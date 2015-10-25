@@ -1,0 +1,526 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DAA9B3351BD605000015D2E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B3341BD605000015D2E6 /* AppDelegate.swift */; };
+		DAA9B3371BD605000015D2E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B3361BD605000015D2E6 /* ViewController.swift */; };
+		DAA9B33A1BD605000015D2E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAA9B3381BD605000015D2E6 /* Main.storyboard */; };
+		DAA9B33D1BD605000015D2E6 /* BlueAgent2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B33B1BD605000015D2E6 /* BlueAgent2.xcdatamodeld */; };
+		DAA9B33F1BD605000015D2E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAA9B33E1BD605000015D2E6 /* Assets.xcassets */; };
+		DAA9B3421BD605000015D2E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAA9B3401BD605000015D2E6 /* LaunchScreen.storyboard */; };
+		DAA9B34D1BD605000015D2E6 /* BlueAgent2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B34C1BD605000015D2E6 /* BlueAgent2Tests.swift */; };
+		DAA9B3581BD605000015D2E6 /* BlueAgent2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B3571BD605000015D2E6 /* BlueAgent2UITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DAA9B3491BD605000015D2E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAA9B3291BD604FF0015D2E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAA9B3301BD604FF0015D2E6;
+			remoteInfo = BlueAgent2;
+		};
+		DAA9B3541BD605000015D2E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAA9B3291BD604FF0015D2E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAA9B3301BD604FF0015D2E6;
+			remoteInfo = BlueAgent2;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DAA9B3311BD604FF0015D2E6 /* BlueAgent2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueAgent2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAA9B3341BD605000015D2E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DAA9B3361BD605000015D2E6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DAA9B3391BD605000015D2E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DAA9B33C1BD605000015D2E6 /* BlueAgent2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BlueAgent2.xcdatamodel; sourceTree = "<group>"; };
+		DAA9B33E1BD605000015D2E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DAA9B3411BD605000015D2E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DAA9B3431BD605000015D2E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAA9B3481BD605000015D2E6 /* BlueAgent2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueAgent2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAA9B34C1BD605000015D2E6 /* BlueAgent2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueAgent2Tests.swift; sourceTree = "<group>"; };
+		DAA9B34E1BD605000015D2E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAA9B3531BD605000015D2E6 /* BlueAgent2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueAgent2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAA9B3571BD605000015D2E6 /* BlueAgent2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueAgent2UITests.swift; sourceTree = "<group>"; };
+		DAA9B3591BD605000015D2E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DAA9B32E1BD604FF0015D2E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAA9B3451BD605000015D2E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAA9B3501BD605000015D2E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DAA9B3281BD604FF0015D2E6 = {
+			isa = PBXGroup;
+			children = (
+				DAA9B3331BD604FF0015D2E6 /* BlueAgent2 */,
+				DAA9B34B1BD605000015D2E6 /* BlueAgent2Tests */,
+				DAA9B3561BD605000015D2E6 /* BlueAgent2UITests */,
+				DAA9B3321BD604FF0015D2E6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DAA9B3321BD604FF0015D2E6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DAA9B3311BD604FF0015D2E6 /* BlueAgent2.app */,
+				DAA9B3481BD605000015D2E6 /* BlueAgent2Tests.xctest */,
+				DAA9B3531BD605000015D2E6 /* BlueAgent2UITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DAA9B3331BD604FF0015D2E6 /* BlueAgent2 */ = {
+			isa = PBXGroup;
+			children = (
+				DAA9B3341BD605000015D2E6 /* AppDelegate.swift */,
+				DAA9B3361BD605000015D2E6 /* ViewController.swift */,
+				DAA9B3381BD605000015D2E6 /* Main.storyboard */,
+				DAA9B33E1BD605000015D2E6 /* Assets.xcassets */,
+				DAA9B3401BD605000015D2E6 /* LaunchScreen.storyboard */,
+				DAA9B3431BD605000015D2E6 /* Info.plist */,
+				DAA9B33B1BD605000015D2E6 /* BlueAgent2.xcdatamodeld */,
+			);
+			path = BlueAgent2;
+			sourceTree = "<group>";
+		};
+		DAA9B34B1BD605000015D2E6 /* BlueAgent2Tests */ = {
+			isa = PBXGroup;
+			children = (
+				DAA9B34C1BD605000015D2E6 /* BlueAgent2Tests.swift */,
+				DAA9B34E1BD605000015D2E6 /* Info.plist */,
+			);
+			path = BlueAgent2Tests;
+			sourceTree = "<group>";
+		};
+		DAA9B3561BD605000015D2E6 /* BlueAgent2UITests */ = {
+			isa = PBXGroup;
+			children = (
+				DAA9B3571BD605000015D2E6 /* BlueAgent2UITests.swift */,
+				DAA9B3591BD605000015D2E6 /* Info.plist */,
+			);
+			path = BlueAgent2UITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DAA9B3301BD604FF0015D2E6 /* BlueAgent2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAA9B35C1BD605000015D2E6 /* Build configuration list for PBXNativeTarget "BlueAgent2" */;
+			buildPhases = (
+				DAA9B32D1BD604FF0015D2E6 /* Sources */,
+				DAA9B32E1BD604FF0015D2E6 /* Frameworks */,
+				DAA9B32F1BD604FF0015D2E6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BlueAgent2;
+			productName = BlueAgent2;
+			productReference = DAA9B3311BD604FF0015D2E6 /* BlueAgent2.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DAA9B3471BD605000015D2E6 /* BlueAgent2Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAA9B35F1BD605000015D2E6 /* Build configuration list for PBXNativeTarget "BlueAgent2Tests" */;
+			buildPhases = (
+				DAA9B3441BD605000015D2E6 /* Sources */,
+				DAA9B3451BD605000015D2E6 /* Frameworks */,
+				DAA9B3461BD605000015D2E6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAA9B34A1BD605000015D2E6 /* PBXTargetDependency */,
+			);
+			name = BlueAgent2Tests;
+			productName = BlueAgent2Tests;
+			productReference = DAA9B3481BD605000015D2E6 /* BlueAgent2Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DAA9B3521BD605000015D2E6 /* BlueAgent2UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAA9B3621BD605000015D2E6 /* Build configuration list for PBXNativeTarget "BlueAgent2UITests" */;
+			buildPhases = (
+				DAA9B34F1BD605000015D2E6 /* Sources */,
+				DAA9B3501BD605000015D2E6 /* Frameworks */,
+				DAA9B3511BD605000015D2E6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAA9B3551BD605000015D2E6 /* PBXTargetDependency */,
+			);
+			name = BlueAgent2UITests;
+			productName = BlueAgent2UITests;
+			productReference = DAA9B3531BD605000015D2E6 /* BlueAgent2UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DAA9B3291BD604FF0015D2E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = BlueAgent;
+				TargetAttributes = {
+					DAA9B3301BD604FF0015D2E6 = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = J62ZDNNW8H;
+					};
+					DAA9B3471BD605000015D2E6 = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = J62ZDNNW8H;
+						TestTargetID = DAA9B3301BD604FF0015D2E6;
+					};
+					DAA9B3521BD605000015D2E6 = {
+						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = J62ZDNNW8H;
+						TestTargetID = DAA9B3301BD604FF0015D2E6;
+					};
+				};
+			};
+			buildConfigurationList = DAA9B32C1BD604FF0015D2E6 /* Build configuration list for PBXProject "BlueAgent2" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DAA9B3281BD604FF0015D2E6;
+			productRefGroup = DAA9B3321BD604FF0015D2E6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DAA9B3301BD604FF0015D2E6 /* BlueAgent2 */,
+				DAA9B3471BD605000015D2E6 /* BlueAgent2Tests */,
+				DAA9B3521BD605000015D2E6 /* BlueAgent2UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DAA9B32F1BD604FF0015D2E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAA9B3421BD605000015D2E6 /* LaunchScreen.storyboard in Resources */,
+				DAA9B33F1BD605000015D2E6 /* Assets.xcassets in Resources */,
+				DAA9B33A1BD605000015D2E6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAA9B3461BD605000015D2E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAA9B3511BD605000015D2E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DAA9B32D1BD604FF0015D2E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAA9B3371BD605000015D2E6 /* ViewController.swift in Sources */,
+				DAA9B3351BD605000015D2E6 /* AppDelegate.swift in Sources */,
+				DAA9B33D1BD605000015D2E6 /* BlueAgent2.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAA9B3441BD605000015D2E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAA9B34D1BD605000015D2E6 /* BlueAgent2Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAA9B34F1BD605000015D2E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAA9B3581BD605000015D2E6 /* BlueAgent2UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DAA9B34A1BD605000015D2E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAA9B3301BD604FF0015D2E6 /* BlueAgent2 */;
+			targetProxy = DAA9B3491BD605000015D2E6 /* PBXContainerItemProxy */;
+		};
+		DAA9B3551BD605000015D2E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAA9B3301BD604FF0015D2E6 /* BlueAgent2 */;
+			targetProxy = DAA9B3541BD605000015D2E6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DAA9B3381BD605000015D2E6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DAA9B3391BD605000015D2E6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DAA9B3401BD605000015D2E6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DAA9B3411BD605000015D2E6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DAA9B35A1BD605000015D2E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DAA9B35B1BD605000015D2E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DAA9B35D1BD605000015D2E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BlueAgent2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BlueAgent.BlueAgent2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DAA9B35E1BD605000015D2E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BlueAgent2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BlueAgent.BlueAgent2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		DAA9B3601BD605000015D2E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BlueAgent2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BlueAgent.BlueAgent2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlueAgent2.app/BlueAgent2";
+			};
+			name = Debug;
+		};
+		DAA9B3611BD605000015D2E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BlueAgent2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BlueAgent.BlueAgent2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlueAgent2.app/BlueAgent2";
+			};
+			name = Release;
+		};
+		DAA9B3631BD605000015D2E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BlueAgent2UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BlueAgent.BlueAgent2UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = BlueAgent2;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		DAA9B3641BD605000015D2E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BlueAgent2UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BlueAgent.BlueAgent2UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = BlueAgent2;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DAA9B32C1BD604FF0015D2E6 /* Build configuration list for PBXProject "BlueAgent2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAA9B35A1BD605000015D2E6 /* Debug */,
+				DAA9B35B1BD605000015D2E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAA9B35C1BD605000015D2E6 /* Build configuration list for PBXNativeTarget "BlueAgent2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAA9B35D1BD605000015D2E6 /* Debug */,
+				DAA9B35E1BD605000015D2E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DAA9B35F1BD605000015D2E6 /* Build configuration list for PBXNativeTarget "BlueAgent2Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAA9B3601BD605000015D2E6 /* Debug */,
+				DAA9B3611BD605000015D2E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DAA9B3621BD605000015D2E6 /* Build configuration list for PBXNativeTarget "BlueAgent2UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAA9B3631BD605000015D2E6 /* Debug */,
+				DAA9B3641BD605000015D2E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DAA9B33B1BD605000015D2E6 /* BlueAgent2.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DAA9B33C1BD605000015D2E6 /* BlueAgent2.xcdatamodel */,
+			);
+			currentVersion = DAA9B33C1BD605000015D2E6 /* BlueAgent2.xcdatamodel */;
+			path = BlueAgent2.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = DAA9B3291BD604FF0015D2E6 /* Project object */;
+}
