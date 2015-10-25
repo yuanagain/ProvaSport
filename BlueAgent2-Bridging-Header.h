@@ -10,4 +10,8 @@
 #define BlueAgent2_Bridging_Header_h
 
 
+#import <Parse/Parse.h>
+#import <ParseFacebookUtilsV4/ParseFacebookUtilsV4.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 #endif /* BlueAgent2_Bridging_Header_h */
