@@ -9,7 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var emailTextField: UITextField!
     
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBAction func loginButtonPressed(sender: UIButton) {
+        print("login button pressed")
+    }
+    
+    @IBAction func registerButtonPressed(sender: AnyObject) {
+        print("register button pressed")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -18,10 +28,6 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func loginButtonTapped(sender: AnyObject) {
-        self.loginWithFacebook()
     }
     
     private func loginWithFacebook() -> Void {
