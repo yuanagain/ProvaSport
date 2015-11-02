@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		178A36059AE1D35E7A70B28B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7387C546E633C0DBF84F28E /* libPods.a */; };
-		DA089BA61BD6812300919536 /* PlayerObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA089BA51BD6812300919536 /* PlayerObjects.swift */; settings = {ASSET_TAGS = (); }; };
-		DA1509E91BDAB7FA00869BD9 /* ParsePlayerManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1509E81BDAB7FA00869BD9 /* ParsePlayerManagement.swift */; settings = {ASSET_TAGS = (); }; };
+		DA089BA61BD6812300919536 /* PlayerObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA089BA51BD6812300919536 /* PlayerObjects.swift */; };
+		DA1509E91BDAB7FA00869BD9 /* ParsePlayerManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1509E81BDAB7FA00869BD9 /* ParsePlayerManagement.swift */; };
+		DA1E2BB81BE7FEBD00C8BE34 /* AgentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1E2BB71BE7FEBD00C8BE34 /* AgentViewController.swift */; };
 		DAA9B3351BD605000015D2E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B3341BD605000015D2E6 /* AppDelegate.swift */; };
-		DAA9B3371BD605000015D2E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B3361BD605000015D2E6 /* ViewController.swift */; };
+		DAA9B3371BD605000015D2E6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B3361BD605000015D2E6 /* LoginViewController.swift */; };
 		DAA9B33A1BD605000015D2E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAA9B3381BD605000015D2E6 /* Main.storyboard */; };
 		DAA9B33D1BD605000015D2E6 /* BlueAgent2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B33B1BD605000015D2E6 /* BlueAgent2.xcdatamodeld */; };
 		DAA9B33F1BD605000015D2E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAA9B33E1BD605000015D2E6 /* Assets.xcassets */; };
@@ -43,10 +44,11 @@
 		D7387C546E633C0DBF84F28E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA089BA51BD6812300919536 /* PlayerObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerObjects.swift; sourceTree = "<group>"; };
 		DA1509E81BDAB7FA00869BD9 /* ParsePlayerManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsePlayerManagement.swift; sourceTree = "<group>"; };
+		DA1E2BB71BE7FEBD00C8BE34 /* AgentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgentViewController.swift; path = ../AgentViewController.swift; sourceTree = "<group>"; };
 		DA39F9941BD60DF4000B4E7F /* BlueAgent2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlueAgent2-Bridging-Header.h"; sourceTree = "<group>"; };
 		DAA9B3311BD604FF0015D2E6 /* BlueAgent2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueAgent2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAA9B3341BD605000015D2E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DAA9B3361BD605000015D2E6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DAA9B3361BD605000015D2E6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DAA9B3391BD605000015D2E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DAA9B33C1BD605000015D2E6 /* BlueAgent2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BlueAgent2.xcdatamodel; sourceTree = "<group>"; };
 		DAA9B33E1BD605000015D2E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,6 +97,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DA1E2BB61BE7FCA800C8BE34 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DA1E2BB71BE7FEBD00C8BE34 /* AgentViewController.swift */,
+				DAA9B3361BD605000015D2E6 /* LoginViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		DAA9B3281BD604FF0015D2E6 = {
 			isa = PBXGroup;
 			children = (
@@ -122,7 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				DAA9B3341BD605000015D2E6 /* AppDelegate.swift */,
-				DAA9B3361BD605000015D2E6 /* ViewController.swift */,
+				DA1E2BB61BE7FCA800C8BE34 /* View Controllers */,
 				DA1509E81BDAB7FA00869BD9 /* ParsePlayerManagement.swift */,
 				DA089BA51BD6812300919536 /* PlayerObjects.swift */,
 				DAA9B3381BD605000015D2E6 /* Main.storyboard */,
@@ -344,8 +355,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA1E2BB81BE7FEBD00C8BE34 /* AgentViewController.swift in Sources */,
 				DA1509E91BDAB7FA00869BD9 /* ParsePlayerManagement.swift in Sources */,
-				DAA9B3371BD605000015D2E6 /* ViewController.swift in Sources */,
+				DAA9B3371BD605000015D2E6 /* LoginViewController.swift in Sources */,
 				DA089BA61BD6812300919536 /* PlayerObjects.swift in Sources */,
 				DAA9B3351BD605000015D2E6 /* AppDelegate.swift in Sources */,
 				DAA9B33D1BD605000015D2E6 /* BlueAgent2.xcdatamodeld in Sources */,
