@@ -66,6 +66,9 @@
 		DA4E019B1BF2A2FF0036177B /* schedule1x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA4E01951BF2A2FF0036177B /* schedule1x.png */; };
 		DA4E019C1BF2A2FF0036177B /* schedule1x.svg in Resources */ = {isa = PBXBuildFile; fileRef = DA4E01961BF2A2FF0036177B /* schedule1x.svg */; };
 		DA4E019E1BF2A3490036177B /* home1x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA4E019D1BF2A3490036177B /* home1x.png */; };
+		DA4E01A01BF30F570036177B /* lineblue.png in Resources */ = {isa = PBXBuildFile; fileRef = DA4E019F1BF30F570036177B /* lineblue.png */; };
+		DA4E01A31BF3B38F0036177B /* ball_racket_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = DA4E01A11BF3B38F0036177B /* ball_racket_bg.png */; };
+		DA4E01A41BF3B38F0036177B /* mask_img_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA4E01A21BF3B38F0036177B /* mask_img_2x.png */; };
 		DA9059451BF13786006E6825 /* oval.png in Resources */ = {isa = PBXBuildFile; fileRef = DA9059431BF13786006E6825 /* oval.png */; };
 		DA9059461BF13786006E6825 /* rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = DA9059441BF13786006E6825 /* rectangle.png */; };
 		DAA9B3351BD605000015D2E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA9B3341BD605000015D2E6 /* AppDelegate.swift */; };
@@ -167,6 +170,9 @@
 		DA4E01951BF2A2FF0036177B /* schedule1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = schedule1x.png; path = ../../../resources/ba2r3/schedule1x.png; sourceTree = "<group>"; };
 		DA4E01961BF2A2FF0036177B /* schedule1x.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = schedule1x.svg; path = ../../../resources/ba2r3/schedule1x.svg; sourceTree = "<group>"; };
 		DA4E019D1BF2A3490036177B /* home1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home1x.png; path = ../../../resources/ba2r3/home1x.png; sourceTree = "<group>"; };
+		DA4E019F1BF30F570036177B /* lineblue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lineblue.png; path = ../../../resources/ba2r3/lineblue.png; sourceTree = "<group>"; };
+		DA4E01A11BF3B38F0036177B /* ball_racket_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ball_racket_bg.png; path = ../../../resources/ba2r3/ball_racket_bg.png; sourceTree = "<group>"; };
+		DA4E01A21BF3B38F0036177B /* mask_img_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask_img_2x.png; path = ../../../resources/ba2r3/mask_img_2x.png; sourceTree = "<group>"; };
 		DA9059431BF13786006E6825 /* oval.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = oval.png; path = ../../../resources/ba2r3/oval.png; sourceTree = "<group>"; };
 		DA9059441BF13786006E6825 /* rectangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rectangle.png; path = ../../../resources/ba2r3/rectangle.png; sourceTree = "<group>"; };
 		DAA9B3311BD604FF0015D2E6 /* BlueAgent2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueAgent2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +238,7 @@
 		DA17E9DF1BF006D400448148 /* UIAssets */ = {
 			isa = PBXGroup;
 			children = (
+				DA4E01A51BF3B39B0036177B /* Headers + Lines */,
 				DA4E01621BF29E490036177B /* Tab Bar Assets */,
 				DAC7BDDE1BF1D2EF00DBB1FA /* SignupPage */,
 				DAC7BDDF1BF1D2FE00DBB1FA /* LoginPage */,
@@ -296,6 +303,16 @@
 				DA4E01541BF29E3F0036177B /* ScheduleTabunselected.png */,
 			);
 			name = "Tab Bar Assets";
+			sourceTree = "<group>";
+		};
+		DA4E01A51BF3B39B0036177B /* Headers + Lines */ = {
+			isa = PBXGroup;
+			children = (
+				DA4E01A11BF3B38F0036177B /* ball_racket_bg.png */,
+				DA4E01A21BF3B38F0036177B /* mask_img_2x.png */,
+				DA4E019F1BF30F570036177B /* lineblue.png */,
+			);
+			name = "Headers + Lines";
 			sourceTree = "<group>";
 		};
 		DAA9B3281BD604FF0015D2E6 = {
@@ -518,9 +535,11 @@
 				DA4E016D1BF2A04D0036177B /* group2xOrange.png in Resources */,
 				DA4E017D1BF2A0C90036177B /* groups3xBlue.png in Resources */,
 				DA1AB91B1BF13112003B1164 /* blurblurlogin.png in Resources */,
+				DA4E01A41BF3B38F0036177B /* mask_img_2x.png in Resources */,
 				DA4E01551BF29E3F0036177B /* AgentTabSELECTED.png in Resources */,
 				DA4E018C1BF2A23D0036177B /* groupbluesvg.svg in Resources */,
 				DA17E9E41BF0096C00448148 /* bg.png in Resources */,
+				DA4E01A31BF3B38F0036177B /* ball_racket_bg.png in Resources */,
 				DA9059461BF13786006E6825 /* rectangle.png in Resources */,
 				DAC7BDDB1BF1C80600DBB1FA /* mark.png in Resources */,
 				DAC7BDE11BF1D34C00DBB1FA /* done3x.png in Resources */,
@@ -535,6 +554,7 @@
 				DA4E018F1BF2A23D0036177B /* listsbluesvg.svg in Resources */,
 				DA4E01841BF2A17C0036177B /* agent3xBlue.png in Resources */,
 				DA4E016F1BF2A04D0036177B /* groups2xOrange.png in Resources */,
+				DA4E01A01BF30F570036177B /* lineblue.png in Resources */,
 				DA4E019B1BF2A2FF0036177B /* schedule1x.png in Resources */,
 				DA4E01571BF29E3F0036177B /* home_blue.png in Resources */,
 				DA4E018E1BF2A23D0036177B /* homebluesvg.svg in Resources */,
