@@ -26,6 +26,7 @@ var LoginPage = React.createClass({
   render: function() {
     var {
       name,
+      loginFunction,
       ...props
     } = this.props;
 
@@ -34,7 +35,7 @@ var LoginPage = React.createClass({
 
       <View style={styles.header_container}>
         <Text style={styles.title_text}>
-          BlueAgent
+          BlueSport
         </Text>
       </View>
 
@@ -69,7 +70,7 @@ var LoginPage = React.createClass({
         <Button
           style={styles.login_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this._handlePress}
+          onPress={this.props.loginFunction}
           >
           Sign In
         </Button>

@@ -3,6 +3,7 @@ var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
+var MatchPage = require('./matchpage')
 
 var NewsFeedMatchRow = require('./newsfeedmatchrow')
 
@@ -28,6 +29,7 @@ var NewsFeedPage = React.createClass({
     };
   },
   render: function() {
+    console.log("YO")
     var {
       name,
       ...props
@@ -59,9 +61,20 @@ var NewsFeedPage = React.createClass({
 
   renderMatchRow(rowData) {
     return (
-        <NewsFeedMatchRow />
+        <NewsFeedMatchRow
+        onPressFunction={() => this.onButtonPress("TEST")}/>
     )
-  }
+  },
+  onButtonPress(arg) {
+    console.log(arg)
+    this.props.navigator.push({
+      id: "MatchScreen",
+      component: MatchPage,
+      passProps: {
+        matchnum: "matchnum",
+      }
+    })
+  },
 });
 
 var styles = StyleSheet.create({
