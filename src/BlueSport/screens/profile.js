@@ -21,7 +21,7 @@ var Profile = React.createClass({
       user: "Sample Username"
     }
   },
-
+  /*
   render: function() {
     if (!this.props.isModal) {
       return (
@@ -39,6 +39,7 @@ var Profile = React.createClass({
       );
     }
     else {
+
       return (
         <View style={styles.container}>
           <View style={styles.prof_pic_container}>
@@ -46,7 +47,7 @@ var Profile = React.createClass({
             source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
             />
           </View>
-          <TouchableOpacity onPress={this.onBackPress}>
+          <TouchableOpacity onPress={this.hideTabFunc}>
             <Text>
               Back
             </Text>
@@ -57,10 +58,33 @@ var Profile = React.createClass({
           </Text>
         </View>
       );
-
-
-
     }
+  },*/
+
+  render: function() {
+    var {
+      toggleTabBar,
+      ...props
+    } = this.props;
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.prof_pic_container}>
+          <Image style={styles.prof_pic_image}
+          source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+          />
+        </View>
+        <TouchableOpacity onPress={this.props.toggleTabBar}>
+          <Text>
+            Back
+          </Text>
+        </TouchableOpacity>
+        <Text style={styles.nameText}>
+          {this.props.user}
+          Placeholder
+        </Text>
+      </View>
+    );
   },
 
   onBackPress() {

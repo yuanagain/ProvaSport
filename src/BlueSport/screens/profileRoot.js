@@ -23,10 +23,15 @@ var {
 var profileRoot = React.createClass({
 
   render: function() {
+    var {
+      toggleTabBar,
+      ...props
+    } = this.props;
+
     return (
       <Navigator
         style={styles.wrapper}
-          initialRoute={{name: 'ProfScreen', component: ProfScreen, passProps: {isModal: false}}}
+          initialRoute={{name: 'ProfScreen', component: ProfScreen, passProps: {isModal: false, hideTabFunc: this.props.toggleTabBar}}}
           
           renderScene={(route, navigator) =>    {
             if (route.component) {
