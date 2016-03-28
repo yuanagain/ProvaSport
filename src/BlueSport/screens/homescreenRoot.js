@@ -9,6 +9,7 @@ var ProfScreen = require('./profile')
 var MatchScreen = require('./match')
 var ContractsScreen = require('./contracts')
 var HomeScreen = require('./homescreen')
+var NewsFeedPage = require('./newsfeedpage')
 
 var {
   AppRegistry,
@@ -26,8 +27,8 @@ render: function() {
       return (
         <Navigator
           style={styles.wrapper}
-          initialRoute={{name: 'HomeScreen', component: HomeScreen}}
-          
+          initialRoute={{name: 'NewsFeedPage', component: NewsFeedPage}}
+
           renderScene={(route, navigator) =>    {
             if (route.component) {
                           return React.createElement(route.component, {...route.passProps, navigator, route } );
@@ -38,7 +39,7 @@ render: function() {
                 return route.sceneConfig;
               }
               return Navigator.SceneConfigs.FloatFromRight;
-          }} 
+          }}
          />
       )
     }

@@ -33,6 +33,7 @@ var NewsFeedMatchRow = React.createClass({
     var {
       row_name,
       payouts,
+      onPressFunction,
       ...props
     } = this.props;
 
@@ -50,7 +51,11 @@ var NewsFeedMatchRow = React.createClass({
             />
           </View>
           <View style={styles.content_container}>
-            <Text style={styles.value_text}>{"Player 1"}</Text>
+            <Text
+            style={styles.value_text}
+            onPress={this.props.onPressFunction}>
+            {"Player 1"}
+            </Text>
             <Text style={styles.winner_text}>{"Player 2"}</Text>
             <Text style={styles.detail_text}>{"Dillon Gym"}</Text>
           </View>
@@ -64,6 +69,15 @@ var NewsFeedMatchRow = React.createClass({
         </View>
       </View>
     );
+  },
+  onButtonPress() {
+    this.props.navigator.push({
+      id: "MatchScreen",
+      component: MatchScreen,
+      passProps: {
+        matchnum: "matchnum",
+      }
+    })
   },
 });
 

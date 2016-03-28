@@ -40,8 +40,9 @@ var ContractsScreen = React.createClass({
       </View>
     );
   },
-
+  // EXAMPLE HERE
   onButtonPress() {
+
     this.props.navigator.push({
       id: "MatchScreen",
       component: MatchScreen,
@@ -50,9 +51,6 @@ var ContractsScreen = React.createClass({
       }
     });
   },
-
-
-
 });
 
 var styles = StyleSheet.create({
