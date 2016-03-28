@@ -9,20 +9,46 @@ class Trophy {
     "description": "",
     "thumbnail": "",
   };
+  /* Creates trophy object and loads a data from Firebase */
   constructor(trophyid) {
-    let this.state.trophyid = trophyid; //might need to define getInitState
+    let this.trophy.trophyid = trophyid; //might need to define getInitState
   }
-  function load() {
 
+  /*
+   * Private method for the trophy class trying to load the JSON object from Firbase
+   * into the trpophy object
+   * Usage: this.load()
+   */
+  function load() {
+    trophy = Firebase.get("/Trophy/"+ trophy.trophyid);
   }
+  /*Usage: this.getName()
+    Description: returns name of trophy object */
   function getName() {
-    return
+    return trophy.name;
   }
-  function getDescription() {}
+  /*
+   * Usage: this.getDescription()
+   * Description: returns trophy's description text
+   */
+  function getDescription() {
+    return trophy.description;
+  }
+  /* 
+   * Usage: getThumbnail()
+   * Description: returns trophy thumbnail as an Image tag
+   */
   function getThumbnail() {
-    return <Image >
+    var imgURL = trophy.thumbnail;
+    return <Image src=imgURL />
   }
+  /*
+   * Usage: this.getThumbnail(string style)
+   * Description: takes in a string representing the image's style and returns the
+   * trophy's thumbnail with that style
+   */
   function getThumbnail(style) {
-    return <Image 'style'=style>
+    var imgURL = trophy.thumbnail;
+    return <Image 'style'=style src=imgURL/>
   }
 }
