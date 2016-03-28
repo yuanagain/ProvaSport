@@ -17,7 +17,6 @@ var lightgreen = "#7ED321"
 var mainfont = 'avenir'
 var skblue = '#4A90E2'
 
-
 var PayoutRow = React.createClass({
   getInitialState: function() {
     return (
