@@ -18,24 +18,16 @@ var {
 } = React;
 
 var leftMargin = 50 * _cvals.dscale;
-var rowWidth = windowSize.width - leftMargin;
+var rowWidth = windowSize.width * 0.85 - leftMargin;
 var rowHeight= 32 * _cvals.dscale;
 
 var GameScoreRow = React.createClass({
-  getInitialState: function() {
-    return (
-      {
-      }
-    )
-  },
 
   render: function() {
     var {
-      key,
       index,
       val1,
       val2,
-      onIconPress,
       ...props
     } = this.props;
 
@@ -44,7 +36,7 @@ var GameScoreRow = React.createClass({
       <View style={styles.container}>
         <View style={[styles.leftmost, styles.left,]}>
           <Text style={[_cstyles.standard_text, ]}>
-            {"Game " + String(this.props.index)}
+            {"Game "}
           </Text>
         </View>
 
@@ -66,12 +58,6 @@ var GameScoreRow = React.createClass({
           </Text>
         </View>
 
-        <View style={[styles.rightmost, styles.center]}>
-          <TouchableOpacity onPress={this.onPress}>
-            <Image source={require('../assets/close.png')} style={_cstyles.close} />
-          </TouchableOpacity>
-        </View>
-
       </View>
     );
   },
@@ -87,6 +73,7 @@ var styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: rowWidth,
     height: rowHeight,
+    
   },
   input: {
 
@@ -119,7 +106,7 @@ var styles = StyleSheet.create({
     alignItems: 'center'
   },
   rightmost: {
-    width: windowSize.width * 1.5 / 10,
+    width: rowWidth * 1.5 / 10,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'

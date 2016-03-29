@@ -23,27 +23,45 @@ var {
 var PopoverSelector = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+    var mode = 'normal'
+    if (this.props.maxSelect == 1) {
+      mode = 'single'
+    }
+
+    var renderSelector = this.props.renderSelector
+    var selectorRenderMode = 'normal'
+    if (renderSelector == null) {
+      renderSelector = () => this.defaultRenderSelector()
+      selectorRenderMode = 'default'
+    }
+
     return {
-      selection: this.props.selection
+      selection: this.props.selection,
+      mode: mode,
+      renderSelector: renderSelector,
+      accesses: 0,
     };
   },
 
   getDefaultProps: function() {
     return {
       title: "Select",
+      mode: 'normal',
       items: [],
       selection: [],
       minSelect: 0,
       maxSelect: Infinity,
       harvestSelection: harvestSelection_default,
       selectedStyle: { opacity: 0.5, backgroundColor: _cvals.skorange },
-      renderSelector: () => <Text>{"select"}</Text>
+      renderSelector: null
     };
   },
 
   render: function() {
     var {
       title,
+      mode,
       renderSelector,
       items,
       harvestSelection,
@@ -56,11 +74,40 @@ var PopoverSelector = React.createClass({
       ...props
     } = this.props;
 
-    return (
-      <TouchableOpacity onPress={this.enterSelector}>
-        {this.props.renderSelector()}
-      </TouchableOpacity>
-    );
+    if (this.state.selectorRenderMode == 'normal') {
+      return (
+        <TouchableOpacity onPress={this.enterSelector}>
+          {this.state.renderSelector()}
+        </TouchableOpacity>
+      );
+    }
+    else {
+      var selectionText = "Select"
+
+      if (this.state.selection.length > 0) {
+        selectionText = this.props.items[this.state.selection[0]]
+      }
+
+      return (
+        <TouchableOpacity onPress={this.enterSelector}>
+          <View style={styles.defaultRenderSelector}>
+            <Text style={_cstyles.section_header_text}>
+              {this.props.title}
+            </Text>
+            <Text style={[_cstyles.standard_text,
+                          {color: _cvals.skblue,
+                           marginRight: 15 * _cvals.dscale}]}>
+              {selectionText}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      )
+    }
+  },
+
+  // to force view re-render
+  update: function() {
+    console.log('updating')
   },
 
   enterSelector: function() {
@@ -78,6 +125,8 @@ var PopoverSelector = React.createClass({
         maxSelect: this.props.maxSelect,
         navigator: this.props.navigator,
         selectedStyle: this.props.selectedStyle,
+
+        update: this.update
       }
     })
   },
@@ -85,6 +134,29 @@ var PopoverSelector = React.createClass({
   harvestSelection: function(selection) {
     this.props.harvestSelection(selection)
     this.props.navigator.pop()
+    console.log(this.state.selection)
+    this.forceUpdate()
+  },
+
+  defaultRenderSelector: function() {
+    var selectionText = "Select"
+
+    if (this.state.selection.length > 1) {
+      selectionText = this.state.selection[0]
+    }
+
+    return (
+      <View style={styles.defaultRenderSelector}>
+        <Text style={_cstyles.section_header_text}>
+          {this.props.title}
+        </Text>
+        <Text style={[_cstyles.standard_text,
+                      {color: _cvals.skblue,
+                       marginRight: 15 * _cvals.dscale}]}>
+          {selectionText}
+        </Text>
+      </View>
+    )
   },
 
 });
@@ -97,6 +169,12 @@ var styles = StyleSheet.create({
   selected_style: {
     opacity: 0.5,
     backgroundColor: _cvals.skorange
+  },
+  defaultRenderSelector: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   container: {
     flexDirection: 'column',

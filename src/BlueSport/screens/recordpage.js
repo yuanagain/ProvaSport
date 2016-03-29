@@ -6,14 +6,13 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 
 var ScoreRowRecord = require('./scorerowrecord')
+
 var PopoverSelect = require('./popoverselect')
-
-var GameScoreRow = require('../parts/gamescorerow')
-var GameScoreRowAdd = require('../parts/gamescorerowadd')
-
+var DynamicList = require('../bigparts/dynamiclist')
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var PopoverSelector = require('../bigparts/popoverselector')
+
 import * as _ctools from '../libs/customtools.js'
 
 var {
@@ -76,12 +75,6 @@ var RecordPage = React.createClass({
       ...props
     } = this.props;
 
-    var createRowOfViews = (data) => <GameScoreRow index={data['key']}
-                                                   val1={data['scores'][0]}
-                                                   val2={data['scores'][1]}
-                                                   kill={this.deleteGame}
-                                                   key={_ctools.randomKey()}/>;
-
     return (
     <View style={styles.container}>
       <View>
@@ -94,53 +87,51 @@ var RecordPage = React.createClass({
         <View style={styles.divider_line}>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={() => this.gotoPopoverSelect(dummyselections)}>
-          <Text style={_cstyles.section_header_text}>{this.state.item}</Text>
-        </TouchableOpacity>
-        <View style={_cstyles.divider_line}>
-        </View>
-
         <View>
           <Text style={_cstyles.section_header_text}>{"Contract"}</Text>
         </View>
         <View style={_cstyles.divider_line}>
         </View>
 
-        <GameScoreRow index={1} val1={10} val2={11} />
-        <GameScoreRowAdd onIconPress={this.addGame} />
-
-        <View>
-          <Text style={_cstyles.section_header_text}>{"Sport"}</Text>
-        </View>
-        <View style={_cstyles.divider_line}>
-        </View>
-
-        <View>
-          <Text style={_cstyles.section_header_text}>{"Team 1"}</Text>
-        </View>
-        <View style={_cstyles.divider_line}>
-        </View>
-
         <PopoverSelector
-          items={['text1', 'text2', 'text3']}
+          title={'Sport'}
+          items={['Sport1', 'Sport2', 'Sport3']}
           renderRow={ (rowData) => <Text>{rowData}</Text> }
           navigator={this.props.navigator}
           selection={[]}
         />
-
-        <View>
-          <Text style={_cstyles.section_header_text}>{"Team 2"}</Text>
+        <View style={_cstyles.divider_line}>
         </View>
+
+        <PopoverSelector
+          title={'Team 1'}
+          items={['Player 1', 'Player 2', 'Player 3']}
+          renderRow={ (rowData) => <Text>{rowData}</Text> }
+          navigator={this.props.navigator}
+          selection={[]}
+        />
+        <View style={_cstyles.divider_line}>
+        </View>
+
+        <PopoverSelector
+          title={'Team 2'}
+          items={['Player 1', 'Player 2', 'Player 3']}
+          renderRow={ (rowData) => <Text>{rowData}</Text> }
+          navigator={this.props.navigator}
+          selection={[]}
+        />
         <View style={_cstyles.divider_line}>
         </View>
 
         <View>
           <Text style={_cstyles.section_header_text}>{"Scores"}</Text>
         </View>
-        <View >
-          {this.state.SomeData.map(createRowOfViews)}
-        </View>
 
+
+        <DynamicList
+          items={[[1,2], [3,5], [5,6]]}
+          magic={'scores'}
+          />
       </View>
       <View style={_cstyles.buttons_container}>
         <Button
@@ -280,54 +271,3 @@ var styles = StyleSheet.create({
 })
 
 module.exports = RecordPage;
-
-//
-// var ScoreRow = React.createClass({
-//   shouldComponentUpdate: function(nextProps, nextState) {
-//     return false;
-//   },
-//   render: function() {
-//     var {
-//       key,
-//       index,
-//       scores,
-//       kill,
-//       ...props
-//     } = this.props;
-//
-//     return (
-//       <View style={[_cstyles.indented_container,]}>
-//         <View style={styles.game_title}>
-//           <Text style={[_cstyles.standard_text, _cstyles.centeredText]}>
-//             {"Game " + String(this.props.index)}
-//           </Text>
-//         </View>
-//
-//         <View style={styles.score_values}>
-//           <View style={[_cstyles.centering_wrap, ]}>
-//             <Text style={[_cstyles.standard_text, _cstyles.centeredText]}>
-//               {this.props.scores[0]}
-//             </Text>
-//           </View>
-//           <Text style={[_cstyles.standard_text, _cstyles.centeredText]}>
-//             {'-'}
-//           </Text>
-//           <View style={[_cstyles.centering_wrap, ]}>
-//             <Text style={[_cstyles.standard_text, _cstyles.centeredText]}>
-//               {this.props.scores[1]}
-//             </Text>
-//           </View>
-//         </View>
-//
-//         <View style={[_cvals.centering_wrap, {marginRight: 20}]}>
-//           <TouchableOpacity
-//             style={{backgroundColor: 'transparent'}}
-//             onPress={()=>this.props.kill(this.props.index)} >
-//
-//             <Image source={require('../assets/close.png')} style={_cstyles.close} />
-//           </TouchableOpacity>
-//         </View>
-//       </View>
-//     );
-//   }
-// });

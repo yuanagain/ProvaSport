@@ -10,6 +10,14 @@ var _cstyles = require('../styles/customstyles')
 
 import * as _ctools from '../libs/customtools.js'
 
+/// ProvaSport specific:
+var GameScoreRowAdd_subco = require('../parts/gamescorerowadd_subco')
+var GameScoreRow_subco = require('../parts/gamescorerow_subco')
+///
+
+
+var rowWidth = windowSize.width
+
 var {
   AppRegistry,
   StyleSheet,
@@ -23,18 +31,25 @@ var {
 
 var DynamicList = React.createClass({
   getInitialState: function() {
+
+    var rowRender = this.props.renderRow
+
+    if (this.props.magic == 'scores' ) {
+      rowRender = this.renderScore
+    }
+
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      items: this.props.items
-      dataSource: ds.cloneWithRows(_ctools.supplementIndex(this.props.items)),
+      items: this.props.items,
+      renderRow: rowRender,
     };
   },
 
   getDefaultProps: function() {
     return {
-      title: "Select",
-      items: []
-      harvest: harvestSelection_default,
+      items: [],
+      harvest: harvest_default,
+      renderRow: (rowdata) => <Text>{rowdata}</Text>
     };
   },
 
@@ -42,144 +57,87 @@ var DynamicList = React.createClass({
     var {
       items,
       harvest,
-      renderForm,
       renderRow,
       ...props
     } = this.props;
 
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
     return (
     <View style={styles.container}>
-      <View style={styles.body_container}>
 
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
-          style={styles.listView}
-        />
+      <ListView
+        dataSource={ds.cloneWithRows(_ctools.supplementIndex(this.state.items))}
+        renderRow={this.renderRow}
+        style={styles.listView}
+      />
 
-        <View style={styles.divider_line}>
-        </View>
-      </View>
       <View style={styles.buttons_container}>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{backgroundColor: 'grey'}}
-          onPress={this.harvestSelection}
-          disabled={this.validSelection}
-          >
-          {'Confirm Selection'}
-        </Button>
+        <GameScoreRowAdd_subco
+          harvest={this.addItem} />
       </View>
     </View>
     );
   },
 
-  harvestSelection: function(selection) {
-    this.props.harvestSelection(selection)
-    this.props.navigator.pop()
-  },
-
-
-  inSelectionRange: function() {
-    var n = this.state.selection.length
-    if (_ctools.inRange(n, this.props.minSelect, this.props.maxSelect)) {
-      return true
-    }
-    return false
-  },
-
-  validateSelection: function() {
-    this.setState({validSelection: _ctools.inRange(this.props.minSelect,
-                                                   this.props.maxSelect,
-                                                   this.state.selection.length)})
-  },
-
-  harvestSelection: function() {
-    var iselect = _ctools.traceIndices(this.props.items,
-                                            this.state.selection)
-    this.props.harvestSelection(iselect)
-  },
-
-  cancelSelection: function() {
-    this.props.cancelSelection([])
-  },
-
-  toggleSelect: function(index) {
-    this.validateSelection()
-    var loc = _ctools.indexOf(this.state.selection, index)
-    // if already in selection
-    if (loc != -1) {
-      this.state.selection.splice(loc, 1)
-    }
-    // if not in selection
-    else {
-      this.state.selection.push(index)
-    }
-    this.setState( {selection: this.state.selection} )
-    console.log(this.state.selection)
-  },
-
-  inSelection: function(index) {
-    return _ctools.contains(this.state.selection, index)
+  renderScore: function(score) {
+    return (
+      <GameScoreRow_subco
+        val1={score[0]}
+        val2={score[1]}
+      />
+    )
   },
 
   renderRow: function(rowData) {
     return (
       <RowWrapper
-        key={_ctools.randomKey()}
-        index={rowData['index']}
-        selected={_ctools.contains(this.state.selection, rowData['index'])}
-        toggleSelect={this.toggleSelect}
-        inSelection={this.inSelection}
-        rowData={rowData['item']}
-        renderRow={this.props.renderRow}
+        key={rowData['index']}
+        item={rowData['item']}
+        renderRow={this.state.renderRow}
+        removeItem={() => this.removeItem(rowData['index'])}
         />
     );
   },
 
-  goBack: function() {
-    this.props.goBack()
+  harvest: function() {
+    this.props.harvest(iselect)
   },
+
+  addItem: function(data) {
+      this.state.items.push(data)
+      this.setState( {items: this.state.items} )
+  },
+
+  removeItem: function(index) {
+    this.state.items.splice(index, 1)
+    this.setState( {items: this.state.items} )
+    console.log(this.state.items)
+  }
 });
 
-
 var RowWrapper = React.createClass({
-  getInitialState: function() {
-    var initialStyle = {}
-    if (this.props.selected) {
-      initialStyle = this.props.selectedStyle
-    }
-    return {
-      selected: this.props.selected,
-      style: initialStyle
-    };
-  },
-
   render: function() {
     var {
       index,
-      selected,
-      toggleSelect,
-      inSelection,
       renderRow,
-      rowData,
-      selectedStyle,
+      item,
+      removeItem,
       ...props
     } = this.props;
 
     return (
-      <View>
+      <View style={styles.row_container}>
         <View style={styles.leftmost}>
-          {this.props.renderRow(rowData)}
+          {this.props.renderRow(this.props.item)}
         </View>
 
-        <TouchableOpacity onPress={this.toggleSelect}
+        <TouchableOpacity onPress={this.props.removeItem}
                           style={[styles.rightmost, styles.center]}>
               <Image source={require('../assets/close.png')}
                      style={_cstyles.close} />
         </TouchableOpacity>
       </View>
-
     );
   },
   toggleSelect: function() {
@@ -192,8 +150,11 @@ var RowWrapper = React.createClass({
     }
     this.setState({selected: selected, style: new_style})
   },
-
 });
+
+function harvest_default(items) {
+  console.log(items)
+}
 
 var styles = StyleSheet.create({
   selected_style: {
@@ -204,24 +165,17 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    backgroundColor: 'transparent',
-    opacity: 1.00,
-    margin: 0,
-  },
-  body_container: {
-    flexDirection: 'column',
-    flex: 1,
-    alignItems: 'flex-start',
     justifyContent: 'flex-start',
     backgroundColor: 'transparent',
-    opacity: 1.00,
-    marginTop: 0,
+    margin: 0,
+    alignSelf: 'flex-start'
   },
-  section_container: {
-    width: windowSize.width,
-    backgroundColor: 'transparent',
-    opacity: 1.0,
+  row_container: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignSelf: 'flex-start'
   },
   listView: {
     backgroundColor: 'transparent',
@@ -230,23 +184,17 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  buttons_container: {
-    //height: windowSize.height * 1 / 10,
-    width: windowSize.width,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 0,
-    backgroundColor: 'transparent',
-  },
   leftmost: {
-    width: windowSize.width * 8.5 / 10,
-    justifyContent: 'center'
+    width: rowWidth * 8.5 / 10,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   rightmost: {
-    width: windowSize.width * 1.5 / 10,
+    width: rowWidth * 1.5 / 10,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 })
 

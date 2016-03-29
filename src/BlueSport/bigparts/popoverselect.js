@@ -105,10 +105,12 @@ var PopoverSelect = React.createClass({
     var iselect = _ctools.traceIndices(this.props.items,
                                             this.state.selection)
     this.props.harvestSelection(iselect)
+    this.props.update()
   },
 
   cancelSelection: function() {
     this.props.cancelSelection([])
+    this.props.update()
   },
 
   toggleSelect: function(index) {

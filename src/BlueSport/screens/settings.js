@@ -16,6 +16,10 @@ var {
 
 var _const = require('../libs/constants')
 var PopoverSelector = require('../bigparts/popoverselector')
+
+var GameScoreRow_subco = require('../parts/gamescorerow_subco')
+var DynamicList = require('../bigparts/dynamiclist')
+
 import * as _ctools from '../libs/customtools.js'
 
 var RowOfChildren = React.createClass({
@@ -31,11 +35,8 @@ var RowOfChildren = React.createClass({
 
         </View>
         <View style={styles.childrow}>
-
             {this.props.vector.map(createRowOfChildren)}
-
         </View>
-
 
       </View>
     );
@@ -87,22 +88,41 @@ var SettingsScreen = React.createClass({
 
     return (
       <View style={styles.container}>
-        {this.state.SomeData.map(createRowOfViews)}
+
+        <View style={styles.container2}>
+
+
+          {this.state.SomeData.map(createRowOfViews)}
+
+        </View>
       </View>
     );
   },
+
+  renderRow: function(score) {
+    return (
+      <GameScoreRow_subco
+        val1={score[0]}
+        val2={score[1]}
+      />
+    )
+  }
 
 
 });
 
 var styles = StyleSheet.create({
-  container: {
+  container2: {
     flexDirection: 'column',
-    flex: 1,
+    justifyContent: 'flex-start',
+    flex: 0,
     backgroundColor: 'transparent',
     margin: 20,
     marginTop: 100,
     width: 400
+  },
+  container: {
+    marginTop: 100,
   },
   childText: {
     marginHorizontal: 20
