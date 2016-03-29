@@ -6,7 +6,6 @@ var windowSize = Dimensions.get('window');
 
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
-
 import '../libs/customtools.js'
 
 var {

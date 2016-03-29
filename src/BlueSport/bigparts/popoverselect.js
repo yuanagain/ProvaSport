@@ -4,10 +4,10 @@ var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 
-var SelectionRow = require('./selectionrow')
 
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
+import '../libs/customtools.js'
 
 var {
   AppRegistry,
@@ -22,32 +22,32 @@ var {
 var RecipeListing = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return { 
-      dataSource: ds.cloneWithRows(this.props.items),
+    return {
       selected: this.props.selection
     };
   },
   render: function() {
     var {
-      name,
-      confirmSelection,
+      title,
+      dataSource,
+      harvestSelection,
+      renderRow,
       ...props
     } = this.props;
+
     console.log(this.props.items)
     return (
     <View style={styles.container}>
       <View style={styles.body_container}>
         <View style={_cstyles.header_container}>
-          <Text style={styles.title_text}>
+          <Text style={_cstyles.title_text}>
             {this.props.title}
           </Text>
-          <View style={styles.divider_line}>
-          </View>
         </View>
 
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderListingRow}
+          renderRow={this.renderRow}
           style={styles.listView}
         />
 
@@ -71,19 +71,18 @@ var RecipeListing = React.createClass({
     console.log(windowSize.height)
   },
 
-  confirmSelection: function() {
-    this.props.confirmSelection(this.state.selected)
+  harvestSelection: function() {
+    this.props.harvestSelection(this.state.selected)
   },
 
-  renderListingRow(rowData) {
+  renderRow(rowData) {
     return (
-        <SelectionRow
-        onSelect={this.onSelect}
-        onDetail={this.onDetail}
-        name={rowData['name']}
-        selected={this.isSelected(rowData)}
-        description_text={rowData['descr']}
+      <View>
+        <TouchableOpacity onPress={this.select}
+          <Text>{"hello"}
+          </Text>
         />
+      </View>
     )
   },
 
