@@ -24,7 +24,6 @@ var ScoreRow = React.createClass({
   render: function() {
     var {
       row_name,
-      payouts,
       ...props
     } = this.props;
 

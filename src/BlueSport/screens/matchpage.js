@@ -6,8 +6,9 @@ var Button = require('react-native-button');
 
 var ScoreRow = require('./scorerow')
 var PayoutRow = require('./payoutrow')
+var _cvals = require('../styles/customvals')
 
-var mainfont = 'avenir'
+var mainfont = _cvals.mainfont
 var skorange = '#F5A623'
 var skblue = '#4A90E2'
 

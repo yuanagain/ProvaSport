@@ -5,6 +5,8 @@ var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 
+var _cvals = require('../styles/customvals')
+
 var {
   AppRegistry,
   StyleSheet,
@@ -104,7 +106,7 @@ var styles = StyleSheet.create({
     flex: 1,
     fontSize: 30,
     textAlign: 'center',
-    backgroundColor: '#F5A623',
+    backgroundColor: _cvals.skorange,
     width: windowSize.width,
     padding: 12,
     fontFamily: 'avenir',

@@ -6,10 +6,15 @@ var Button = require('react-native-button');
 var MatchPage = require('./matchpage')
 
 var NewsFeedMatchRow = require('./newsfeedmatchrow')
+var PopoverSelect = require('./popoverselect')
+
+var _cvals = require('../styles/customvals')
+let _cstyles = require('../styles/customstyles')
 
 var mainfont = 'avenir'
 var skorange = '#F5A623'
 var skblue = '#4A90E2'
+
 
 var {
   AppRegistry,
@@ -38,14 +43,13 @@ var NewsFeedPage = React.createClass({
     return (
     <View style={styles.container}>
 
-      <View style={styles.header_container}>
-        <Text style={styles.header_text}>
+      <View style={_cstyles.header_container}>
+        <Text style={_cstyles.title_text}>
           {"NEWS"}
         </Text>
         <View style={styles.divider_line}>
-        </View>
       </View>
-
+      </View>
 
       <ListView
         dataSource={this.state.dataSource}
@@ -57,6 +61,10 @@ var NewsFeedPage = React.createClass({
       </View>
     </View>
     );
+  },
+
+  goBack: function() {
+    this.props.navigator.pop()
   },
 
   renderMatchRow(rowData) {
