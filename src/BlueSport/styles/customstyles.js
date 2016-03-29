@@ -25,6 +25,12 @@ var CustomStyles = StyleSheet.create({
     paddingTop: 30 * _cvals.dscale,
     paddingBottom: 5,
   },
+  section_header_text: {
+    color: 'black',
+    fontSize: 26 * _cvals.dscale,
+    fontFamily: _cvals.mainfont,
+    paddingHorizontal: 10 * _cvals.dscale,
+  },
   standard_text: {
     color: 'black',
     fontSize: 20 * _cvals.dscale,
@@ -69,6 +75,26 @@ var CustomStyles = StyleSheet.create({
     opacity: 0.3,
     width: windowSize.width
   },
+  indented_container: {
+    marginLeft: 40 * _cvals.dscale,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  centeredText: {
+    textAlign: 'center',
+  },
+  centering_wrap: {
+    justifyContent: 'center',
+    width: 60 * _cvals.dscale
+  },
+  close: {
+    height: 20 * _cvals.dscale,
+    width: 20 * _cvals.dscale
+  },
+  add: {
+    height: 30 * _cvals.dscale,
+    width: 30 * _cvals.dscale
+  }
 })
 
 module.exports = CustomStyles;

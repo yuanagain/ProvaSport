@@ -21,6 +21,7 @@ var listsIcon = require('./assets/lists.png')
 var LoginPage = require('./screens/loginpage')
 var ProfScreen = require('./screens/profileRoot')
 var RecordPage = require('./screens/recordpage')
+var RecordPageRoot = require('./screens/recordpageroot')
 var HomeScreen = require('./screens/homescreenRoot')
 var ContractsScreen = require('./screens/contractsRoot')
 var SettingsScreen = require('./screens/settingsRoot')
@@ -90,7 +91,7 @@ class BlueSport extends Component {
               });
             }
             }>
-            <RecordPage />
+            <RecordPageRoot />
           </TabNavigator.Item>
           <TabNavigator.Item
             selected={this.state.selectedTab === 'profile'}
