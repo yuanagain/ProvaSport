@@ -14,19 +14,28 @@ var {
   TouchableOpacity,
 } = React;
 
+var PopoverSelector = require('../bigparts/popoverselector')
 var RowOfChildren = React.createClass({
 
 
   render: function() {
     var createRowOfChildren = (rowdata) => <ChildView id={rowdata['id']} name={rowdata['name']} />;
     return (
-      <View style={styles.childrow}>
+      <View>
+        <View>
+          
+        </View>
+        <View style={styles.childrow}>
 
-          {this.props.vector.map(createRowOfChildren)}
+            {this.props.vector.map(createRowOfChildren)}
+
+        </View>
+
 
       </View>
     );
-  }
+  },
+
 });
 
 

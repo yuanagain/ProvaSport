@@ -22,7 +22,7 @@ var RecordPageRoot = require('./screens/recordpageroot')
 
 var HomeScreen = require('./screens/homescreenRoot')
 var ContractsScreen = require('./screens/contractsRoot')
-var SettingsScreen = require('./screens/settingsRoot')
+var SettingsRoot = require('./screens/settingsRoot')
 
 var _cvals = require('./styles/customvals.js')
 
@@ -118,7 +118,7 @@ class BlueSport extends Component {
               });
             }
             }>
-            <SettingsScreen/>
+            <SettingsRoot />
           </TabNavigator.Item>
         </TabNavigator>
         )

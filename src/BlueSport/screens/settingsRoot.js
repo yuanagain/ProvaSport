@@ -28,10 +28,10 @@ var SettingsRoot = React.createClass({
       <Navigator
         style={styles.wrapper}
           initialRoute={{name: 'SettingsScreen', component: SettingsScreen}}
-          
+
           renderScene={(route, navigator) =>    {
             if (route.component) {
-              return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
+              return React.createElement(route.component, {  ...route.passProps, navigator, route } );
             }
         }}
         configureScene={(route) => {
@@ -39,7 +39,7 @@ var SettingsRoot = React.createClass({
             return route.sceneConfig;
           }
           return Navigator.SceneConfigs.FloatFromRight;
-          }} 
+          }}
       />
     )
   }

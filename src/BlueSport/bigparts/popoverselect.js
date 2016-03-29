@@ -7,7 +7,8 @@ var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
-import '../libs/customtools.js'
+
+import * as _ctools from '../libs/customtools.js'
 
 var {
   AppRegistry,
@@ -16,26 +17,44 @@ var {
   Text,
   TextInput,
   Image,
+  TouchableOpacity,
   ListView
 } = React;
 
-var RecipeListing = React.createClass({
+var PopoverSelect = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      selected: this.props.selection
+      selection: this.props.selection,
+      dataSource: ds.cloneWithRows(_ctools.supplementIndex(this.props.items)),
+      validSelection: _ctools.inRange(this.props.minSelect,
+                                      this.props.maxSelect,
+                                      this.props.selection.length)
     };
   },
+
+  getDefaultProps: function() {
+    return {
+      title: "Select",
+      dataSource: [],
+      selection: [],
+      minSelect: 0,
+      maxSelect: Infinity,
+    };
+  },
+
   render: function() {
     var {
       title,
-      dataSource,
       harvestSelection,
       renderRow,
+      selection,
+      minSelect,
+      maxSelect,
+      selectedStyle,
       ...props
     } = this.props;
 
-    console.log(this.props.items)
     return (
     <View style={styles.container}>
       <View style={styles.body_container}>
@@ -57,8 +76,9 @@ var RecipeListing = React.createClass({
       <View style={styles.buttons_container}>
         <Button
           style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
-          onPress={this.confirmSelection}
+          styleDisabled={{backgroundColor: 'grey'}}
+          onPress={this.harvestSelection}
+          disabled={this.validSelection}
           >
           {'Confirm Selection'}
         </Button>
@@ -67,74 +87,126 @@ var RecipeListing = React.createClass({
     );
   },
 
-  componentDidMount: function() {
-    console.log(windowSize.height)
+  inSelectionRange: function() {
+    var n = this.state.selection.length
+    if (_ctools.inRange(n, this.props.minSelect, this.props.maxSelect)) {
+      return true
+    }
+    return false
+  },
+
+  validateSelection: function() {
+    this.setState({validSelection: _ctools.inRange(this.props.minSelect,
+                                                   this.props.maxSelect,
+                                                   this.state.selection.length)})
   },
 
   harvestSelection: function() {
-    this.props.harvestSelection(this.state.selected)
+    var iselect = _ctools.traceIndices(this.props.items,
+                                            this.state.selection)
+    this.props.harvestSelection(iselect)
   },
 
-  renderRow(rowData) {
-    return (
-      <View>
-        <TouchableOpacity onPress={this.select}
-          <Text>{"hello"}
-          </Text>
-        />
-      </View>
-    )
+  cancelSelection: function() {
+    this.props.cancelSelection([])
   },
 
-  isSelected: function(rowData) {
-    if (this.state.selected.indexOf(rowData['name']) == -1) return false;
-    return true;
-  },
-
-  onSelect: function(name) {
-    // if not contained in selection
-    if (this.state.selected.indexOf(name) == -1) {
-      this.state.selected.push(name)
+  toggleSelect: function(index) {
+    this.validateSelection()
+    var loc = _ctools.indexOf(this.state.selection, index)
+    // if already in selection
+    if (loc != -1) {
+      this.state.selection.splice(loc, 1)
     }
-    // if already contained in selection
+    // if not in selection
     else {
-      var index = this.state.selected.indexOf(name)
-      this.state.selected.splice(index, 1)
-
+      this.state.selection.push(index)
     }
-    console.log(this.state.selected)
+    this.setState( {selection: this.state.selection} )
+    console.log(this.state.selection)
   },
 
-  onDetail: function(name) {
-    console.log(name)
+  inSelection: function(index) {
+    return _ctools.contains(this.state.selection, index)
+  },
+
+  renderRow: function(rowData) {
+    return (
+      <RowWrapper
+        index={rowData['index']}
+        selected={_ctools.contains(this.state.selection, rowData['index'])}
+        toggleSelect={this.toggleSelect}
+        inSelection={this.inSelection}
+        rowData={rowData['item']}
+        renderRow={this.props.renderRow}
+        selectedStyle={this.props.selectedStyle}
+        />
+    );
   },
 
   goBack: function() {
-    this.props.navigator.pop()
-  }
+    this.props.goBack()
+  },
+});
+
+
+var RowWrapper = React.createClass({
+  getInitialState: function() {
+    var initialStyle = {}
+    if (this.props.selected) {
+      initialStyle = this.props.selectedStyle
+    }
+    return {
+      selected: this.props.selected,
+      style: initialStyle
+    };
+  },
+
+  render: function() {
+    var {
+      index,
+      selected,
+      toggleSelect,
+      inSelection,
+      renderRow,
+      rowData,
+      selectedStyle,
+      ...props
+    } = this.props;
+
+    return (
+        <TouchableOpacity
+          onPress={this.toggleSelect}
+          style={[styles.row, this.state.style]}>
+            {this.props.renderRow(rowData)}
+        </TouchableOpacity>
+
+    );
+  },
+  toggleSelect: function() {
+    this.props.toggleSelect(this.props.index)
+    var selected = this.props.inSelection(this.props.index)
+    console.log(selected)
+    var new_style = {}
+    if (selected) {
+      new_style = this.props.selectedStyle
+    }
+
+    this.setState({selected: selected, style: new_style})
+  },
+
 });
 
 var styles = StyleSheet.create({
-  title_text: {
-    color: 'white',
-    fontSize: 30 * _cvals.dscale,
-    fontFamily: _cvals.mainfont,
-    paddingTop: 30 * _cvals.dscale,
-    paddingBottom: 5,
+  row: {
+    height: 40,
+    width: 60,
+    borderWidth: 0.5,
+    borderColor: 'grey',
   },
-  header_text: {
-    color: 'white',
-    fontSize: 30 * _cvals.dscale,
-    fontFamily: _cvals.mainfont,
-    fontWeight: 'bold',
-    paddingHorizontal: 10,
-    marginVertical: 5 * _cvals.dscale,
-  },
-  value_text: {
-    color: 'black',
-    fontSize: 20,
-    fontFamily: _cvals.mainfont,
-    padding: 10,
+  selected_style: {
+    opacity: 0.5,
+    backgroundColor: _cvals.skorange
   },
   container: {
     flexDirection: 'column',
@@ -154,23 +226,10 @@ var styles = StyleSheet.create({
     opacity: 1.00,
     marginTop: 0,
   },
-  header_container: {
-    width: windowSize.width,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    backgroundColor: _cvals.skkellygreen,
-    height: _cvals.headerHeight,
-  },
   section_container: {
     width: windowSize.width,
     backgroundColor: 'transparent',
     opacity: 1.0,
-  },
-  divider_line: {
-    backgroundColor: _cvals.skgreen,
-    height: 1.2,
-    opacity: 0.3,
-    width: windowSize.width
   },
   listView: {
     backgroundColor: 'transparent',
@@ -183,24 +242,6 @@ var styles = StyleSheet.create({
       flex: 0,
       backgroundColor: 'transparent',
     },
-    button: {
-      color: 'white',
-      //height: windowSize.height * 1 / 10,
-      //width: windowSize.width,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 1,
-      fontSize: 28 * _cvals.dscale,
-      textAlign: 'center',
-      backgroundColor: _cvals.sknavy,
-      width: windowSize.width,
-      padding: 5,
-      fontFamily: _cvals.mainfont,
-      shadowRadius: 4,
-      shadowColor: 'black',
-      shadowOpacity: 0.5,
-      shadowOffset: {width: 0, height: 3}
-    },
 })
 
-module.exports = RecipeListing;
+module.exports = PopoverSelect;

@@ -6,7 +6,7 @@ var windowSize = Dimensions.get('window');
 
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
-import '../libs/customtools.js'
+import * as _ctools from '../libs/customtools.js'
 
 var {
   AppRegistry,
@@ -77,7 +77,8 @@ var GameScoreRowAdd = React.createClass({
     );
   },
   onIconPress: function() {
-    if (isValidScore(this.state.val1) && isValidScore(this.state.val2)) {
+    if (_ctools.isValidScore(this.state.val1)
+        && _ctools.isValidScore(this.state.val2)) {
       this.props.onIconPress([this.state.val1, this.state.val2])
       console.log('is numeric')
     }

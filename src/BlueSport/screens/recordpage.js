@@ -13,6 +13,7 @@ var GameScoreRowAdd = require('../parts/gamescorerowadd')
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
+var PopoverSelector = require('../bigparts/popoverselector')
 
 var {
   AppRegistry,
@@ -118,6 +119,15 @@ var RecordPage = React.createClass({
         <View style={_cstyles.divider_line}>
         </View>
 
+        <PopoverSelector
+          style={{width: 100}}
+          title={"Select Item"}
+          items={['text1', 'text2', 'text3']}
+          renderRow={ (rowData) => <Text>{rowData}</Text> }
+          navigator={this.props.navigator}
+          selection={[]}
+        />
+
         <View>
           <Text style={_cstyles.section_header_text}>{"Team 2"}</Text>
         </View>
@@ -144,6 +154,7 @@ var RecordPage = React.createClass({
     </View>
     );
   },
+
   goBack: function() {
     this.props.navigator.pop()
   },
