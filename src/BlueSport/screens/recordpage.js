@@ -14,6 +14,7 @@ var GameScoreRowAdd = require('../parts/gamescorerowadd')
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var PopoverSelector = require('../bigparts/popoverselector')
+import * as _ctools from '../libs/customtools.js'
 
 var {
   AppRegistry,
@@ -78,7 +79,8 @@ var RecordPage = React.createClass({
     var createRowOfViews = (data) => <GameScoreRow index={data['key']}
                                                    val1={data['scores'][0]}
                                                    val2={data['scores'][1]}
-                                                   kill={this.deleteGame} />;
+                                                   kill={this.deleteGame}
+                                                   key={_ctools.randomKey()}/>;
 
     return (
     <View style={styles.container}>
@@ -120,8 +122,6 @@ var RecordPage = React.createClass({
         </View>
 
         <PopoverSelector
-          style={{width: 100}}
-          title={"Select Item"}
           items={['text1', 'text2', 'text3']}
           renderRow={ (rowData) => <Text>{rowData}</Text> }
           navigator={this.props.navigator}

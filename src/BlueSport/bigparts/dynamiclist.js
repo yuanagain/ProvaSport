@@ -21,48 +21,35 @@ var {
   ListView
 } = React;
 
-var PopoverSelect = React.createClass({
+var DynamicList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      selection: this.props.selection,
+      items: this.props.items
       dataSource: ds.cloneWithRows(_ctools.supplementIndex(this.props.items)),
-      validSelection: _ctools.inRange(this.props.minSelect,
-                                      this.props.maxSelect,
-                                      this.props.selection.length)
     };
   },
 
   getDefaultProps: function() {
     return {
       title: "Select",
-      dataSource: [],
-      selection: [],
-      minSelect: 0,
-      maxSelect: Infinity,
+      items: []
+      harvest: harvestSelection_default,
     };
   },
 
   render: function() {
     var {
-      title,
-      harvestSelection,
+      items,
+      harvest,
+      renderForm,
       renderRow,
-      selection,
-      minSelect,
-      maxSelect,
-      selectedStyle,
       ...props
     } = this.props;
 
     return (
     <View style={styles.container}>
       <View style={styles.body_container}>
-        <View style={_cstyles.header_container}>
-          <Text style={_cstyles.title_text}>
-            {this.props.title}
-          </Text>
-        </View>
 
         <ListView
           dataSource={this.state.dataSource}
@@ -78,7 +65,7 @@ var PopoverSelect = React.createClass({
           style={_cstyles.wide_button}
           styleDisabled={{backgroundColor: 'grey'}}
           onPress={this.harvestSelection}
-          disabled={this.state.validSelection}
+          disabled={this.validSelection}
           >
           {'Confirm Selection'}
         </Button>
@@ -86,6 +73,12 @@ var PopoverSelect = React.createClass({
     </View>
     );
   },
+
+  harvestSelection: function(selection) {
+    this.props.harvestSelection(selection)
+    this.props.navigator.pop()
+  },
+
 
   inSelectionRange: function() {
     var n = this.state.selection.length
@@ -140,7 +133,6 @@ var PopoverSelect = React.createClass({
         inSelection={this.inSelection}
         rowData={rowData['item']}
         renderRow={this.props.renderRow}
-        selectedStyle={this.props.selectedStyle}
         />
     );
   },
@@ -176,11 +168,17 @@ var RowWrapper = React.createClass({
     } = this.props;
 
     return (
-        <TouchableOpacity
-          onPress={this.toggleSelect}
-          style={[styles.row, this.state.style]}>
-            {this.props.renderRow(rowData)}
+      <View>
+        <View style={styles.leftmost}>
+          {this.props.renderRow(rowData)}
+        </View>
+
+        <TouchableOpacity onPress={this.toggleSelect}
+                          style={[styles.rightmost, styles.center]}>
+              <Image source={require('../assets/close.png')}
+                     style={_cstyles.close} />
         </TouchableOpacity>
+      </View>
 
     );
   },
@@ -192,16 +190,12 @@ var RowWrapper = React.createClass({
     if (selected) {
       new_style = this.props.selectedStyle
     }
-
     this.setState({selected: selected, style: new_style})
   },
 
 });
 
 var styles = StyleSheet.create({
-  row: {
-    width: windowSize.width
-  },
   selected_style: {
     opacity: 0.5,
     backgroundColor: _cvals.skorange
@@ -232,14 +226,28 @@ var styles = StyleSheet.create({
   listView: {
     backgroundColor: 'transparent',
   },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   buttons_container: {
-      //height: windowSize.height * 1 / 10,
-      width: windowSize.width,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 0,
-      backgroundColor: 'transparent',
-    },
+    //height: windowSize.height * 1 / 10,
+    width: windowSize.width,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 0,
+    backgroundColor: 'transparent',
+  },
+  leftmost: {
+    width: windowSize.width * 8.5 / 10,
+    justifyContent: 'center'
+  },
+  rightmost: {
+    width: windowSize.width * 1.5 / 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 })
 
-module.exports = PopoverSelect;
+module.exports = DynamicList;

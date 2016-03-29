@@ -14,16 +14,21 @@ var {
   TouchableOpacity,
 } = React;
 
+var _const = require('../libs/constants')
 var PopoverSelector = require('../bigparts/popoverselector')
+import * as _ctools from '../libs/customtools.js'
+
 var RowOfChildren = React.createClass({
 
 
   render: function() {
-    var createRowOfChildren = (rowdata) => <ChildView id={rowdata['id']} name={rowdata['name']} />;
+    var createRowOfChildren = (rowdata) => <ChildView id={rowdata['id']}
+                                            name={rowdata['name']}
+                                            key={_ctools.randomKey()} />;
     return (
       <View>
         <View>
-          
+
         </View>
         <View style={styles.childrow}>
 
@@ -77,7 +82,8 @@ var SettingsScreen = React.createClass({
 
   render: function() {
 
-    var createRowOfViews = (rowdata) => <RowOfChildren vector={rowdata} />;
+    var createRowOfViews = (rowdata) => <RowOfChildren vector={rowdata}
+                                                key={_ctools.randomKey()}/>;
 
     return (
       <View style={styles.container}>

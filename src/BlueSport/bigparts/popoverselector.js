@@ -15,6 +15,7 @@ var {
   View,
   Text,
   TextInput,
+  TouchableOpacity,
   Image,
   ListView
 } = React;
@@ -36,13 +37,14 @@ var PopoverSelector = React.createClass({
       maxSelect: Infinity,
       harvestSelection: harvestSelection_default,
       selectedStyle: { opacity: 0.5, backgroundColor: _cvals.skorange },
+      renderSelector: () => <Text>{"select"}</Text>
     };
   },
 
   render: function() {
     var {
-      style,
       title,
+      renderSelector,
       items,
       harvestSelection,
       renderRow,
@@ -55,12 +57,9 @@ var PopoverSelector = React.createClass({
     } = this.props;
 
     return (
-      <Button
-        style={this.props.style}
-        onPress={this.enterSelector}
-        >
-        {this.props.title}
-      </Button>
+      <TouchableOpacity onPress={this.enterSelector}>
+        {this.props.renderSelector()}
+      </TouchableOpacity>
     );
   },
 
@@ -121,12 +120,6 @@ var styles = StyleSheet.create({
     width: windowSize.width,
     backgroundColor: 'transparent',
     opacity: 1.0,
-  },
-  divider_line: {
-    backgroundColor: _cvals.skgreen,
-    height: 1.2,
-    opacity: 0.3,
-    width: windowSize.width
   },
   listView: {
     backgroundColor: 'transparent',
