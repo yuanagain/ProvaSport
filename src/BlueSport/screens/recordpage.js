@@ -87,9 +87,13 @@ var RecordPage = React.createClass({
         <View style={styles.divider_line}>
         </View>
 
-        <View>
-          <Text style={_cstyles.section_header_text}>{"Contract"}</Text>
-        </View>
+        <PopoverSelector
+          title={'Contract'}
+          items={['Standard Contract']}
+          renderRow={ (rowData) => <Text>{rowData}</Text> }
+          navigator={this.props.navigator}
+          selection={[]}
+        />
         <View style={_cstyles.divider_line}>
         </View>
 
@@ -115,7 +119,7 @@ var RecordPage = React.createClass({
 
         <PopoverSelector
           title={'Team 2'}
-          items={['Player 1', 'Player 2', 'Player 3']}
+          items={['Player 4', 'Player 5', 'Player 6']}
           renderRow={ (rowData) => <Text>{rowData}</Text> }
           navigator={this.props.navigator}
           selection={[]}

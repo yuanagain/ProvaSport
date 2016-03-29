@@ -73,6 +73,7 @@ var CustomStyles = StyleSheet.create({
     backgroundColor: 'grey',
     height: 1,
     opacity: 0.3,
+    marginVertical: 0.5,
     width: windowSize.width
   },
   indented_container: {
