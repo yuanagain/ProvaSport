@@ -18,7 +18,7 @@ var LoginPage = require('./screens/loginpage')
 var LoginScreen = require('./screens/login')
 var ProfScreen = require('./screens/profileRoot')
 
-var RecordPage = require('./screens/recordpage')
+var RecordPageRoot = require('./screens/recordpageroot')
 
 var HomeScreen = require('./screens/homescreenRoot')
 var ContractsScreen = require('./screens/contractsRoot')
@@ -88,7 +88,7 @@ class BlueSport extends Component {
               });
             }
             }>
-            <RecordPage />
+            <RecordPageRoot />
           </TabNavigator.Item>
           <TabNavigator.Item
             title="Profile"
