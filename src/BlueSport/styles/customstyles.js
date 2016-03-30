@@ -36,6 +36,11 @@ var CustomStyles = StyleSheet.create({
     fontSize: 20 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
   },
+  detail_text: {
+    color: 'black',
+    fontSize: 16 * _cvals.dscale,
+    fontFamily: _cvals.mainfont,
+  },
   header_container: {
     height: _cvals.headerHeight,
     width: windowSize.width,

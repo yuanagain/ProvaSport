@@ -28,22 +28,13 @@ var {
   Modal,
 } = React;
 
-var dummyselections = [
-  {'name': '1', 'descr': 'Description 1'},
-  {'name': '2', 'descr': 'Description 2'},
-  {'name': '3', 'descr': 'Description 3'},
-  {'name': '4', 'descr': 'Description 4'},
-  {'name': '5', 'descr': 'Description 5'},
-  {'name': '6', 'descr': 'Description 6'},
-  {'name': '7', 'descr': 'Description 7'},
-  {'name': '8', 'descr': 'Description 8'},
-  {'name': '9', 'descr': 'Description 9'},
-]
+// testing
+var RoundRobinPage = require('../screens/roundrobinpage')
 
 
 var items = ["Item 1", "Item 2"];
 
-var ContractsPage = React.createClass({
+var SettingsPage = React.createClass({
 
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => this.rowChanged(r1, r2)})
@@ -93,6 +84,9 @@ var ContractsPage = React.createClass({
         <View style={_cstyles.section_divider_line}>
         </View>
 
+        <RoundRobinPage />
+
+
       </View>
       <View style={_cstyles.buttons_container}>
         <Button
@@ -107,79 +101,6 @@ var ContractsPage = React.createClass({
     );
   },
 
-  goBack: function() {
-    this.props.navigator.pop()
-  },
-
-  gotoPopoverSelect: function(items) {
-    this.props.navigator.push({
-      id: "PopoverSelect",
-      component: PopoverSelect,
-      passProps: {
-        title: 'select stuff',
-        goBack: this.goBack,
-        confirmSelection: this.confirmSelection,
-        items: items,
-        selection: this.state.selection,
-      }
-    })
-  },
-
-  deleteGame: function(index) {
-    console.log('deleting')
-
-    // reorder states
-    for (var i = 0; i < this.state.SomeData.length; i++) {
-
-      if (this.state.SomeData[i]['key'] == index) {
-
-        this.state.SomeData.splice(i, 1)
-        var SomeData = this.state.SomeData
-
-        this.setState({SomeData: SomeData})
-
-        return;
-      }
-    }
-  },
-
-  addGame: function(scores) {
-    console.log("adding game")
-    console.log(scores)
-  },
-
-  onSelect: function(name) {
-    console.log(name)
-    this.props.navigator.push({
-      id: "Select",
-      component: PopoverSelect,
-      passProps: {
-        name: name,
-        imageLink: 'http://facebook.github.io/react/img/logo_og.png',
-        descr: "Description Text",
-        goBack: this.goBack,
-
-      }
-    })
-  },
-
-  confirmSelection(selected) {
-    this.selected_1 = selected
-    console.log("confirming selection")
-    this.goBack()
-  },
-
-  renderRow(rowData) {
-    return (
-      <ScoreRowRecord
-        scores={rowData}
-      />
-    )
-  },
-
-  updateGames: function() {
-
-  },
 
 });
 
@@ -231,4 +152,4 @@ var styles = StyleSheet.create({
   }
 })
 
-module.exports = ContractsPage;
+module.exports = SettingsPage;

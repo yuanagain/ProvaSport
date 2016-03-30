@@ -80,7 +80,7 @@ var ContractsPage = React.createClass({
       <View>
         <View style={_cstyles.header_container}>
           <Text style={_cstyles.title_text}>
-            {"CONTRACTS"}
+            {"CREATE"}
           </Text>
         </View>
 
