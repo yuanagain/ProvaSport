@@ -48,7 +48,7 @@ class BlueSport extends Component {
 
     else {
       return (
-        <TabNavigator 
+        <TabNavigator
           selected={this.state.selectedTab}
           tabBarStyle={styles.tabBarStyle}>
           <TabNavigator.Item
@@ -139,7 +139,6 @@ class BlueSport extends Component {
 
 
 const styles = StyleSheet.create({
-
   icon: {
     height: 27,
     width: 27,

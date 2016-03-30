@@ -108,9 +108,9 @@ var styles = StyleSheet.create({
   },
   input: {
     height: rowHeight * 0.7,
-    width: 40 * _cvals.dscale,
+    width: 39 * _cvals.dscale,
     borderColor: 'gray',
-    borderWidth: 0.5,
+    borderWidth: 1,
     alignSelf: 'center'
   },
   left: {
