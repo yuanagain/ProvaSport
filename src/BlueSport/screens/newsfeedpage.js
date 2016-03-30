@@ -6,7 +6,7 @@ var Button = require('react-native-button');
 var MatchPage = require('./matchpage')
 
 var NewsFeedMatchRow = require('./newsfeedmatchrow')
-var PopoverSelect = require('./popoverselect')
+var PopoverSelect = require('../parts/popoverselect')
 
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
