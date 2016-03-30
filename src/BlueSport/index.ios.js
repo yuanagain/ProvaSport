@@ -28,9 +28,6 @@ var SettingsScreen = require('./screens/settingsRoot')
 
 var _cvals = require('./styles/customvals.js')
 
-// TEMPORARY
-var SignUpPage = require('./screens/signup.js')
-
 class BlueSport extends Component {
 
   constructor(props) {
