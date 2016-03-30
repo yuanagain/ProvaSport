@@ -5,9 +5,11 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('./profile')
-var MatchScreen = require('./match')
-var ContractsScreen = require('./contracts')
+var ProfScreen = require('../screens/profile')
+var MatchScreen = require('../screens/match')
+var ContractsScreen = require('../screens/contracts')
+var HomeScreen = require('../screens/homescreen')
+var SettingsScreen = require('../screens/settings')
 
 var {
   AppRegistry,
@@ -19,56 +21,41 @@ var {
   TouchableOpacity,
 } = React;
 
-var ContractsRoot = React.createClass({
+var SettingsRoot = React.createClass({
 
   render: function() {
-      return (
-        <Navigator
-          style={styles.wrapper}
-          initialRoute={{name: 'ContractsScreen', component: ContractsScreen}}
-          
+    return (
+      <Navigator
+        style={styles.wrapper}
+          initialRoute={{name: 'SettingsScreen', component: SettingsScreen}}
+
           renderScene={(route, navigator) =>    {
             if (route.component) {
-                          return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
-                      }
+              return React.createElement(route.component, {  ...route.passProps, navigator, route } );
+            }
         }}
-          configureScene={(route) => {
-              if (route.sceneConfig) {
-                return route.sceneConfig;
-              }
-              return Navigator.SceneConfigs.FloatFromRight;
-          }} 
-         />
-      )
-    }
+        configureScene={(route) => {
+          if (route.sceneConfig) {
+            return route.sceneConfig;
+          }
+          return Navigator.SceneConfigs.FloatFromRight;
+          }}
+      />
+    )
+  }
 /*
   renderScene(route, navigator) {
     var routeId = route.id;
 
-    if (routeId === 'ContractsScreen') {
+    if (routeId === 'SettingsScreen') {
       return (
-        <ContractsScreen
+        <SettingsScreen
             navigator={navigator} />
       );
     }
-
-    if (routeId === 'ProfScreen') {
-      return (
-        <ProfScreen
-            navigator={navigator} />
-      );
-    }
-    
-    if (routeId === 'MatchScreen') {
-      return (
-        <MatchScreen
-            navigator={navigator} />
-      );
-    }
-
   },
-
   */
+
 });
 
   var NavigationBarRouteMapper = {
@@ -89,15 +76,12 @@ var ContractsRoot = React.createClass({
       return (
         <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
           <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-            Contracts
+            Settings
           </Text>
         </TouchableOpacity>
       );
     }
   };
-
-
-
 
 var styles = StyleSheet.create({
   wrapper: {
@@ -110,7 +94,7 @@ var styles = StyleSheet.create({
     margin: 0
   },
   prof_pic_container: {
-    marginTop: 200
+    marginTop: 20
   },
   prof_pic_image: {
     flex: 1,
@@ -123,4 +107,4 @@ var styles = StyleSheet.create({
   }
 })
 
-module.exports = ContractsRoot;
+module.exports = SettingsRoot;

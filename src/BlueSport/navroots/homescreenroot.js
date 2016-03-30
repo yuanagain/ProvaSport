@@ -5,11 +5,11 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('./profile')
-var MatchScreen = require('./match')
-var ContractsScreen = require('./contracts')
-var HomeScreen = require('./homescreen')
-var SettingsScreen = require('./settings')
+var ProfScreen = require('../screens/profile')
+var MatchScreen = require('../screens/match')
+var ContractsScreen = require('../screens/contracts')
+var HomeScreen = require('../screens/homescreen')
+var NewsFeedPage = require('../screens/newsfeedpage')
 
 var {
   AppRegistry,
@@ -21,41 +21,47 @@ var {
   TouchableOpacity,
 } = React;
 
-var SettingsRoot = React.createClass({
+var HomeScreenRoot = React.createClass({
 
-  render: function() {
-    return (
-      <Navigator
-        style={styles.wrapper}
-          initialRoute={{name: 'SettingsScreen', component: SettingsScreen}}
+render: function() {
+      return (
+        <Navigator
+          style={styles.wrapper}
+          initialRoute={{name: 'NewsFeedPage', component: NewsFeedPage}}
 
           renderScene={(route, navigator) =>    {
             if (route.component) {
-              return React.createElement(route.component, {  ...route.passProps, navigator, route } );
-            }
+                          return React.createElement(route.component, {...route.passProps, navigator, route } );
+                      }
         }}
-        configureScene={(route) => {
-          if (route.sceneConfig) {
-            return route.sceneConfig;
-          }
-          return Navigator.SceneConfigs.FloatFromRight;
+          configureScene={(route) => {
+              if (route.sceneConfig) {
+                return route.sceneConfig;
+              }
+              return Navigator.SceneConfigs.FloatFromRight;
           }}
-      />
-    )
-  }
+         />
+      )
+    }
 /*
+
+navigationBar={
+            <Navigator.NavigationBar style={{backgroundColor: '#246dd5'}}
+              routeMapper={NavigationBarRouteMapper} />
+}
+
   renderScene(route, navigator) {
     var routeId = route.id;
 
-    if (routeId === 'SettingsScreen') {
+    if (routeId === 'HomeScreen') {
       return (
-        <SettingsScreen
+        <HomeScreen
             navigator={navigator} />
       );
     }
-  },
-  */
 
+  },
+*/
 });
 
   var NavigationBarRouteMapper = {
@@ -76,7 +82,7 @@ var SettingsRoot = React.createClass({
       return (
         <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
           <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-            Settings
+            Home
           </Text>
         </TouchableOpacity>
       );
@@ -107,4 +113,4 @@ var styles = StyleSheet.create({
   }
 })
 
-module.exports = SettingsRoot;
+module.exports = HomeScreenRoot;
