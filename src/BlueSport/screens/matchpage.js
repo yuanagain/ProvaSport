@@ -4,8 +4,8 @@ var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 
-var ScoreRow = require('./scorerow')
-var PayoutRow = require('./payoutrow')
+var ScoreRow = require('../parts/scorerow')
+var PayoutRow = require('../parts/payoutrow')
 var _cvals = require('../styles/customvals')
 
 var mainfont = _cvals.mainfont
