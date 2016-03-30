@@ -15,14 +15,12 @@ import React, {
 import TabNavigator from 'react-native-tab-navigator';
 
 var LoginPage = require('./screens/loginpage')
-var LoginScreen = require('./screens/login')
-var ProfScreen = require('./screens/profileRoot')
 
-var RecordPageRoot = require('./screens/recordpageroot')
-
-var HomeScreen = require('./screens/homescreenRoot')
-var ContractsScreen = require('./screens/contractsRoot')
-var SettingsRoot = require('./screens/settingsRoot')
+var ProfScreen = require('./navroots/profileroot')
+var RecordPageRoot = require('./navroots/recordpageroot')
+var HomeScreen = require('./navroots/homescreenroot')
+var ContractsScreen = require('./navroots/contractsroot')
+var SettingsRoot = require('./navroots/settingsroot')
 
 var _cvals = require('./styles/customvals.js')
 
@@ -31,7 +29,7 @@ class BlueSport extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'record'
+      selectedTab: 'login'
     };
   }
 
