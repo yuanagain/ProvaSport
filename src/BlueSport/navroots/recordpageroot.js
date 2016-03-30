@@ -5,11 +5,11 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('./profile')
-var MatchScreen = require('./match')
-var ContractsScreen = require('./contracts')
-var HomeScreen = require('./homescreen')
-var RecordPage = require('./recordpage')
+var ProfScreen = require('../screens/profile')
+var MatchScreen = require('../screens/match')
+var ContractsScreen = require('../screens/contracts')
+var HomeScreen = require('../screens/homescreen')
+var RecordPage = require('../screens/recordpage')
 
 var {
   AppRegistry,

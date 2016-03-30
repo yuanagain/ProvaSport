@@ -5,11 +5,9 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('./profile')
-var MatchScreen = require('./match')
-var ContractsScreen = require('./contracts')
-var HomeScreen = require('./homescreen')
-var NewsFeedPage = require('./newsfeedpage')
+var ProfScreen = require('../screens/profile')
+var MatchScreen = require('../screens/match')
+var ContractsScreen = require('../screens/contracts')
 
 var {
   AppRegistry,
@@ -21,17 +19,17 @@ var {
   TouchableOpacity,
 } = React;
 
-var HomeScreenRoot = React.createClass({
+var ContractsRoot = React.createClass({
 
-render: function() {
+  render: function() {
       return (
         <Navigator
           style={styles.wrapper}
-          initialRoute={{name: 'NewsFeedPage', component: NewsFeedPage}}
+          initialRoute={{name: 'ContractsScreen', component: ContractsScreen}}
 
           renderScene={(route, navigator) =>    {
             if (route.component) {
-                          return React.createElement(route.component, {...route.passProps, navigator, route } );
+                          return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
                       }
         }}
           configureScene={(route) => {
@@ -44,24 +42,33 @@ render: function() {
       )
     }
 /*
-
-navigationBar={
-            <Navigator.NavigationBar style={{backgroundColor: '#246dd5'}}
-              routeMapper={NavigationBarRouteMapper} />
-}
-
   renderScene(route, navigator) {
     var routeId = route.id;
 
-    if (routeId === 'HomeScreen') {
+    if (routeId === 'ContractsScreen') {
       return (
-        <HomeScreen
+        <ContractsScreen
+            navigator={navigator} />
+      );
+    }
+
+    if (routeId === 'ProfScreen') {
+      return (
+        <ProfScreen
+            navigator={navigator} />
+      );
+    }
+
+    if (routeId === 'MatchScreen') {
+      return (
+        <MatchScreen
             navigator={navigator} />
       );
     }
 
   },
-*/
+
+  */
 });
 
   var NavigationBarRouteMapper = {
@@ -82,12 +89,15 @@ navigationBar={
       return (
         <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
           <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-            Home
+            Contracts
           </Text>
         </TouchableOpacity>
       );
     }
   };
+
+
+
 
 var styles = StyleSheet.create({
   wrapper: {
@@ -100,7 +110,7 @@ var styles = StyleSheet.create({
     margin: 0
   },
   prof_pic_container: {
-    marginTop: 20
+    marginTop: 200
   },
   prof_pic_image: {
     flex: 1,
@@ -113,4 +123,4 @@ var styles = StyleSheet.create({
   }
 })
 
-module.exports = HomeScreenRoot;
+module.exports = ContractsRoot;
