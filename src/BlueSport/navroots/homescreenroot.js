@@ -5,10 +5,6 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('../screens/profile')
-var MatchScreen = require('../screens/match')
-var ContractsScreen = require('../screens/contracts')
-var HomeScreen = require('../screens/homescreen')
 var NewsFeedPage = require('../screens/newsfeedpage')
 
 var {
@@ -43,25 +39,6 @@ render: function() {
          />
       )
     }
-/*
-
-navigationBar={
-            <Navigator.NavigationBar style={{backgroundColor: '#246dd5'}}
-              routeMapper={NavigationBarRouteMapper} />
-}
-
-  renderScene(route, navigator) {
-    var routeId = route.id;
-
-    if (routeId === 'HomeScreen') {
-      return (
-        <HomeScreen
-            navigator={navigator} />
-      );
-    }
-
-  },
-*/
 });
 
   var NavigationBarRouteMapper = {

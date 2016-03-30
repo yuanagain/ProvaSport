@@ -20,6 +20,20 @@ var {
   ListView
 } = React;
 
+var defaultRenderRow = function(rowText) {
+  return (
+    <View>
+      <View style={default_styles.rowContainer}>
+        <Text style={_cstyles.section_header_text}>
+          {rowText}
+        </Text>
+
+      </View>
+
+    </View>
+  )
+}
+
 var PopoverSelector = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -53,8 +67,9 @@ var PopoverSelector = React.createClass({
       minSelect: 0,
       maxSelect: Infinity,
       harvestSelection: harvestSelection_default,
-      selectedStyle: { opacity: 0.5, backgroundColor: _cvals.skorange },
-      renderSelector: null
+      selectedStyle: { backgroundColor: _cvals.skbluelight },
+      renderSelector: null,
+      renderRow: defaultRenderRow
     };
   },
 
@@ -167,8 +182,8 @@ function harvestSelection_default(selection) {
 
 var styles = StyleSheet.create({
   selected_style: {
-    opacity: 0.5,
-    backgroundColor: _cvals.skorange
+    // opacity: 0.5,
+    backgroundColor: _cvals.skbluelight
   },
   defaultRenderSelector: {
     flexDirection: 'row',
@@ -182,7 +197,6 @@ var styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
-    opacity: 1.00,
     margin: 0,
   },
   body_container: {
@@ -191,13 +205,11 @@ var styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     backgroundColor: 'transparent',
-    opacity: 1.00,
     marginTop: 0,
   },
   section_container: {
     width: windowSize.width,
-    backgroundColor: 'transparent',
-    opacity: 1.0,
+    backgroundColor: 'transparent'
   },
   listView: {
     backgroundColor: 'transparent',
@@ -210,6 +222,16 @@ var styles = StyleSheet.create({
       flex: 0,
       backgroundColor: 'transparent',
     },
+})
+
+var default_styles = StyleSheet.create({
+  rowContainer: {
+    flexDirection: 'row',
+    margin: 5 * _cvals.dscale,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+
 })
 
 module.exports = PopoverSelector;

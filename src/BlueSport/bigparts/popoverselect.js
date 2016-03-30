@@ -178,11 +178,16 @@ var RowWrapper = React.createClass({
     } = this.props;
 
     return (
-        <TouchableOpacity
-          onPress={this.toggleSelect}
-          style={[styles.row, this.state.style]}>
-            {this.props.renderRow(rowData)}
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity
+            onPress={this.toggleSelect}
+            style={[styles.row, this.state.style]}>
+              {this.props.renderRow(rowData)}
+
+          </TouchableOpacity>
+          <View style={_cstyles.divider_line}>
+          </View>
+        </View>
 
     );
   },
@@ -205,8 +210,8 @@ var styles = StyleSheet.create({
     width: windowSize.width
   },
   selected_style: {
-    opacity: 0.5,
-    backgroundColor: _cvals.skorange
+    // opacity: 0.5,
+    backgroundColor: _cvals.skbluelight
   },
   container: {
     flexDirection: 'column',

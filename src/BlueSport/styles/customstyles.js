@@ -62,7 +62,7 @@ var CustomStyles = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: _cvals.skorange,
     width: windowSize.width,
-    padding: 10 * _cvals.dscale,
+    padding: 6 * _cvals.dscale,
     fontFamily: 'avenir',
     shadowRadius: 4,
     shadowColor: 'black',
@@ -70,6 +70,13 @@ var CustomStyles = StyleSheet.create({
     shadowOffset: {width: 0, height: -1}
   },
   divider_line: {
+    backgroundColor: 'grey',
+    height: 1,
+    opacity: 0.3,
+    // marginVertical: 0.5,
+    width: windowSize.width
+  },
+  section_divider_line: {
     backgroundColor: 'grey',
     height: 1,
     opacity: 0.3,

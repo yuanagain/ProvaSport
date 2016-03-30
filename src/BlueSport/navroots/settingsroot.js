@@ -5,11 +5,7 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('../screens/profile')
-var MatchScreen = require('../screens/match')
-var ContractsScreen = require('../screens/contracts')
-var HomeScreen = require('../screens/homescreen')
-var SettingsScreen = require('../screens/settings')
+var SettingsPage= require('../screens/settingspage')
 
 var {
   AppRegistry,
@@ -27,7 +23,7 @@ var SettingsRoot = React.createClass({
     return (
       <Navigator
         style={styles.wrapper}
-          initialRoute={{name: 'SettingsScreen', component: SettingsScreen}}
+          initialRoute={{name: 'SettingsScreen', component: SettingsPage}}
 
           renderScene={(route, navigator) =>    {
             if (route.component) {
@@ -43,19 +39,6 @@ var SettingsRoot = React.createClass({
       />
     )
   }
-/*
-  renderScene(route, navigator) {
-    var routeId = route.id;
-
-    if (routeId === 'SettingsScreen') {
-      return (
-        <SettingsScreen
-            navigator={navigator} />
-      );
-    }
-  },
-  */
-
 });
 
   var NavigationBarRouteMapper = {

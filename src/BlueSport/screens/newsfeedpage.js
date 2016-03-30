@@ -5,7 +5,7 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var MatchPage = require('./matchpage')
 
-var NewsFeedMatchRow = require('./newsfeedmatchrow')
+var NewsFeedMatchRow = require('../parts/newsfeedmatchrow')
 var PopoverSelect = require('../parts/popoverselect')
 
 var _cvals = require('../styles/customvals')
@@ -47,9 +47,8 @@ var NewsFeedPage = React.createClass({
         <Text style={_cstyles.title_text}>
           {"NEWS"}
         </Text>
-        <View style={styles.divider_line}>
       </View>
-      </View>
+
 
       <ListView
         dataSource={this.state.dataSource}

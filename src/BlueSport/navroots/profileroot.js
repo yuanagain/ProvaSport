@@ -6,9 +6,6 @@ var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
 var ProfScreen = require('../screens/profile')
-var MatchScreen = require('../screens/match')
-var ContractsScreen = require('../screens/contracts')
-var HomeScreen = require('../screens/homescreen')
 
 var {
   AppRegistry,
@@ -42,19 +39,6 @@ var profileRoot = React.createClass({
       />
     )
   }
-/*
-  renderScene(route, navigator) {
-    var routeId = route.id;
-
-    if (routeId === 'ProfScreen') {
-      return (
-        <ProfScreen
-            navigator={navigator} />
-      );
-    }
-
-  },
-  */
 
 });
 

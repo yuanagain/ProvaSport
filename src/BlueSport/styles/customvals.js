@@ -10,6 +10,7 @@ const _cvals = {
   mainfont: 'avenir',
   skorange: '#F5A623',
   skblue: '#4A90E2',
+  skbluelight: '#a6c9f2',
   headerTextSize: 24,
   normalTextSize: 20,
   detailTextSize: 14,

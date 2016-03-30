@@ -5,9 +5,7 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('../screens/profile')
-var MatchScreen = require('../screens/match')
-var ContractsScreen = require('../screens/contracts')
+var ContractsScreen = require('../screens/contractspage')
 
 var {
   AppRegistry,
@@ -41,34 +39,6 @@ var ContractsRoot = React.createClass({
          />
       )
     }
-/*
-  renderScene(route, navigator) {
-    var routeId = route.id;
-
-    if (routeId === 'ContractsScreen') {
-      return (
-        <ContractsScreen
-            navigator={navigator} />
-      );
-    }
-
-    if (routeId === 'ProfScreen') {
-      return (
-        <ProfScreen
-            navigator={navigator} />
-      );
-    }
-
-    if (routeId === 'MatchScreen') {
-      return (
-        <MatchScreen
-            navigator={navigator} />
-      );
-    }
-
-  },
-
-  */
 });
 
   var NavigationBarRouteMapper = {
@@ -95,9 +65,6 @@ var ContractsRoot = React.createClass({
       );
     }
   };
-
-
-
 
 var styles = StyleSheet.create({
   wrapper: {

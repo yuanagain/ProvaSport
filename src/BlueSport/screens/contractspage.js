@@ -43,7 +43,7 @@ var dummyselections = [
 
 var items = ["Item 1", "Item 2"];
 
-var RecordPage = React.createClass({
+var ContractsPage = React.createClass({
 
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => this.rowChanged(r1, r2)})
@@ -80,16 +80,16 @@ var RecordPage = React.createClass({
       <View>
         <View style={_cstyles.header_container}>
           <Text style={_cstyles.title_text}>
-            {"RECORD"}
+            {"CONTRACTS"}
           </Text>
         </View>
 
 
         <PopoverSelector
-          title={'Contract'}
-          items={['Standard Contract']}
+          title={'Event Type'}
+          items={['Single Match', 'Elimination ', 'Round Robin']}
           navigator={this.props.navigator}
-          selection={[]}
+          selection={[1]}
         />
         <View style={_cstyles.section_divider_line}>
         </View>
@@ -121,15 +121,6 @@ var RecordPage = React.createClass({
         <View style={_cstyles.section_divider_line}>
         </View>
 
-        <View>
-          <Text style={_cstyles.section_header_text}>{"Scores"}</Text>
-        </View>
-
-
-        <DynamicList
-          items={[[1,2], [3,5], [5,6]]}
-          magic={'scores'}
-          />
       </View>
       <View style={_cstyles.buttons_container}>
         <Button
@@ -137,7 +128,7 @@ var RecordPage = React.createClass({
           styleDisabled={{color: 'grey'}}
           onPress={this.props.loginFunction}
           >
-          {'Record'}
+          {'Create'}
         </Button>
       </View>
     </View>
@@ -268,4 +259,4 @@ var styles = StyleSheet.create({
   }
 })
 
-module.exports = RecordPage;
+module.exports = ContractsPage;
