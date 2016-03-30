@@ -31,8 +31,6 @@ var SettingsRoot = require('./navroots/settingsroot')
 
 var _cvals = require('./styles/customvals.js')
 
-
-
 class BlueSport extends Component {
 
   constructor(props) {

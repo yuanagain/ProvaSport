@@ -4,10 +4,11 @@ var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 
+
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
 
-var RoundRobin = require('../bigparts/roundrobin')
+var Bracket = require('../bigparts/bracket')
 
 var {
   AppRegistry,
@@ -19,20 +20,11 @@ var {
   ListView
 } = React;
 
-var dummymatches = [[{'item': [3,4], 'type': 'blank'}, {'item': [3,4],  'type': 'icon' }, {'item': [3,4], 'type': 'icon' }, {'item': [3,4], 'type': 'icon' },],
-                    [{'item': 'Player 1', 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],
-                    [{'item': 'Player 2', 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],
-                    [{'item': 'Player 3', 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],]
-
+var dummymatches = [[{'team1': 'Player 1', 'team2': 'Player 2' },  {'team1': 'Player 3', 'team2': 'Player 4' }, {'team1': 'Player 5', 'team2': 'Player 6' }, {'team1': 'Player 7', 'team2': 'Player 8' }],
+                    [{'team1': 'Player 1', 'team2': 'Player 3' }, {'team1': 'Player 5', 'team2': 'Player 8' }],
+                    [{'team1': 'Player 3', 'team2': 'Player 5' }],]
 
 var RoundRobinPage = React.createClass({
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
-    };
-  },
-
   getDefaultProps: function() {
     return (
       {
@@ -40,8 +32,15 @@ var RoundRobinPage = React.createClass({
       }
     )
   },
+
+  getInitialState: function() {
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    return {
+      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+    };
+  },
+
   render: function() {
-    console.log("YO")
     var {
       name,
       navigator,
@@ -53,16 +52,14 @@ var RoundRobinPage = React.createClass({
 
       <View style={_cstyles.header_container}>
         <Text style={_cstyles.title_text}>
-          {"Round Robin"}
+          {"Bracket"}
         </Text>
       </View>
-      <RoundRobin matches={this.props.matches}
+      <Bracket matches={dummymatches}
                   navigator={this.props.navigator} />
     </View>
     );
   },
-
-
 });
 
 var styles = StyleSheet.create({

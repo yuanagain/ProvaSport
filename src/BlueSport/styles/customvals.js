@@ -6,6 +6,9 @@ var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var React = require('react-native');
 
+var dscale = windowSize.height / 667
+var slength = 75 * dscale
+
 const _cvals = {
   mainfont: 'avenir',
   skorange: '#F5A623',
@@ -14,8 +17,12 @@ const _cvals = {
   headerTextSize: 24,
   normalTextSize: 20,
   detailTextSize: 14,
-  dscale: windowSize.height / 667,
-  headerHeight: 70 * this.dscale
+  dscale: dscale,
+  headerHeight: 70 * dscale,
+  slength: slength,
+  bricklength: (slength) * 2.5 - 2,
+  brickheight: slength,
+  thumbslength: ((slength) * 3 / 5 ),
 }
 
 module.exports = _cvals;

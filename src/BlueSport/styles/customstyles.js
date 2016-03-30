@@ -107,6 +107,14 @@ var CustomStyles = StyleSheet.create({
   add: {
     height: 30 * _cvals.dscale,
     width: 30 * _cvals.dscale
+  },
+  vline: {
+    width: 1,
+    backgroundColor: 'black',
+  },
+  hline: {
+    height: 1,
+    backgroundColor: 'black',
   }
 })
 

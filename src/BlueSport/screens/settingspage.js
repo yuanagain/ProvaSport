@@ -5,9 +5,6 @@ var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 
-// var ScoreRowRecord = require('./scorerowrecord')
-
-// var PopoverSelect = require('./popoverselect')
 var DynamicList = require('../bigparts/dynamiclist')
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
@@ -27,10 +24,6 @@ var {
   ListView,
   Modal,
 } = React;
-
-// testing
-var RoundRobinPage = require('../screens/roundrobinpage')
-
 
 var items = ["Item 1", "Item 2"];
 
@@ -83,9 +76,6 @@ var SettingsPage = React.createClass({
         />
         <View style={_cstyles.section_divider_line}>
         </View>
-
-        <RoundRobinPage />
-
 
       </View>
       <View style={_cstyles.buttons_container}>

@@ -13,6 +13,9 @@ var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var PopoverSelector = require('../bigparts/popoverselector')
 
+var RoundRobinPage = require('../screens/roundrobinpage')
+var BracketPage = require('../screens/bracketpage')
+
 import * as _ctools from '../libs/customtools.js'
 
 var {
@@ -122,11 +125,29 @@ var ContractsPage = React.createClass({
         </View>
 
       </View>
+
       <View style={_cstyles.buttons_container}>
         <Button
           style={_cstyles.wide_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this.props.loginFunction}
+          onPress={this.toRR}
+          >
+          {'View RR Page'}
+        </Button>
+        <View style={{height: 1}}></View>
+        <Button
+          style={_cstyles.wide_button}
+          styleDisabled={{color: 'grey'}}
+          onPress={this.toBracket}
+          >
+          {'View Bracket Page'}
+        </Button>
+        <View style={{height: 1}}></View>
+
+        <Button
+          style={_cstyles.wide_button}
+          styleDisabled={{color: 'grey'}}
+
           >
           {'Create'}
         </Button>
@@ -209,6 +230,26 @@ var ContractsPage = React.createClass({
 
   },
 
+  //// TEMP TEMP TEMP
+  toRR() {
+    this.props.navigator.push({
+      id: "RoundRobinPage",
+      component: RoundRobinPage,
+      passProps: {
+        temp: 2
+      }
+    })
+  },
+
+  toBracket() {
+    this.props.navigator.push({
+      id: "BracketPage",
+      component: BracketPage,
+      passProps: {
+        temp: 2
+      }
+    })
+  },
 });
 
 
@@ -244,11 +285,12 @@ var styles = StyleSheet.create({
     opacity: 1.0,
   },
   buttons_container: {
+    flexDirection: 'column',
     width: windowSize.width,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
     alignSelf: 'flex-end',
-    flex: 0,
+    flex: 1,
     backgroundColor: 'transparent',
   },
   score_values: {

@@ -27,7 +27,7 @@ var dummymatches = [[{'item': [3,4], 'type': 'blank'}, {'item': [3,4],  'type': 
                     [{'item': [3,4], 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],
                     [{'item': [3,4], 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],]
 
-var slength = _const.slength
+var slength = _cvals.slength
 
 var RRMatchSquare = React.createClass({
   getInitialState: function() {
@@ -65,7 +65,7 @@ var RRMatchSquare = React.createClass({
     if (this.state.type == 'player') {
       return (
         <TouchableOpacity style={[styles.player, styles.border]}>
-          <PlayerBrick player={this.props.data}
+          <PlayerBrick player={this.state.item}
                        navigator={this.props.navigator} />
         </TouchableOpacity>
       )
@@ -108,14 +108,6 @@ var RoundRobin = React.createClass({
     );
   },
 
-  getDefaultProps: function() {
-    return (
-      {
-        matches: dummymatches,
-      }
-    )
-  },
-
   render: function() {
     var {
       matches,
@@ -124,7 +116,7 @@ var RoundRobin = React.createClass({
     } = this.props;
 
     var tslength = slength + 2 * _cvals.dscale
-    var height = this.props.matches.length * tslength
+    var height = this.state.matches.length * tslength
     var width = height + tslength * 1.5
 
     var renderRow = (matchrow) => <RRMatchRow navigator={this.props.navigator}
@@ -134,7 +126,7 @@ var RoundRobin = React.createClass({
     return (
       <View>
         <ScrollView style={[styles.scroll,
-                            {width: windowSize.width - 20},
+                            {width: windowSize.width },
                             this.props.style]}
                     contentContainerStyle={[styles.container,
                                             {width: width, height: height}]}>
@@ -143,7 +135,6 @@ var RoundRobin = React.createClass({
       </View>
     );
   },
-
 });
 
 var styles = StyleSheet.create({
@@ -195,7 +186,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-
 })
 
 module.exports = RoundRobin;
