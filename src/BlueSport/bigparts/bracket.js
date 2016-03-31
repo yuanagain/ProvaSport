@@ -23,6 +23,7 @@ var {
   TouchableOpacity,
 } = React;
 
+var defaultHeight = 46 * _cvals.dscale
 // ==================================================
 // Style up first for visibility to getDefaultProps
 // ==================================================
@@ -88,7 +89,6 @@ var styles = StyleSheet.create({
 
 var Fork = React.createClass({
   getInitialState: function() {
-    var defaultHeight = 50
     var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2
     var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
 
@@ -111,7 +111,7 @@ var Fork = React.createClass({
       {
         style: styles.scroll,
         level: 0,
-        levels: 1,
+
       }
     )
   },
@@ -120,7 +120,6 @@ var Fork = React.createClass({
     var {
       data,
       level,
-      levels,
       navigator,
       ...props
     } = this.props;
@@ -141,8 +140,8 @@ var Fork = React.createClass({
         </TouchableOpacity>
         <View style={styles.vline_wrapper}>
           <View style={[_cstyles.vline,
-                        {height: this.state.fheight + 0.5,
-                         marginBottom: this.state.fmargin + 0.25,
+                        {height: this.state.fheight,
+                         marginBottom: this.state.fmargin,
                          marginLeft: 0}]}>
           </View>
         </View>
@@ -157,7 +156,6 @@ var ForkColumn = React.createClass({
       column,
       navigator,
       level,
-      levels,
       ...props
     } = this.props;
 
@@ -166,7 +164,7 @@ var ForkColumn = React.createClass({
       console.log("FORK " + String(i))
       forks.push(<Fork navigator={this.props.navigator}
                        level={this.props.level}
-                       levels={this.props.levels}
+
                        data={this.props.column[i]}
                        key={i} />);
     }
@@ -207,13 +205,13 @@ var Bracket = React.createClass({
 
     var tslength = _const.slength + 2 * _cvals.dscale
     var height = Math.pow(2, this.props.matches.length) * (_const.slength + 2)
-    var width = _cvals.bricklength * (this.state.matches.length + 1) + 1
+    var width = _cvals.bricklength * (this.state.matches.length + 1) + 20
 
     var columns = [];
     for (var i = 0; i < this.props.matches.length; i++) {
         columns.push(<ForkColumn navigator={this.props.navigator}
                         level={i}
-                        levels={this.props.matches.length}
+
                         column={this.props.matches[i]}
                         key={i} />);
     }
@@ -225,10 +223,67 @@ var Bracket = React.createClass({
                                             {width: width, }]}>
 
           {columns}
+          <Final data={{'team1': 'WINNER'}}
+                 level={this.props.matches.length}
+                 marginBottom={height / 2}
+                 navigator={this.props.navigator} />
         </ScrollView>
       </View>
     );
   },
+});
+
+var Final = React.createClass({
+  getInitialState: function() {
+    // TODO: CHECK MATH HERE
+    var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2 * 3/ 4
+    var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
+
+    if (this.props.level == 0) {
+      fmargin = 0
+    }
+
+    return (
+      {
+        type: this.props.data['type'],
+        match: this.props.data,
+        fmargin: fmargin,
+        fheight: fheight,
+      }
+    );
+  },
+
+  getDefaultProps: function() {
+    return (
+      {
+        style: styles.scroll,
+        level: 0,
+
+      }
+    )
+  },
+
+  render: function() {
+    var {
+      data,
+      level,
+      marginBottom,
+      navigator,
+      ...props
+    } = this.props;
+
+    return (
+      <View style={[styles.fork_wrapper, {marginRight: 16 * _cvals.dscale}]}>
+        <TouchableOpacity style={[styles.fork, {marginLeft: 1}]}>
+          <View style={[{marginTop: this.state.fmargin}]}>
+            <PlayerBrick player={this.state.match['team1']}
+                         navigator={this.props.navigator} />
+            <View style={[_cstyles.hline, styles.hline, ]}></View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
 });
 
 
