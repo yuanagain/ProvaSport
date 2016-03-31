@@ -163,7 +163,6 @@ var RecordPage = React.createClass({
   },
 
   deleteGame: function(index) {
-    console.log('deleting')
 
     // reorder states
     for (var i = 0; i < this.state.SomeData.length; i++) {
@@ -181,12 +180,11 @@ var RecordPage = React.createClass({
   },
 
   addGame: function(scores) {
-    console.log("adding game")
-    console.log(scores)
+
   },
 
   onSelect: function(name) {
-    console.log(name)
+
     this.props.navigator.push({
       id: "Select",
       component: PopoverSelect,
@@ -202,7 +200,7 @@ var RecordPage = React.createClass({
 
   confirmSelection(selected) {
     this.selected_1 = selected
-    console.log("confirming selection")
+
     this.goBack()
   },
 

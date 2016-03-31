@@ -47,6 +47,10 @@ var inRange = function(n, min, max) {
   return true
 }
 
+/*
+takes list of indices, recovers corresponding list
+of items
+*/
 var traceIndices = function(haystack, indices) {
   var items = []
   for (var i = 0; i < indices.length; i++) {
@@ -55,6 +59,10 @@ var traceIndices = function(haystack, indices) {
   return items
 }
 
+/*
+takes list of item, recovers corresponding list
+of indices
+*/
 var selectionNeedles = function(haystack, needles) {
   var indices = []
   for (var i = 0; i < needles.length; i++) {
@@ -69,4 +77,5 @@ var randomKey = function() {
 }
 
 module.exports = {indexOf, supplementIndex, contains, inRange,
-                  traceIndices, isValidScore, randomKey};
+                  traceIndices, isValidScore, randomKey,
+                  selectionNeedles};

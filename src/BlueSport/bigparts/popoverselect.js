@@ -99,9 +99,12 @@ var PopoverSelect = React.createClass({
     this.setState({validSelection: _ctools.inRange(this.props.minSelect,
                                                    this.props.maxSelect,
                                                    this.state.selection.length)})
+    return _ctools.inRange(this.props.minSelect, this.props.maxSelect, this.state.selection.length)
   },
 
   harvestSelection: function() {
+    this.state.selection.sort()
+    this.setState( {selection: this.state.selection })
     var iselect = _ctools.traceIndices(this.props.items,
                                             this.state.selection)
     this.props.harvestSelection(iselect)
@@ -123,13 +126,23 @@ var PopoverSelect = React.createClass({
     // if not in selection
     else {
       this.state.selection.push(index)
+      if (this.props.mode == 'single') {
+        var newlist = [index]
+        this.setState({selection: [index]})
+        console.log(this.state.selection)
+
+        return
+      }
     }
     this.setState( {selection: this.state.selection} )
-    console.log(this.state.selection)
+
   },
 
   inSelection: function(index) {
-    return _ctools.contains(this.state.selection, index)
+    var result =  _ctools.contains(this.state.selection, index)
+//    console.log('index: ' + String(index) + ': '+ String(result))
+
+    return result
   },
 
   renderRow: function(rowData) {
@@ -137,7 +150,7 @@ var PopoverSelect = React.createClass({
       <RowWrapper
         key={_ctools.randomKey()}
         index={rowData['index']}
-        selected={_ctools.contains(this.state.selection, rowData['index'])}
+        selected={this.inSelection(rowData['index'])}
         toggleSelect={this.toggleSelect}
         inSelection={this.inSelection}
         rowData={rowData['item']}
@@ -146,7 +159,6 @@ var PopoverSelect = React.createClass({
         />
     );
   },
-
   goBack: function() {
     this.props.goBack()
   },
@@ -194,7 +206,7 @@ var RowWrapper = React.createClass({
   toggleSelect: function() {
     this.props.toggleSelect(this.props.index)
     var selected = this.props.inSelection(this.props.index)
-    console.log(selected)
+
     var new_style = {}
     if (selected) {
       new_style = this.props.selectedStyle

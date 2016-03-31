@@ -58,7 +58,7 @@ var ContractsPage = React.createClass({
         password: '',
         scoreData: [(21, 5), (10, 21), (21, 12)],
         dataSource: ds.cloneWithRows([[21, 5], [10, 21], [21, 12]]),
-        selectedSport: "None Selected",
+        selectedSport: ["Tennis"],
         selectedContract: "None Selected",
         selectedTeam1: [],
         selectedTeam2: [],
@@ -92,7 +92,7 @@ var ContractsPage = React.createClass({
           title={'Event Type'}
           items={['Single Match', 'Elimination ', 'Round Robin']}
           navigator={this.props.navigator}
-          selection={[1]}
+          selection={['Single Match']}
         />
         <View style={_cstyles.section_divider_line}>
         </View>
@@ -101,7 +101,10 @@ var ContractsPage = React.createClass({
           title={'Sport'}
           items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
           navigator={this.props.navigator}
-          selection={[0]}
+          selection={this.state.selectedSport}
+          harvestSelection={this.setSport}
+          maxSelect={1}
+          mode={'single'}
         />
         <View style={_cstyles.section_divider_line}>
         </View>
@@ -156,6 +159,12 @@ var ContractsPage = React.createClass({
     );
   },
 
+  setSport: function(selection) {
+    this.setState({selectedSport: selection})
+    console.log("SELECTED SPORT: " + String(this.state.selectedSport))
+    this.forceUpdate()
+  },
+
   goBack: function() {
     this.props.navigator.pop()
   },
@@ -175,7 +184,6 @@ var ContractsPage = React.createClass({
   },
 
   deleteGame: function(index) {
-    console.log('deleting')
 
     // reorder states
     for (var i = 0; i < this.state.SomeData.length; i++) {
@@ -193,12 +201,10 @@ var ContractsPage = React.createClass({
   },
 
   addGame: function(scores) {
-    console.log("adding game")
-    console.log(scores)
+
   },
 
   onSelect: function(name) {
-    console.log(name)
     this.props.navigator.push({
       id: "Select",
       component: PopoverSelect,
@@ -214,7 +220,6 @@ var ContractsPage = React.createClass({
 
   confirmSelection(selected) {
     this.selected_1 = selected
-    console.log("confirming selection")
     this.goBack()
   },
 

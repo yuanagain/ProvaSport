@@ -132,7 +132,6 @@ class BlueSport extends Component {
   }
 
   loginFunc() {
-    console.log("GOING HOME")
     this.setState({selectedTab: 'home'})
   }
 }

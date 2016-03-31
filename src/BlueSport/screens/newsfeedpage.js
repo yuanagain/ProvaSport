@@ -34,7 +34,6 @@ var NewsFeedPage = React.createClass({
     };
   },
   render: function() {
-    console.log("YO")
     var {
       name,
       ...props
@@ -73,7 +72,6 @@ var NewsFeedPage = React.createClass({
     )
   },
   onButtonPress(arg) {
-    console.log(arg)
     this.props.navigator.push({
       id: "MatchScreen",
       component: MatchPage,

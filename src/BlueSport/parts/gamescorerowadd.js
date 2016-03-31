@@ -80,9 +80,7 @@ var GameScoreRowAdd = React.createClass({
     if (_ctools.isValidScore(this.state.val1)
         && _ctools.isValidScore(this.state.val2)) {
       this.props.onIconPress([this.state.val1, this.state.val2])
-      console.log('is numeric')
     }
-    console.log('icon pressed')
   }
 });
 

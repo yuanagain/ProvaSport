@@ -39,7 +39,6 @@ var PlayerBrick = React.createClass({
   },
 
   onPress: function() {
-    console.log("pressed")
     // this.navigator.push()
   },
 

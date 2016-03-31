@@ -45,7 +45,7 @@ var SimpleRow= React.createClass({
     return (
       <View style={[styles.container, ,]}>
         <View style={styles.title}>
-          <Text style={[_cstyles.standard_text,
+          <Text style={[_cstyles.header_text,
                         {fontWeight: 'normal'}]}>
             {this.props.title}
           </Text>
@@ -54,7 +54,7 @@ var SimpleRow= React.createClass({
         <TouchableOpacity
             style={styles.values}
             onPress={this.props.onPress}>
-          <Text style={[_cstyles.standard_text,
+          <Text style={[_cstyles.header_text,
                         {color: _cvals.skblue, fontWeight: 'normal'}]}>
             {this.props.value}
           </Text>
@@ -76,14 +76,14 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignSelf: 'flex-start',
-    width: windowSize.width / 2 - _cvals.stdmargin
+    width: windowSize.width / 2
   },
 
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     flex: 0,
-    paddingHorizontal: _cvals.stdmargin,
+    paddingRight: _cvals.stdmargin,
     width: windowSize.width
   },
 })

@@ -31,9 +31,21 @@ var CustomStyles = StyleSheet.create({
     fontFamily: _cvals.mainfont,
     paddingHorizontal: 10 * _cvals.dscale,
   },
+  header_text: {
+    color: 'black',
+    fontSize: 23 * _cvals.dscale,
+    fontFamily: _cvals.mainfont,
+    paddingHorizontal: 8 * _cvals.dscale,
+    marginVertical: 4 * _cvals.dscale,
+  },
   standard_text: {
     color: 'black',
     fontSize: 20 * _cvals.dscale,
+    fontFamily: _cvals.mainfont,
+  },
+  detail_text: {
+    color: 'black',
+    fontSize: 16 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
   },
   detail_text: {
@@ -115,7 +127,7 @@ var CustomStyles = StyleSheet.create({
   hline: {
     height: 1,
     backgroundColor: 'black',
-  }
+  },
 })
 
 module.exports = CustomStyles;

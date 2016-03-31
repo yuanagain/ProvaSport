@@ -1,3 +1,7 @@
+/*
+OLD DEPRECATED
+*/
+
 'use strict';
 var React = require('react-native');
 var Dimensions = require('Dimensions');
@@ -19,21 +23,29 @@ var {
   ListView
 } = React;
 
-var RecipeListing = React.createClass({
+var PopoverSelect = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return { 
+    return {
       dataSource: ds.cloneWithRows(this.props.items),
       selected: this.props.selection
     };
   },
+  getDefaultProps: function() {
+    return (
+      {
+        mode: 'normal', // or 'single'
+      }
+    )
+  },
+
   render: function() {
     var {
       name,
       confirmSelection,
+      mode,
       ...props
     } = this.props;
-    console.log(this.props.items)
     return (
     <View style={styles.container}>
       <View style={styles.body_container}>
@@ -59,6 +71,7 @@ var RecipeListing = React.createClass({
           style={_cstyles.wide_button}
           styleDisabled={{color: 'grey'}}
           onPress={this.confirmSelection}
+          disabled={this.validateSelectionCount}
           >
           {'Confirm Selection'}
         </Button>
@@ -68,7 +81,6 @@ var RecipeListing = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log(windowSize.height)
   },
 
   confirmSelection: function() {
@@ -83,8 +95,15 @@ var RecipeListing = React.createClass({
         name={rowData['name']}
         selected={this.isSelected(rowData)}
         description_text={rowData['descr']}
+        valid={this.validateSelectionCount}
         />
     )
+  },
+
+  validateSelectionCount: function() {
+    return _ctools(this.selected.length,
+                      this.props.minSelect,
+                      this.props.maxSelect)
   },
 
   isSelected: function(rowData) {
@@ -93,6 +112,14 @@ var RecipeListing = React.createClass({
   },
 
   onSelect: function(name) {
+    if (this.props.mode == 'single') {
+      var newlist = [name]
+      this.setState({selected: [name]})
+      this.forceUpdate()
+      return
+    }
+    console.log("RUNNINGSELECT")
+
     // if not contained in selection
     if (this.state.selected.indexOf(name) == -1) {
       this.state.selected.push(name)
@@ -103,11 +130,9 @@ var RecipeListing = React.createClass({
       this.state.selected.splice(index, 1)
 
     }
-    console.log(this.state.selected)
   },
 
   onDetail: function(name) {
-    console.log(name)
   },
 
   goBack: function() {
@@ -204,4 +229,4 @@ var styles = StyleSheet.create({
     },
 })
 
-module.exports = RecipeListing;
+module.exports = PopoverSelect;

@@ -112,7 +112,6 @@ var DynamicList = React.createClass({
   removeItem: function(index) {
     this.state.items.splice(index, 1)
     this.setState( {items: this.state.items} )
-    console.log(this.state.items)
   }
 });
 
@@ -143,7 +142,6 @@ var RowWrapper = React.createClass({
   toggleSelect: function() {
     this.props.toggleSelect(this.props.index)
     var selected = this.props.inSelection(this.props.index)
-    console.log(selected)
     var new_style = {}
     if (selected) {
       new_style = this.props.selectedStyle
@@ -153,7 +151,6 @@ var RowWrapper = React.createClass({
 });
 
 function harvest_default(items) {
-  console.log(items)
 }
 
 var styles = StyleSheet.create({

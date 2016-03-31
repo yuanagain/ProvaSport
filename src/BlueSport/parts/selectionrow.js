@@ -26,7 +26,7 @@ var lightgreen = "#7ED321"
 var mainfont = 'avenir'
 var skblue = '#4A90E2'
 
-var RecipeListingRow = React.createClass({
+var SelectionRow = React.createClass({
   getInitialState: function() {
     return (
       {
@@ -77,6 +77,8 @@ var RecipeListingRow = React.createClass({
   },
 
   onSelect: function() {
+    // this.setState({selected: this.props.})
+
     if (this.state.selected) {
       this.props.onSelect(this.props.name)
       this.setState({selectedStyle: {}, selected: false})
@@ -163,4 +165,4 @@ var styles = StyleSheet.create({
   },
 })
 
-module.exports = RecipeListingRow;
+module.exports = SelectionRow;

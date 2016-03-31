@@ -41,7 +41,6 @@ var RoundRobinPage = React.createClass({
     )
   },
   render: function() {
-    console.log("YO")
     var {
       name,
       navigator,

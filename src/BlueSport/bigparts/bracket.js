@@ -32,7 +32,7 @@ var styles = StyleSheet.create({
   scroll: {
     flexDirection: 'column',
     flex: 1,
-    height: 200,
+    padding: 15 * _cvals.dscale,
     width: windowSize.width,
   },
   container: {
@@ -161,7 +161,6 @@ var ForkColumn = React.createClass({
 
     var forks = [];
     for (var i = 0; i < this.props.column.length; i++) {
-      console.log("FORK " + String(i))
       forks.push(<Fork navigator={this.props.navigator}
                        level={this.props.level}
 

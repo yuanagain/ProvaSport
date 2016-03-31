@@ -49,7 +49,7 @@ var PayoutSection= React.createClass({
     return (
       <View style={[styles.container, ,]}>
         <View style={styles.title}>
-          <Text style={[_cstyles.standard_text,
+          <Text style={[_cstyles.header_text,
                         {alignSelf: 'flex-start', fontWeight: 'normal'}]}>
             {this.props.title}
           </Text>
@@ -57,18 +57,22 @@ var PayoutSection= React.createClass({
 
         <View style={styles.values}>
           <Text style={[_cstyles.standard_text,
-                       {color: _cvals.sklightgreen, fontWeight: 'bold'}]}>
+                       {color: _cvals.sklightgreen, fontWeight: 'bold',
+                        paddingVertical: _cvals.stdmargin / 2}]}>
             {this.state.plus + '$'
               + String(this.props.earnings['cash'])}
           </Text>
         </View>
 
         <View style={styles.values}>
+
           <Text style={[_cstyles.standard_text,
-                       {color: _cvals.skblue, fontWeight: 'normal'}]}>
+                       {color: _cvals.skblue, fontWeight: 'normal',
+                        paddingVertical: _cvals.stdmargin / 2}]}>
             {'\t' + this.state.plus +
               +String(this.props.earnings['xp']) + ' EXP'}
           </Text>
+
         </View>
       </View>
     );
@@ -79,6 +83,7 @@ var styles = StyleSheet.create({
   values: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    alignItems: 'center',
     alignSelf: 'flex-end',
     width: windowSize.width / 3,
   },
@@ -86,13 +91,13 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignSelf: 'flex-start',
-    width: windowSize.width / 3 - 2 * _cvals.stdmargin,
+    width: windowSize.width / 3 - 1 * _cvals.stdmargin,
   },
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    flex: 1,
-    paddingHorizontal: _cvals.stdmargin,
+    flex: 0,
+    paddingRight: _cvals.stdmargin,
     width: windowSize.width
   },
 })

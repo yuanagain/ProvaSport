@@ -7,7 +7,8 @@ var Button = require('react-native-button');
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
 var PopoverSelect = require('./popoverselect')
-import '../libs/customtools.js'
+import * as _ctools from '../libs/customtools.js'
+
 
 var {
   AppRegistry,
@@ -27,9 +28,7 @@ var defaultRenderRow = function(rowText) {
         <Text style={_cstyles.section_header_text}>
           {rowText}
         </Text>
-
       </View>
-
     </View>
   )
 }
@@ -39,7 +38,7 @@ var PopoverSelector = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     var mode = 'normal'
-    if (this.props.maxSelect == 1) {
+    if (this.props.maxSelect == 1 || this.props.mode == 'single') {
       mode = 'single'
     }
 
@@ -51,7 +50,10 @@ var PopoverSelector = React.createClass({
     }
 
     return {
-      selection: this.props.selection,
+      /* NOTE SELECTION PASSED IN ARE OBJECTS, SELECTION
+      USED INTERNALLY ARE INDICES
+      */
+      selection: _ctools.selectionNeedles(this.props.items, this.props.selection),
       mode: mode,
       renderSelector: renderSelector,
       accesses: 0,
@@ -103,10 +105,22 @@ var PopoverSelector = React.createClass({
         selectionText = this.props.items[this.state.selection[0]]
       }
 
+      if (this.state.selection.length > 1) {
+        selectionText += ', ' + this.props.items[this.state.selection[1]]
+      }
+
+      if (this.state.selection.length > 2) {
+        selectionText += ', ...'
+      }
+
+      if (selectionText.length > 23) {
+        selectionText = selectionText.substr(0, 20) + '...'
+      }
+
       return (
         <TouchableOpacity onPress={this.enterSelector}>
           <View style={styles.defaultRenderSelector}>
-            <Text style={_cstyles.section_header_text}>
+            <Text style={_cstyles.header_text}>
               {this.props.title}
             </Text>
             <Text style={[_cstyles.standard_text,
@@ -122,7 +136,6 @@ var PopoverSelector = React.createClass({
 
   // to force view re-render
   update: function() {
-    console.log('updating')
   },
 
   enterSelector: function() {
@@ -140,7 +153,7 @@ var PopoverSelector = React.createClass({
         maxSelect: this.props.maxSelect,
         navigator: this.props.navigator,
         selectedStyle: this.props.selectedStyle,
-
+        mode: this.state.mode,
         update: this.update
       }
     })
@@ -149,15 +162,18 @@ var PopoverSelector = React.createClass({
   harvestSelection: function(selection) {
     this.props.harvestSelection(selection)
     this.props.navigator.pop()
-    console.log(this.state.selection)
     this.forceUpdate()
   },
 
   defaultRenderSelector: function() {
     var selectionText = "Select"
 
-    if (this.state.selection.length > 1) {
+    if (this.state.selection.length == 1) {
       selectionText = this.state.selection[0]
+    }
+
+    if (this.state.selection.length > 1) {
+      selectionText = this.state.selection[0] + ',...'
     }
 
     return (
@@ -177,7 +193,7 @@ var PopoverSelector = React.createClass({
 });
 
 function harvestSelection_default(selection) {
-  console.log("SELECTION: " + String(selection))
+  //console.log("SELECTION: " + String(selection))
 }
 
 var styles = StyleSheet.create({
