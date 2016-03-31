@@ -14,6 +14,7 @@ const _cvals = {
   skorange: '#F5A623',
   skblue: '#4A90E2',
   skbluelight: '#a6c9f2',
+  sklightgreen: "#7ED321",
   headerTextSize: 24,
   normalTextSize: 20,
   detailTextSize: 14,
@@ -23,6 +24,7 @@ const _cvals = {
   bricklength: (slength) * 2.5 - 2,
   brickheight: slength,
   thumbslength: ((slength) * 3 / 5 - 12 * dscale),
+  stdmargin: 7 * dscale,
 }
 
 module.exports = _cvals;

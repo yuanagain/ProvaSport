@@ -37,7 +37,7 @@ var LoginPage = React.createClass({
 
       <View style={styles.header_container}>
         <Text style={styles.title_text}>
-          BlueSport
+          {"ProvaSport"}
         </Text>
       </View>
 
@@ -163,10 +163,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 0,
     backgroundColor: '#7bafea',
-    // shadowRadius: 4,
-    // shadowColor: 'black',
-    // shadowOpacity: 0.5,
-    // shadowOffset: {width: 0, height: 0}
   },
   white_line: {
     backgroundColor: 'white',

@@ -5,7 +5,7 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('../screens/profile')
+var ProfilePage = require('../screens/profilepage')
 
 var {
   AppRegistry,
@@ -23,7 +23,7 @@ var profileRoot = React.createClass({
     return (
       <Navigator
         style={styles.wrapper}
-          initialRoute={{name: 'ProfScreen', component: ProfScreen, passProps: {isModal: false}}}
+          initialRoute={{name: 'ProfilePage', component: ProfilePage, passProps: {isModal: false}}}
 
           renderScene={(route, navigator) =>    {
             if (route.component) {
