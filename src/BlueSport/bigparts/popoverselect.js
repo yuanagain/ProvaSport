@@ -73,18 +73,34 @@ var PopoverSelect = React.createClass({
         <View style={styles.divider_line}>
         </View>
       </View>
-      <View style={styles.buttons_container}>
+      <View style={[styles.buttons_container,
+                     this.canConfirm()]}>
         <Button
-          style={_cstyles.wide_button}
+          style={[_cstyles.wide_button, this.canConfirm()]}
           styleDisabled={{backgroundColor: 'grey'}}
           onPress={this.harvestSelection}
-          disabled={this.state.validSelection}
+          disabled={this.isDisabled()}
           >
           {'Confirm Selection'}
         </Button>
       </View>
     </View>
     );
+  },
+
+  // used to hide confirm button in single case
+  canConfirm: function() {
+    if (this.props.mode == "single") {
+      return {height: 0, opacity: 0.0}
+    }
+    return {}
+  },
+
+  isDisabled: function() {
+    if (this.props.mode == 'single') {
+      return true
+    }
+    return false
   },
 
   inSelectionRange: function() {
@@ -105,9 +121,7 @@ var PopoverSelect = React.createClass({
   harvestSelection: function() {
     this.state.selection.sort()
     this.setState( {selection: this.state.selection })
-    var iselect = _ctools.traceIndices(this.props.items,
-                                            this.state.selection)
-    this.props.harvestSelection(iselect)
+    this.props.harvestSelection(this.state.selection)
     this.props.update()
   },
 
@@ -122,15 +136,17 @@ var PopoverSelect = React.createClass({
     // if already in selection
     if (loc != -1) {
       this.state.selection.splice(loc, 1)
+      // if (this.props.mode == 'single') {
+      //   this.setState({selection: []})
+      // }
     }
     // if not in selection
     else {
       this.state.selection.push(index)
       if (this.props.mode == 'single') {
-        var newlist = [index]
         this.setState({selection: [index]})
         console.log(this.state.selection)
-
+        this.harvestSelection()
         return
       }
     }

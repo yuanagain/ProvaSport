@@ -160,9 +160,11 @@ var PopoverSelector = React.createClass({
   },
 
   harvestSelection: function(selection) {
-    this.props.harvestSelection(selection)
+    this.setState({selection: selection})
+    var iselect = _ctools.traceIndices(this.props.items,
+                                            this.state.selection)
+    this.props.harvestSelection(iselect)
     this.props.navigator.pop()
-    this.forceUpdate()
   },
 
   defaultRenderSelector: function() {
