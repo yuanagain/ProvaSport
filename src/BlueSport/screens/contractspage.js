@@ -92,7 +92,8 @@ var ContractsPage = React.createClass({
           title={'Event Type'}
           items={['Single Match', 'Elimination ', 'Round Robin']}
           navigator={this.props.navigator}
-          selection={['Single Match']}
+          selection={[]}
+          mode={'single'}
         />
         <View style={_cstyles.section_divider_line}>
         </View>

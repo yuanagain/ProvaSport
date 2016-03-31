@@ -72,7 +72,7 @@ var SettingsPage = React.createClass({
           title={'Sports'}
           items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
           navigator={this.props.navigator}
-          selection={[0]}
+          selection={['Tennis']}
         />
         <View style={_cstyles.section_divider_line}>
         </View>
