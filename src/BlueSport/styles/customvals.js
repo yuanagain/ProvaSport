@@ -22,7 +22,7 @@ const _cvals = {
   slength: slength,
   bricklength: (slength) * 2.5 - 2,
   brickheight: slength,
-  thumbslength: ((slength) * 3 / 5 ),
+  thumbslength: ((slength) * 3 / 5 - 12 * dscale),
 }
 
 module.exports = _cvals;

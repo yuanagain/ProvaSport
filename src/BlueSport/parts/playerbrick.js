@@ -53,8 +53,8 @@ var PlayerBrick = React.createClass({
     return (
       <TouchableOpacity style={styles.playerbrick}
                         onPress={() => this.onPress()}>
-        <View style={styles.center}>
-          <Image style={styles.left}
+        <View style={[styles.center, styles.left]} >
+          <Image style={styles.im}
                  source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}/>
         </View>
         <View style={styles.right}>
@@ -67,28 +67,26 @@ var PlayerBrick = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   playerbrick: {
     width: _cvals.bricklength,
     flexDirection: 'row',
     alignItems: 'flex-end',
-    padding: 4,
-
-    //height: _const.slength,
+    justifyContent: 'flex-start',
+    paddingLeft: 4,
   },
-  left: {
+  im: {
     height: _cvals.thumbslength,
     width: _cvals.thumbslength,
     borderRadius: _cvals.thumbslength / 2,
-    marginRight: 4,
-    flexDirection: 'column',
-    flex: 1,
-    justifyContent: 'center',
+    marginRight: 4 * _cvals.dscale,
   },
+  left:{
+    alignSelf: 'center',
+    justifyContent: 'space-between',
+  },
+  right: {
 
+  },
   border: {
     borderWidth: 1,
     borderColor: 'black',
@@ -104,8 +102,8 @@ var styles = StyleSheet.create({
   center: {
     justifyContent: 'center',
     alignItems: 'center',
-  }
 
-})
+  },
+});
 
 module.exports = PlayerBrick;

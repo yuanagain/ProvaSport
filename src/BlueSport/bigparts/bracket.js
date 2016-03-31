@@ -88,19 +88,13 @@ var styles = StyleSheet.create({
 
 var Fork = React.createClass({
   getInitialState: function() {
-    var defaultHeight = 59
+    var defaultHeight = 50
     var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2
     var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
 
     if (this.props.level == 0) {
       fmargin = 0
     }
-    // if (this.props.level == 1) {
-    //   fmargin = 59 / 2
-    // }
-    // if (this.props.level == 2) {
-    //   fmargin = 59 * 3 / 2
-    // }
 
     return (
       {
@@ -148,7 +142,7 @@ var Fork = React.createClass({
         <View style={styles.vline_wrapper}>
           <View style={[_cstyles.vline,
                         {height: this.state.fheight + 0.5,
-                         marginBottom: this.state.fmargin,
+                         marginBottom: this.state.fmargin + 0.25,
                          marginLeft: 0}]}>
           </View>
         </View>
