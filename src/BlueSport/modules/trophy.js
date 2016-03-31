@@ -1,17 +1,19 @@
-var Firebase = require("firebase");
+var trophydb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
-Firebase = new Firebase("FirebaseURL/resource");
+trophydb = new Firebase("https://incandescent-torch-5505.firebaseio.com/trophy");
 /*player object within Player class*/
 class Trophy {
-  var trophy = {
-    "trophyid": -1,
-    "name": "(string)",
-    "description": "",
-    "thumbnail": "",
+  var trophy =
+  {
+      "trophyid": -1,
+      "name": "(string)",
+      "description": "",
+      "thumbnail": ""
   };
   /* Creates trophy object and loads a data from Firebase */
   constructor(trophyid) {
     let this.trophy.trophyid = trophyid; //might need to define getInitState
+    load(trophyid);
   }
 
   /*
@@ -19,9 +21,13 @@ class Trophy {
    * into the trpophy object
    * Usage: this.load()
    */
-  function load() {
-    trophy = Firebase.get("/Trophy/"+ trophy.trophyid);
-  }
+   function load(trophyid) {
+     trophydb.orderByChild("trophyid").equalTo(trophyid).once("value", function(snapshot) {
+       this.trophy = snapshot.val();
+     }, function (errorObject) {
+       console.log("The trophy read failed: " + errorObject.code);
+     });
+   }
   /*Usage: this.getName()
     Description: returns name of trophy object */
   function getName() {
@@ -34,7 +40,7 @@ class Trophy {
   function getDescription() {
     return trophy.description;
   }
-  /* 
+  /*
    * Usage: getThumbnail()
    * Description: returns trophy thumbnail as an Image tag
    */

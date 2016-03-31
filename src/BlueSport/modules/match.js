@@ -1,6 +1,6 @@
-var Firebase = require("firebase");
+var matchdb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
-Firebase = new Firebase("FirebaseURL/resource");
+matchdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/match");
 /*player object within Player class*/
 var Match;
 class Match {
@@ -8,30 +8,35 @@ class Match {
    * Match object that will
    * serve as the JSON object Firbase will download to
    */
-  Match = {
-    "matchid": -1,
-    "datetime": 0,
-    "sport": "string",
-    "scores": [],
-    "tournamentid": -1,
-    "winner": -1,
-    "data": {},
-    "teams": [],
-    "payoutdata": {
-      "xp": -1,
-      "cash": -1
-    },
-    "location": (),
+  Match =
+    {
+      "matchid": -1,
+      "datetime": 0,
+      "sport": "string",
+      "scores": [],
+      "tournamentid": -1,
+      "winner": -1,
+      "data": {},
+      "teams": [],
+      "payoutdata": {
+        "xp": -1,
+        "cash": -1
+      },
+      "location": ()
   };
 /*Creates the match object and loads it from the Firebase  */
   constructor(matchid) {
     Match.matchid = matchid; /* make this completely immutable */
-    load();
+    load(matchid);
     /* alert(Match.matchid); */
   }
   /* Loads the correct match object from Firebase and caches to local variable*/
-  function load() {
-    Match = Firebase.get("/match/matchid");
+  function load(matchid) {
+    matchdb.orderByChild("matchid").equalTo(matchid).once("value", function(snapshot) {
+      this.Match = snapshot.val();
+    }, function (errorObject) {
+      console.log("The match read failed: " + errorObject.code);
+    });
   }
   /*
    * Usage: this.type()
@@ -48,7 +53,8 @@ class Match {
  * Accessing the Date:
  * 1. import Date Library
  * 2. d = new Date(Epoch)
- * 3. string day = strfrmDate("%d");
+ * 3. string day = d.toString("%d"); Other documnetation of the date object found:
+ http://www.w3schools.com/jsref/jsref_obj_date.asp
  */
   function getTime() {
     return Match.datetime;

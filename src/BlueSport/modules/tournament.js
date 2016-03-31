@@ -11,20 +11,21 @@
 */
 
 
-var Firebase = require("firebase");
+var tourndb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
-Firebase = new Firebase("FirebaseURL/resource");
+tourndb = new Firebase("https://incandescent-torch-5505.firebaseio.com/tournament");
 /*player object within Player class*/
 class Tournament {
   /* Tournament object that is global and will be set by the Firebase load */
-  var Tournament = {
-    "tournamentid": -1,
-    "type": "",
-    "teams": [], //alphabetical list of teams or sorted by priority
-    "location": (,), /*tuple of  Latitude and Longitude*/
-    "dates": [],
-    "sport": "(string)",
-    "matches": [],
+  var Tournament =
+  {
+      "tournamentid": -1,
+      "type": "",
+      "teams": [], //alphabetical list of teams or sorted by priority
+      "location": (), /*tuple of  Latitude and Longitude*/
+      "dates": [],
+      "sport": "(string)",
+      "matches": []
   };
 
   /*
@@ -32,8 +33,8 @@ class Tournament {
    * Dependent on load() and Firebase
    */
   constructor(tournamentid) {
-    let this.state.tournamentid = tournamentid; //automatically hiding information
-    var ret = load();
+    let this.Tournament.tournamentid = tournamentid; //automatically hiding information
+    var ret = load(tournamentid);
     if (!ret) {
       alert("FATAL NO object Found");
     }
@@ -42,13 +43,12 @@ class Tournament {
   /* Load in the Tournament by tournamentid and set public object tournament
    Look into scoping rules and investigate later if the design choice is to make
   the object private for strict API usage and constricting errors within class */
-  function load() {
-    try {
-      Tournament = Firebase.get("/Tournament/"+ tournamentid);
-    }
-    catch (err) {
-      return null;
-    }
+  function load(tournamentid) {
+    tourndb.orderByChild("tournamentid").equalTo(tournamentid).once("value", function(snapshot) {
+      this.Tournament = snapshot.val();
+    }, function (errorObject) {
+      console.log("The tournament read failed: " + errorObject.code);
+    });
   }
 
   /*

@@ -1,7 +1,7 @@
 /* provide module to access/update player data here */
-var Firebase = require("firebase");
+var playerdataRef = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
-Firebase = new Firebase("FirebaseURL/resource");
+playerdataRef = new Firebase("https://incandescent-torch-5505.firebaseio.com/player");
 /*player object within Player class*/
 class Player {
   var Player = {
@@ -19,22 +19,28 @@ class Player {
     "friends": [],
     "teams": [],
     "matches": [],
-    "tournaments": [],
+    "tournaments": []
   };
   /* Creates and loads the Player from the Firebase */
   constructor(playerid) {
-  let this.Player.playerid = playerid;
+    let this.Player.playerid = playerid;
+    load(playerid);
   }
   /* loads player from firebase and then handles Firebase errs */
-  function load() {
-    player = Firebase.get("/"+playerid+"/");
+  function load(playerid) {
+    playerdataRef.orderByChild("playerid").equalTo(playerid).once("value", function(snapshot) {
+      this.Player = snapshot.val();
+    }, function (errorObject) {
+      console.log("The player read failed: " + errorObject.code);
+    });
   }
+
   /*
    * Usage: Player.getProfPic()
    * returns image tag of the PLayer's profile
    */
   function getProfPic() {
-    return <Image src=player.prof_pic>
+    return <Image src=Player.prof_pic>
   }
 
   /*
@@ -42,14 +48,14 @@ class Player {
    * returns the earnings of the player
    */
   function getEarnings() {
-    return player.earnings;
+    return Player.earnings;
   }
   /*
    * Usage: player.getELO()
    * returns the ELO of the player (specific to sport)
    */
   function getELO() {
-    return player.elo;
+    return Player.elo;
   }
   /*
    * Usage: player.getSports()
@@ -58,39 +64,39 @@ class Player {
    * have multisport data and how that relates to ELO calculation
    */
   function getSports() {
-    return player.sports;
+    return Player.sports;
   }
   /*
    * Usage: player.getFriends()
    * returns the integer array of friendids of the players
    */
   function getFriends() {
-    return player.friends;
+    return Player.friends;
   }
   /* get the num-th friend from friend list sorted by: TODO */
   function getFriends(num) {
-    return player.friends[num]
+    return Player.friends[num]
   }
   /*
    * Usage: player.getTeams()
    * returns the array obect of teamids the player is on
    */
   function getTeams(){
-    return player.teams;
+    return Player.teams;
   }
   /*
    * Usage: Player.getMatches()
    * return the matchids that the player particpatedin
    */
   function getMatches() {
-    return player.matches
+    return Player.matches
   }
   /*
    * Usage: Player.getTournaments()
    * returns the tournamnetids that the player particpated in
    */
   function getTournaments() {
-    return player.tournaments
+    return Player.tournaments
 
   }
 /*possilby add stuff like isOnTeam etc.*/
