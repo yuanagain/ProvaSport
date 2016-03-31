@@ -5,24 +5,26 @@ matchdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/match");
 var Match;
 class Match {
   /*
+  TODO get rid of the "" for keys
+  design decisions about uploading child ony or object to the cloud
    * Match object that will
    * serve as the JSON object Firbase will download to
    */
   Match =
     {
-      "matchid": -1,
-      "datetime": 0,
-      "sport": "string",
-      "scores": [],
-      "tournamentid": -1,
-      "winner": -1,
-      "data": {},
-      "teams": [],
-      "payoutdata": {
-        "xp": -1,
-        "cash": -1
+      matchid: -1,
+      datetime: 0,
+      sport: "",
+      scores: [],
+      tournamentid: -1,
+      winner: -1,
+      data: {},
+      teams: [],
+      payoutdata: {
+        xp: -1,
+        cash: -1
       },
-      "location": ()
+      location: ()
   };
 /*Creates the match object and loads it from the Firebase  */
   constructor(matchid) {
@@ -38,6 +40,49 @@ class Match {
       console.log("The match read failed: " + errorObject.code);
     });
   }
+  /* add team to the Match */
+  function addTeam(argTeamid) {
+    (Match.teams).append(argTeamid);
+    var ref = matchdb.child(Match.matchid).child(teams);
+    ref.push(argTeamid);
+  }
+
+  /* set time for the Match */
+  function setTime(argTime) {
+    /* %d argTime for EPCOH */
+    var ref = matchdb.child(Match.matchid).child(time);
+    ref.set(argTime);
+  }
+  /* add team to the Match */
+  function reportScore(scoreTuple) {
+    var ref = matchdb.child(Match.matchid).child(scores);
+    ref.push(scoreTuple);
+  }
+  /* takes in a dictionary of payout data and updates that value loacally and in DB */
+  function setPayout(dictPay) {
+    Match.payoutdata = dictPay;
+    var ref = matchdb.child(Match.matchid).child(payoutdata);
+    ref.set(dictPay);
+  }
+  /* takes in a dictionary of match data and updates that value loacally and in DB */
+  function setData(dataObj) {
+    Match.data = dataObj;
+    var ref = matchdb.child(Match.matchid).child(data);
+    ref.set(dataObj);
+  }
+  function setLocation(argloc) {
+    Match.location = argloc;
+    matchdb.child(Match.matchid).child(location).set(argloc);
+  }
+  function setSport(strSport) {
+    Match.sport = strSport;
+    matchdb.child(Match.matchid).child(sport).set(strSport);
+  }
+  function reportWinner(playerid){
+    Match.winner = playerid;
+    matchdb.child(Match.matchid).child(winner).set(playerid); // allow multiple winners??
+  }
+  /*  */
   /*
    * Usage: this.type()
    * returns the string type standardized as:
@@ -84,8 +129,6 @@ class Match {
   function getTournament() {
     return Match.tournamentid;
   }
-
-
   /*
    * usage: this.getWinner()
    * returns playerid of winner
@@ -93,7 +136,6 @@ class Match {
   function getWinner() {
     return Match.winner;
   }
-
   /*
    * Usage: this.getData()
    * returns the data dictionary with each match data
@@ -101,7 +143,6 @@ class Match {
   function getData() {
     return Match.data;
   }
-
   /*
    * Usage: this.getTeams()
    * desciption: returns the array of teamids indicating teams particpating in match
@@ -109,7 +150,6 @@ class Match {
   function getTeams() {
     return Match.teams;
   }
-
   /*
    * Usage: this.getPayout()
    * Description: returns payout data for the match as a dictionary of form:
@@ -130,5 +170,11 @@ class Match {
   function getLocation() {
     return Match.data;
   }
+  /*  */
+  function updateData(jsonObj) {
+    /* assumes valid Json for entire object and match created*/
+    matchdb.child(Match.matchid).update(jsonObj);
+  }
+  function setAttribute()
 }
 export match

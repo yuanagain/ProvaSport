@@ -8,13 +8,14 @@ var Firebase = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 var FireURL = "https://incandescent-torch-5505.firebaseio.com";
 var User = {
-  "name": "",
-  "userid" : 0,
-  "email": "",
-  "playerid": 0,
+  name: "",
+  userid: 0,
+  email: "",
+  playerid: 0,
 /* TODO session token? NO Firebase will handle this if we decide on a session token scheme */
 
 }
+var ref;
 class User {
   /* Creates a new user if there is none or logins a user if exists in database */
   constructor(email, password, isNew) {
@@ -24,15 +25,65 @@ class User {
     session token? this wil be where the user will be authenticated throught he node.js
     npm install firebase-token-generator --save
     */
-    if (isNew) {
-      User.email = email;
-      create();
-    }
-    else {
+  // Register the callback to be fired every time auth state changes
+    ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+    ref.onAuth(authDataCallback);
 
-    }
+
+
+/* LOGIN TODO
+On Shutdown: ref.unauth(); to deauthorize.
+*/
+if (isNew){
+  newName();
+}
+else {
+  ref.authWithPassword({
+    email    : email,
+    password : password
+  }, authHandler);
+}
+
+// find a suitable name based on the meta info given by each provider
+
     /*Firebase generate a user id*/
   }
+  function newName(authData) {
+    switch(authData.provider) {
+       case 'password':
+         return authData.password.email.replace(/@.*/, '');
+       case 'twitter':
+         return authData.twitter.displayName;
+       case 'facebook':
+         return authData.facebook.displayName;
+    }
+  }
+
+  function authDataCallback(authData) {
+    if (authData) {
+      console.log("User " + authData.uid + " is logged in with " + authData.provider);
+      ref.offAuth(authDataCallback);// logged in no longer need to listen for login
+    } else {
+      console.log("User is logged out");
+    }
+  }
+/* authenitcation handler */
+function authHandler() {
+  ref.offAuth()
+}
+
+var isNewUser = true;
+var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+ref.onAuth(function(authData) {
+  if (authData && isNewUser) {
+    // save the user's profile into the database so we can list users,
+    // use them in Security and Firebase Rules, and show profiles
+    ref.child("users").child(authData.uid).set({
+      provider: authData.provider,
+      name: getName(authData)
+    });
+  }
+});
   function create() {
     /*Actual login*/
   }

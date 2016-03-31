@@ -5,21 +5,21 @@ playerdataRef = new Firebase("https://incandescent-torch-5505.firebaseio.com/pla
 /*player object within Player class*/
 class Player {
   var Player = {
-    "playerid" : -1,
-    "name" : "",
-    "userid" : -1,
-    "prof_pic": "url",
-    "elo": 0.0,
-    "earnings": {
-      "cash": -1,
-      "xp": -1,
-      "trophies": []
+    playerid : -1,
+    name : "",
+    userid : -1,
+    prof_pic: "url",
+    elo: 0.0,
+    earnings: {
+      cash: -1,
+      xp: -1,
+      trophies: []
     }
-    "sports": "",
-    "friends": [],
-    "teams": [],
-    "matches": [],
-    "tournaments": []
+    sports: "",
+    friends: [],
+    teams: [],
+    matches: [],
+    tournaments: []
   };
   /* Creates and loads the Player from the Firebase */
   constructor(playerid) {
@@ -34,7 +34,32 @@ class Player {
       console.log("The player read failed: " + errorObject.code);
     });
   }
-
+  function setELO(newElo) {
+    Player.elo = newElo;
+    playerdb.child(Player.playerid).child(elo).set(newElo);
+  }
+  function setProfPic(picURL) {
+    Player.prof_pic = picURL;
+    playerdb.child(Player.playerid).child(prof_pic).set(picURL);
+  }
+  function addSport(strSport) {
+    Player.sports.append(strSport);
+    playerdb.child(Player.playerid).child(sports).set(strSport);
+  }
+  function setName(strName) {
+    Player.name = strName;
+    playerdb.child(Player.playerid).child(name).set(strName);
+  }
+  function addFriend(frid) {
+    load(Player.playerid);
+    Player.friends.append(frid);
+    playerdb.child(Player.playerid).child(friends).set(Player.friends);
+  }
+  function addTrophy(trophyid) {
+    Player.earnings.trophies.append(trophyid);
+    playerdb.child(Player.playerid).child(earnings).child(trophies).set(Player.earnings.trophies);
+  }
+  
   /*
    * Usage: Player.getProfPic()
    * returns image tag of the PLayer's profile

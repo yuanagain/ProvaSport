@@ -3,12 +3,13 @@ var trophydb = require("firebase");
 trophydb = new Firebase("https://incandescent-torch-5505.firebaseio.com/trophy");
 /*player object within Player class*/
 class Trophy {
+  // this will all be Admin-defined so read-only API
   var trophy =
   {
-      "trophyid": -1,
-      "name": "(string)",
-      "description": "",
-      "thumbnail": ""
+      trophyid: -1,
+      name: "(string)",
+      description: "",
+      thumbnail: ""
   };
   /* Creates trophy object and loads a data from Firebase */
   constructor(trophyid) {

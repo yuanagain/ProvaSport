@@ -10,7 +10,7 @@
   });
 */
 
-
+var specTourndb;
 var tourndb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 tourndb = new Firebase("https://incandescent-torch-5505.firebaseio.com/tournament");
@@ -19,24 +19,49 @@ class Tournament {
   /* Tournament object that is global and will be set by the Firebase load */
   var Tournament =
   {
-      "tournamentid": -1,
-      "type": "",
-      "teams": [], //alphabetical list of teams or sorted by priority
-      "location": (), /*tuple of  Latitude and Longitude*/
-      "dates": [],
-      "sport": "(string)",
-      "matches": []
+      tournamentid: -1,
+      type: "",
+      teams: [], //alphabetical list of teams or sorted by priority
+      location: (), /*tuple of  Latitude and Longitude*/
+      dates: [],
+      sport: "(string)",
+      matches: []
   };
+  /*  */
+  function setType(strType) {
+    Tournament.type = strType;
+    specTourndb.child(type).set(strType);
+    /* how to make this a once - only call? do int hte constructor? */
+  }
+  function addTeam(teamid) {
+    Tournament.teams.append(teamid); // makesure the already current object is in-time with database so basically make this real-time updated
+    specTourndb.child(teams).set(Tournament.teams);
+  }
+  function setLocation(loc) {
+    Tournament.location = loc;
+    specTourndb.child(location).set(loc);
 
+  }
+  function setDates(datesArr) {
+    Tournament.dates = datesArr;
+    specTourndb.child(dates).set(datesArr);
+  }
+  function setMatches(matchesArr) {
+    Tournament.matches = matchesArr;
+    specTourndb.child(matches).set(matchesArr);
+  }
   /*
    * Constructor: create a TournamentObject and load it's contents
    * Dependent on load() and Firebase
    */
   constructor(tournamentid) {
-    let this.Tournament.tournamentid = tournamentid; //automatically hiding information
+    Tournament.tournamentid = tournamentid; //automatically hiding information
     var ret = load(tournamentid);
     if (!ret) {
       alert("FATAL NO object Found");
+    }
+    else {
+      specTourndb = tourndb.child(tournamentid);
     }
   }
 
