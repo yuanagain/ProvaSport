@@ -21,22 +21,15 @@ class User {
     session token? this wil be where the user will be authenticated throught he node.js
     npm install firebase-token-generator --save
     */
-/*
-var ref = new Firebase("https://incandescent-torch-5505.firebaseio.com");
-ref.authWithPassword({
-  email    : "bobtony@firebase.com",
-  password : "correcthorsebatterystaple"
-}, function(error, authData) {  }, {
-  remember: "sessionOnly"
-});
-*/
-
-
-
-
-
-
-
+    /*
+    var ref = new Firebase("https://incandescent-torch-5505.firebaseio.com");
+    ref.authWithPassword({
+      email    : "bobtony@firebase.com",
+      password : "correcthorsebatterystaple"
+    }, function(error, authData) {  }, {
+      remember: "sessionOnly"
+    });
+    */
   // Register the callback to be fired every time auth state changes
     ref = new Firebase("https://incandescent-torch-5505.firebaseio.com");
     ref.onAuth(authDataCallback);
@@ -166,112 +159,127 @@ ref.authWithPassword({
     ref.set(team);
   }
 
-//change Email data of user
-  ref.changeEmail({
-    oldEmail : "bobtony@firebase.com",
-    newEmail : "bobtony@google.com",
-    password : "correcthorsebatterystaple"
-  }, function(error) {
-    if (error === null) {
-      console.log("Email changed successfully");
-    } else {
-      console.log("Error changing email:", error);
-    }
-  });
-
-/* Create New User with Login */
-  ref.createUser({
-    email    : "bobtony@firebase.com",
-    password : "correcthorsebatterystaple"
-  }, function(error, userData) {
-    if (error) {
-      console.log("Error creating user:", error);
-    } else {
-      console.log("Successfully created user account with uid:", userData.uid);
-    }
-  });
-
-
-/* Login existing user */
-  ref.authWithPassword({
-    email    : "bobtony@firebase.com",
-    password : "correcthorsebatterystaple"
-  }, function(error, authData) {
-    if (error) {
-     switch (error.code) {
-       case "INVALID_EMAIL":
-         console.log("The specified user account email is invalid.");
-         break;
-       case "INVALID_PASSWORD":
-         console.log("The specified user account password is incorrect.");
-         break;
-       case "INVALID_USER":
-         console.log("The specified user account does not exist.");
-         break;
-       default:
-         console.log("Error logging user in:", error);
-     }
-   } else {
-      console.log("Authenticated successfully with payload:", authData);
-    }
-});
-
-/* Forgotten password and in-app reset */
-ref.changePassword({
-  email       : "bobtony@firebase.com",
-  oldPassword : "correcthorsebatterystaple",
-  newPassword : "neatsupersecurenewpassword"
-}, function(error) {
-  if (error === null) {
-    console.log("Password changed successfully");
-  } else {
-    console.log("Error changing password:", error);
-  }
-});
-
-/* Can't Remeber your passwrod? We got your back */
-ref.resetPassword({
-  email : "bobtony@firebase.com"
-}, function(error) {
-  if (error === null) {
-    console.log("Password reset email sent successfully");
-  } else {
-    console.log("Error sending password reset email:", error);
-  }
-});
-
-
-/* Delte Users from DB (they delete themselves) [Full Authority still belongs to Admin]*/
-ref.removeUser({
-  email    : "bobtony@firebase.com",
-  password : "correcthorsebatterystaple"
-}, function(error) {
-  if (error === null) {
-    console.log("User removed successfully");
-  } else {
-    console.log("Error removing user:", error);
-  }
-});
-
-/* Sign in with Facebook */
-ref.authWithOAuthRedirect("<provider>", authHandler);
-
-/* Sign out */
-ref.unauth();
-
-/* Save User Data */
-var isNewUser = true;
-var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
-ref.onAuth(function(authData) {
-  if (authData && isNewUser) {
-    // save the user's profile into the database so we can list users,
-    // use them in Security and Firebase Rules, and show profiles
-    ref.child("users").child(authData.uid).set({
-      provider: authData.provider,
-      data: authData
+  //change Email data of user
+  function changeEmail(oldEmail, NewEmail, password) {
+    ref.changeEmail({
+      oldEmail :oldEmail,
+      newEmail : newEmail,
+      password : password
+    }, function(error) {
+      if (error === null) {
+        console.log("Email changed successfully");
+      } else {
+        console.log("Error changing email:", error);
+      }
     });
   }
-});
+
+  /* Create New User with Login */
+  function createUser(email, password) {
+    ref.createUser({
+      email    : email,
+      password : password
+    }, function(error, userData) {
+      if (error) {
+        console.log("Error creating user:", error);
+      } else {
+        console.log("Successfully created user account with uid:", userData.uid);
+      }
+    });
+  }
+
+  /* Login existing user */
+  function login(email, password) {
+    ref.authWithPassword({
+      email    : email,
+      password : password
+    }, function(error, authData) {
+      if (error) {
+       switch (error.code) {
+         case "INVALID_EMAIL":
+           console.log("The specified user account email is invalid.");
+           break;
+         case "INVALID_PASSWORD":
+           console.log("The specified user account password is incorrect.");
+           break;
+         case "INVALID_USER":
+           console.log("The specified user account does not exist.");
+           break;
+         default:
+           console.log("Error logging user in:", error);
+       }
+     } else {
+        console.log("Authenticated successfully with payload:", authData);
+      }
+    });
+  }
+
+  /* Forgotten password and in-app reset */
+  function changePassword(oldPass, newPass, email) {
+    ref.changePassword({
+      email       : email,
+      oldPassword : oldPass,
+      newPassword : newPass
+    }, function(error) {
+      if (error === null) {
+        console.log("Password changed successfully");
+      } else {
+        console.log("Error changing password:", error);
+      }
+    });
+  }
+
+  /* Can't Remeber your passwrod? We got your back */
+  function resetPasswordEmail(email) {
+    ref.resetPassword({
+      email : email
+    }, function(error) {
+      if (error === null) {
+        console.log("Password reset email sent successfully");
+      } else {
+        console.log("Error sending password reset email:", error);
+      }
+    });
+  }
+
+  /* Delte Users from DB (they delete themselves) [Full Authority still belongs to Admin]*/
+  function removeUser(strEmail, strPassword) {
+    ref.removeUser({
+      email    : strEmail,
+      password : strPassword
+    }, function(error) {
+      if (error === null) {
+        console.log("User removed successfully");
+      } else {
+        console.log("Error removing user:", error);
+      }
+    });
+  }
+
+  /* NEEDS WORK Sign in with Facebook */
+  function FBlogin() {
+    ref.authWithOAuthRedirect("Facebook", authHandler);
+  }
+
+  /* Sign out */
+  function logout() {
+    ref.unauth();
+  }
+
+
+  /* Save User Data */
+  function saveUser(authData) {
+    ref.onAuth(function(authData) {
+      if (authData) {
+        // save the user's profile into the database so we can list users,
+        // use them in Security and Firebase Rules, and show profiles
+        ref.child("users").child(authData.uid).set({
+          provider: authData.provider,
+          data: authData
+          });
+      }
+    });
+  }
 
 }
-module.exports = UserData;
+  module.exports = UserData;
