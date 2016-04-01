@@ -21,8 +21,24 @@ class User {
     session token? this wil be where the user will be authenticated throught he node.js
     npm install firebase-token-generator --save
     */
+/*
+var ref = new Firebase("https://incandescent-torch-5505.firebaseio.com");
+ref.authWithPassword({
+  email    : "bobtony@firebase.com",
+  password : "correcthorsebatterystaple"
+}, function(error, authData) {  }, {
+  remember: "sessionOnly"
+});
+*/
+
+
+
+
+
+
+
   // Register the callback to be fired every time auth state changes
-    ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+    ref = new Firebase("https://incandescent-torch-5505.firebaseio.com");
     ref.onAuth(authDataCallback);
     /* LOGIN TODO
     On Shutdown: ref.unauth(); to deauthorize.
