@@ -12,7 +12,7 @@ var DynamicList = require('../bigparts/dynamiclist')
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var PopoverSelector = require('../bigparts/popoverselector')
-
+var Header = require('../parts/header')
 import * as _ctools from '../libs/customtools.js'
 
 var {
@@ -78,11 +78,8 @@ var RecordPage = React.createClass({
     return (
     <View style={styles.container}>
       <View>
-        <View style={_cstyles.header_container}>
-          <Text style={_cstyles.title_text}>
-            {"RECORD"}
-          </Text>
-        </View>
+        <Header title={"RECORD"}
+                navigator={this.props.navigator} />
 
 
         <PopoverSelector

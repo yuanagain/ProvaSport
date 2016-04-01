@@ -4,7 +4,7 @@ var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 
-
+var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
 
@@ -58,11 +58,9 @@ var PopoverSelect = React.createClass({
     return (
     <View style={styles.container}>
       <View style={styles.body_container}>
-        <View style={_cstyles.header_container}>
-          <Text style={_cstyles.title_text}>
-            {this.props.title}
-          </Text>
-        </View>
+        <Header title={this.props.title}
+                mode={'nav'}
+                navigator={this.props.navigator} />
 
         <ListView
           dataSource={this.state.dataSource}

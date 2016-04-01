@@ -8,6 +8,7 @@ var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
 
 var RoundRobin = require('../bigparts/roundrobin')
+var Header = require('../parts/header')
 
 var {
   AppRegistry,
@@ -50,11 +51,9 @@ var RoundRobinPage = React.createClass({
     return (
     <View style={styles.container}>
 
-      <View style={_cstyles.header_container}>
-        <Text style={_cstyles.title_text}>
-          {"Round Robin"}
-        </Text>
-      </View>
+      <Header title={"ROUND ROBIN"}
+              mode={'nav'}
+              navigator={this.props.navigator} />
       <RoundRobin matches={this.props.matches}
                   navigator={this.props.navigator} />
     </View>

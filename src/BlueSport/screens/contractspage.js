@@ -16,6 +16,8 @@ var PopoverSelector = require('../bigparts/popoverselector')
 var RoundRobinPage = require('../screens/roundrobinpage')
 var BracketPage = require('../screens/bracketpage')
 
+var Header = require('../parts/header')
+
 import * as _ctools from '../libs/customtools.js'
 
 var {
@@ -81,11 +83,8 @@ var ContractsPage = React.createClass({
     return (
     <View style={styles.container}>
       <View>
-        <View style={_cstyles.header_container}>
-          <Text style={_cstyles.title_text}>
-            {"CREATE"}
-          </Text>
-        </View>
+        <Header title={"CREATE"}
+                navigator={this.props.navigator} />
 
 
         <PopoverSelector

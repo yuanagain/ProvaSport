@@ -7,7 +7,7 @@ var Button = require('react-native-button');
 var ScoreRow = require('../parts/scorerow')
 var PayoutRow = require('../parts/payoutrow')
 var _cvals = require('../styles/customvals')
-
+var Header = require('../parts/header')
 var mainfont = _cvals.mainfont
 var skorange = '#F5A623'
 var skblue = '#4A90E2'
@@ -33,17 +33,16 @@ var MatchPage = React.createClass({
   render: function() {
     var {
       name,
+      navigator,
       ...props
     } = this.props;
 
     return (
     <View style={styles.container}>
 
-      <View style={styles.header_container}>
-        <Text style={styles.header_text}>
-          Match on 9/12/2015
-        </Text>
-      </View>
+      <Header title={"MATCH"}
+              mode={'nav'}
+              navigator={this.props.navigator} />
 
       <View style={styles.section_container}>
         <Text style={styles.title_text}>

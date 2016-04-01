@@ -16,14 +16,12 @@ var {
 
 let _cvals = require('./customvals')
 
-/* using multiple styles: <View style={[styles.element, this.props.elementStyle]} /> */
 var CustomStyles = StyleSheet.create({
   title_text: {
     color: 'white',
     fontSize: 30 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
-    paddingTop: 30 * _cvals.dscale,
-    paddingBottom: 5,
+    // marginTop: 30 * _cvals.dscale,
   },
   section_header_text: {
     color: 'black',
@@ -56,9 +54,11 @@ var CustomStyles = StyleSheet.create({
   header_container: {
     height: _cvals.headerHeight,
     width: windowSize.width,
-    alignItems: 'center',
+    flexDirection: 'row',
+
+    alignItems: 'flex-end',
     backgroundColor: _cvals.skblue,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   buttons_container: {
     width: windowSize.width,
@@ -81,7 +81,7 @@ var CustomStyles = StyleSheet.create({
     width: windowSize.width,
     padding: 6 * _cvals.dscale,
     fontFamily: 'avenir',
-    shadowRadius: 4,
+    shadowRadius: 4 * _cvals.dscale,
     shadowColor: 'black',
     shadowOpacity: 0.2,
     shadowOffset: {width: 0, height: -1}
@@ -97,7 +97,7 @@ var CustomStyles = StyleSheet.create({
     backgroundColor: 'grey',
     height: 1,
     opacity: 0.3,
-    marginVertical: 0.5,
+    marginVertical: 0.5 ,
     width: windowSize.width
   },
   indented_container: {
@@ -127,6 +127,17 @@ var CustomStyles = StyleSheet.create({
   hline: {
     height: 1,
     backgroundColor: 'black',
+  },
+  left_arrow: {
+    height: 28 * _cvals.dscale,
+    width: 28 * _cvals.dscale,
+    marginLeft: 12 * _cvals.dscale,
+    paddingTop: 10
+  },
+  right_arrow: {
+    height: 28 * _cvals.dscale,
+    width: 28 * _cvals.dscale,
+    marginRight: 15 * _cvals.dscale,
   },
 })
 

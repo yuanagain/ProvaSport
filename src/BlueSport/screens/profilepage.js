@@ -8,7 +8,7 @@ var Button = require('react-native-button');
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 import * as _ctools from '../libs/customtools.js'
-
+var Header = require('../parts/header')
 var PayoutSection = require('../parts/payoutsection')
 var SimpleRow = require('../smallparts/simplerow')
 
@@ -46,11 +46,9 @@ var ProfilePage = React.createClass({
     return (
     <View style={styles.container}>
       <View>
-        <View style={_cstyles.header_container}>
-          <Text style={_cstyles.title_text}>
-            {"PROFILE"}
-          </Text>
-        </View>
+        <Header title={"PROFILE"}
+                mode={'nav'}
+                navigator={this.props.navigator} />
       </View>
       <ScrollView styles={[styles.scroll, {height: windowSize.width}]}
                   contentContainerStyle={styles.content} >

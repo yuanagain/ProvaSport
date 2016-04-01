@@ -7,7 +7,7 @@ var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
-
+var Header = require('../parts/header')
 var Bracket = require('../bigparts/bracket')
 
 var {
@@ -50,11 +50,10 @@ var RoundRobinPage = React.createClass({
     return (
     <View style={styles.container}>
 
-      <View style={_cstyles.header_container}>
-        <Text style={_cstyles.title_text}>
-          {"Bracket"}
-        </Text>
-      </View>
+      <Header title={"BRACKET"}
+              mode={'nav'}
+              navigator={this.props.navigator} />
+
       <Bracket matches={dummymatches}
                   navigator={this.props.navigator} />
     </View>

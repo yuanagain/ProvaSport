@@ -10,6 +10,8 @@ var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var PopoverSelector = require('../bigparts/popoverselector')
 
+var Header = require('../parts/header')
+
 import * as _ctools from '../libs/customtools.js'
 
 var {
@@ -33,22 +35,9 @@ var SettingsPage = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => this.rowChanged(r1, r2)})
     return (
       {
-        item: "Select Item",
-        isVisible: false,
-        username: '',
-        password: '',
-        scoreData: [(21, 5), (10, 21), (21, 12)],
-        dataSource: ds.cloneWithRows([[21, 5], [10, 21], [21, 12]]),
-        selectedSport: "None Selected",
-        selectedContract: "None Selected",
         selectedTeam1: [],
         selectedTeam2: [],
         selection: [],
-
-        SomeData: [{'key': 1, 'scores': [21,  2]},
-                   {'key': 2, 'scores': [11, 21]},
-                   {'key': 3, 'scores': [12, 21]},
-                   {'key': 4, 'scores': [11, 14]}]
       }
     );
   },
@@ -56,26 +45,24 @@ var SettingsPage = React.createClass({
     var {
       name,
       loginFunction,
+      navigator,
       ...props
     } = this.props;
 
     return (
     <View style={styles.container}>
       <View>
-        <View style={_cstyles.header_container}>
-          <Text style={_cstyles.title_text}>
-            {"SETTINGS"}
-          </Text>
-        </View>
+        <Header title={"SETTINGS"}
+                navigator={this.props.navigator} />
 
         <PopoverSelector
           title={'Sports'}
           items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
           navigator={this.props.navigator}
           selection={['Tennis']}
+          mode={'single'}
         />
-        <View style={_cstyles.section_divider_line}>
-        </View>
+        <View style={_cstyles.section_divider_line}></View>
 
       </View>
       <View style={_cstyles.buttons_container}>

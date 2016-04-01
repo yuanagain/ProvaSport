@@ -7,7 +7,7 @@ var MatchPage = require('./matchpage')
 
 var NewsFeedMatchRow = require('../parts/newsfeedmatchrow')
 var PopoverSelect = require('../parts/popoverselect')
-
+var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
 
@@ -42,11 +42,8 @@ var NewsFeedPage = React.createClass({
     return (
     <View style={styles.container}>
 
-      <View style={_cstyles.header_container}>
-        <Text style={_cstyles.title_text}>
-          {"NEWS"}
-        </Text>
-      </View>
+    <Header title={"NEWS"}
+            navigator={this.props.navigator} />
 
 
       <ListView
@@ -68,6 +65,7 @@ var NewsFeedPage = React.createClass({
   renderMatchRow(rowData) {
     return (
         <NewsFeedMatchRow
+        navigator={this.props.navigator}
         onPressFunction={() => this.onButtonPress("TEST")}/>
     )
   },
