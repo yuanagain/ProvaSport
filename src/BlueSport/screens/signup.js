@@ -32,7 +32,7 @@ var SignUpPage = React.createClass({
     return {
       name: '',
       gender: [],
-      date: new Date()
+      date: new Date(),
       email: '',
       username: '',
       password: '',

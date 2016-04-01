@@ -24,6 +24,7 @@ var {
   TextInput,
   Image,
   ListView,
+  RefreshControl,
 } = React;
 
 var NewsFeedPage = React.createClass({
@@ -31,6 +32,7 @@ var NewsFeedPage = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      isRefreshing: false,
     };
   },
   render: function() {
@@ -48,11 +50,20 @@ var NewsFeedPage = React.createClass({
         </Text>
       </View>
 
-
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderMatchRow}
         style={styles.listView}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={this.onRefresh}
+            tintColor={_cstyles.skblue}
+            title="Refreshing..."
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor="'#808080'"
+          />
+        }
       />
 
       <View style={styles.divider_line}>
@@ -71,6 +82,7 @@ var NewsFeedPage = React.createClass({
         onPressFunction={() => this.onButtonPress("TEST")}/>
     )
   },
+
   onButtonPress(arg) {
     this.props.navigator.push({
       id: "MatchScreen",
@@ -80,6 +92,12 @@ var NewsFeedPage = React.createClass({
       }
     })
   },
+
+  onRefresh() {
+    this.setState({isRefreshing: false})
+  },
+
+
 });
 
 var styles = StyleSheet.create({
@@ -113,7 +131,6 @@ var styles = StyleSheet.create({
     marginTop: 0,
   },
   header_container: {
-    // height: windowSize.height * 6 / 10,
     width: windowSize.width,
     alignItems: 'center',
     justifyContent: 'flex-end',
