@@ -28,19 +28,21 @@ var TeamRow = React.createClass({
       }
     )
   },
+
+  createPlayerBricks: function(player, i) {
+    // TODO Somehow navigator is not being passed.
+    return (
+      <PlayerBrick key={i} player={player}
+          navigator={this.props.navigator} />
+    )
+  },
+
   render: function() {
     var {
       team,
       navigator,
       ...props
     } = this.props;
-
-    var createPlayerBricks = function(player, i) {
-      // TODO Somehow navigator is not being passed.
-      return (
-        <PlayerBrick key={i} player={player} />
-      )
-    }
 
     return (
       <TouchableOpacity onPress={this.onPress}
@@ -49,25 +51,13 @@ var TeamRow = React.createClass({
           contentContainerStyle={[styles.content,
                   {width: (_cvals.bricklength + 10) * this.props.team.length,}]}>
 
-          {this.props.team.map(createPlayerBricks)}
+          {this.props.team.map(this.createPlayerBricks)}
         </ScrollView>
       </TouchableOpacity>
 
     )
   },
-
-  onPress: function() {
-    this.props.navigator.push({
-      id: "TeamPage",
-      component: MatchPage,
-      passProps: {
-        match: this.props.match,
-        navigator: this.props.navigator
-      }
-    })
-  },
 });
-
 
 var picslength = _cvals.dscale * 30
 

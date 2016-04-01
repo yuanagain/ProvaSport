@@ -247,7 +247,7 @@ var ContractsPage = React.createClass({
   //// TODO POPULATE W/ REAL DATA
   toRR() {
     this.props.navigator.push({
-      id: "RoundRobinPage",
+      id: "RoundRobinPage3",
       component: RoundRobinPage,
       passProps: {
         navigator: this.props.navigator
@@ -256,7 +256,7 @@ var ContractsPage = React.createClass({
   },
   toBracket() {
     this.props.navigator.push({
-      id: "BracketPage",
+      id: "BracketPage3",
       component: BracketPage,
       passProps: {
         navigator: this.props.navigator
@@ -265,7 +265,7 @@ var ContractsPage = React.createClass({
   },
   toTeamPage() {
     this.props.navigator.push({
-      id: "TeamPage",
+      id: "TeamPage3",
       component: TeamPage,
       passProps: {
         navigator: this.props.navigator

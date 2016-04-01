@@ -18,28 +18,22 @@ var {
   Text,
   Image,
   ScrollView,
+  Navigator,
   TouchableOpacity,
 } = React;
 
 
 var PlayerBrick = React.createClass({
 
-  getInitialState: function() {
-    return (
-      {
-      }
-    );
-  },
-
-  getDefaultProps: function() {
-    return (
-      {
-      }
-    )
-  },
-
   onPress: function() {
-    // this.navigator.push()
+    var ProfilePage = require('../screens/profilepage')
+    this.props.navigator.push({
+      id: "ProfilePage" + String(_ctools.randomKey()),
+      component: ProfilePage,
+      passProps: {
+        navigator: this.props.navigator
+      }
+    })
   },
 
   render: function() {

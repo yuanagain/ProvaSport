@@ -7,9 +7,8 @@ var Button = require('react-native-button');
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
 var Header = require('../parts/header')
-var TeamRow = require('../parts/teamrow')
 var SimpleRow = require('../smallparts/simplerow')
-var DynamicList = require('../bigparts/dynamiclist')
+
 var MatchList = require('../bigparts/matchlist')
 
 var {
@@ -47,7 +46,6 @@ var TeamPage = React.createClass({
     } = this.props;
 
     return (
-
     <View>
       <Header title={"TEAM"}
               mode={'nav'}
@@ -65,7 +63,7 @@ var TeamPage = React.createClass({
         <View style={_cstyles.section_divider_line} ></View>
 
         <SimpleRow title={"Members"} value={"3"} />
-        <TeamRow navigator={this.props.navigator} />
+        <SimpleRow navigator={this.props.navigator} />
 
         <View style={_cstyles.section_divider_line} ></View>
         <SimpleRow title={"Recent Matches"} value={"4"} />

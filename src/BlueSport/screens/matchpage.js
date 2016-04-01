@@ -10,6 +10,7 @@ var Header = require('../parts/header')
 var TeamRow = require('../parts/teamrow')
 var SimpleRow = require('../smallparts/simplerow')
 var DynamicList = require('../bigparts/dynamiclist')
+var TeamBlock = require('../smallparts/teamblock')
 
 var {
   AppRegistry,
@@ -63,12 +64,18 @@ var MatchPage = React.createClass({
         <SimpleRow title={"Location"} value={"MBBC"} />
         <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Team 1"} value={"Won"} />
+        <TeamBlock title={"Team 1"} value={"Won"}
+                    navigator={this.props.navigator}/>
+
         <TeamRow navigator={this.props.navigator} />
+
         <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Team 2"} value={"Lost"} />
+        <TeamBlock title={"Team 2"} value={"Lost"}
+                    navigator={this.props.navigator}/>
+
         <TeamRow navigator={this.props.navigator} />
+        
         <View style={_cstyles.section_divider_line} ></View>
 
         <SimpleRow title={"Scores"} value={""} />

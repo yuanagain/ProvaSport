@@ -3,12 +3,12 @@ var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
-var MatchPage = require('../screens/matchpage')
 
-var MatchRow = require('../parts/matchrow')
 var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
+
+var MatchRow = require('../parts/matchrow')
 
 var {
   AppRegistry,
@@ -35,6 +35,7 @@ var MatchList = React.createClass({
     )
   },
   render: function() {
+
     var {
       data,
       ...props

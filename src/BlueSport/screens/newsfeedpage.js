@@ -3,10 +3,8 @@ var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
-var MatchPage = require('./matchpage')
 
 var MatchList = require('../bigparts/matchlist')
-var MatchRow = require('../parts/matchrow')
 var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
@@ -63,13 +61,6 @@ var NewsFeedPage = React.createClass({
 
   goBack: function() {
     this.props.navigator.pop()
-  },
-
-  renderMatchRow(rowData) {
-    return (
-        <MatchRow
-        navigator={this.props.navigator} />
-    )
   },
 });
 

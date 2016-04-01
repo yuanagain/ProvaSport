@@ -8,7 +8,6 @@ var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 
 import * as _ctools from '../libs/customtools.js'
-var MatchPage = require('../screens/matchpage')
 
 var {
   AppRegistry,
@@ -87,8 +86,9 @@ var MatchRow = React.createClass({
   },
 
   onPress: function() {
+    var MatchPage = require('../screens/matchpage')
     this.props.navigator.push({
-      id: "MatchPage",
+      id: "MatchPage" + String(_ctools.randomKey()),
       component: MatchPage,
       passProps: {
         match: this.props.match,
