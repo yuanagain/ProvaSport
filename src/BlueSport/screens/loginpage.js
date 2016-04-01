@@ -4,8 +4,9 @@ var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
-
 var _cvals = require('../styles/customvals')
+
+var SignUpPage = require('./signup.js')
 
 var {
   AppRegistry,
@@ -25,10 +26,12 @@ var LoginPage = React.createClass({
       }
     );
   },
+
   render: function() {
     var {
       name,
-      loginFunction,
+      navToHomeFunc,
+      signUpFunc,
       ...props
     } = this.props;
 
@@ -72,19 +75,18 @@ var LoginPage = React.createClass({
         <Button
           style={styles.login_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this.props.loginFunction}
+          onPress={this.props.navToHomeFunc}
           >
           Sign In
         </Button>
         <Button
           style={styles.signup_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this._handlePress}
+          onPress={this.props.signUpFunction}
           >
           New user? Sign Up!
         </Button>
       </View>
-
     </View>
     );
   },

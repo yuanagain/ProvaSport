@@ -28,6 +28,7 @@ var RecordPageRoot = require('./navroots/recordpageroot')
 var HomeScreen = require('./navroots/homescreenroot')
 var ContractsScreen = require('./navroots/contractsroot')
 var SettingsRoot = require('./navroots/settingsroot')
+var SignUpPageRoot = require('./navroots/signuproot')
 
 var _cvals = require('./styles/customvals.js')
 
@@ -42,8 +43,13 @@ class BlueSport extends Component {
 
   render() {
     if (this.state.selectedTab == 'login') {
-      return <LoginPage
-              loginFunction={() => this.loginFunc()} />
+      return <LoginPage 
+                navToHomeFunc={() => this.navToHomeFunc()} 
+                signUpFunction={() => this.signUpFunc()} />
+    }
+
+    if (this.state.selectedTab == 'signUp') {
+      return <SignUpPageRoot navToHomeFunc={() => this.navToHomeFunc()} />
     }
 
     else {
@@ -131,9 +137,14 @@ class BlueSport extends Component {
     }
   }
 
-  loginFunc() {
+  navToHomeFunc() {
     this.setState({selectedTab: 'home'})
   }
+
+  signUpFunc() {
+    this.setState({selectedTab: 'signUp'})
+  }
+
 }
 
 
