@@ -57,8 +57,12 @@ var PlayerBrick = React.createClass({
                  source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}/>
         </View>
         <View style={styles.right}>
-          <Text style={[_cstyles.detail_text]}>{this.props.player}</Text>
-          <Text style={[_cstyles.detail_text]}>{"Last Name"}</Text>
+          <View >
+            <Text style={[_cstyles.detail_text]}>{this.props.player}</Text>
+          </View>
+          <View style={styles.compress}>
+            <Text style={[_cstyles.detail_text]}>{"Last Name"}</Text>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -67,6 +71,7 @@ var PlayerBrick = React.createClass({
 
 var styles = StyleSheet.create({
   playerbrick: {
+    height: _cvals.brickheight,
     width: _cvals.bricklength,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -101,8 +106,10 @@ var styles = StyleSheet.create({
   center: {
     justifyContent: 'center',
     alignItems: 'center',
-
   },
+  compress: {
+    marginTop: _cvals.dscale * -4
+  }
 });
 
 module.exports = PlayerBrick;

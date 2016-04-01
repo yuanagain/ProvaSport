@@ -23,7 +23,7 @@ var {
   TouchableOpacity,
 } = React;
 
-var defaultHeight = 46 * _cvals.dscale
+var defaultHeight = _cvals.slength / 2 * _cvals.dscale + 1
 // ==================================================
 // Style up first for visibility to getDefaultProps
 // ==================================================

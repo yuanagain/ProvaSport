@@ -13,8 +13,8 @@ import * as _ctools from '../libs/customtools.js'
 /// ProvaSport specific:
 var GameScoreRowAdd_subco = require('../parts/gamescorerowadd_subco')
 var GameScoreRow_subco = require('../parts/gamescorerow_subco')
+var GameScoreRow_fixed = require('../smallparts/gamescorerowfixed')
 ///
-
 
 var rowWidth = windowSize.width
 
@@ -35,6 +35,10 @@ var DynamicList = React.createClass({
     var rowRender = this.props.renderRow
 
     if (this.props.magic == 'scores' ) {
+      rowRender = this.renderScore
+    }
+
+    if (this.props.magic == 'scores_fixed' ) {
       rowRender = this.renderScore
     }
 
@@ -63,6 +67,16 @@ var DynamicList = React.createClass({
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
+    var AddRow = (
+      <View style={styles.buttons_container}>
+        <GameScoreRowAdd_subco
+          harvest={this.addItem} />
+      </View>
+    )
+
+    if (this.props.magic == "scores_fixed") {
+      AddRow = ( <View></View> )
+    }
     return (
     <View style={styles.container}>
 
@@ -71,11 +85,7 @@ var DynamicList = React.createClass({
         renderRow={this.renderRow}
         style={styles.listView}
       />
-
-      <View style={styles.buttons_container}>
-        <GameScoreRowAdd_subco
-          harvest={this.addItem} />
-      </View>
+      {AddRow}
     </View>
     );
   },
@@ -89,12 +99,14 @@ var DynamicList = React.createClass({
     )
   },
 
+
   renderRow: function(rowData) {
     return (
       <RowWrapper
         key={rowData['index']}
         item={rowData['item']}
         renderRow={this.state.renderRow}
+        magic={this.props.magic}
         removeItem={() => this.removeItem(rowData['index'])}
         />
     );
@@ -122,9 +134,25 @@ var RowWrapper = React.createClass({
       renderRow,
       item,
       removeItem,
+      magic,
       ...props
     } = this.props;
 
+    if (this.props.magic == 'scores_fixed') {
+      return (
+        <View style={styles.row_container}>
+          <View style={styles.leftmost}>
+            {this.props.renderRow(this.props.item)}
+          </View>
+
+          <TouchableOpacity
+                            style={[styles.rightmost, styles.center]}>
+                <Image source={require('../assets/close.png')}
+                       style={[_cstyles.close, {opacity: 0}]} />
+          </TouchableOpacity>
+        </View>
+      );
+    }
     return (
       <View style={styles.row_container}>
         <View style={styles.leftmost}>
@@ -138,6 +166,7 @@ var RowWrapper = React.createClass({
         </TouchableOpacity>
       </View>
     );
+
   },
   toggleSelect: function() {
     this.props.toggleSelect(this.props.index)
@@ -149,6 +178,7 @@ var RowWrapper = React.createClass({
     this.setState({selected: selected, style: new_style})
   },
 });
+
 
 function harvest_default(items) {
 }

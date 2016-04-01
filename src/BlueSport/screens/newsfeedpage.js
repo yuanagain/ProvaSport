@@ -40,8 +40,7 @@ var NewsFeedPage = React.createClass({
     return (
     <View style={styles.container}>
 
-    <Header title={"NEWS"}
-            navigator={this.props.navigator} />
+    <Header title={"NEWS"} navigator={this.props.navigator} />
 
 
       <ListView

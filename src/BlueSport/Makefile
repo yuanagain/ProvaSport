@@ -4,4 +4,5 @@ gitadd:
 	git add index.ios.js index.android.js
 	git status
 
-clean: rm -rf *.o *~
+clean:
+	rm -rf *.o *~
