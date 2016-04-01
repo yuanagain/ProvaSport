@@ -5,8 +5,7 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var MatchPage = require('./matchpage')
 
-var NewsFeedMatchRow = require('../parts/newsfeedmatchrow')
-var PopoverSelect = require('../parts/popoverselect')
+var MatchRow = require('../parts/matchrow')
 var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
@@ -14,7 +13,6 @@ let _cstyles = require('../styles/customstyles')
 var mainfont = 'avenir'
 var skorange = '#F5A623'
 var skblue = '#4A90E2'
-
 
 var {
   AppRegistry,
@@ -64,19 +62,9 @@ var NewsFeedPage = React.createClass({
 
   renderMatchRow(rowData) {
     return (
-        <NewsFeedMatchRow
-        navigator={this.props.navigator}
-        onPressFunction={() => this.onButtonPress("TEST")}/>
+        <MatchRow
+        navigator={this.props.navigator} />
     )
-  },
-  onButtonPress(arg) {
-    this.props.navigator.push({
-      id: "MatchScreen",
-      component: MatchPage,
-      passProps: {
-        matchnum: "matchnum",
-      }
-    })
   },
 });
 
