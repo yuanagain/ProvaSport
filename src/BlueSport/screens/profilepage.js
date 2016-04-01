@@ -11,6 +11,7 @@ import * as _ctools from '../libs/customtools.js'
 var Header = require('../parts/header')
 var PayoutSection = require('../parts/payoutsection')
 var SimpleRow = require('../smallparts/simplerow')
+var MatchList = require('../bigparts/matchlist')
 
 var {
   AppRegistry,
@@ -110,6 +111,18 @@ var ProfilePage = React.createClass({
 
         <View style={_cstyles.section_divider_line}></View>
 
+        <SimpleRow title={"Recent Matches"} value={"4"} />
+
+        <View style={styles.matches}>
+          <MatchList
+            navigator={this.props.navigator}
+          />
+        </View>
+
+        <View style={_cstyles.section_divider_line} ></View>
+        <View style={{height: 50 * _cvals.dscale, width: windowSize.width}}>
+        </View>
+
       </ScrollView>
 
       <View style={_cstyles.buttons_container}>
@@ -139,6 +152,9 @@ var styles = StyleSheet.create({
   },
   contentContainerStyle: {
     flex: 1,
+  },
+  matches: {
+    height: 200 * _cvals.dscale
   }
 })
 

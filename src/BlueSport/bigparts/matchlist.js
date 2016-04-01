@@ -3,9 +3,8 @@ var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
-var MatchPage = require('./matchpage')
+var MatchPage = require('../screens/matchpage')
 
-var MatchList = require('../bigparts/matchlist')
 var MatchRow = require('../parts/matchrow')
 var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
@@ -21,43 +20,32 @@ var {
   ListView
 } = React;
 
-var data = ['row 1', 'row 2', 'row 3', 'row 4', 'row 5', 'row 6',
-            'row 7', 'row 8', 'row 9',]
-
-var NewsFeedPage = React.createClass({
+var MatchList = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      dataSource: ds.cloneWithRows(this.props.data),
     };
   },
   getDefaultProps: function() {
     return (
       {
-        data: data
+        data: ['row 1', 'row 2', 'row 3', 'row 4',]
       }
     )
   },
   render: function() {
     var {
-      name,
+      data,
       ...props
     } = this.props;
 
     return (
-    <View style={styles.container}>
-
-    <Header title={"NEWS"} navigator={this.props.navigator} />
-
-
-      <MatchList
-        navigator={this.props.navigator}
-        data={this.props.data}
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderMatchRow}
+        style={styles.listView}
       />
-
-      <View style={styles.divider_line}>
-      </View>
-    </View>
     );
   },
 
@@ -101,4 +89,4 @@ var styles = StyleSheet.create({
   }
 })
 
-module.exports = NewsFeedPage;
+module.exports = MatchList;

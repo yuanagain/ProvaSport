@@ -15,6 +15,7 @@ var PopoverSelector = require('../bigparts/popoverselector')
 
 var RoundRobinPage = require('../screens/roundrobinpage')
 var BracketPage = require('../screens/bracketpage')
+var TeamPage = require('../screens/teampage')
 
 var Header = require('../parts/header')
 
@@ -133,6 +134,14 @@ var ContractsPage = React.createClass({
         <Button
           style={_cstyles.wide_button}
           styleDisabled={{color: 'grey'}}
+          onPress={this.toTeamPage}
+          >
+          {'View Team Page'}
+        </Button>
+        <View style={{height: 1}}></View>
+        <Button
+          style={_cstyles.wide_button}
+          styleDisabled={{color: 'grey'}}
           onPress={this.toRR}
           >
           {'View RR Page'}
@@ -235,29 +244,35 @@ var ContractsPage = React.createClass({
 
   },
 
-  //// TEMP TEMP TEMP
+  //// TODO POPULATE W/ REAL DATA
   toRR() {
     this.props.navigator.push({
       id: "RoundRobinPage",
       component: RoundRobinPage,
       passProps: {
-        temp: 2
+        navigator: this.props.navigator
       }
     })
   },
-
   toBracket() {
     this.props.navigator.push({
       id: "BracketPage",
       component: BracketPage,
       passProps: {
-        temp: 2
+        navigator: this.props.navigator
+      }
+    })
+  },
+  toTeamPage() {
+    this.props.navigator.push({
+      id: "TeamPage",
+      component: TeamPage,
+      passProps: {
+        navigator: this.props.navigator
       }
     })
   },
 });
-
-
 
 var styles = StyleSheet.create({
   title_text: {
