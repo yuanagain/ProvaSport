@@ -1,8 +1,5 @@
 /*TODO:
-a lot! need ot talk about stnadardization of what the User does and how it can effect a player object when only bound by player id
-2. ask if this is the best way to implement modules with this uploading all the info and handling login and other modules only downloading data
-walk cautiously an carefully with this seciton of hte code */
-/* EVERYTING can not be set here the idea of a one-way data flow fails this API */
+ */
 
 var Firebase = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
@@ -13,7 +10,6 @@ var User = {
   email: "",
   playerid: 0,
 /* TODO session token? NO Firebase will handle this if we decide on a session token scheme */
-
 }
 var ref;
 class User {
@@ -28,26 +24,21 @@ class User {
   // Register the callback to be fired every time auth state changes
     ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
     ref.onAuth(authDataCallback);
-
-
-
-/* LOGIN TODO
-On Shutdown: ref.unauth(); to deauthorize.
-*/
-if (isNew){
-  newName();
-}
-else {
-  ref.authWithPassword({
-    email    : email,
-    password : password
-  }, authHandler);
-}
-
-// find a suitable name based on the meta info given by each provider
-
+    /* LOGIN TODO
+    On Shutdown: ref.unauth(); to deauthorize.
+    */
+    if (isNew){
+      newName();
+    }
+    else {
+      ref.authWithPassword({
+        email    : email,
+        password : password
+      }, authHandler);
+    }
     /*Firebase generate a user id*/
   }
+  // find a suitable name based on the meta info given by each provider
   function newName(authData) {
     switch(authData.provider) {
        case 'password':
@@ -67,23 +58,23 @@ else {
       console.log("User is logged out");
     }
   }
-/* authenitcation handler */
-function authHandler() {
-  ref.offAuth()
-}
-
-var isNewUser = true;
-var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
-ref.onAuth(function(authData) {
-  if (authData && isNewUser) {
-    // save the user's profile into the database so we can list users,
-    // use them in Security and Firebase Rules, and show profiles
-    ref.child("users").child(authData.uid).set({
-      provider: authData.provider,
-      name: getName(authData)
-    });
+  /* authenitcation handler */
+  function authHandler() {
+    ref.offAuth()
   }
-});
+
+  var isNewUser = true;
+  var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+  ref.onAuth(function(authData) {
+    if (authData && isNewUser) {
+      // save the user's profile into the database so we can list users,
+      // use them in Security and Firebase Rules, and show profiles
+      ref.child("users").child(authData.uid).set({
+        provider: authData.provider,
+        name: getName(authData)
+      });
+    }
+  });
   function create() {
     /*Actual login*/
   }
@@ -121,7 +112,6 @@ ref.onAuth(function(authData) {
     ref.set(User);
   }
   /*
-   *
    * Set profile picture
    */
   function setProfPic(ImgURL) {
@@ -170,7 +160,5 @@ ref.onAuth(function(authData) {
     /* TODO ERROR API INADEQUACY NEED TO BREAK API RULES FOR CORRECT JSON OBJECT */
     ref.set(team);
   }
-
-
 }
-export userdata
+module.exports = UserData;

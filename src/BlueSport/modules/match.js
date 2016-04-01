@@ -177,4 +177,4 @@ class Match {
   }
   function setAttribute()
 }
-export match
+module.exports = Match;

@@ -4,9 +4,9 @@ teamdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/team");
 
 class Team {
   var Team = {
-      "teamid": -1,
-      "name": "(string)",
-      "players": []
+      teamid: -1,
+      name: "string",
+      players: []
   };
   /*constructor for the Team Object
     input: query teamid
@@ -23,6 +23,10 @@ class Team {
       console.log("The team read failed: " + errorObject.code);
     });
   }
+  function addPlayer(playerid) {
+    Team.players.append(playerid);
+    teamdb.child(Team.teamid).child(players).push(playerid);
+  }
   /* Get the name of the Team */
   function getName() {
     return this.Team.name;
@@ -35,3 +39,5 @@ class Team {
   /* Add remove player? who is team leader or team captain? what about team
   structures do we have to incorporate into the data obj? */
 }
+
+module.exports = TeamData;

@@ -59,3 +59,4 @@ class Trophy {
     return <Image 'style'=style src=imgURL/>
   }
 }
+module.exports = trophy;

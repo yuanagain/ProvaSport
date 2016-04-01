@@ -1,14 +1,5 @@
 
-/* for the real time accessing of data when it changes
-
-  // Save data
-  ref.set({ name: "Alex Wolfe" });
-  // Listen for realtime changes
-  ref.on("value", function(data) {
-    var name = data.val().name;
-    alert("My name is " + name);
-  });
-*/
+/* for the real time accessing of data when it changes*/
 
 var specTourndb;
 var tourndb = require("firebase");
@@ -27,7 +18,8 @@ class Tournament {
       sport: "(string)",
       matches: []
   };
-  /*  */
+  /* Set the type of torunament
+    Standard: string */
   function setType(strType) {
     Tournament.type = strType;
     specTourndb.child(type).set(strType);
@@ -54,8 +46,9 @@ class Tournament {
    * Constructor: create a TournamentObject and load it's contents
    * Dependent on load() and Firebase
    */
-  constructor(tournamentid) {
+  constructor(tournamentid, strSport) {
     Tournament.tournamentid = tournamentid; //automatically hiding information
+    Tournament.sport = strSport;
     var ret = load(tournamentid);
     if (!ret) {
       alert("FATAL NO object Found");
@@ -151,3 +144,4 @@ class Tournament {
   }
 
 }
+module.exports = Tournament;

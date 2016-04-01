@@ -4,8 +4,7 @@ var playerdataRef = require("firebase");
 playerdataRef = new Firebase("https://incandescent-torch-5505.firebaseio.com/player");
 /*player object within Player class*/
 class Player {
-  var Player = {
-    playerid : -1,
+  var Player = {$playerid: {
     name : "",
     userid : -1,
     prof_pic: "url",
@@ -20,7 +19,8 @@ class Player {
     teams: [],
     matches: [],
     tournaments: []
-  };
+  }
+};
   /* Creates and loads the Player from the Firebase */
   constructor(playerid) {
     let this.Player.playerid = playerid;
@@ -28,8 +28,9 @@ class Player {
   }
   /* loads player from firebase and then handles Firebase errs */
   function load(playerid) {
-    playerdataRef.orderByChild("playerid").equalTo(playerid).once("value", function(snapshot) {
+    playerdataRef.child(playerid).once("value", function(snapshot) {
       this.Player = snapshot.val();
+      this.Player.userid = snapshot.key();
     }, function (errorObject) {
       console.log("The player read failed: " + errorObject.code);
     });
@@ -59,7 +60,7 @@ class Player {
     Player.earnings.trophies.append(trophyid);
     playerdb.child(Player.playerid).child(earnings).child(trophies).set(Player.earnings.trophies);
   }
-  
+
   /*
    * Usage: Player.getProfPic()
    * returns image tag of the PLayer's profile
