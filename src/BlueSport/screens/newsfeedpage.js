@@ -23,7 +23,7 @@ var {
   Text,
   TextInput,
   Image,
-  ListView
+  ListView,
 } = React;
 
 var NewsFeedPage = React.createClass({
