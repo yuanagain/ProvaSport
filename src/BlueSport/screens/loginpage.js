@@ -28,7 +28,8 @@ var LoginPage = React.createClass({
   render: function() {
     var {
       name,
-      loginFunction,
+      navToHomeFunc,
+      signUpFunction,
       ...props
     } = this.props;
 
@@ -58,9 +59,7 @@ var LoginPage = React.createClass({
 
         <TextInput
         style={styles.email_input}
-
         onChangeText={(password) => this.setState({password})}
-
         value={this.state.password}
         placeholder={"Password"}
         secureTextEntry={true}
@@ -72,14 +71,14 @@ var LoginPage = React.createClass({
         <Button
           style={styles.login_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this.props.loginFunction}
+          onPress={this.props.navToHomeFunc}
           >
           Sign In
         </Button>
         <Button
           style={styles.signup_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this._handlePress}
+          onPress={this.props.signUpFunction}
           >
           New user? Sign Up!
         </Button>
