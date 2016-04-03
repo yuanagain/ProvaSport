@@ -20,6 +20,7 @@ var {
   Image,
   DatePickerIOS,
   TouchableOpacity,
+  Alert,
 } = React;
 
 // TODO: Datepicker for Android using DatePickerAndroid API calls
@@ -43,6 +44,11 @@ var SignUpPage = React.createClass({
     }
   },
 
+  onDateChange: function(date) {
+    this.setState({date: date});
+  },
+
+
   render: function() {
     var {
       name,
@@ -50,6 +56,15 @@ var SignUpPage = React.createClass({
       navToHomeFunc,
       ...props
     } = this.props;
+
+    // Known issue with DatePickerIOS results in warnings. This suppresses the 
+    // yellow warning boxes. React Native team is currently working on this.
+    // See https://github.com/facebook/react-native/issues/4547 for first.
+    // See https://github.com/facebook/react-native/issues/41 for second.
+    console.ignoredYellowBox = [
+      'Warning: Failed propType',
+      'Warning: ScrollView doesn\'t take rejection well - scrolls anyway'
+    ];
 
     return (
       <View style={styles.screen}>
@@ -68,40 +83,48 @@ var SignUpPage = React.createClass({
           <TextField
             label="Username"
             placeholder="username"
+            secureTextEntry={false}
+            keyboardType='default'
             onChangeText={(username) => this.setState({username})}
           />
 
           <TextField
             label="Email"
             placeholder="user@email.com"
+            secureTextEntry={false}
+            keyboardType='email-address'
             onChangeText={(email) => this.setState({email})}
           />
 
           <TextField
             label="Password"
             placeholder="password"
+            secureTextEntry={true}
+            keyboardType='default'
             onChangeText={(password) => this.setState({password})}
           />
 
           <TextField
             label="Confirm Password"
             placeholder="password"
+            secureTextEntry={true}
+            keyboardType='default'
             onChangeText={(passwordConf) => this.setState({passwordConf})}
           />
 
           <TextField
             label="Name"
             placeholder="name"
+            secureTextEntry={false}
+            keyboardType='default'
             onChangeText={(name) => this.setState({name})}
           />
 
           <View style={styles.input_row}>
             <Text style={_cstyles.section_header_text}>Birthday</Text>
-            <DatePickerIOS
-              date={this.state.date}
-              mode="date"
-              onDateChange={(date) => this.setState({date})}
-            />
+            <View style={styles.date_picker_container}>
+
+            </View>
           </View>
           <View style={_cstyles.divider_line}/>
 
@@ -109,7 +132,7 @@ var SignUpPage = React.createClass({
           <PopoverSelector
               title={'Gender'}
               items={['Male', 'Female']}
-              renderRow={ (rowData) => <Text>{rowData}</Text> }
+              maxSelect={1}
               navigator={this.props.navigator}
               harvestSelection={(gender) => this.setState({gender})}
             />
@@ -120,7 +143,7 @@ var SignUpPage = React.createClass({
             <PopoverSelector
               title={'Country'}
               items={['Country1', 'Country2', 'Country3']}
-              renderRow={ (rowData) => <Text>{rowData}</Text> }
+              maxSelect={1}
               navigator={this.props.navigator}
               harvestSelection={(country) => this.setState({country})}
             />
@@ -131,7 +154,6 @@ var SignUpPage = React.createClass({
             <PopoverSelector
               title={'Sports'}
               items={['Sport1', 'Sport2', 'Sport3']}
-              renderRow={ (rowData) => <Text>{rowData}</Text> }
               navigator={this.props.navigator}
               harvestSelection={(sports) => this.setState({sports})}
             />
@@ -141,7 +163,7 @@ var SignUpPage = React.createClass({
           <Button
             style={_cstyles.wide_button}
             styleDisabled={{color: 'grey'}}
-            onPress={this.props.navToHomeFunc}
+            onPress={this.onSubmit}
           >
           {'Submit'}
         </Button>
@@ -149,7 +171,81 @@ var SignUpPage = React.createClass({
       </View>
     );
   },
+
+  validEmail() {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(this.state.email)
+  },
+
+  validPasswordLength() {
+    return (this.state.password.length >= 8)
+  },
+
+  validPasswordConf() {
+    return (this.state.password == this.state.passwordConf)
+  },
+
+  validUsername() {
+    return (this.state.username.length >= 6)
+  },
+
+  validName() {
+    return (this.state.name.length >= 1) 
+  },
+
+  onSubmit() {
+    if (!this.validUsername()) {
+      Alert.alert(
+        'Invalid Username',
+        'Username must be at least 6 characters long',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+    else if (!this.validEmail()) {
+      Alert.alert(
+        'Invalid Email',
+        'Invalid email address',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+    else if (!this.validPasswordLength()) {
+      Alert.alert(
+        'Invalid Password',
+        'Password must be at least 8 characters long',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+    else if (!this.validPasswordConf()) {
+      Alert.alert(
+        'Invalid Password',
+        'Passwords do not match',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+    else if (!this.validName()) {
+      Alert.alert(
+        'Invalid Name',
+        'Name field must not be left blank',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+    else {
+      this.props.navToHomeFunc.call()
+    }
+  },
 });
+
+
 
 // Layout for labels and text input fields
 var TextField = React.createClass({
@@ -161,6 +257,9 @@ var TextField = React.createClass({
             <TextInput
               style={[styles.input, styles.blackFont]}
               placeholder={this.props.placeholder}
+              secureTextEntry={this.props.secureTextEntry}
+              autoCorrect={false}
+              keyboardType={this.props.keyboardType}
               onChangeText={this.props.onChangeText}
             />
         </View>
@@ -173,13 +272,18 @@ var TextField = React.createClass({
 var styles = StyleSheet.create({
   // Height bound necessary for ScrollView to work as expected
   screen: {
-    height: windowSize.height
+    height: windowSize.height,
+    flex: 1,
   },
   image_container: {
     height: 200 * _cvals.dscale,
     backgroundColor: '#808080',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  date_picker_container: {
+    alignItems: 'center',
+    flex: 1,
   },
   input_container: {
     height: windowSize.height

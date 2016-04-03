@@ -1,7 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 import React, {
   AppRegistry,
@@ -9,7 +5,8 @@ import React, {
   StyleSheet,
   Text,
   Image,
-  View
+  View,
+  Navigator,
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
@@ -23,12 +20,12 @@ var listsIcon = require('./assets/lists.png')
 
 // Screens and View Navigation Routes
 var LoginPage = require('./screens/loginpage')
-var ProfScreen = require('./navroots/profileroot')
-var RecordPageRoot = require('./navroots/recordpageroot')
-var HomeScreen = require('./navroots/homescreenroot')
-var ContractsScreen = require('./navroots/contractsroot')
-var SettingsRoot = require('./navroots/settingsroot')
-var SignUpPageRoot = require('./navroots/signuproot')
+var ProfilePage = require('./screens/profile')
+var RecordPage = require('./screens/recordpage')
+var NewsFeedPage = require('./screens/newsfeedpage')
+var ContractsScreen = require('./screens/contractspage')
+var SettingsPage = require('./screens/settingspage')
+var SignUpPage = require('./screens/signup')
 
 var _cvals = require('./styles/customvals.js')
 
@@ -49,7 +46,17 @@ class BlueSport extends Component {
     }
 
     if (this.state.selectedTab == 'signUp') {
-      return <SignUpPageRoot navToHomeFunc={() => this.navToHomeFunc()} />
+      return (
+        <Navigator
+          style={styles.wrapper}
+          initialRoute={{name: 'SignUpPage', component: SignUpPage, passProps:{navToHomeFunc: this.navToHomeFunc.bind(this)}}}
+          renderScene={(route, navigator) =>    {
+            if (route.component) {
+              return React.createElement(route.component, {...route.passProps, navigator, route } );
+            }
+          }}
+        />
+      )
     }
 
     else {
@@ -64,13 +71,17 @@ class BlueSport extends Component {
               source={homeIcon}
             />}
             renderSelectedIcon={() => <Image source={homeIcon} style={styles.selectedIcon}/>}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'home'
-              });
-              }
-            }>
-            <HomeScreen/>
+            onPress={() => {this.onTabPress('home', this.refs.homeRef)}}
+            >
+            <Navigator
+              ref='homeRef'
+              initialRoute={{name: 'NewsFeedPage', component: NewsFeedPage}}
+              renderScene={(route, navigator) => {
+                if (route.component) {
+                  return React.createElement(route.component, {...route.passProps, navigator, route});
+                }
+              }}
+            />
           </TabNavigator.Item>
           <TabNavigator.Item
             //title="Contracts"
@@ -79,14 +90,19 @@ class BlueSport extends Component {
               source={scheduleIcon}
             />}
             renderSelectedIcon={() => <Image source={scheduleIcon} style={styles.selectedIcon}/>}
-            onPress={() => {
-              this.setState({
-              selectedTab: 'contracts'
-              });
-            }
-            }>
-            <ContractsScreen/>
+            onPress={() => {this.onTabPress('contracts', this.refs.contractsRef)}}
+            >
+            <Navigator
+              ref='contractsRef'
+              initialRoute={{name: 'ContractsScreen', component: ContractsScreen}}
+              renderScene={(route, navigator) =>    {
+                if (route.component) {
+                  return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
+                }
+              }}
+            />
           </TabNavigator.Item>
+
           <TabNavigator.Item
             //title="Record"
             selected={this.state.selectedTab === 'record'}
@@ -94,14 +110,19 @@ class BlueSport extends Component {
               source={clusterIcon}
             />}
             renderSelectedIcon={() => <Image source={clusterIcon} style={styles.selectedIcon}/>}
-            onPress={() => {
-              this.setState({
-              selectedTab: 'record'
-              });
-            }
-            }>
-            <RecordPageRoot />
+            onPress={() => {this.onTabPress('record', this.refs.recordRef)}}
+            >
+            <Navigator
+              ref='recordRef'
+              initialRoute={{name: 'RecordPage', component: RecordPage}}
+              renderScene={(route, navigator) =>    {
+                if (route.component) {
+                return React.createElement(route.component, {  ...route.passProps, navigator, route } );
+                }
+              }}
+            />
           </TabNavigator.Item>
+
           <TabNavigator.Item
             //title="Profile"
             selected={this.state.selectedTab === 'profile'}
@@ -109,14 +130,19 @@ class BlueSport extends Component {
               source={profileIcon}
             />}
             renderSelectedIcon={() => <Image source={profileIcon} style={styles.selectedIcon}/>}
-            onPress={() => {
-              this.setState({
-              selectedTab: 'profile'
-              });
-            }
-            }>
-            <ProfScreen user={"Placeholder"}/>
+            onPress={() => {this.onTabPress('profile', this.refs.profRef)}}
+            >
+            <Navigator
+              ref='profRef'
+              initialRoute={{name: 'ProfilePage', component: ProfilePage}}
+              renderScene={(route, navigator) =>    {
+                if (route.component) {
+                return React.createElement(route.component, {  ...route.passProps, navigator, route } );
+                }
+              }}
+            />
           </TabNavigator.Item>
+
           <TabNavigator.Item
             //title="Settings"
             selected={this.state.selectedTab === 'settings'}
@@ -124,16 +150,30 @@ class BlueSport extends Component {
               source={listsIcon}
             />}
             renderSelectedIcon={() => <Image source={listsIcon} style={styles.selectedIcon}/>}
-            onPress={() => {
-              this.setState({
-              selectedTab: 'settings'
-              });
-            }
-            }>
-            <SettingsRoot />
+            onPress={() => {this.onTabPress('settings', this.refs.settingsRef)}}
+            >
+            <Navigator
+              ref='settingsRef'
+              initialRoute={{name: 'SettingsScreen', component: SettingsPage}}
+              renderScene={(route, navigator) =>    {
+                if (route.component) {
+                return React.createElement(route.component, {  ...route.passProps, navigator, route } );
+                }
+              }}
+            />
           </TabNavigator.Item>
         </TabNavigator>
-        )
+      )
+    }
+  }
+
+  onTabPress(tab, navRef) {
+    if (this.state.selectedTab !== tab) {
+      this.setState({
+        selectedTab: tab
+      });
+    } else if (this.state.selectedTab === tab) {
+      navRef.popToTop();
     }
   }
 
@@ -147,7 +187,6 @@ class BlueSport extends Component {
 
 }
 
-
 const styles = StyleSheet.create({
   icon: {
     height: 27,
@@ -157,12 +196,6 @@ const styles = StyleSheet.create({
     height: 27,
     width: 27,
     tintColor: _cvals.skorange,
-  },
-  iconTitle: {
-    tintColor: _cvals.skorange,
-  },
-  wrapper: {
-    flex: 1,
   },
   container: {
     flex: 1,

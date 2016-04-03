@@ -61,7 +61,6 @@ var NewsFeedPage = React.createClass({
             tintColor={_cstyles.skblue}
             title="Refreshing..."
             colors={['#ff0000', '#00ff00', '#0000ff']}
-            progressBackgroundColor="'#808080'"
           />
         }
       />
@@ -94,6 +93,11 @@ var NewsFeedPage = React.createClass({
   },
 
   onRefresh() {
+    this.setState({isRefreshing: true})
+    setTimeout(() => {
+      console.log("In timeout")
+    }, 5000);
+
     this.setState({isRefreshing: false})
   },
 
