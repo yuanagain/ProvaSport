@@ -8,7 +8,6 @@ var windowSize = Dimensions.get('window')
 var PopoverSelector = require('../bigparts/popoverselector')
 var Button = require('react-native-button')
 var AddImageIcon = require('../assets/add.png')
-
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 
 var {
@@ -22,10 +21,6 @@ var {
   TouchableOpacity,
   Alert,
 } = React;
-
-// TODO: Datepicker for Android using DatePickerAndroid API calls
-// TODO: Implement entry validation
-// TODO: Fix image displaying
 
 var SignUpPage = React.createClass({
 
@@ -48,6 +43,34 @@ var SignUpPage = React.createClass({
     this.setState({date: date});
   },
 
+  showImagePicker: function() {
+    var options = {
+      title: 'Select Avatar', 
+      cancelButtonTitle: 'Cancel',
+      takePhotoButtonTitle: 'Take Photo...', 
+      chooseFromLibraryButtonTitle: 'Choose from Library...', 
+      mediaType: 'photo', 
+      storageOptions: {
+        skipBackup: true
+      },
+      allowsEditing: true, 
+    };
+
+    ImagePickerManager.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+        // You can display the image using either data:
+        // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+        // uri (on iOS)
+        const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+        // uri (on android)
+        // const source = {uri: response.uri, isStatic: true};
+
+        this.setState({
+          profImage: source
+        });
+      }
+    );
+  },
 
   render: function() {
     var {
@@ -75,8 +98,8 @@ var SignUpPage = React.createClass({
         </View>
         <ScrollView style={styles.input_container}>
           <View style={styles.image_container}>
-            <TouchableOpacity onPress={this.selectPhotoTapped}>
-              <Image source={this.state.profImage}/>
+            <TouchableOpacity onPress={this.showImagePicker}>
+              <Image source={this.state.profImage} style={styles.avatar}/>
             </TouchableOpacity>
           </View>
 
@@ -123,12 +146,7 @@ var SignUpPage = React.createClass({
           <View style={styles.input_row}>
             <Text style={_cstyles.section_header_text}>Birthday</Text>
             <View style={styles.date_picker_container}>
-              <DatePickerIOS
-                date={this.state.date}
-                mode="date"
-                maximumDate={new Date(Date.now)}
-                onDateChange={(date) => this.setState({date})}
-              />
+
             </View>
           </View>
           <View style={_cstyles.divider_line}/>
@@ -333,6 +351,11 @@ var styles = StyleSheet.create({
   blackFront: {
     color: "#000"
   },
+  avatar: {
+    borderRadius: 75,
+    width: 150,
+    height: 150
+  }
 
 })
 
