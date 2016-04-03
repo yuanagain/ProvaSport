@@ -4,16 +4,20 @@ trophydb = new Firebase("https://incandescent-torch-5505.firebaseio.com/trophy")
 /*player object within Player class*/
 class Trophy {
   // this will all be Admin-defined so read-only API
-  var trophy =
+
+  var trophy = {
+    name: "string",
+    description: "",
+    thumbnail: ""
+  };
+  var Data =
   {
       trophyid: -1,
-      name: "(string)",
-      description: "",
-      thumbnail: ""
+      data: trophy
   };
   /* Creates trophy object and loads a data from Firebase */
   constructor(trophyid) {
-    let this.trophy.trophyid = trophyid; //might need to define getInitState
+    let this.Data.trophyid = trophyid; //might need to define getInitState
     load(trophyid);
   }
 

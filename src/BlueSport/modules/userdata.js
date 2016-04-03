@@ -1,15 +1,19 @@
-/*TODO:
+/*TODO: login users and clean up constructor
  */
 
 var Firebase = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 var FireURL = "https://incandescent-torch-5505.firebaseio.com";
+
 var User = {
   name: "",
-  userid: 0,
   email: "",
-  playerid: 0,
+  playerid: 0
 /* TODO session token? NO Firebase will handle this if we decide on a session token scheme */
+}
+var Data = {
+  userid: -1,
+  data: User
 }
 var ref;
 class User {
@@ -79,7 +83,7 @@ class User {
   /*set everything in here*/
   function set(obj) {
     User = obj;
-    var userDB = new Firebase(FireURL + "/User/"+User.userid);
+    var userDB = new Firebase(FireURL + "/User/"+Data.userid);
     userDB.set(obj);
     /* handle error if object not correct JSON format */
   }
@@ -87,7 +91,7 @@ class User {
     /* Messed up you need to search by child node and then set */
     /* TODO change the data structure to be indexed by Id's */
     var playerdb = new Firebase(FireURL + "/player/");
-    var playerTroph = playerdb.child(User.userid).child("earnings").child("trophyid");
+    var playerTroph = playerdb.child(Data.userid).child("earnings").child("trophyid");
     playerTroph.push(trophyid);
   }
   function updateEarnings(newEarnings) {

@@ -1,6 +1,6 @@
 
 /* for the real time accessing of data when it changes*/
-
+/* TODO check if specTournament reference works  */
 var specTourndb;
 var tourndb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
@@ -10,13 +10,16 @@ class Tournament {
   /* Tournament object that is global and will be set by the Firebase load */
   var Tournament =
   {
-      tournamentid: -1,
       type: "",
       teams: [], //alphabetical list of teams or sorted by priority
       location: (), /*tuple of  Latitude and Longitude*/
       dates: [],
       sport: "(string)",
       matches: []
+  };
+  var Data = {
+    tournamentid: -1,
+    data: Tournament
   };
   /* Set the type of torunament
     Standard: string */
@@ -47,7 +50,7 @@ class Tournament {
    * Dependent on load() and Firebase
    */
   constructor(tournamentid, strSport) {
-    Tournament.tournamentid = tournamentid; //automatically hiding information
+    Data.tournamentid = tournamentid; //automatically hiding information
     Tournament.sport = strSport;
     var ret = load(tournamentid);
     if (!ret) {

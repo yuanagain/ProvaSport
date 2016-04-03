@@ -2,7 +2,6 @@ var matchdb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 matchdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/match");
 /*player object within Player class*/
-var Match;
 class Match {
   /*
   TODO get rid of the "" for keys
@@ -10,9 +9,8 @@ class Match {
    * Match object that will
    * serve as the JSON object Firbase will download to
    */
-  Match =
+var Match =
     {
-      matchid: -1,
       datetime: 0,
       sport: "",
       scores: [],
@@ -26,11 +24,15 @@ class Match {
       },
       location: ()
   };
+  var Data = {
+    matchid: -1,
+    data: Match // does this change if Match changes?
+  };
 /*Creates the match object and loads it from the Firebase  */
   constructor(matchid) {
-    Match.matchid = matchid; /* make this completely immutable */
+    Data.matchid = matchid; /* make this completely immutable */
     load(matchid);
-    /* alert(Match.matchid); */
+    /* alert(Data.matchid); */
   }
   /* Loads the correct match object from Firebase and caches to local variable*/
   function load(matchid) {
@@ -43,44 +45,44 @@ class Match {
   /* add team to the Match */
   function addTeam(argTeamid) {
     (Match.teams).append(argTeamid);
-    var ref = matchdb.child(Match.matchid).child(teams);
+    var ref = matchdb.child(Data.matchid).child(teams);
     ref.push(argTeamid);
   }
 
   /* set time for the Match */
   function setTime(argTime) {
     /* %d argTime for EPCOH */
-    var ref = matchdb.child(Match.matchid).child(time);
+    var ref = matchdb.child(Data.matchid).child(time);
     ref.set(argTime);
   }
   /* add team to the Match */
   function reportScore(scoreTuple) {
-    var ref = matchdb.child(Match.matchid).child(scores);
+    var ref = matchdb.child(Data.matchid).child(scores);
     ref.push(scoreTuple);
   }
   /* takes in a dictionary of payout data and updates that value loacally and in DB */
   function setPayout(dictPay) {
     Match.payoutdata = dictPay;
-    var ref = matchdb.child(Match.matchid).child(payoutdata);
+    var ref = matchdb.child(Data.matchid).child(payoutdata);
     ref.set(dictPay);
   }
   /* takes in a dictionary of match data and updates that value loacally and in DB */
   function setData(dataObj) {
     Match.data = dataObj;
-    var ref = matchdb.child(Match.matchid).child(data);
+    var ref = matchdb.child(Data.matchid).child(data);
     ref.set(dataObj);
   }
   function setLocation(argloc) {
     Match.location = argloc;
-    matchdb.child(Match.matchid).child(location).set(argloc);
+    matchdb.child(Data.matchid).child(location).set(argloc);
   }
   function setSport(strSport) {
     Match.sport = strSport;
-    matchdb.child(Match.matchid).child(sport).set(strSport);
+    matchdb.child(Data.matchid).child(sport).set(strSport);
   }
   function reportWinner(playerid){
     Match.winner = playerid;
-    matchdb.child(Match.matchid).child(winner).set(playerid); // allow multiple winners??
+    matchdb.child(Data.matchid).child(winner).set(playerid); // allow multiple winners??
   }
   /*  */
   /*
@@ -173,7 +175,7 @@ class Match {
   /*  */
   function updateData(jsonObj) {
     /* assumes valid Json for entire object and match created*/
-    matchdb.child(Match.matchid).update(jsonObj);
+    matchdb.child(Data.matchid).update(jsonObj);
   }
   function setAttribute()
 }

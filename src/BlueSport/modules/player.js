@@ -4,7 +4,7 @@ var playerdataRef = require("firebase");
 playerdataRef = new Firebase("https://incandescent-torch-5505.firebaseio.com/player");
 /*player object within Player class*/
 class Player {
-  var Player = {$playerid: {
+  var Player =  {
     name : "",
     userid : -1,
     prof_pic: "url",
@@ -19,11 +19,14 @@ class Player {
     teams: [],
     matches: [],
     tournaments: []
-  }
-};
+  };
+  var Data {
+    playerid: -1,
+    data: Player
+  };
   /* Creates and loads the Player from the Firebase */
   constructor(playerid) {
-    let this.Player.playerid = playerid;
+    let this.Data.playerid = playerid;
     load(playerid);
   }
   /* loads player from firebase and then handles Firebase errs */
@@ -37,28 +40,28 @@ class Player {
   }
   function setELO(newElo) {
     Player.elo = newElo;
-    playerdb.child(Player.playerid).child(elo).set(newElo);
+    playerdb.child(Data.playerid).child(elo).set(newElo);
   }
   function setProfPic(picURL) {
     Player.prof_pic = picURL;
-    playerdb.child(Player.playerid).child(prof_pic).set(picURL);
+    playerdb.child(Data.playerid).child(prof_pic).set(picURL);
   }
   function addSport(strSport) {
     Player.sports.append(strSport);
-    playerdb.child(Player.playerid).child(sports).set(strSport);
+    playerdb.child(Data.playerid).child(sports).set(strSport);
   }
   function setName(strName) {
     Player.name = strName;
-    playerdb.child(Player.playerid).child(name).set(strName);
+    playerdb.child(Data.playerid).child(name).set(strName);
   }
   function addFriend(frid) {
-    load(Player.playerid);
+    load(Data.playerid);
     Player.friends.append(frid);
-    playerdb.child(Player.playerid).child(friends).set(Player.friends);
+    playerdb.child(Data.playerid).child(friends).set(Player.friends);
   }
   function addTrophy(trophyid) {
     Player.earnings.trophies.append(trophyid);
-    playerdb.child(Player.playerid).child(earnings).child(trophies).set(Player.earnings.trophies);
+    playerdb.child(Data.playerid).child(earnings).child(trophies).set(Player.earnings.trophies);
   }
 
   /*

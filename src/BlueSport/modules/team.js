@@ -4,15 +4,18 @@ teamdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/team");
 
 class Team {
   var Team = {
-      teamid: -1,
       name: "string",
       players: []
+  };
+  var Data = {
+    teamid: -1,
+    data: Team
   };
   /*constructor for the Team Object
     input: query teamid
     creates and loads Team based off of teamid*/
   constructor(teamid) {
-    let this.Team.teamid = teamid; //might need to define getInitState
+    let this.Data.teamid = teamid; //might need to define getInitState
     load(teamid);
   }
   /* Loads the Team object double check the scope of this  */
@@ -25,7 +28,7 @@ class Team {
   }
   function addPlayer(playerid) {
     Team.players.append(playerid);
-    teamdb.child(Team.teamid).child(players).push(playerid);
+    teamdb.child(Data.teamid).child(players).push(playerid);
   }
   /* Get the name of the Team */
   function getName() {
