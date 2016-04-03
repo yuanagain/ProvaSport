@@ -329,6 +329,11 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  avatar: {
+    borderRadius: 75,
+    width: 150,
+    height: 150
+  },
   date_picker_container: {
     alignItems: 'center',
     flex: 1,
@@ -351,12 +356,6 @@ var styles = StyleSheet.create({
   blackFront: {
     color: "#000"
   },
-  avatar: {
-    borderRadius: 75,
-    width: 150,
-    height: 150
-  }
-
 })
 
 module.exports = SignUpPage;
