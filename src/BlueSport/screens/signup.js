@@ -32,15 +32,15 @@ var SignUpPage = React.createClass({
   getInitialState() {
     return {
       name: '',
-      gender: [],
+      gender: null,
       date: new Date(),
       email: '',
       username: '',
       password: '',
       passwordConf: '',
       profImage: AddImageIcon,
-      country: [],
-      sports: [],
+      country: null,
+      sports: null,
     }
   },
 
@@ -123,7 +123,12 @@ var SignUpPage = React.createClass({
           <View style={styles.input_row}>
             <Text style={_cstyles.section_header_text}>Birthday</Text>
             <View style={styles.date_picker_container}>
-
+              <DatePickerIOS
+                date={this.state.date}
+                mode="date"
+                maximumDate={new Date(Date.now)}
+                onDateChange={(date) => this.setState({date})}
+              />
             </View>
           </View>
           <View style={_cstyles.divider_line}/>
@@ -239,13 +244,38 @@ var SignUpPage = React.createClass({
         ]
       )
     }
+    else if (this.state.gender == null) {
+      Alert.alert(
+        'Invalid Gender',
+        'Please select a gender',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+    else if (this.state.country == null) {
+      Alert.alert(
+        'Invalid Country',
+        'Please select a country',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+    else if (this.state.sports == null) {
+      Alert.alert(
+        'Invalid Country',
+        'Please select at least 1 sport',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
     else {
       this.props.navToHomeFunc.call()
     }
   },
 });
-
-
 
 // Layout for labels and text input fields
 var TextField = React.createClass({
