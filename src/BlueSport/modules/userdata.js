@@ -1,4 +1,5 @@
 /*TODO: login users and clean up constructor
+  data validation and crash handling
  */
 
 var Firebase = require("firebase");
@@ -35,11 +36,12 @@ class User {
     });
     */
   // Register the callback to be fired every time auth state changes
-    ref = new Firebase("https://incandescent-torch-5505.firebaseio.com");
+    ref = new Firebase("FireURL");
     ref.onAuth(authDataCallback);
     /* LOGIN TODO
     On Shutdown: ref.unauth(); to deauthorize.
     */
+
     if (isNew){
       newName();
     }
@@ -51,7 +53,7 @@ class User {
     }
     /*Firebase generate a user id*/
   }
-
+/* check if the user is logged in given authentication data */
   function authDataCallback(authData) {
     if (authData) {
       console.log("User " + authData.uid + " is logged in with " + authData.provider);
@@ -65,21 +67,23 @@ class User {
     ref.offAuth()
   }
 
-  var isNewUser = true;
-  var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
-  ref.onAuth(function(authData) {
-    if (authData && isNewUser) {
-      // save the user's profile into the database so we can list users,
-      // use them in Security and Firebase Rules, and show profiles
-      ref.child("users").child(authData.uid).set({
-        provider: authData.provider,
-        name: getName(authData)
-      });
-    }
-  });
+/* register new user */
   function create() {
     /*Actual login*/
+    var isNewUser = true;
+    var ref = new Firebase("FireURL");
+    ref.onAuth(function(authData) {
+      if (authData && isNewUser) {
+        // save the user's profile into the database so we can list users,
+        // use them in Security and Firebase Rules, and show profiles
+        ref.child("users").child(authData.uid).set({
+          provider: authData.provider,
+          name: getName(authData)
+        });
+      }
+    });
   }
+
   /*set everything in here*/
   function set(obj) {
     User = obj;
@@ -87,27 +91,43 @@ class User {
     userDB.set(obj);
     /* handle error if object not correct JSON format */
   }
+
+  /* Create a new trophy */
   function newTrophy(trophyid) {
     /* Messed up you need to search by child node and then set */
     /* TODO change the data structure to be indexed by Id's */
     var playerdb = new Firebase(FireURL + "/player/");
-    var playerTroph = playerdb.child(Data.userid).child("earnings").child("trophyid");
-    playerTroph.push(trophyid);
+    var playerTroph = playerdb.child(User.playerid).child("earnings").child("trophyid");
+    playerTroph.push(trophyid); //change to appednig to array not pushing a new object
   }
+
+/* Change Player's earnings to New earnings JSONObject
+ *
+ *
+ */
   function updateEarnings(newEarnings) {
     new Firebase(FireURL+"/player/"+User.playerid).child(earnings).update(newEarnings);
   }
-  /* HUGE TODO how to request a friend instead of force them to be together? */
+
+
+  /* HUGE API TODO how to request a friend? instead of force them to be together? */
   function addFriend(friendid) {
     var friendsDb = new Firebase(FireURL+"/player/"+User.playerid+"/friends");
     friends.push(friendid);
   }
+
+
   /* Delete friend: */
   function deleteFriend(friendid) {
     var friends = new Firebase(FireURL + "/player/" + User.playerid+"/friends");
+    if(err) { return null;}
     friends.filter(friendid);
     Firebase.set("/players/"+User.playerid+"/friends", friends );
   }
+
+  /* set the users name
+  
+    */
   function setName(strName) {
     User.name = strName;
     var ref = new Firebase(FireURL + "/user/");
@@ -150,8 +170,12 @@ class User {
     var tourn = new Tournament(generatedId);
     new Firebase(FireURL+"/tournament/").set(tourn);
   }
+  /* user joins team */
   function joinTeam(teamid) {
-    new Firebase(FireURL+"/team/"+teamid+"/players/").push(User.playerid);
+    var p = new Player(User.playerid);
+    p.addTeam(teamid);
+    var team = new Team(teamid);
+    team.addPlayer(user.playerid); //check concurrency condition
   }
   /*
   create team // returns team object if successful, -1 otherwise
@@ -269,7 +293,6 @@ class User {
   function logout() {
     ref.unauth();
   }
-
 
   /* Save User Data */
   function saveUser(authData) {
