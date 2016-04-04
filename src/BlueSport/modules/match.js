@@ -1,3 +1,6 @@
+/* TODO: make sure not changing indexes fo matches */
+
+
 var matchdb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 matchdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/match");
@@ -11,18 +14,18 @@ class Match {
    */
 var Match =
     {
-      datetime: 0,
-      sport: "",
-      scores: [],
-      tournamentid: -1,
-      winner: -1,
-      data: {},
-      teams: [],
-      payoutdata: {
-        xp: -1,
-        cash: -1
+      "datetime": 0,
+      "sport": "",
+      "scores": [],
+      "tournamentid": -1,
+      "winner": -1,
+      "data": {},
+      "teams": [],
+      "payoutdata": {
+        "xp": -1,
+        "cash": -1
       },
-      location: ()
+      "location": ()
   };
   var Data = {
     matchid: -1,
@@ -32,6 +35,7 @@ var Match =
   constructor(matchid) {
     Data.matchid = matchid; /* make this completely immutable */
     load(matchid);
+    return Match;
     /* alert(Data.matchid); */
   }
   /* Loads the correct match object from Firebase and caches to local variable*/
@@ -125,6 +129,7 @@ var Match =
     return Match.scores;
   }
   /*
+   *
    * Usage: this.getTournament()
    * returns the tournamentid of the tournament the match is bound to
    */
