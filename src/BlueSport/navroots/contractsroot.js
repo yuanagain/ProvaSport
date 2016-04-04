@@ -5,11 +5,7 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('./profile')
-var MatchScreen = require('./match')
-var ContractsScreen = require('./contracts')
-var HomeScreen = require('./homescreen')
-var SettingsScreen = require('./settings')
+var ContractsScreen = require('../screens/contractspage')
 
 var {
   AppRegistry,
@@ -21,41 +17,28 @@ var {
   TouchableOpacity,
 } = React;
 
-var SettingsRoot = React.createClass({
+var ContractsRoot = React.createClass({
 
   render: function() {
-    return (
-      <Navigator
-        style={styles.wrapper}
-          initialRoute={{name: 'SettingsScreen', component: SettingsScreen}}
-          
+      return (
+        <Navigator
+          style={styles.wrapper}
+          initialRoute={{name: 'ContractsScreen', component: ContractsScreen}}
+
           renderScene={(route, navigator) =>    {
             if (route.component) {
-              return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
-            }
+                          return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
+                      }
         }}
-        configureScene={(route) => {
-          if (route.sceneConfig) {
-            return route.sceneConfig;
-          }
-          return Navigator.SceneConfigs.FloatFromRight;
-          }} 
-      />
-    )
-  }
-/*
-  renderScene(route, navigator) {
-    var routeId = route.id;
-
-    if (routeId === 'SettingsScreen') {
-      return (
-        <SettingsScreen
-            navigator={navigator} />
-      );
+          configureScene={(route) => {
+              if (route.sceneConfig) {
+                return route.sceneConfig;
+              }
+              return Navigator.SceneConfigs.FloatFromRight;
+          }}
+         />
+      )
     }
-  },
-  */
-
 });
 
   var NavigationBarRouteMapper = {
@@ -76,7 +59,7 @@ var SettingsRoot = React.createClass({
       return (
         <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
           <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-            Settings
+            Contracts
           </Text>
         </TouchableOpacity>
       );
@@ -94,7 +77,7 @@ var styles = StyleSheet.create({
     margin: 0
   },
   prof_pic_container: {
-    marginTop: 20
+    marginTop: 200
   },
   prof_pic_image: {
     flex: 1,
@@ -107,4 +90,4 @@ var styles = StyleSheet.create({
   }
 })
 
-module.exports = SettingsRoot;
+module.exports = ContractsRoot;

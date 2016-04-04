@@ -21,11 +21,9 @@ var {
 var MatchScreen = React.createClass({
   getInitialState: function() {
     return {
-      
+
     }
   },
-
-
   render: function() {
     return (
       <View style={styles.container}>
@@ -48,7 +46,7 @@ var MatchScreen = React.createClass({
           <Text>
             Player 2
           </Text>
-        </TouchableOpacity> 
+        </TouchableOpacity>
       </View>
     );
   },
@@ -67,7 +65,6 @@ var MatchScreen = React.createClass({
     this.props.navigator.pop({
     });
   },
-
 });
 
 var styles = StyleSheet.create({

@@ -5,6 +5,8 @@ var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 
+var _cvals = require('../styles/customvals')
+
 var {
   AppRegistry,
   StyleSheet,
@@ -26,7 +28,8 @@ var LoginPage = React.createClass({
   render: function() {
     var {
       name,
-      loginFunction,
+      navToHomeFunc,
+      signUpFunction,
       ...props
     } = this.props;
 
@@ -35,7 +38,7 @@ var LoginPage = React.createClass({
 
       <View style={styles.header_container}>
         <Text style={styles.title_text}>
-          BlueSport
+          {"ProvaSport"}
         </Text>
       </View>
 
@@ -56,9 +59,7 @@ var LoginPage = React.createClass({
 
         <TextInput
         style={styles.email_input}
-
         onChangeText={(password) => this.setState({password})}
-
         value={this.state.password}
         placeholder={"Password"}
         secureTextEntry={true}
@@ -70,14 +71,14 @@ var LoginPage = React.createClass({
         <Button
           style={styles.login_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this.props.loginFunction}
+          onPress={this.props.navToHomeFunc}
           >
           Sign In
         </Button>
         <Button
           style={styles.signup_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this._handlePress}
+          onPress={this.props.signUpFunction}
           >
           New user? Sign Up!
         </Button>
@@ -104,7 +105,7 @@ var styles = StyleSheet.create({
     flex: 1,
     fontSize: 30,
     textAlign: 'center',
-    backgroundColor: '#F5A623',
+    backgroundColor: _cvals.skorange,
     width: windowSize.width,
     padding: 12,
     fontFamily: 'avenir',
@@ -161,10 +162,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 0,
     backgroundColor: '#7bafea',
-    // shadowRadius: 4,
-    // shadowColor: 'black',
-    // shadowOpacity: 0.5,
-    // shadowOffset: {width: 0, height: 0}
   },
   white_line: {
     backgroundColor: 'white',

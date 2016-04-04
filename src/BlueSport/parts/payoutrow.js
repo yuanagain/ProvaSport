@@ -4,8 +4,6 @@ var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 
-var mainfont = 'avenir'
-
 var {
   AppRegistry,
   StyleSheet,
@@ -13,7 +11,13 @@ var {
   Text,
 } = React;
 
-var ScoreRow = React.createClass({
+// SHARED FORMATTING.
+// TODO: make univeral
+var lightgreen = "#7ED321"
+var mainfont = 'avenir'
+var skblue = '#4A90E2'
+
+var PayoutRow = React.createClass({
   getInitialState: function() {
     return (
       {
@@ -36,8 +40,13 @@ var ScoreRow = React.createClass({
           </Text>
         </View>
         <View style={styles.column_r_r}>
-          <Text style={styles.value_text}>
-            {String(this.props.scores[0]) + '\t - \t' + String(this.props.scores[1])}
+
+          <Text style={[styles.value_text, {color: lightgreen}]}>
+            {'$' + String(this.props.payouts[0])}
+          </Text>
+
+          <Text style={[styles.value_text, {color: skblue}]}>
+            {'\t' + String(this.props.payouts[1]) + ' EXP'}
           </Text>
         </View>
       </View>
@@ -46,13 +55,6 @@ var ScoreRow = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  title_text: {
-    color: 'black',
-    fontSize: 20,
-    fontFamily: mainfont,
-    fontWeight: 'bold',
-    padding: 10
-  },
   value_text: {
     color: 'black',
     fontSize: 20,
@@ -80,4 +82,4 @@ var styles = StyleSheet.create({
   },
 })
 
-module.exports = ScoreRow;
+module.exports = PayoutRow;

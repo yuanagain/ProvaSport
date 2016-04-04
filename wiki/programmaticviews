@@ -1,0 +1,27 @@
+	var ChildView = React.createClass({
+	shouldComponentUpdate: function(nextProps, nextState) {
+	  return false;
+	},
+	render: function() {
+	  return (
+		<View style={styles.style}>
+		  <Text>this.props.text</Text>
+		</View>
+	  );
+	}
+	});
+
+	... 
+
+	var createRowOfViews = (text) => <ChildView text={text} />;
+
+	...
+
+	var ParentComponent = React.createClass({
+	render: function() {
+	  <View >
+		{SomeData.map(createRowOfViews)}
+	  </View>
+	},
+	...
+	}

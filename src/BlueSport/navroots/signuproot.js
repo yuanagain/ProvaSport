@@ -5,11 +5,7 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var ProfScreen = require('./profile')
-var MatchScreen = require('./match')
-var ContractsScreen = require('./contracts')
-var HomeScreen = require('./homescreen')
-var NewsFeedPage = require('./newsfeedpage')
+var SignUpPage = require('../screens/signup.js')
 
 var {
   AppRegistry,
@@ -21,13 +17,19 @@ var {
   TouchableOpacity,
 } = React;
 
-var HomeScreenRoot = React.createClass({
+var SignUpRoot = React.createClass({
 
 render: function() {
+  var {
+    name,
+    navToHomeFunc,
+    ...props
+  } = this.props;
+      
       return (
         <Navigator
           style={styles.wrapper}
-          initialRoute={{name: 'NewsFeedPage', component: NewsFeedPage}}
+          initialRoute={{name: 'SignUpPage', component: SignUpPage, passProps:{navToHomeFunc: this.props.navToHomeFunc}}}
 
           renderScene={(route, navigator) =>    {
             if (route.component) {
@@ -90,27 +92,7 @@ navigationBar={
   };
 
 var styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-  },
-  container: {
-    flexDirection: 'column',
-    flex: 1,
-    backgroundColor: 'transparent',
-    margin: 0
-  },
-  prof_pic_container: {
-    marginTop: 20
-  },
-  prof_pic_image: {
-    flex: 1,
-    width: windowSize.width,
-    height: 50,
-  },
-  nameText: {
-    fontSize: 20,
-    fontWeight: 'bold'
-  }
+
 })
 
-module.exports = HomeScreenRoot;
+module.exports = SignUpRoot;

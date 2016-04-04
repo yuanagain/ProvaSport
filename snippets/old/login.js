@@ -8,7 +8,7 @@ var Button_Native = require('react-native-button');
 var windowSize = Dimensions.get('window');
 
 var HomeScreen = require('../screens/homescreen');
-var RecordScreen = require('../screens/recordscreen');
+var RecordScreen = require('../screens/recordpage');
 var Navigator = require('Navigator');
 
 
