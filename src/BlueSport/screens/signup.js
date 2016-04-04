@@ -72,6 +72,10 @@ var SignUpPage = React.createClass({
     );
   },
 
+  onDateChange: function(date) {
+    this.setState({date: date});
+  },
+
   render: function() {
     var {
       name,
@@ -146,7 +150,12 @@ var SignUpPage = React.createClass({
           <View style={styles.input_row}>
             <Text style={_cstyles.section_header_text}>Birthday</Text>
             <View style={styles.date_picker_container}>
-
+              <DatePickerIOS
+                date={this.state.date}
+                mode="date"
+                maximumDate={new Date(Date.now)}
+                onDateChange={this.onDateChange}
+              />
             </View>
           </View>
           <View style={_cstyles.divider_line}/>
