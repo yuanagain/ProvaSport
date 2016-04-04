@@ -126,7 +126,7 @@ class User {
   }
 
   /* set the users name
-  
+
     */
   function setName(strName) {
     User.name = strName;
@@ -138,9 +138,8 @@ class User {
    */
   function setProfPic(ImgURL) {
     if(imgURL !=== "") throw new err;
-    User.player.prof_pic = ImgURL;
-    upload()
-
+    var p = new Player(User.playerid);
+    p.setProfPic(ImsgURL);
   }
 
   /* Add sport */

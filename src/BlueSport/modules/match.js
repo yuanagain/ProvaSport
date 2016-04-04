@@ -118,7 +118,7 @@ var Match =
 
   /*
    * Usage: this.getScores()
-   * return type: array of tuples
+   * return type: 2D array
    * Description: returns the scores of the Match
    */
   function getScores() {
