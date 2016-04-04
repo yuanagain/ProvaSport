@@ -46,7 +46,7 @@ var MatchPage = React.createClass({
 
   render: function() {
     console.log("======================")
-    console.log(this.state.match)
+    console.log(this.state.match.match)
     console.log("======================")
     var {
       match,

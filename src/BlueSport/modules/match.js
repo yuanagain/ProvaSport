@@ -29,12 +29,13 @@ class Match {
           },
           "location": ""
     };
-    this.load(matchid);
+    this.load();
   }
   /* Loads the correct match object from Firebase and caches to local variable*/
   load() {
-    matchdb.child(this.matchid).once("value", function(snapshot) {
+    matchdb.once("value", function(snapshot) {
       this.match = snapshot.val();
+      console.log(this.match)
     }, function (errorObject) {
       console.log("The match read failed: " + errorObject.code);
     });
@@ -109,8 +110,10 @@ class Match {
    * description: return the standardized *****TODO*****
    * string of the sport type
    */
-   getSport() {
-    return this.match.sport;
+  getSport() {
+    console.log(this.match)
+    console.log('++++++++++++')
+    return this.match['sport'];
   }
 
   /*
