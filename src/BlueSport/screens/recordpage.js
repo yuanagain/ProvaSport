@@ -96,6 +96,7 @@ var RecordPage = React.createClass({
           items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
           navigator={this.props.navigator}
           selection={['Tennis']}
+          mode={'single'}
         />
         <View style={_cstyles.section_divider_line}>
         </View>

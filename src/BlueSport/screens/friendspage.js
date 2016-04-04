@@ -7,12 +7,9 @@ var Button = require('react-native-button');
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
 var Header = require('../parts/header')
-var TeamRow = require('../parts/teamrow')
 var SimpleRow = require('../smallparts/simplerow')
-var DynamicList = require('../bigparts/dynamiclist')
-var TeamBlock = require('../smallparts/teamblock')
-//
-var Match = require('../modules/match')
+
+var MatchList = require('../bigparts/matchlist')
 
 var {
   AppRegistry,
@@ -24,11 +21,11 @@ var {
   Image
 } = React;
 
-var MatchPage = React.createClass({
+var FriendsPage = React.createClass({
   getInitialState: function() {
     return (
       {
-        match: new Match(this.props.matchid),
+
       }
     );
   },
@@ -37,72 +34,51 @@ var MatchPage = React.createClass({
       {
         match: {'Team1': "Team 1", "Team2": "Team 2",
                 'scores': [[21,12], [13,21], [21,6]],
-                'sport': 'Badminton', },
-        matchid: 0,
+                'sport': 'Badminton', }
       }
     )
   },
-
-
   render: function() {
-    console.log("======================")
-    console.log(this.state.match)
-    console.log("======================")
     var {
       match,
       navigator,
       ...props
     } = this.props;
 
-
     return (
-
     <View>
-      <Header title={"MATCH"}
+      <Header title={"TEAM"}
               mode={'nav'}
               navigator={this.props.navigator} />
       <ScrollView style={styles.container}
                   contentContainerStyle={styles.content}>
 
-        <SimpleRow title={"Date"} value={"3/12/2016"} />
+        <SimpleRow title={"Team Name"} value={"Princeton Tigers"} />
         <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Sport"} value={this.state.match.getSport()} />
+        <SimpleRow title={"Sport"} value={"Badminton"} />
         <View style={_cstyles.section_divider_line} ></View>
 
         <SimpleRow title={"Location"} value={"MBBC"} />
         <View style={_cstyles.section_divider_line} ></View>
 
-        <TeamBlock title={"Team 1"} value={"Won"}
-                    navigator={this.props.navigator}/>
-
-        <TeamRow navigator={this.props.navigator} />
+        <SimpleRow title={"Members"} value={"3"} />
+        <SimpleRow navigator={this.props.navigator} />
 
         <View style={_cstyles.section_divider_line} ></View>
+        <SimpleRow title={"Recent Matches"} value={"4"} />
 
-        <TeamBlock title={"Team 2"} value={"Lost"}
-                    navigator={this.props.navigator}/>
-
-        <TeamRow navigator={this.props.navigator} />
-
-        <View style={_cstyles.section_divider_line} ></View>
-
-        <SimpleRow title={"Scores"} value={""} />
-        <DynamicList
-          items={this.props.match['scores']}
-          magic={'scores_fixed'}
+        <View style={styles.matches}>
+          <MatchList
+            navigator={this.props.navigator}
           />
+        </View>
 
         <View style={_cstyles.section_divider_line} ></View>
 
       </ScrollView>
     </View>
     );
-  },
-
-  componentDidMount: function () {
-    this.state.match = this.props.match
-
   },
 });
 
@@ -123,6 +99,9 @@ var styles = StyleSheet.create({
   section: {
 
   },
+  matches: {
+    height: 200 * _cvals.dscale
+  }
 })
 
-module.exports = MatchPage;
+module.exports = FriendsPage;
