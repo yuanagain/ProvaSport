@@ -16,7 +16,8 @@ var {
   Text,
   TextInput,
   Image,
-  ListView
+  ListView,
+  RefreshControl,
 } = React;
 
 var data = ['row 1', 'row 2', 'row 3', 'row 4', 'row 5', 'row 6',
@@ -27,6 +28,7 @@ var NewsFeedPage = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      isRefreshing: false,
     };
   },
   getDefaultProps: function() {
@@ -47,7 +49,6 @@ var NewsFeedPage = React.createClass({
 
     <Header title={"NEWS"} navigator={this.props.navigator} />
 
-
       <MatchList
         navigator={this.props.navigator}
         data={this.props.data}
@@ -62,7 +63,7 @@ var NewsFeedPage = React.createClass({
   goBack: function() {
     this.props.navigator.pop()
   },
-});
+})
 
 var styles = StyleSheet.create({
   container: {
@@ -75,7 +76,6 @@ var styles = StyleSheet.create({
     marginTop: 0,
   },
   header_container: {
-    // height: windowSize.height * 6 / 10,
     width: windowSize.width,
     alignItems: 'center',
     justifyContent: 'flex-end',
