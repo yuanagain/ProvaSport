@@ -4,21 +4,23 @@ trophydb = new Firebase("https://incandescent-torch-5505.firebaseio.com/trophy")
 /*player object within Player class*/
 class Trophy {
   // this will all be Admin-defined so read-only API
-
-  var trophy = {
-    name: "string",
-    description: "",
-    thumbnail: ""
-  };
-  var Data =
-  {
-      trophyid: -1,
-      data: trophy
-  };
   /* Creates trophy object and loads a data from Firebase */
   constructor(trophyid) {
-    let this.Data.trophyid = trophyid; //might need to define getInitState
-    load(trophyid);
+    this.hasLoaded = false;
+    this.trophy = {
+      "name": "string",
+      "description": "",
+      "thumbnail": ""
+    };
+    this.trophyid = trophyid; //might need to define getInitState
+    this.promise = new Promise(function(resolve, reject) {
+      trophydb.child(trophyid).on("value", function(snapshot) {
+        this.trophy = snapshot.val();
+        console.log("\n\nDOWLOADED TROPHY:  "+this.trophy);
+        this.hasLoaded = true;
+        resolve(this.trophy);
+      });
+    });
   }
 
   /*
@@ -26,41 +28,72 @@ class Trophy {
    * into the trpophy object
    * Usage: this.load()
    */
-   function load(trophyid) {
-     trophydb.orderByChild("trophyid").equalTo(trophyid).once("value", function(snapshot) {
-       this.trophy = snapshot.val();
-     }, function (errorObject) {
-       console.log("The trophy read failed: " + errorObject.code);
-     });
-   }
+ /*
+  * load(trophyid) {
+  *     trophydb.child(trophyid).once("value", function(snapshot) {
+  *       this.trophy = snapshot.val();
+  *     }, function (errorObject) {
+  *       console.log("The trophy read failed: " + errorObject.code);
+  *     });
+  *   }
+  */
+
   /*Usage: this.getName()
     Description: returns name of trophy object */
-  function getName() {
-    return trophy.name;
+ getName() {
+   if (!this.hasLoaded) {
+     this.promise.then(function(value){
+       console.log(value.name);
+       return value.name;
+     });
+   }
+   else {
+     return this.trophy.name;
+   }
   }
   /*
    * Usage: this.getDescription()
    * Description: returns trophy's description text
    */
-  function getDescription() {
-    return trophy.description;
+ getDescription() {
+     if (!this.hasLoaded) {
+       this.promise.then(function(value){
+         console.log(value.description);
+         return value.description;
+       });
+     }
+     else {
+       return this.trophy.description;
+     }
   }
   /*
    * Usage: getThumbnail()
    * Description: returns trophy thumbnail as an Image tag
    */
-  function getThumbnail() {
-    var imgURL = trophy.thumbnail;
-    return <Image src=imgURL />
+ getThumbnail() {
+   if (!this.hasLoaded) {
+     this.promise.then(function(value){
+       return <Image src=value.thumbnail />
+     });
+   }
+   else {
+     return <Image src=trophy.thumbnail />
+   }
   }
   /*
    * Usage: this.getThumbnail(string style)
    * Description: takes in a string representing the image's style and returns the
    * trophy's thumbnail with that style
    */
-  function getThumbnail(style) {
-    var imgURL = trophy.thumbnail;
-    return <Image 'style'=style src=imgURL/>
+ getThumbnail(style) {
+   if (!this.hasLoaded) {
+     this.promise.then(function(value){
+          return <Image 'style'=style src=trophy.thumbnail/>
+     });
+   }
+   else {
+     return <Image 'style'=style src=trophy.thumbnail/>
+   }
   }
 }
-module.exports = trophy;
+module.exports = Trophy;

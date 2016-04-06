@@ -5,38 +5,18 @@
 var Firebase = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 var FireURL = "https://incandescent-torch-5505.firebaseio.com";
-
-var User = {
-  name: "",
-  email: "",
-  playerid: 0
-/* TODO session token? NO Firebase will handle this if we decide on a session token scheme */
-}
-var Data = {
-  userid: -1,
-  data: User
-}
 var ref;
 class User {
   /* Creates a new user if there is none or logins a user if exists in database */
   constructor(email, password, isNew) {
-    /*given email and password
-    checks if matches login
-    if so create if not
-    session token? this wil be where the user will be authenticated throught he node.js
-    npm install firebase-token-generator --save
-    */
-    /*
-    var ref = new Firebase("https://incandescent-torch-5505.firebaseio.com");
-    ref.authWithPassword({
-      email    : "bobtony@firebase.com",
-      password : "correcthorsebatterystaple"
-    }, function(error, authData) {  }, {
-      remember: "sessionOnly"
-    });
-    */
+    this.User = {
+      "name": "",
+      "email": "",
+      "playerid": 0
+    /* TODO session token? NO Firebase will handle this if we decide on a session token scheme */
+    };
   // Register the callback to be fired every time auth state changes
-    ref = new Firebase("FireURL");
+    ref = new Firebase(FireURL);
     ref.onAuth(authDataCallback);
     /* LOGIN TODO
     On Shutdown: ref.unauth(); to deauthorize.
@@ -54,7 +34,7 @@ class User {
     /*Firebase generate a user id*/
   }
 /* check if the user is logged in given authentication data */
-  function authDataCallback(authData) {
+  authDataCallback(authData) {
     if (authData) {
       console.log("User " + authData.uid + " is logged in with " + authData.provider);
       ref.offAuth(authDataCallback);// logged in no longer need to listen for login
@@ -63,12 +43,12 @@ class User {
     }
   }
   /* authenitcation handler */
-  function authHandler() {
+  authHandler() {
     ref.offAuth()
   }
 
 /* register new user */
-  function create() {
+  create() {
     /*Actual login*/
     var isNewUser = true;
     var ref = new Firebase("FireURL");
@@ -85,7 +65,7 @@ class User {
   }
 
   /*set everything in here*/
-  function set(obj) {
+  set(obj) {
     User = obj;
     var userDB = new Firebase(FireURL + "/User/"+Data.userid);
     userDB.set(obj);
@@ -93,7 +73,7 @@ class User {
   }
 
   /* Create a new trophy */
-  function newTrophy(trophyid) {
+  newTrophy(trophyid) {
     /* Messed up you need to search by child node and then set */
     /* TODO change the data structure to be indexed by Id's */
     var playerdb = new Firebase(FireURL + "/player/");
@@ -105,30 +85,31 @@ class User {
  *
  *
  */
-  function updateEarnings(newEarnings) {
+  updateEarnings(newEarnings) {
     new Firebase(FireURL+"/player/"+User.playerid).child(earnings).update(newEarnings);
   }
 
 
   /* HUGE API TODO how to request a friend? instead of force them to be together? */
-  function addFriend(friendid) {
-    var friendsDb = new Firebase(FireURL+"/player/"+User.playerid+"/friends");
-    friends.push(friendid);
+  addFriend(friendid) {
+    var p = new Player(this.User.playerid);
+    p.addFriend(friendid);
   }
 
 
   /* Delete friend: */
-  function deleteFriend(friendid) {
-    var friends = new Firebase(FireURL + "/player/" + User.playerid+"/friends");
+  deleteFriend(friendid) {
     if(err) { return null;}
+    var p = new Player(User.playerid);
+    var friends = p.getFriends;
     friends.filter(friendid);
-    Firebase.set("/players/"+User.playerid+"/friends", friends );
+    ref.child("player").child(this.User.playerid).update({"friends":friends});
   }
 
   /* set the users name
 
     */
-  function setName(strName) {
+  setName(strName) {
     User.name = strName;
     var ref = new Firebase(FireURL + "/user/");
     ref.set(User);
@@ -136,41 +117,41 @@ class User {
   /*
    * Set profile picture
    */
-  function setProfPic(ImgURL) {
+  setProfPic(ImgURL) {
     if(imgURL !=== "") throw new err;
     var p = new Player(User.playerid);
     p.setProfPic(ImsgURL);
   }
 
   /* Add sport */
-  function addSport(sport) {
+  addSport(sport) {
     sports = Firebase.get("/players/"+User.playerid+"/sports");
     sports.push(sport);
   }
 
   /* report match // return new match object, -1 otherwise */
-  function reportMatch(tupleObj, matchid) {
+  reportMatch(tupleObj, matchid) {
     Firebase.set("/match/"+matchid+"/scores", tupleObj);
   }
   /* schedule match // returns match object if successful, -1 otherwise */
-  function scheduleMatch(matchid, timeObj) {
+  scheduleMatch(matchid, timeObj) {
     var ref = new Firebase(FireURL+"/match/");
     ref.set(new Match(matchid)); //inadequate API to deal with this should be
     //handled in the Match Class not here
   }
   /* join tournament // returns tournament object if successful, -1 otherwise */
-  function joinTournament(tournamentid) {
+  joinTournament(tournamentid) {
     var ref = new Firebase(FireURL+"/player/"+User.playerid+"/tournaments/"+tournamentid);
     //set both player object AND tournamnet object
     ref.push(tournamentid);
   }
   /* create tournament // returns tournament object if successful, -1 otherwise */
-  function createTournament() {
+  createTournament() {
     var tourn = new Tournament(generatedId);
     new Firebase(FireURL+"/tournament/").set(tourn);
   }
   /* user joins team */
-  function joinTeam(teamid) {
+  joinTeam(teamid) {
     var p = new Player(User.playerid);
     p.addTeam(teamid);
     var team = new Team(teamid);
@@ -179,7 +160,7 @@ class User {
   /*
   create team // returns team object if successful, -1 otherwise
     */
-  function createTeam(teamid) {
+  createTeam(teamid) {
     var team = new Team(teamid);
     var ref = new Firebase(FireURL + "/team/");
     /* TODO ERROR API INADEQUACY NEED TO BREAK API RULES FOR CORRECT JSON OBJECT */
@@ -187,7 +168,7 @@ class User {
   }
 
   //change Email data of user
-  function changeEmail(oldEmail, NewEmail, password) {
+  changeEmail(oldEmail, NewEmail, password) {
     ref.changeEmail({
       oldEmail :oldEmail,
       newEmail : newEmail,
@@ -202,7 +183,7 @@ class User {
   }
 
   /* Create New User with Login */
-  function createUser(email, password) {
+  createUser(email, password) {
     ref.createUser({
       email    : email,
       password : password
@@ -216,7 +197,7 @@ class User {
   }
 
   /* Login existing user */
-  function login(email, password) {
+  login(email, password) {
     ref.authWithPassword({
       email    : email,
       password : password
@@ -242,7 +223,7 @@ class User {
   }
 
   /* Forgotten password and in-app reset */
-  function changePassword(oldPass, newPass, email) {
+  changePassword(oldPass, newPass, email) {
     ref.changePassword({
       email       : email,
       oldPassword : oldPass,
@@ -257,7 +238,7 @@ class User {
   }
 
   /* Can't Remeber your passwrod? We got your back */
-  function resetPasswordEmail(email) {
+  resetPasswordEmail(email) {
     ref.resetPassword({
       email : email
     }, function(error) {
@@ -270,7 +251,7 @@ class User {
   }
 
   /* Delte Users from DB (they delete themselves) [Full Authority still belongs to Admin]*/
-  function removeUser(strEmail, strPassword) {
+  removeUser(strEmail, strPassword) {
     ref.removeUser({
       email    : strEmail,
       password : strPassword
@@ -284,17 +265,17 @@ class User {
   }
 
   /* NEEDS WORK Sign in with Facebook */
-  function FBlogin() {
+  FBlogin() {
     ref.authWithOAuthRedirect("Facebook", authHandler);
   }
 
   /* Sign out */
-  function logout() {
+  logout() {
     ref.unauth();
   }
 
   /* Save User Data */
-  function saveUser(authData) {
+  saveUser(authData) {
     ref.onAuth(function(authData) {
       if (authData) {
         // save the user's profile into the database so we can list users,

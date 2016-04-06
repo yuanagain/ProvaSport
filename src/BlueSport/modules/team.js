@@ -3,41 +3,63 @@ var teamdb = require("firebase");
 teamdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/team");
 
 class Team {
-  var Team = {
-      name: "string",
-      players: []
-  };
-  var Data = {
-    teamid: -1,
-    data: Team
-  };
   /*constructor for the Team Object
     input: query teamid
     creates and loads Team based off of teamid*/
   constructor(teamid) {
-    let this.Data.teamid = teamid; //might need to define getInitState
-    load(teamid);
+    this.hasLoaded =false;
+    this.teamid = teamid; //might need to define getInitState
+    this.Team = {
+        "name": "string",
+        "players": []
+    };
+    this.promise= new Promise(function(resolve, reject) {
+      teamdb.child(teamid).on("value", function(snapshot) {
+        this.Team = snapshot.val();
+        console.log("\n\nDOWLOADED Team:  "+this.Team);
+        this.hasLoaded = true;
+        resolve(this.Team);
+      });
+    });
+    /* Testing script */
+    /* this.addPlayer(0); */
   }
   /* Loads the Team object double check the scope of this  */
-  function load(teamid) {
-    teamdb.orderByChild("teamid").equalTo(teamid).once("value", function(snapshot) {
-      this.Player = snapshot.val();
-    }, function (errorObject) {
-      console.log("The team read failed: " + errorObject.code);
-    });
-  }
-  function addPlayer(playerid) {
-    Team.players.append(playerid);
+  /*
+   * load(teamid) {
+   *   teamdb.orderByChild("teamid").equalTo(teamid).once("value", function(snapshot) {
+   *     this.Player = snapshot.val();
+   *   }, function (errorObject) {
+   *     console.log("The team read failed: " + errorObject.code);
+   *   });
+   * }
+   */
+  addPlayer(playerid) {
+    this.Team.players.append(playerid);
     teamdb.child(Data.teamid).child(players).push(playerid);
   }
   /* Get the name of the Team */
-  function getName() {
-    return this.Team.name;
+  getName() {
+    if(!this.hasLoaded){
+    this.promise.then(function(value){
+      console.log(value.name);
+      return value.name;
+    });}
+    else {
+      return this.Team.name;
+    }
   }
   /* returns all players that are on the team
    */
-  function getPlayers() {
-    return this.Team.Players
+  getPlayers() {
+    if(!this.hasLoaded){
+    this.promise.then(function(value){
+      console.log(value.players);
+      return value.players;
+    });}
+    else {
+      return this.Team.players;
+    }
   }
   /* Add remove player? who is team leader or team captain? what about team
   structures do we have to incorporate into the data obj? */
