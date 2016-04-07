@@ -2,6 +2,23 @@ html {
   box-sizing: border-box;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  -webkit-var-mainfont: avenir;
+  -webkit-var-skorange: #F5A623;
+  -webkit-var-skblue: #4A90E2;
+  -webkit-var-skbluelight: #a6c9f2;
+  -webkit-var-esklightgreen: #7ED321;
+  /* Unclear how to handle anything that requires height in a variable,
+     but it's got to be possible... */
+  /* -webkit-var-headerTextSize: 24 * dscale;
+  -webkit-var-normalTextSize: 20 * dscale;
+  -webkit-var-detailTextSize: 14 * dscale;
+  -webkit-var-dscale: dscale;
+  -webkit-var-headerHeight: 65 * dscale;
+  -webkit-var-slength: slength;
+  -webkit-var-bricklength: (slength) * 2.5 - 2;
+  -webkit-var-brickheight: ((slength) * 3 / 5 - 4 * dscale);
+  -webkit-var-thumbslength: ((slength) * 3 / 5 - 12 * dscale);
+  -webkit-var-stdmargin: 8 * dscale; */
 }
 
 *, *:before, *:after {
@@ -17,3 +34,125 @@ h1, h2, h3, h4, h5, h6, p, ul {
   margin: 0;
   padding: 0;
 }
+
+.title_text {
+  color: white;
+  /*font-size: 30 * -webkit-var(dscale);*/
+  font-family: -webkit-var(mainfont);
+}
+.section_header_text {
+  color: black;
+  /*font-size: 26 * -webkit-var(dscale);*/
+  font-family: -webkit-var(mainfont);
+  /*paddingHorizontal: 8 * _cvals.dscale,
+  marginVertical: 4 * _cvals.dscale,*/
+}
+.header_text {
+  color: black;
+  /*font-size: 23 * _cvals.dscale,*/
+  font-family: -webkit-var(mainfont);
+  /*paddingHorizontal: 8 * _cvals.dscale,
+  marginVertical: 4 * _cvals.dscale,*/
+}
+.standard_text {
+  color: black;
+  /*fontSize: 20 * _cvals.dscale,*/
+  font-family: -webkit-var(mainfont);
+}
+.detail_text {
+  color: black;
+  /*fontSize: 16 * _cvals.dscale,*/
+  font-family: -webkit-var(mainfont);
+}
+.light_text {
+  color: grey;
+  /*fontSize: 12 * _cvals.dscale,*/
+  font-family: -webkit-var(mainfont);
+}
+.header_container {
+  /*height: _cvals.headerHeight,*/
+  width: 100%;
+  flex-direction: row;
+  align-items: flex-end;
+  background-color: -webkit-var(skblue);
+  justify-content: space-between;
+}
+.buttons_container {
+  width: 100%;
+  align-items: flex-end;
+  justify-content: flex-end;
+  align-self: flex-end;
+  flex: 0;
+  background-color: transparent;
+}
+.wide_button {
+  color: white;
+  /*//height: windowSize.height * 1 / 10,
+  //width: windowSize.width,*/
+  align-iems: flex-end;
+  justify-content: flex-end;
+  flex: 1;
+  /*font-size: 24 * _cvals.dscale,*/
+  text-align: center;
+  background-color: -webkit-var(skorange);
+  width: 100%;
+  /*padding: 6 * _cvals.dscale,*/
+  font-family: -webkit-var(mainfont);
+  /*shadowRadius: 4 * _cvals.dscale,
+  shadow-color: black;
+  shadow-opacity: 0.2;
+  shadow-offset: {width: 0, height: -1};*/
+}
+.divider_line {
+  background-color: grey;
+  height: 1;
+  opacity: 0.3;
+  /*// marginVertical: 0.5,*/
+  width: 100%;
+}
+.section_divider_line {
+  background-color: grey;
+  height: 1;
+  opacity: 0.3;
+  /*marginVertical: 0.5;*/
+  window: 100%;
+}
+.indented_container {
+  /*margin-left: 40 * _cvals.dscale,*/
+  flex-direction: row;
+  justify-content: space-between;
+}
+.centeredText {
+  text-align: center;
+}
+.centering_wrap {
+  justify-content: center;
+  /*width: 60 * _cvals.dscale*/
+}
+/*.close {
+  height: 20 * _cvals.dscale,
+  width: 20 * _cvals.dscale
+}
+.add {
+  height: 30 * _cvals.dscale,
+  width: 30 * _cvals.dscale
+}*/
+.vline {
+  width: 1;
+  background-color: black;
+}
+.hline {
+  height: 1;
+  background-color: 'black';
+}
+.left_arrow {
+  /*height: 28 * _cvals.dscale,
+  width: 28 * _cvals.dscale,
+  marginLeft: 12 * _cvals.dscale,*/
+  padding-top: 10;
+}
+/*.right_arrow {
+  height: 28 * _cvals.dscale,
+  width: 28 * _cvals.dscale,
+  marginRight: 15 * _cvals.dscale,
+}*/
