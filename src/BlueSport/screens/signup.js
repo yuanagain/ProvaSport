@@ -295,7 +295,7 @@ var SignUpPage = React.createClass({
   },
 });
 
-// Layout for labels and text input fields
+// Layout for labels and text fields
 var TextField = React.createClass({
   render: function() {
     return(
