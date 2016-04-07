@@ -40,16 +40,10 @@ class BlueSport extends Component {
 
   render() {
     if (this.state.selectedTab == 'login') {
-      return <LoginPage 
-                navToHomeFunc={() => this.navToHomeFunc()} 
-                signUpFunction={() => this.signUpFunc()} />
-    }
-
-    if (this.state.selectedTab == 'signUp') {
       return (
         <Navigator
           style={styles.wrapper}
-          initialRoute={{name: 'SignUpPage', component: SignUpPage, passProps:{navToHomeFunc: this.navToHomeFunc.bind(this)}}}
+          initialRoute={{name: 'LoginPage', component: LoginPage, passProps:{navToHomeFunc: this.navToHomeFunc.bind(this)}}}
           renderScene={(route, navigator) =>    {
             if (route.component) {
               return React.createElement(route.component, {...route.passProps, navigator, route } );
