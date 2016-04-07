@@ -11,6 +11,8 @@ var TeamRow = require('../parts/teamrow')
 var SimpleRow = require('../smallparts/simplerow')
 var DynamicList = require('../bigparts/dynamiclist')
 var TeamBlock = require('../smallparts/teamblock')
+
+var LoadingPage = require('../screens/loadingpage')
 //
 var Match = require('../modules/match')
 
@@ -29,6 +31,7 @@ var MatchPage = React.createClass({
     return (
       {
         match: new Match(this.props.matchid),
+        loaded: false,
       }
     );
   },
@@ -54,6 +57,9 @@ var MatchPage = React.createClass({
       ...props
     } = this.props;
 
+    if (this.state.loaded != true) {
+      return (<LoadingPage navigator={this.props.navigator}/>)
+    }
 
     return (
 
@@ -102,7 +108,7 @@ var MatchPage = React.createClass({
 
   componentDidMount: function () {
     this.state.match = this.props.match
-
+    
   },
 });
 
