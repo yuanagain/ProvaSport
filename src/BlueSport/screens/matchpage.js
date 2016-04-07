@@ -106,10 +106,16 @@ var MatchPage = React.createClass({
     );
   },
 
-  componentDidMount: function () {
-    this.state.match = this.props.match
-    
+  fetchData: function(data) {
+    this.state.match = data
+    this.setState( {loaded : true} )
   },
+
+  componentDidMount: function () {
+    // this.state.match = this.props.match
+    _GetMatch(this.props.matchid, this.fetchData)
+  },
+
 });
 
 var styles = StyleSheet.create({
