@@ -272,4 +272,9 @@ function _Default(callback) {
       callback(match);
 
 }
-module.exports = _GetMatch;
+
+var default_match = {
+
+}
+
+module.exports = {_GetMatch, default_match};

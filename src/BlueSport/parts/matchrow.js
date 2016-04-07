@@ -31,7 +31,6 @@ var MatchRow = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        match:
       }
     )
   },
