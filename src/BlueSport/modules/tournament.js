@@ -20,19 +20,16 @@ function _GetTournament(tournamentid, callback) {
       console.log("Failed");
     });
 }
-function _TournamentDefault(callback) {
-  /* var match = new Match(matchid); */
-  var tournament =
+  var default_tournament =
   {
-      "type": "",
+      "type": "Loading",
       "teams": [], //alphabetical list of teams or sorted by priority
-      "location": "", /*tuple of  Latitude and Longitude*/
+      "location": "Loading", /*tuple of  Latitude and Longitude*/
       "dates": [],
-      "sport": "",
+      "sport": "Loading",
       "matches": []
   };
-  callback(tournament);
-}
+
 
 
 class Tournament {
@@ -230,4 +227,4 @@ class Tournament {
       }
     }
 }
-module.exports = {_GetTournament,_TournamentDefault};
+module.exports = {_GetTournament, default_tournament};

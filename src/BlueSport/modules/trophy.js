@@ -2,7 +2,7 @@ var trophydb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 trophydb = new Firebase("https://incandescent-torch-5505.firebaseio.com/trophy");
 /*player object within Player class*/
-function _GetTournament(trophyid, callback) {
+function _GetTrophy(trophyid, callback) {
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
         trophydb.child(trophyid).on("value", function(snapshot) {
@@ -16,16 +16,13 @@ function _GetTournament(trophyid, callback) {
       console.log("Failed");
     });
 }
-function _TrophyDefault(callback) {
-  /* var match = new Match(matchid); */
-  var trophy =
-  {
-      "name": "LOADING",
-      "description": "LOADING",
-      "thumbnail": "LOADING"
-    };
-  callback(trophy);
-}
+
+var default_trophy =
+{
+    "name": "Loading",
+    "description": "Loading",
+    "thumbnail": "Loading"
+};
 
 class Trophy {
   // this will all be Admin-defined so read-only API
@@ -121,4 +118,4 @@ class Trophy {
    }
   }
 }
-module.exports = Trophy;
+module.exports = {_GetTrophy, default_trophy};

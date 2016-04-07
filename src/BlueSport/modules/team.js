@@ -16,15 +16,10 @@ function _GetTeam(teamid, callback) {
       console.log("Failed");
     });
 }
-function _TeamDefault(callback) {
-  /* var match = new Match(matchid); */
-  var team = {
+  var default_team = {
     "name": "LOADING",
     "players": []
-  };
-  callback(team);
-}
-
+};
 
 class Team {
   /*constructor for the Team Object
@@ -89,4 +84,4 @@ class Team {
   structures do we have to incorporate into the data obj? */
 }
 
-module.exports = _GetTeam;
+module.exports = {_GetTeam, default_team};

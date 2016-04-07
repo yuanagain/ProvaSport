@@ -200,9 +200,7 @@ function _GetPlayer(playerid, callback) {
       console.log("Failed");
     });
 }
-function _PlayerDefault(callback) {
-  /* var match = new Match(matchid); */
-  var player = {
+  var default_player = {
     "name" : "LOADING",
     "userid" : -1,
     "prof_pic": "LOADING",
@@ -219,6 +217,5 @@ function _PlayerDefault(callback) {
     "matches": [],
     "tournaments": []
   };
-      callback(player);
-}
-module.exports = _GetPlayer;
+
+module.exports = {_GetPlayer, default_player};

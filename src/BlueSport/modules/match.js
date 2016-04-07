@@ -253,9 +253,10 @@ function _GetMatch(matchid, callback) {
       console.log("Failed");
     });
 }
-function _Default(callback) {
-  /* var match = new Match(matchid); */
-  var match = {
+
+
+var default_match =
+  {
         "datetime": 0,
         "sport": "LOADING",
         "scores": [],
@@ -269,12 +270,6 @@ function _Default(callback) {
         },
         "location": "LOADING"
   };
-      callback(match);
 
-}
-
-var default_match = {
-
-}
 
 module.exports = {_GetMatch, default_match};
