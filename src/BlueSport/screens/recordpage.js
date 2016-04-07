@@ -65,6 +65,24 @@ var RecordPage = React.createClass({
                    {'key': 2, 'scores': [11, 21]},
                    {'key': 3, 'scores': [12, 21]},
                    {'key': 4, 'scores': [11, 14]}]
+      },
+      {
+        match:
+          {
+      			"datetime": 1770090,
+      			"sport": "basketba",
+      			"scores": [[0,5,7],[1,8,9],[2,3,4]],
+      			"tournamentid": 99,
+      			"winner": 1,
+      			"data": {},
+      			"teams": [10],
+      			"payoutdata": {
+      				"xp": 100,
+      				"cash": 100
+      			},
+      			"location": 0
+      		},
+        matchid: 0,
       }
     );
   },
@@ -120,7 +138,7 @@ var RecordPage = React.createClass({
         </View>
 
         <View>
-          <Text style={_cstyles.section_header_text}>{"Scores"}</Text>
+          <Text style={_cstyles.section_header_text}>{"Record Match"}</Text>
         </View>
 
 

@@ -10,6 +10,7 @@ var Header = require('../parts/header')
 var SimpleRow = require('../smallparts/simplerow')
 
 var MatchList = require('../bigparts/matchlist')
+var _GetTeam = require('../modules/team')
 
 var {
   AppRegistry,
@@ -25,16 +26,20 @@ var TeamPage = React.createClass({
   getInitialState: function() {
     return (
       {
-
+        team: this.props.team,
+        loaded: false,
       }
     );
   },
   getDefaultProps: function() {
     return (
       {
-        match: {'Team1': "Team 1", "Team2": "Team 2",
-                'scores': [[21,12], [13,21], [21,6]],
-                'sport': 'Badminton', }
+        team:
+          {
+            "name" : "LOADING",
+            "players": []
+          },
+        teamid: 0,
       }
     )
   },
@@ -53,16 +58,16 @@ var TeamPage = React.createClass({
       <ScrollView style={styles.container}
                   contentContainerStyle={styles.content}>
 
-        <SimpleRow title={"Team Name"} value={"Princeton Tigers"} />
+        <SimpleRow title={"Team Name"} value={this.state.team.name} />
         <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Sport"} value={"Badminton"} />
+        <SimpleRow title={"Sport"} value={this.state.team.sport} />
         <View style={_cstyles.section_divider_line} ></View>
 
         <SimpleRow title={"Location"} value={"MBBC"} />
         <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Members"} value={"3"} />
+        <SimpleRow title={"Members"} value={this.state.team.players.length} />
         <SimpleRow navigator={this.props.navigator} />
 
         <View style={_cstyles.section_divider_line} ></View>
@@ -79,6 +84,26 @@ var TeamPage = React.createClass({
       </ScrollView>
     </View>
     );
+  },
+  /*
+   * fetchPlayer: function(data) {
+   *   this.state.player = data
+   *   console.log("DATA SUCCESSFULLY FETCHED")
+   *   console.log(data);
+   *   this.setState({loaded : true})
+   * },
+   */
+  fetchTeam: function(data) {
+    this.state.team = data
+    console.log("DATA SUCCESSFULLY FETCHED")
+    console.log(data);
+    this.setState({loaded : true})
+    /* _GetPlayer(this.state.player.teams[0], this.fetchPlayer) */
+  },
+
+  componentDidMount: function () {
+    // this.state.match = this.props.match
+    _GetTeam(0, this.fetchTeam)
   },
 });
 

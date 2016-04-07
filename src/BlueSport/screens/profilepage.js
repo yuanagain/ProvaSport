@@ -13,6 +13,8 @@ var PayoutSection = require('../parts/payoutsection')
 var SimpleRow = require('../smallparts/simplerow')
 var MatchList = require('../bigparts/matchlist')
 
+var _GetPlayer = require('../modules/player')
+var _GetTeam = require('../modules/team')
 var {
   AppRegistry,
   StyleSheet,
@@ -32,14 +34,45 @@ var ProfilePage = React.createClass({
 
     return (
       {
-        username: '',
-        password: '',
+        player: this.props.player,
+        team: this.props.team,
+        loaded: false,
       }
     );
   },
+  getDefaultProps: function() {
+    return (
+      {
+        player:
+          {
+            "name" : "LOADING",
+            "userid" : -1,
+            "prof_pic": "LOADING",
+            "elo": 0.0,
+            "earnings": {
+              "cash": -1,
+              "xp": -1,
+            },
+            "sports": "LOADING",
+            "friends": [0],
+            "teams": [],
+            "matches": [],
+            "tournaments": []
+      		},
+        playerid: 0,
+        team:
+          {
+            "name" : "LOADING",
+            "players": []
+          },
+        teamid: 0,
+      }
+    )
+  },
   render: function() {
     var {
-      name,
+      player,
+      team,
       loginFunction,
       ...props
     } = this.props;
@@ -53,18 +86,18 @@ var ProfilePage = React.createClass({
       </View>
       <ScrollView styles={[styles.scroll, {height: windowSize.width}]}
                   contentContainerStyle={styles.content} >
-        <Image source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+        <Image source={{uri: this.state.player.imageURL}}
                style={styles.pic} />
 
        <SimpleRow
          title={'Name'}
-         value={'Player Name'}/>
+         value={this.state.player.name}/>
 
        <View style={_cstyles.section_divider_line}></View>
 
        <SimpleRow
          title={'Nationality'}
-         value={'USA'}/>
+         value={this.state.player.Nationality}/>
 
        <View style={_cstyles.section_divider_line}></View>
 
@@ -76,7 +109,7 @@ var ProfilePage = React.createClass({
 
         <PayoutSection
           title={'Earnings'}
-          earnings={{'cash': 13000, 'xp': 13000}}
+          earnings={this.state.player.earnings}
         />
 
         <PayoutSection
@@ -95,19 +128,19 @@ var ProfilePage = React.createClass({
 
         <SimpleRow
           title={'Sports'}
-          value={'Tennis, Soccer, Lacrosse'}/>
+          value={this.state.player.sports}/>
 
         <View style={_cstyles.section_divider_line}></View>
 
         <SimpleRow
           title={'Location'}
-          value={'Princeton, NJ'}/>
+          value={this.state.player.home}/>
 
         <View style={_cstyles.section_divider_line}></View>
 
         <SimpleRow
           title={'Teams'}
-          value={'None'}/>
+          value={this.state.team.name}/>
 
         <View style={_cstyles.section_divider_line}></View>
 
@@ -130,6 +163,26 @@ var ProfilePage = React.createClass({
     </View>
     );
   },
+  fetchPlayer: function(data) {
+    this.state.player = data
+    console.log("DATA SUCCESSFULLY FETCHED")
+    console.log(data);
+    this.setState({loaded : true})
+    _GetTeam(this.state.player.teams[0], this.fetchTeam)
+  },
+  fetchTeam: function(data) {
+    this.state.team = data
+    console.log("DATA SUCCESSFULLY FETCHED")
+    console.log(data);
+    this.setState({loaded : true})
+  },
+
+  componentDidMount: function () {
+    // this.state.match = this.props.match
+    _GetPlayer(1, this.fetchPlayer)
+
+  },
+
 });
 
 var styles = StyleSheet.create({

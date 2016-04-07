@@ -6,7 +6,7 @@ var windowSize = Dimensions.get('window');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
-
+var _MatchDefault = require('../modules/match')
 import * as _ctools from '../libs/customtools.js'
 
 var {
@@ -31,8 +31,7 @@ var MatchRow = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        match: {'Team1': "Team 1", "Team2": "Team 2",
-                'scores': [[21,12], [13,21], [21,6]]}
+        match:
       }
     )
   },
@@ -76,7 +75,12 @@ var MatchRow = React.createClass({
 
           <View style={styles.details}>
             <Text style={_cstyles.light_text}>
-              {"3/12/2016 Dillon Gym, Princeton NJ"}
+            /*
+
+            INSERTED CODE Date Location
+
+             */
+              {this.state.match.}
             </Text>
           </View>
         </TouchableOpacity>

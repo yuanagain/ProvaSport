@@ -1,23 +1,16 @@
-/* TODO: make sure not changing indexes fo matches */
-
 
 var matchdb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 matchdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/match");
 /*player object within Player class*/
 class Match {
-  /*
-  TODO get rid of the "" for keys
-  design decisions about uploading child ony or object to the cloud
-   * Match object that will
-   * serve as the JSON object Firbase will download to
-   */
-/*Creates the match object and loads it from the Firebase  */
-  constructor(matchid) {
+  constructor(matchid){
+    /* this.construct = new Promise(function(resolve, reject) { */
+    this.hasLoaded = false;
     this.matchid = matchid; /* make this completely immutable */
-    this.match = {
-          "datetime": 0,
-          "sport": "",
+    this.Match = {
+          "datetime": 19900,
+          "sport": "baskt",
           "scores": [],
           "tournamentid": -1,
           "winner": -1,
@@ -29,58 +22,110 @@ class Match {
           },
           "location": ""
     };
-    this.load();
+    /* Loads the correct match object from Firebase and caches to local variable*/
+    this.promise = new Promise(function(resolve, reject) {
+        matchdb.child(matchid).on("value", function(snapshot) {
+          this.Match = snapshot.val();
+          this.hasLoaded = true;
+          resolve(this.Match);
+        });
+     });
+
+    this.getSport = function() {
+        if (this.hasLoaded){
+          return this.Match.sport;
+        }
+        this.promise.then(function(value){
+          return value.sport;
+        });
+    };
+    /*
+     * this.getTime = function() {
+     *   this.promise.then(function(value){
+     *     console.log('GETTTTTTTIIIMMMMMMMMMEEEEEEEEE');
+     *     console.log(value.datetime);
+     *     return value.datetime;
+     *   });
+     * };
+     */
+    /*
+     * this.promise.then(function() {
+     *   resolve();
+     * });
+     */
+  /* }); */
   }
-  /* Loads the correct match object from Firebase and caches to local variable*/
-  load() {
-    matchdb.once("value", function(snapshot) {
-      this.match = snapshot.val();
-      console.log(this.match)
-    }, function (errorObject) {
-      console.log("The match read failed: " + errorObject.code);
-    });
-  }
+ /*
+  *  rload() {
+  *
+  * }
+  */
+
+
+  /* Usage: this.getTime()
+   * returns the time of the Match as an EPOCH (integer milliseconds since
+   * Jan 1st 1970) parse with JavaScript's Date object
+   *
+   * Accessing the Date:
+   * 1. import Date Library
+   * 2. d = new Date(Epoch)
+   * 3. string day = d.toString("%d"); Other documnetation of the date object found:
+   http://www.w3schools.com/jsref/jsref_obj_date.asp
+   */
+    getTime() {
+      this.promise.then(function(value){
+        console.log('\n\n DateTIME: ');
+        console.log(value.datetime);
+        return value.datetime;
+      });
+    }
+  /*
+   * Usage: this.getSport()
+   * description: return the standardized *****TODO*****
+   * string of the sport type
+   */
+
   /* add team to the Match */
   addTeam(argTeamid) {
-     this.match.teams.append(argTeamid);
-    var ref = matchdb.child(this.matchid).child(teams);
+     this.Match.teams.append(argTeamid);
+    var ref = matchdb.child(this.matchid).child("teams");
     ref.push(argTeamid);
   }
 
   /* set time for the Match */
   setTime(argTime) {
     /* %d argTime for EPCOH */
-    var ref = matchdb.child(this.matchid).child(time);
+    var ref = matchdb.child(this.matchid).child("time");
     ref.set(argTime);
   }
   /* add team to the Match */
   reportScore(scoreTuple) {
-    var ref = matchdb.child(this.matchid).child(scores);
+    var ref = matchdb.child(this.matchid).child("scores");
     ref.push(scoreTuple);
   }
   /* takes in a dictionary of payout data and updates that value loacally and in DB */
   setPayout(dictPay) {
-   this.match.payoutdata = dictPay;
-    var ref = matchdb.child(this.matchid).child(payoutdata);
+   this.Match.payoutdata = dictPay;
+    var ref = matchdb.child(this.matchid).child("payoutdata");
     ref.set(dictPay);
   }
   /* takes in a dictionary of match data and updates that value loacally and in DB */
   setData(dataObj) {
-   this.match.data = dataObj;
-    var ref = matchdb.child(this.matchid).child(data);
+   this.Match.data = dataObj;
+    var ref = matchdb.child(this.matchid).child("data");
     ref.set(dataObj);
   }
   setLocation(argloc) {
-   this.match.location = argloc;
-    matchdb.child(this.matchid).child(location).set(argloc);
+   this.Match.location = argloc;
+    matchdb.child(this.matchid).child("location").set(argloc);
   }
   setSport(strSport) {
-   this.match.sport = strSport;
-    matchdb.child(this.matchid).child(sport).set(strSport);
+   this.Match.sport = strSport;
+    matchdb.child(this.matchid).child("sport").set(strSport);
   }
   reportWinner(playerid){
-   this.match.winner = playerid;
-    matchdb.child(this.matchid).child(winner).set(playerid); // allow multiple winners??
+   this.Match.winner = playerid;
+    matchdb.child(this.matchid).child("winner").set(playerid); // allow multiple winners??
   }
   /*  */
   /*
@@ -88,9 +133,7 @@ class Match {
    * returns the string type standardized as:
    * "round-robin" or "bracket"
    */
-   type() {
-    return this.match.type;
-  }
+
 /* Usage: this.getTime()
  * returns the time of the Match as an EPOCH (integer milliseconds since
  * Jan 1st 1970) parse with JavaScript's Date object
@@ -101,19 +144,17 @@ class Match {
  * 3. string day = d.toString("%d"); Other documnetation of the date object found:
  http://www.w3schools.com/jsref/jsref_obj_date.asp
  */
- getTime() {
-    return this.match.datetime;
-  }
 
   /*
    * Usage: this.getSport()
    * description: return the standardized *****TODO*****
    * string of the sport type
    */
-  getSport() {
-    console.log(this.match)
-    console.log('++++++++++++')
-    return this.match['sport'];
+
+   type() {
+     this.promise.then(function(value){
+       return value.type;
+     });
   }
 
   /*
@@ -122,36 +163,47 @@ class Match {
    * Description: returns the scores of the Match
    */
    getScores() {
-    return this.match.scores;
+     this.promise.then(function(value){
+       return value.scores;
+     });
   }
   /*
-   *
    * Usage: this.getTournament()
    * returns the tournamentid of the tournament the match is bound to
    */
    getTournament() {
-    return this.match.tournamentid;
+     this.promise.then(function(value){
+       return value.tournamentid;
+     });
   }
   /*
    * usage: this.getWinner()
    * returns playerid of winner
    */
+
    getWinner() {
-    return this.match.winner;
+     this.promise.then(function(value){
+       return value.winner;
+     });
   }
   /*
    * Usage: this.getData()
    * returns the data dictionary with each match data
    */
+
    getData() {
-    return this.match.data;
+     this.promise.then(function(value){
+       return value.data;
+     });
   }
   /*
    * Usage: this.getTeams()
    * desciption: returns the array of teamids indicating teams particpating in match
-   */
+*/
    getTeams() {
-    return this.match.teams;
+     this.promise.then(function(value){
+       return value.teams;
+     });
   }
   /*
    * Usage: this.getPayout()
@@ -161,9 +213,10 @@ class Match {
    *   "cash": value
    * }
    */
-   getPayout() {
-    //return Match.payout;
-    return this.match.payoutdata;
+  getPayout() {
+    this.promise.then(function(value){
+      return value.payoutdata;
+    });
   }
   /*possibly add stuff like isOnTeam etc.*/
   /*
@@ -171,16 +224,52 @@ class Match {
    * returns GPS data of the location of the match to integrate into map
    */
    getLocation() {
-    return this.match.data;
+     this.promise.then(function(value){
+       return value.data;
+     });
   }
-  /*  */
+  /* generic Data update with jsonObject  DO NOT ALLOW USER TO USE **SECURITY CONCERN**
+  */
   updateData(jsonObj) {
     /* assumes valid Json for entire object and match created*/
-    matchdb.child(this.matchid).update(jsonObj);
+    matchdb.child(Data.matchid).update(jsonObj);
   }
-  setAttribute() {
-    return
-  }
-};
 
-module.exports = Match;
+};
+function _GetMatch(matchid, callback) {
+  /* var match = new Match(matchid); */
+    var promise = new Promise(function(resolve, reject) {
+        matchdb.child(matchid).on("value", function(snapshot) {
+          var match = snapshot.val();
+          console.log(match);
+          resolve(match);
+        });
+     });
+    promise.then(function(value){
+      console.log("\n\n");
+      console.log("CALLED   " + value.sport + " NOW CALL"+ callback+"\n\n\n");
+      callback(value);
+    }).catch(function(){
+      console.log("Failed");
+    });
+}
+function _Default(callback) {
+  /* var match = new Match(matchid); */
+  var match = {
+        "datetime": 0,
+        "sport": "LOADING",
+        "scores": [],
+        "tournamentid": -1,
+        "winner": -1,
+        "data": {},
+        "teams": [],
+        "payoutdata": {
+          "xp": -1,
+          "cash": -1
+        },
+        "location": "LOADING"
+  };
+      callback(match);
+
+}
+module.exports = _GetMatch;
