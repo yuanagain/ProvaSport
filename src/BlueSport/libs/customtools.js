@@ -75,9 +75,39 @@ var selectionNeedles = function(haystack, needles) {
 var randomKey = function() {
   return Math.random(1, _const.bignum)
 }
+
 var toDate = function(mydate){
   return (mydate.getMonth()+1)+"/"+mydate.getDate()+"/"+mydate.getFullYear();
 }
+
+var shortString = function(strings, max) {
+  var out = ""
+  var len = 0
+  for (var i = 0; i < strings.length; i++) {
+    var s = String(strings[i])
+    if (len + s.length > max - 5) {
+      return out + ', ...'
+    }
+    out += s
+    len += s.length
+    if (i < out.length - 1) {
+      out += ', '
+      len += 2
+    }
+  }
+  return out
+}
+
+var cumulativeEarnings = function(earnings) {
+  var out = {'cash': 0, 'xp': 0}
+  for (var key in earnings) {
+    out['cash'] += earnings[key]['cash']
+    out['xp'] += earnings[key]['xp']
+  }
+  return out
+}
+
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
-                  selectionNeedles, toDate};
+                  selectionNeedles, toDate, shortString,
+                  cumulativeEarnings};

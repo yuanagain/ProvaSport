@@ -11,6 +11,7 @@ var _const = require('../libs/constants')
 import * as _ctools from '../libs/customtools.js'
 var SimpleRow = require('../smallparts/simplerow')
 
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -24,15 +25,15 @@ var TeamBlock = React.createClass({
   getInitialState: function() {
     return (
       {
-
+        team: Team.default_team,
+        loaded: false,
       }
     );
   },
   getDefaultProps() {
     return (
       {
-        title: 'Title',
-        value: 'Value'
+        teamid: 0,
       }
     )
   },
@@ -59,10 +60,23 @@ var TeamBlock = React.createClass({
         id: "TeamPage" + String(_ctools.randomKey()),
         component: TeamPage,
         passProps: {
+          teamid: this.props.teamid,
           navigator: this.props.navigator
         }
       })
     },
+
+
+  fetchTeam: function(data) {
+    this.state.team = data
+    this.setState({loaded : true})
+  },
+
+  componentDidMount: function () {
+    // this.state.match = this.props.match
+    Team._GetTeam(this.props.teamid, this.fetchTeam)
+
+  },
 });
 
 var styles = StyleSheet.create({

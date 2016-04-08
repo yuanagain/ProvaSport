@@ -10,7 +10,8 @@ var Header = require('../parts/header')
 var SimpleRow = require('../smallparts/simplerow')
 
 var MatchList = require('../bigparts/matchlist')
-var _GetTeam = require('../modules/team')
+
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -93,18 +94,15 @@ var TeamPage = React.createClass({
    *   this.setState({loaded : true})
    * },
    */
-  fetchTeam: function(data) {
-    this.state.team = data
-    console.log("DATA SUCCESSFULLY FETCHED")
-    console.log(data);
-    this.setState({loaded : true})
-    /* _GetPlayer(this.state.player.teams[0], this.fetchPlayer) */
-  },
+   fetchTeam: function(data) {
+     this.state.team = data
+     this.setState({loaded : true})
+   },
 
-  componentDidMount: function () {
+   componentDidMount: function () {
     // this.state.match = this.props.match
-    _GetTeam(0, this.fetchTeam)
-  },
+      Team._GetTeam(this.props.teamid, this.fetchTeam)
+    },
 });
 
 var styles = StyleSheet.create({

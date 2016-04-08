@@ -16,7 +16,7 @@ var {
 
 let _cvals = require('./customvals')
 
-var CustomStyles = StyleSheet.create({
+var CustomStylesDefault = StyleSheet.create({
   title_text: {
     color: 'white',
     fontSize: 30 * _cvals.dscale,
@@ -140,5 +140,13 @@ var CustomStyles = StyleSheet.create({
     marginRight: 15 * _cvals.dscale,
   },
 })
+
+var chooseStyle = function() {
+
+  if (true)
+    return CustomStylesDefault
+}
+
+var CustomStyles = chooseStyle()
 
 module.exports = CustomStyles;
