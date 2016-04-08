@@ -1,6 +1,6 @@
 var teamdb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
-teamdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/team");
+teamdb = new Firebase("https://shining-torch-4767.firebaseio.com/team");
 /*possilby add stuff like isOnTeam etc.*/
 function _GetTeam(teamid, callback) {
   /* var match = new Match(matchid); */

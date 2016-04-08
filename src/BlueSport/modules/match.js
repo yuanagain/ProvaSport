@@ -1,6 +1,6 @@
 var matchdb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
-matchdb = new Firebase("https://incandescent-torch-5505.firebaseio.com/match");
+matchdb = new Firebase("https://shining-torch-4767.firebaseio.com/match");
 /*player object within Player class*/
 function _GetMatch(matchid, callback) {
   /* var match = new Match(matchid); */

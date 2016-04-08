@@ -4,7 +4,7 @@
 var specTourndb;
 var tourndb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
-tourndb = new Firebase("https://incandescent-torch-5505.firebaseio.com/tournament");
+tourndb = new Firebase("https://shining-torch-4767.firebaseio.com/tournament");
 /*player object within Player class*/
 function _GetTournament(tournamentid, callback) {
   /* var match = new Match(matchid); */
