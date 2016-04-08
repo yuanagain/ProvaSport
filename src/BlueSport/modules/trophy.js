@@ -1,6 +1,6 @@
 var trophydb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
-trophydb = new Firebase("https://incandescent-torch-5505.firebaseio.com/trophy");
+trophydb = new Firebase("https://shining-torch-4767.firebaseio.com/trophy");
 /*player object within Player class*/
 function _GetTrophy(trophyid, callback) {
   /* var match = new Match(matchid); */
