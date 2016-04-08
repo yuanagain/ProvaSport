@@ -13,9 +13,8 @@ var DynamicList = require('../bigparts/dynamiclist')
 var TeamBlock = require('../smallparts/teamblock')
 
 var LoadingPage = require('../screens/loadingpage')
-//
-var _GetMatch = require('../modules/match')
-var _GetTeam = require('../modules/team')
+
+import * as Match from '../modules/match'
 
 var {
   AppRegistry,
@@ -31,8 +30,7 @@ var MatchPage = React.createClass({
   getInitialState: function() {
     return (
       {
-        team: this.props.team,
-        match: this.props.match,
+        match: Match.default_match,
         loaded: false,
       }
     );
@@ -40,27 +38,7 @@ var MatchPage = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        match: {
-      			"datetime": 1770090,
-      			"sport": "LOADING",
-      			"scores": [[0,5,7],[1,8,9],[2,3,4]],
-      			"tournamentid": 99,
-      			"winner": 1,
-      			"data": {},
-      			"teams": [1,0],
-      			"payoutdata": {
-      				"xp": 100,
-      				"cash": 100
-      			},
-      			"location": 0
-      		},
         matchid: 0,
-        team:
-          {
-            "name" : "LOADING",
-            "players": []
-          },
-        teamid: 0,
       }
     )
   },
@@ -93,15 +71,19 @@ var MatchPage = React.createClass({
             <SimpleRow title={"Location"} value={this.state.match.location} />
             <View style={_cstyles.section_divider_line} ></View>
 
-            <TeamBlock title={"Team 1"} value={"Won"}
-                        navigator={this.props.navigator}/>
+            <TeamBlock title={"Team 1"}
+                       teamid={this.state.match.teams[0]}
+                       value={""}
+                       navigator={this.props.navigator}/>
 
             <TeamRow navigator={this.props.navigator} />
 
             <View style={_cstyles.section_divider_line} ></View>
 
-            <TeamBlock title={"Team 2"} value={"Lost"}
-                        navigator={this.props.navigator}/>
+            <TeamBlock title={"Team 2"}
+                       teamid={this.state.match.teams[1]}
+                       value={""}
+                       navigator={this.props.navigator}/>
 
             <TeamRow navigator={this.props.navigator} />
 
@@ -129,20 +111,12 @@ var MatchPage = React.createClass({
 
   fetchMatch: function(data) {
     this.state.match = data
-    console.log(data);
-    this.setState({loaded : true})
-    _GetTeam(this.state.match.teams[0], this.fetchTeam)
-  },
-  fetchTeam: function(data) {
-    this.state.team = data
-    console.log("DATA SUCCESSFULLY FETCHED")
-    console.log(data);
     this.setState({loaded : true})
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    _GetMatch(this.props.matchid, this.fetchMatch)
+    Match._GetMatch(this.props.matchid, this.fetchMatch)
 
   },
 

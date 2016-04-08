@@ -13,8 +13,9 @@ var PayoutSection = require('../parts/payoutsection')
 var SimpleRow = require('../smallparts/simplerow')
 var MatchList = require('../bigparts/matchlist')
 
-var _GetPlayer = require('../modules/player')
-var _GetTeam = require('../modules/team')
+import * as Player from '../modules/player'
+// var _GetTeam = require('../modules/team')
+
 var {
   AppRegistry,
   StyleSheet,
@@ -34,8 +35,7 @@ var ProfilePage = React.createClass({
 
     return (
       {
-        player: this.props.player,
-        team: this.props.team,
+        player: Player.default_player,
         loaded: false,
       }
     );
@@ -43,28 +43,7 @@ var ProfilePage = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        player:
-          {
-            "name" : "LOADING",
-            "userid" : -1,
-            "prof_pic": "LOADING",
-            "elo": 0.0,
-            "earnings": {
-              "cash": -1,
-              "xp": -1,
-            },
-            "sports": "LOADING",
-            "friends": [0],
-            "teams": [],
-            "matches": [],
-            "tournaments": []
-      		},
         playerid: 0,
-        team:
-          {
-            "name" : "LOADING",
-            "players": []
-          },
         teamid: 0,
       }
     )
@@ -140,7 +119,7 @@ var ProfilePage = React.createClass({
 
         <SimpleRow
           title={'Teams'}
-          value={this.state.team.name}/>
+          value={""}/>
 
         <View style={_cstyles.section_divider_line}></View>
 
@@ -165,10 +144,8 @@ var ProfilePage = React.createClass({
   },
   fetchPlayer: function(data) {
     this.state.player = data
-    console.log("DATA SUCCESSFULLY FETCHED")
-    console.log(data);
     this.setState({loaded : true})
-    _GetTeam(this.state.player.teams[0], this.fetchTeam)
+    // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
   fetchTeam: function(data) {
     this.state.team = data
@@ -179,7 +156,7 @@ var ProfilePage = React.createClass({
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    _GetPlayer(1, this.fetchPlayer)
+    Player._GetPlayer(1, this.fetchPlayer)
 
   },
 

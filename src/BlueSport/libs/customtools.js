@@ -75,9 +75,15 @@ var selectionNeedles = function(haystack, needles) {
 var randomKey = function() {
   return Math.random(1, _const.bignum)
 }
+
 var toDate = function(mydate){
   return (mydate.getMonth()+1)+"/"+mydate.getDate()+"/"+mydate.getFullYear();
 }
+
+var shortString = function(strings) {
+  
+}
+
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
-                  selectionNeedles, toDate};
+                  selectionNeedles, toDate, shortString};
