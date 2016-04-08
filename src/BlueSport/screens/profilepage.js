@@ -9,7 +9,7 @@ var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 import * as _ctools from '../libs/customtools.js'
 var Header = require('../parts/header')
-var PayoutSection = require('../parts/payoutsection')
+var PayoutSection = require('../smallparts/payoutsection')
 var SimpleRow = require('../smallparts/simplerow')
 var MatchList = require('../bigparts/matchlist')
 
@@ -76,13 +76,13 @@ var ProfilePage = React.createClass({
 
        <SimpleRow
          title={'Nationality'}
-         value={this.state.player.Nationality}/>
+         value={this.state.player.nationality}/>
 
        <View style={_cstyles.section_divider_line}></View>
 
        <SimpleRow
          title={'Level'}
-         value={'23'}/>
+         value={this.state.player.level}/>
 
        <View style={_cstyles.section_divider_line}></View>
 

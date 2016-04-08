@@ -80,8 +80,22 @@ var toDate = function(mydate){
   return (mydate.getMonth()+1)+"/"+mydate.getDate()+"/"+mydate.getFullYear();
 }
 
-var shortString = function(strings) {
-  
+var shortString = function(strings, max) {
+  var out = ""
+  var len = 0
+  for (var i = 0; i < strings.length; i++) {
+    var s = String(strings[i])
+    if (len + s.length > max - 5) {
+      return out + ', ...'
+    }
+    out += s
+    len += s.length
+    if (i < out.length - 1) {
+      out += ', '
+      len += 2
+    }
+  }
+  return out
 }
 
 module.exports = {indexOf, supplementIndex, contains, inRange,
