@@ -46,37 +46,18 @@ var PayoutSection= React.createClass({
       ...props
     } = this.props;
 
+    var row = [];
+    for (var i = 0; i < this.props.score.length; i++) {
+        columns.push(<ForkColumn navigator={this.props.navigator}
+                        level={i}
+
+                        column={this.props.matches[i]}
+                        key={i} />);
+    }
+
     return (
       <View style={[styles.container, ,]}>
-        <View style={styles.title}>
-          <Text style={[_cstyles.header_text,
-                        {alignSelf: 'flex-start', fontWeight: 'normal'}]}>
-            {this.props.title}
-          </Text>
-        </View>
-
-        <View style={styles.values}>
-          <Text style={[_cstyles.standard_text,
-                       {color: _cvals.sklightgreen, fontWeight: 'bold',
-                        paddingVertical: _cvals.stdmargin / 2}]}>
-            {this.state.plus + '$'
-              + String(this.props.earnings['cash'])}
-          </Text>
-        </View>
-
-        <View style={styles.values}>
-
-          <Text style={[_cstyles.standard_text,
-                       {color: _cvals.skblue, fontWeight: 'normal',
-                        paddingVertical: _cvals.stdmargin / 2}]}>
-            {'\t' + this.state.plus +
-              +String(this.props.earnings['xp']) + ' EXP'}
-          </Text>
-
-        </View>
       </View>
-    );
-  },
 });
 
 var styles = StyleSheet.create({
