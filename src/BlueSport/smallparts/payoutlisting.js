@@ -10,6 +10,8 @@ var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 import * as _ctools from '../libs/customtools.js'
 
+var PayoutSection = require('../smallparts/payoutsection')
+
 var {
   AppRegistry,
   StyleSheet,
@@ -17,7 +19,7 @@ var {
   Text,
 } = React;
 
-var PayoutSection= React.createClass({
+var PayoutListing= React.createClass({
   getInitialState: function() {
     var plus = ''
     if (this.props.mode == 'plus') {
@@ -32,55 +34,40 @@ var PayoutSection= React.createClass({
   getDefaultProps() {
     return (
       {
-        earnings: {'cash': 0, 'xp': 0, 'trophies': []},
-        mode: 'total',
-        title: '',
+        earnings: {'sport': {'cash': 0, 'xp': 0, 'trophies': []} },
       }
     )
   },
   render: function() {
     var {
       earnings,
-      mode,
-      title,
       ...props
     } = this.props;
 
-    var row = [];
-    for (var i = 0; i < this.props.score.length; i++) {
-        columns.push(<ForkColumn navigator={this.props.navigator}
-                        level={i}
-
-                        column={this.props.matches[i]}
-                        key={i} />);
+    var rows = [];
+    for (var key in this.props.earnings) {
+        rows.push( <PayoutSection
+                        title={'\t' + key}
+                        mode={'plus'}
+                        earnings={this.props.earnings[key]}
+                        key={_ctools.randomKey()} />);
     }
-
     return (
       <View style={[styles.container, ,]}>
+        {rows}
       </View>
+    )
+  }
 });
 
 var styles = StyleSheet.create({
-  values: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    alignSelf: 'flex-end',
-    width: windowSize.width / 3,
-  },
-  title: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignSelf: 'flex-start',
-    width: windowSize.width / 3 - 1 * _cvals.stdmargin,
-  },
+
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     flex: 0,
-    paddingRight: _cvals.stdmargin,
     width: windowSize.width
   },
 })
 
-module.exports = PayoutSection;
+module.exports = PayoutListing;

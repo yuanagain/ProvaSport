@@ -10,6 +10,7 @@ var _cstyles  = require('../styles/customstyles')
 import * as _ctools from '../libs/customtools.js'
 var Header = require('../parts/header')
 var PayoutSection = require('../smallparts/payoutsection')
+var PayoutListing = require('../smallparts/payoutlisting')
 var SimpleRow = require('../smallparts/simplerow')
 var MatchList = require('../bigparts/matchlist')
 
@@ -88,22 +89,16 @@ var ProfilePage = React.createClass({
 
         <PayoutSection
           title={'Earnings'}
-          earnings={this.state.player.earnings}
+          earnings={_ctools.cumulativeEarnings(this.state.player.earnings)}
         />
 
-        <PayoutSection
-          title={'\tTennis'}
-          mode={'plus'}
-          earnings={{'cash': 1000, 'xp': 1000}}
-        />
+        <PayoutListing
+          earnings={this.state.player.earnings} />
 
-        <PayoutSection
-          title={'\tSoccer'}
-          mode={'plus'}
-          earnings={{'cash': 12000, 'xp': 12000}}
-        />
 
         <View style={_cstyles.section_divider_line}></View>
+
+
 
         <SimpleRow
           title={'Sports'}

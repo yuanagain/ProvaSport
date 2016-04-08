@@ -98,6 +98,16 @@ var shortString = function(strings, max) {
   return out
 }
 
+var cumulativeEarnings = function(earnings) {
+  var out = {'cash': 0, 'xp': 0}
+  for (var key in earnings) {
+    out['cash'] += earnings[key]['cash']
+    out['xp'] += earnings[key]['xp']
+  }
+  return out
+}
+
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
-                  selectionNeedles, toDate, shortString};
+                  selectionNeedles, toDate, shortString,
+                  cumulativeEarnings};
