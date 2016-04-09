@@ -10,6 +10,7 @@ var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
 import * as _ctools from '../libs/customtools.js'
+import * as Player from '../modules/player'
 
 var {
   AppRegistry,
@@ -35,7 +36,21 @@ var PlayerBrick = React.createClass({
       }
     })
   },
-
+  getInitialState: function() {
+    return (
+      {
+        player: Player.default_player,
+        loaded: false,
+      }
+    );
+  },
+  getDefaultProps: function() {
+    return (
+      {
+        playerid: 0,
+      }
+    )
+  },
   render: function() {
     var {
       player,
@@ -48,18 +63,28 @@ var PlayerBrick = React.createClass({
                         onPress={() => this.onPress()}>
         <View style={[styles.center, styles.left]} >
           <Image style={styles.im}
-                 source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}/>
+                 source={{uri: this.state.player.prof_pic}}/>
         </View>
         <View style={styles.right}>
           <View >
-            <Text style={[_cstyles.detail_text]}>{this.props.player}</Text>
+            <Text style={[_cstyles.detail_text]}>{"Player "+this.props.player}</Text>
           </View>
           <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text]}>{"Last Name"}</Text>
+            <Text style={[_cstyles.detail_text]}>{this.state.player.name}</Text>
           </View>
         </View>
       </TouchableOpacity>
     );
+  },
+  fetchPlayer: function(data) {
+    this.state.player = data
+    this.setState({loaded : true})
+    // _GetTeam(this.state.player.teams[0], this.fetchTeam)
+  },
+
+  componentDidMount: function () {
+    // this.state.match = this.props.match
+    Player._GetPlayer(this.props.player, this.fetchPlayer)
   },
 });
 

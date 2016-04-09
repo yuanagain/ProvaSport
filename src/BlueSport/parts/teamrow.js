@@ -24,7 +24,8 @@ var TeamRow = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        team: ['Player 1', 'Player 2', 'Player 3']
+        //team players
+        team: [0, 1, 0]
       }
     )
   },

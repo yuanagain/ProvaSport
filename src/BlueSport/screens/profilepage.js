@@ -66,7 +66,7 @@ var ProfilePage = React.createClass({
       </View>
       <ScrollView styles={[styles.scroll, {height: windowSize.width}]}
                   contentContainerStyle={styles.content} >
-        <Image source={{uri: this.state.player.imageURL}}
+        <Image source={{uri: this.state.player.prof_pic}}
                style={styles.pic} />
 
        <SimpleRow
@@ -114,11 +114,11 @@ var ProfilePage = React.createClass({
 
         <SimpleRow
           title={'Teams'}
-          value={""}/>
+          value={_ctools.shortString(this.state.player.teams)}/>
 
         <View style={_cstyles.section_divider_line}></View>
 
-        <SimpleRow title={"Recent Matches"} value={"4"} />
+        <SimpleRow title={"Recent Matches"} value={this.state.player.matches.length} />
 
         <View style={styles.matches}>
           <MatchList
@@ -151,7 +151,8 @@ var ProfilePage = React.createClass({
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(1, this.fetchPlayer)
+    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    /* Player._CreateNewPlayer(Player.newDefault_player) */
 
   },
 

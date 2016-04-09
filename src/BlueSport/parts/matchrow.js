@@ -69,7 +69,7 @@ var MatchRow = React.createClass({
 
             <View style={styles.name}>
               <Text style={_cstyles.standard_text}>
-                {this.state.teams[0]['name']}
+                {this.state.teams[1]['name']}
               </Text>
             </View>
             <View style={styles.scores}>
@@ -79,7 +79,7 @@ var MatchRow = React.createClass({
 
           <View style={styles.details}>
             <Text style={_cstyles.light_text}>
-              {""+(new Date(this.state.match.datetime)).toDateString()}
+              {_ctools.toDate(new Date(this.state.match.datetime))}
             </Text>
             <Text style={_cstyles.light_text}>
               {" at " + this.state.match.location}

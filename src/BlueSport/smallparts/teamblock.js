@@ -33,7 +33,8 @@ var TeamBlock = React.createClass({
   getDefaultProps() {
     return (
       {
-        teamid: 0,
+        /* HOw do we change this based on past screen data?   */
+        teamid: 1,
       }
     )
   },
@@ -75,7 +76,6 @@ var TeamBlock = React.createClass({
   componentDidMount: function () {
     // this.state.match = this.props.match
     Team._GetTeam(this.props.teamid, this.fetchTeam)
-
   },
 });
 

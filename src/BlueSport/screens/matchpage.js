@@ -13,8 +13,9 @@ var DynamicList = require('../bigparts/dynamiclist')
 var TeamBlock = require('../smallparts/teamblock')
 
 var LoadingPage = require('../screens/loadingpage')
-
+import * as _ctools from '../libs/customtools'
 import * as Match from '../modules/match'
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -31,6 +32,7 @@ var MatchPage = React.createClass({
     return (
       {
         match: Match.default_match,
+        teams: [Team.default_team, Team.default_team],
         loaded: false,
       }
     );
@@ -46,7 +48,7 @@ var MatchPage = React.createClass({
 
   render: function() {
     var {
-      team,
+      teams,
       match,
       navigator,
       ...props
@@ -62,7 +64,7 @@ var MatchPage = React.createClass({
           <ScrollView style={styles.container}
                       contentContainerStyle={styles.content}>
 
-            <SimpleRow title={"Date"} value={""+(new Date(this.state.match.datetime)).toDateString()} />
+            <SimpleRow title={"Date"} value={_ctools.toDate(new Date(this.state.match.datetime))} />
             <View style={_cstyles.section_divider_line} ></View>
 
             <SimpleRow title={"Sport"} value={this.state.match.sport} />
@@ -71,7 +73,7 @@ var MatchPage = React.createClass({
             <SimpleRow title={"Location"} value={this.state.match.location} />
             <View style={_cstyles.section_divider_line} ></View>
 
-            <TeamBlock title={"Team 1"}
+            <TeamBlock title={this.state.teams[0].name}
                        teamid={this.state.match.teams[0]}
                        value={""}
                        navigator={this.props.navigator}/>
@@ -80,7 +82,7 @@ var MatchPage = React.createClass({
 
             <View style={_cstyles.section_divider_line} ></View>
 
-            <TeamBlock title={"Team 2"}
+            <TeamBlock title={this.state.teams[1].name}
                        teamid={this.state.match.teams[1]}
                        value={""}
                        navigator={this.props.navigator}/>
@@ -111,6 +113,18 @@ var MatchPage = React.createClass({
 
   fetchMatch: function(data) {
     this.state.match = data
+    Team._GetTeam(this.state.match.teams[0], this.fetchTeam1)
+    Team._GetTeam(this.state.match.teams[1], this.fetchTeam2)
+    this.setState({loaded : true})
+  },
+
+  fetchTeam1: function(data) {
+    this.state.teams[0] = data
+    this.setState({loaded : true})
+  },
+
+  fetchTeam2: function(data) {
+    this.state.teams[1] = data
     this.setState({loaded : true})
   },
 
