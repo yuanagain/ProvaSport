@@ -19,6 +19,8 @@ var TeamPage = require('../screens/teampage')
 
 var Header = require('../parts/header')
 
+var TeamListingPage = require('../screens/teamlistingpage')
+
 import * as _ctools from '../libs/customtools.js'
 
 var {
@@ -131,6 +133,13 @@ var ContractsPage = React.createClass({
       </View>
 
       <View style={_cstyles.buttons_container}>
+        <Button
+            style={_cstyles.wide_button}
+            styleDisabled={{color: 'grey'}}
+            onPress={this.toTeamListingPage}
+            >
+            {'View Team Listing Page'}
+        </Button>
         <Button
           style={_cstyles.wide_button}
           styleDisabled={{color: 'grey'}}
@@ -267,6 +276,16 @@ var ContractsPage = React.createClass({
     this.props.navigator.push({
       id: "TeamPage3",
       component: TeamPage,
+      passProps: {
+        navigator: this.props.navigator
+      }
+    })
+  },
+
+  toTeamListingPage() {
+    this.props.navigator.push({
+      id: "TeamListingPage1",
+      component: TeamListingPage,
       passProps: {
         navigator: this.props.navigator
       }

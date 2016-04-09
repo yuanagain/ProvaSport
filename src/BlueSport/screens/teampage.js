@@ -53,7 +53,7 @@ var TeamPage = React.createClass({
 
     return (
     <View>
-      <Header title={"TEAM"}
+      <Header title={this.state.team.name}
               mode={'nav'}
               navigator={this.props.navigator} />
       <ScrollView style={styles.container}

@@ -46,9 +46,10 @@ var TeamBlock = React.createClass({
       ...props
     } = this.props;
 
+
     return (
       <TouchableOpacity onPress={this.onPress}>
-        <SimpleRow title={this.props.title}
+        <SimpleRow title={this.state.team.name}
                    value={this.props.value} />
       </TouchableOpacity>
     );
