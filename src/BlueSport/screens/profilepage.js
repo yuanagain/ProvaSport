@@ -14,6 +14,8 @@ var PayoutListing = require('../smallparts/payoutlisting')
 var SimpleRow = require('../smallparts/simplerow')
 var MatchList = require('../bigparts/matchlist')
 
+
+
 import * as Player from '../modules/player'
 // var _GetTeam = require('../modules/team')
 
@@ -60,7 +62,7 @@ var ProfilePage = React.createClass({
     return (
     <View style={styles.container}>
       <View>
-        <Header title={"PROFILE"}
+        <Header title={this.state.player.name}
                 mode={'nav'}
                 navigator={this.props.navigator} />
       </View>
