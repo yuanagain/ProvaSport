@@ -53,7 +53,7 @@ var PlayerBrick = React.createClass({
   },
   render: function() {
     var {
-      player,
+      playerid,
       navigator,
       ...props
     } = this.props;
@@ -67,15 +67,16 @@ var PlayerBrick = React.createClass({
         </View>
         <View style={styles.right}>
           <View >
-            <Text style={[_cstyles.detail_text]}>{"Player "+this.props.player}</Text>
+            <Text style={[_cstyles.detail_text]}>{this.state.player.name.first}</Text>
           </View>
           <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text]}>{this.state.player.name.last}</Text>
+            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</Text>
           </View>
         </View>
       </TouchableOpacity>
     );
   },
+
   fetchPlayer: function(data) {
     this.state.player = data
     this.setState({loaded : true})
@@ -84,7 +85,11 @@ var PlayerBrick = React.createClass({
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.player, this.fetchPlayer)
+    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    Player._GetPlayer(nextProps.playerid, this.fetchTeam)
   },
 });
 

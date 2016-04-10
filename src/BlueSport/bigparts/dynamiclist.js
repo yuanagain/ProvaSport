@@ -90,6 +90,10 @@ var DynamicList = React.createClass({
     );
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({items: nextProps.items})
+  },
+
   renderScore: function(score) {
     return (
       <GameScoreRow_subco
