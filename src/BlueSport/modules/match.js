@@ -21,7 +21,7 @@ var default_match =
   {
         "datetime": 0,
         "sport": "LOADING",
-        "scores": [["L","L"]],
+        "scores": [["...","..."]],
         "tournamentid": -1,
         "winner": -1,
         "data": {},

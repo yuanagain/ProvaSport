@@ -9,7 +9,7 @@
 /* provide module to access/update player data here */
 var playerdataRef = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
-playerdataRef = new Firebase("https://incandescent-torch-5505.firebaseio.com/player");
+playerdataRef = new Firebase("https://shining-torch-4767.firebaseio.com/player");
 
 
 

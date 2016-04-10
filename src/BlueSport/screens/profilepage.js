@@ -62,7 +62,7 @@ var ProfilePage = React.createClass({
     return (
     <View style={styles.container}>
       <View>
-        <Header title={this.state.player.name}
+        <Header title={"Player"}
                 mode={'nav'}
                 navigator={this.props.navigator} />
       </View>
