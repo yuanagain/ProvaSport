@@ -18,7 +18,7 @@ function _GetTeam(teamid, callback) {
 }
 
 var default_team = {
-    "name": "LOADING",
+    "name": "Loading",
     "players": []
 };
 

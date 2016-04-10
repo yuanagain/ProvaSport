@@ -25,7 +25,7 @@ var default_match =
         "tournamentid": -1,
         "winner": -1,
         "data": {},
-        "teams": [],
+        "teams": [0,0],
         "payoutdata": {
           "xp": -1,
           "cash": -1
