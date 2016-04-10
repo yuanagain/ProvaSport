@@ -73,7 +73,7 @@ var ProfilePage = React.createClass({
 
        <SimpleRow
          title={'Name'}
-         value={this.state.player.name}/>
+         value={this.state.player.name.full}/>
 
        <View style={_cstyles.section_divider_line}></View>
 

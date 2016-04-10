@@ -70,7 +70,7 @@ var PlayerBrick = React.createClass({
             <Text style={[_cstyles.detail_text]}>{"Player "+this.props.player}</Text>
           </View>
           <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text]}>{this.state.player.name}</Text>
+            <Text style={[_cstyles.detail_text]}>{this.state.player.name.last}</Text>
           </View>
         </View>
       </TouchableOpacity>
