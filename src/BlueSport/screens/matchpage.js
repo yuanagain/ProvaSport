@@ -54,6 +54,8 @@ var MatchPage = React.createClass({
       ...props
     } = this.props;
 
+    console.log("teams")
+    console.log(this.state.match.teams)
 
     //if (this.state.loaded) {
       return (
@@ -73,21 +75,22 @@ var MatchPage = React.createClass({
             <SimpleRow title={"Location"} value={this.state.match.location} />
             <View style={_cstyles.section_divider_line} ></View>
 
-            <TeamBlock title={this.state.teams[0].name}
-                       teamid={this.state.match.teams[0]}
+            <TeamBlock teamid={this.state.match.teams[0]}
                        value={""}
                        navigator={this.props.navigator}/>
 
-            <TeamRow navigator={this.props.navigator} />
+            <TeamRow  teamid={this.state.match.teams[0]}
+                      navigator={this.props.navigator} />
 
             <View style={_cstyles.section_divider_line} ></View>
 
-            <TeamBlock title={this.state.teams[1].name}
-                       teamid={this.state.match.teams[1]}
+            <TeamBlock teamid={this.state.match.teams[1]}
+                       getTeam={this.state.getTeams}
                        value={""}
                        navigator={this.props.navigator}/>
 
-            <TeamRow navigator={this.props.navigator} />
+            <TeamRow  teamid={this.state.match.teams[1]}
+                      navigator={this.props.navigator} />
 
             <View style={_cstyles.section_divider_line} ></View>
 
@@ -95,36 +98,27 @@ var MatchPage = React.createClass({
             <DynamicList
               items={this.state.match.scores}
               magic={'scores_fixed'}
-              />
+            />
 
             <View style={_cstyles.section_divider_line} ></View>
 
           </ScrollView>
         </View>
       );
-    //}
+  },
 
-    // else {
-    //   return (
-    //     <LoadingPage navigator={this.props.navigator}/>
-    //   );
-    // }
+  getTeamid1: function() {
+    return this.state.match.teams[0]
+  },
+
+  getTeamid2: function() {
+    return this.state.match.teams[1]
   },
 
   fetchMatch: function(data) {
     this.state.match = data
-    Team._GetTeam(this.state.match.teams[0], this.fetchTeam1)
-    Team._GetTeam(this.state.match.teams[1], this.fetchTeam2)
-    this.setState({loaded : true})
-  },
-
-  fetchTeam1: function(data) {
-    this.state.teams[0] = data
-    this.setState({loaded : true})
-  },
-
-  fetchTeam2: function(data) {
-    this.state.teams[1] = data
+    this.setState({match: data})
+    console.log(data)
     this.setState({loaded : true})
   },
 

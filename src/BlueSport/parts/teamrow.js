@@ -9,6 +9,7 @@ var _cstyles  = require('../styles/customstyles')
 var PlayerBrick = require('../parts/playerbrick')
 
 import * as _ctools from '../libs/customtools.js'
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -21,26 +22,33 @@ var {
 } = React;
 
 var TeamRow = React.createClass({
+  getInitialState: function() {
+    return ({
+      team: Team.default_team,
+    })
+  },
+
   getDefaultProps: function() {
     return (
       {
         //team players
-        team: [0, 1, 0]
+        
       }
     )
   },
 
-  createPlayerBricks: function(player, i) {
+  createPlayerBricks: function(playerid, i) {
     // TODO Somehow navigator is not being passed.
     return (
-      <PlayerBrick key={i} player={player}
+      <PlayerBrick key={i} player={playerid}
           navigator={this.props.navigator} />
     )
   },
 
   render: function() {
     var {
-      team,
+      teamid,
+      getTeamid,
       navigator,
       ...props
     } = this.props;
@@ -50,14 +58,32 @@ var TeamRow = React.createClass({
                         style={styles.container}>
         <ScrollView style={styles.scroll}
           contentContainerStyle={[styles.content,
-                  {width: (_cvals.bricklength + 10) * this.props.team.length,}]}>
+                  {width: (_cvals.bricklength + 10) * this.state.team.players.length,}]}>
 
-          {this.props.team.map(this.createPlayerBricks)}
+          {this.state.team.players.map(this.createPlayerBricks)}
         </ScrollView>
       </TouchableOpacity>
 
     )
   },
+
+
+  fetchTeam: function(data) {
+    this.state.team = data
+    this.setState({loaded : true})
+    console.log(data)
+  },
+
+  componentDidMount: function () {
+    // props.teamid not properly seen
+    Team._GetTeam(this.props.teamid, this.fetchTeam)
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    Team._GetTeam(nextProps.teamid, this.fetchTeam)
+  },
+
+
 });
 
 var picslength = _cvals.dscale * 30

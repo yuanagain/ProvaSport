@@ -34,7 +34,7 @@ var TeamBlock = React.createClass({
     return (
       {
         /* HOw do we change this based on past screen data?   */
-        teamid: 1,
+        teamid: 0,
       }
     )
   },
@@ -42,7 +42,7 @@ var TeamBlock = React.createClass({
     var {
       title,
       value,
-      team,
+      teamid,
       navigator,
       ...props
     } = this.props;
@@ -75,9 +75,15 @@ var TeamBlock = React.createClass({
   },
 
   componentDidMount: function () {
-    // this.state.match = this.props.match
+    // props.teamid not properly seen
     Team._GetTeam(this.props.teamid, this.fetchTeam)
   },
+
+  componentWillReceiveProps: function(nextProps) {
+    Team._GetTeam(nextProps.teamid, this.fetchTeam)
+  },
+
+  
 });
 
 var styles = StyleSheet.create({
