@@ -50,7 +50,7 @@ var MatchRow = React.createClass({
         <TouchableOpacity onPress={this.onPress}
                           style={styles.container}>
           <View style={styles.player_row}>
-            <Image source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+            <Image source={{uri: this.state.teams[0].thumbnail}}
                    style={styles.pic} />
 
             <View style={styles.name}>
@@ -64,7 +64,7 @@ var MatchRow = React.createClass({
           </View>
 
           <View style={styles.player_row}>
-            <Image source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+            <Image source={{uri: this.state.teams[1].thumbnail}}
                    style={styles.pic} />
 
             <View style={styles.name}>
@@ -107,6 +107,8 @@ var MatchRow = React.createClass({
     this.state.teams[1] = data
     this.setState({loaded : true})
   },
+
+
 
   componentDidMount: function () {
     // this.state.match = this.props.match

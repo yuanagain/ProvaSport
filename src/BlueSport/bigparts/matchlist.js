@@ -41,7 +41,8 @@ var MatchList = React.createClass({
     } = this.props;
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var dataSource = ds.cloneWithRows(this.props.matches),
+    var dataSource = ds.cloneWithRows(this.props.matches)
+    
     return (
       <ListView
         dataSource={dataSource}
@@ -58,6 +59,7 @@ var MatchList = React.createClass({
   renderMatchRow(rowData) {
     return (
         <MatchRow
+        matchid={rowData}
         navigator={this.props.navigator} />
     )
   },
