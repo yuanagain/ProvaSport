@@ -87,47 +87,47 @@ var ContractsPage = React.createClass({
         <Header title={"CREATE"}
                 navigator={this.props.navigator} />
 
+        <View style={_cstyles.body_container}>
+          <PopoverSelector
+            title={'Event Type'}
+            items={['Single Match', 'Elimination ', 'Round Robin']}
+            navigator={this.props.navigator}
+            selection={[]}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
 
-        <PopoverSelector
-          title={'Event Type'}
-          items={['Single Match', 'Elimination ', 'Round Robin']}
-          navigator={this.props.navigator}
-          selection={[]}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}>
+          <PopoverSelector
+            title={'Sport'}
+            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            navigator={this.props.navigator}
+            selection={this.state.selectedSport}
+            harvestSelection={this.setSport}
+            maxSelect={1}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Team 1'}
+            items={['Player 1', 'Player 2', 'Player 3']}
+            navigator={this.props.navigator}
+            selection={[]}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Team 2'}
+            items={['Player 4', 'Player 5', 'Player 6']}
+            navigator={this.props.navigator}
+            selection={[]}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
         </View>
-
-        <PopoverSelector
-          title={'Sport'}
-          items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-          navigator={this.props.navigator}
-          selection={this.state.selectedSport}
-          harvestSelection={this.setSport}
-          maxSelect={1}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Team 1'}
-          items={['Player 1', 'Player 2', 'Player 3']}
-          navigator={this.props.navigator}
-          selection={[]}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Team 2'}
-          items={['Player 4', 'Player 5', 'Player 6']}
-          navigator={this.props.navigator}
-          selection={[]}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
       </View>
 
       <View style={_cstyles.buttons_container}>

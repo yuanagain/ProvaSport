@@ -86,6 +86,7 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'flex-end',
     width: windowSize.width / 3,
+    paddingRight: _cvals.stdmargin,
   },
   title: {
     flexDirection: 'row',

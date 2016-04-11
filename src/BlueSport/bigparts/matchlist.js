@@ -72,14 +72,6 @@ var styles = StyleSheet.create({
     opacity: 1.00,
     marginTop: 0,
   },
-  header_container: {
-    // height: windowSize.height * 6 / 10,
-    width: windowSize.width,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    backgroundColor: 'transparent',
-    height: 40,
-  },
   section_container: {
     width: windowSize.width,
     backgroundColor: 'transparent',

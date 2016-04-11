@@ -54,16 +54,16 @@ var SettingsPage = React.createClass({
       <View>
         <Header title={"SETTINGS"}
                 navigator={this.props.navigator} />
-
-        <PopoverSelector
-          title={'Sports'}
-          items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-          navigator={this.props.navigator}
-          selection={['Tennis']}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}></View>
-
+        <View style={_cstyles.body_container}>
+          <PopoverSelector
+            title={'Sports'}
+            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            navigator={this.props.navigator}
+            selection={['Tennis']}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}></View>
+        </View>
       </View>
       <View style={_cstyles.buttons_container}>
         <Button

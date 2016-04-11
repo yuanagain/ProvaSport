@@ -58,30 +58,30 @@ var TeamPage = React.createClass({
               navigator={this.props.navigator} />
       <ScrollView style={styles.container}
                   contentContainerStyle={styles.content}>
+        <View style={_cstyles.body_container}>
+          <SimpleRow title={"Team Name"} value={this.state.team.name} />
+          <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Team Name"} value={this.state.team.name} />
-        <View style={_cstyles.section_divider_line} ></View>
+          <SimpleRow title={"Sport"} value={this.state.team.sport} />
+          <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Sport"} value={this.state.team.sport} />
-        <View style={_cstyles.section_divider_line} ></View>
+          <SimpleRow title={"Location"} value={"MBBC"} />
+          <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Location"} value={"MBBC"} />
-        <View style={_cstyles.section_divider_line} ></View>
+          <SimpleRow title={"Members"} value={this.state.team.players.length} />
+          <SimpleRow navigator={this.props.navigator} />
 
-        <SimpleRow title={"Members"} value={this.state.team.players.length} />
-        <SimpleRow navigator={this.props.navigator} />
+          <View style={_cstyles.section_divider_line} ></View>
+          <SimpleRow title={"Recent Matches"} value={"4"} />
 
-        <View style={_cstyles.section_divider_line} ></View>
-        <SimpleRow title={"Recent Matches"} value={"4"} />
+          <View style={styles.matches}>
+            <MatchList
+              navigator={this.props.navigator}
+            />
+          </View>
 
-        <View style={styles.matches}>
-          <MatchList
-            navigator={this.props.navigator}
-          />
+          <View style={_cstyles.section_divider_line} ></View>
         </View>
-
-        <View style={_cstyles.section_divider_line} ></View>
-
       </ScrollView>
     </View>
     );

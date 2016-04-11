@@ -99,53 +99,54 @@ var RecordPage = React.createClass({
         <Header title={"RECORD"}
                 navigator={this.props.navigator} />
 
-
-        <PopoverSelector
-          title={'Contract'}
-          items={['Standard Contract']}
-          navigator={this.props.navigator}
-          selection={[]}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Sport'}
-          items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-          navigator={this.props.navigator}
-          selection={['Tennis']}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Team 1'}
-          items={['Player 1', 'Player 2', 'Player 3']}
-          navigator={this.props.navigator}
-          selection={[]}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Team 2'}
-          items={['Player 4', 'Player 5', 'Player 6']}
-          navigator={this.props.navigator}
-          selection={[]}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <View>
-          <Text style={_cstyles.section_header_text}>{"Record Match"}</Text>
-        </View>
-
-
-        <DynamicList
-          items={[[1,2], [3,5], [5,6]]}
-          magic={'scores'}
+        <View style={_cstyles.body_container}>
+          <PopoverSelector
+            title={'Contract'}
+            items={['Standard Contract']}
+            navigator={this.props.navigator}
+            selection={[]}
           />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Sport'}
+            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            navigator={this.props.navigator}
+            selection={['Tennis']}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Team 1'}
+            items={['Player 1', 'Player 2', 'Player 3']}
+            navigator={this.props.navigator}
+            selection={[]}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Team 2'}
+            items={['Player 4', 'Player 5', 'Player 6']}
+            navigator={this.props.navigator}
+            selection={[]}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <View>
+            <Text style={_cstyles.section_header_text}>{"Record Match"}</Text>
+          </View>
+
+
+          <DynamicList
+            items={[[1,2], [3,5], [5,6]]}
+            magic={'scores'}
+            />
+        </View>
       </View>
       <View style={_cstyles.buttons_container}>
         <Button

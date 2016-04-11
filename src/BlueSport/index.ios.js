@@ -174,11 +174,6 @@ class BlueSport extends Component {
   navToHomeFunc() {
     this.setState({selectedTab: 'home'})
   }
-
-  signUpFunc() {
-    this.setState({selectedTab: 'signUp'})
-  }
-
 }
 
 const styles = StyleSheet.create({

@@ -61,42 +61,42 @@ var MatchPage = React.createClass({
                   navigator={this.props.navigator} />
           <ScrollView style={styles.container}
                       contentContainerStyle={styles.content}>
+            <View style={_cstyles.body_container}>
+              <SimpleRow title={"Date"} value={""+(new Date(this.state.match.datetime)).toDateString()} />
+              <View style={_cstyles.section_divider_line} ></View>
 
-            <SimpleRow title={"Date"} value={""+(new Date(this.state.match.datetime)).toDateString()} />
-            <View style={_cstyles.section_divider_line} ></View>
+              <SimpleRow title={"Sport"} value={this.state.match.sport} />
+              <View style={_cstyles.section_divider_line} ></View>
 
-            <SimpleRow title={"Sport"} value={this.state.match.sport} />
-            <View style={_cstyles.section_divider_line} ></View>
+              <SimpleRow title={"Location"} value={this.state.match.location} />
+              <View style={_cstyles.section_divider_line} ></View>
 
-            <SimpleRow title={"Location"} value={this.state.match.location} />
-            <View style={_cstyles.section_divider_line} ></View>
+              <TeamBlock title={"Team 1"}
+                         teamid={this.state.match.teams[0]}
+                         value={""}
+                         navigator={this.props.navigator}/>
 
-            <TeamBlock title={"Team 1"}
-                       teamid={this.state.match.teams[0]}
-                       value={""}
-                       navigator={this.props.navigator}/>
+              <TeamRow navigator={this.props.navigator} />
 
-            <TeamRow navigator={this.props.navigator} />
+              <View style={_cstyles.section_divider_line} ></View>
 
-            <View style={_cstyles.section_divider_line} ></View>
+              <TeamBlock title={"Team 2"}
+                         teamid={this.state.match.teams[1]}
+                         value={""}
+                         navigator={this.props.navigator}/>
 
-            <TeamBlock title={"Team 2"}
-                       teamid={this.state.match.teams[1]}
-                       value={""}
-                       navigator={this.props.navigator}/>
+              <TeamRow navigator={this.props.navigator} />
 
-            <TeamRow navigator={this.props.navigator} />
+              <View style={_cstyles.section_divider_line} ></View>
 
-            <View style={_cstyles.section_divider_line} ></View>
+              <SimpleRow title={"Scores"} value={""} />
+              <DynamicList
+                items={this.state.match.scores}
+                magic={'scores_fixed'}
+                />
 
-            <SimpleRow title={"Scores"} value={""} />
-            <DynamicList
-              items={this.state.match.scores}
-              magic={'scores_fixed'}
-              />
-
-            <View style={_cstyles.section_divider_line} ></View>
-
+              <View style={_cstyles.section_divider_line} ></View>
+            </View>
           </ScrollView>
         </View>
       );

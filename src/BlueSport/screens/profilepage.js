@@ -68,73 +68,74 @@ var ProfilePage = React.createClass({
         <Image source={{uri: this.state.player.imageURL}}
                style={styles.pic} />
 
-       <SimpleRow
-         title={'Name'}
-         value={this.state.player.name}/>
+        <View style={_cstyles.body_container}>
+           <SimpleRow
+             title={'Name'}
+             value={this.state.player.name}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+           <View style={_cstyles.section_divider_line}></View>
 
-       <SimpleRow
-         title={'Nationality'}
-         value={this.state.player.nationality}/>
+           <SimpleRow
+             title={'Nationality'}
+             value={this.state.player.nationality}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+           <View style={_cstyles.section_divider_line}></View>
 
-       <SimpleRow
-         title={'Level'}
-         value={this.state.player.level}/>
+           <SimpleRow
+             title={'Level'}
+             value={this.state.player.level}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+           <View style={_cstyles.section_divider_line}></View>
 
-        <PayoutSection
-          title={'Earnings'}
-          earnings={this.state.player.earnings}
-        />
+            <PayoutSection
+              title={'Earnings'}
+              earnings={this.state.player.earnings}
+            />
 
-        <PayoutSection
-          title={'\tTennis'}
-          mode={'plus'}
-          earnings={{'cash': 1000, 'xp': 1000}}
-        />
+            <PayoutSection
+              title={'\tTennis'}
+              mode={'plus'}
+              earnings={{'cash': 1000, 'xp': 1000}}
+            />
 
-        <PayoutSection
-          title={'\tSoccer'}
-          mode={'plus'}
-          earnings={{'cash': 12000, 'xp': 12000}}
-        />
+            <PayoutSection
+              title={'\tSoccer'}
+              mode={'plus'}
+              earnings={{'cash': 12000, 'xp': 12000}}
+            />
 
-        <View style={_cstyles.section_divider_line}></View>
+            <View style={_cstyles.section_divider_line}></View>
 
-        <SimpleRow
-          title={'Sports'}
-          value={this.state.player.sports}/>
+            <SimpleRow
+              title={'Sports'}
+              value={this.state.player.sports}/>
 
-        <View style={_cstyles.section_divider_line}></View>
+            <View style={_cstyles.section_divider_line}></View>
 
-        <SimpleRow
-          title={'Location'}
-          value={this.state.player.home}/>
+            <SimpleRow
+              title={'Location'}
+              value={this.state.player.home}/>
 
-        <View style={_cstyles.section_divider_line}></View>
+            <View style={_cstyles.section_divider_line}></View>
 
-        <SimpleRow
-          title={'Teams'}
-          value={""}/>
+            <SimpleRow
+              title={'Teams'}
+              value={""}/>
 
-        <View style={_cstyles.section_divider_line}></View>
+            <View style={_cstyles.section_divider_line}></View>
 
-        <SimpleRow title={"Recent Matches"} value={"4"} />
+            <SimpleRow title={"Recent Matches"} value={"4"} />
 
-        <View style={styles.matches}>
-          <MatchList
-            navigator={this.props.navigator}
-          />
+            <View style={styles.matches}>
+              <MatchList
+                navigator={this.props.navigator}
+              />
+            </View>
+
+            <View style={_cstyles.section_divider_line} ></View>
+            <View style={{height: 50 * _cvals.dscale, width: windowSize.width}}>
+            </View>
         </View>
-
-        <View style={_cstyles.section_divider_line} ></View>
-        <View style={{height: 50 * _cvals.dscale, width: windowSize.width}}>
-        </View>
-
       </ScrollView>
 
       <View style={_cstyles.buttons_container}>
