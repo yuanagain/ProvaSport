@@ -14,10 +14,7 @@ var PayoutListing = require('../smallparts/payoutlisting')
 var SimpleRow = require('../smallparts/simplerow')
 var MatchList = require('../bigparts/matchlist')
 
-
-
 import * as Player from '../modules/player'
-// var _GetTeam = require('../modules/team')
 
 var {
   AppRegistry,
@@ -33,7 +30,6 @@ var {
 } = React;
 
 var ProfilePage = React.createClass({
-
   getInitialState: function() {
 
     return (
@@ -54,16 +50,13 @@ var ProfilePage = React.createClass({
   render: function() {
     var {
       playerid,
-      player,
-      team,
       loginFunction,
       ...props
     } = this.props;
-    console.log(this.props.playerid);
     return (
     <View style={styles.container}>
       <View>
-        <Header title={"Player"}
+        <Header title={this.state.player.name.full}
                 mode={'nav'}
                 navigator={this.props.navigator} />
       </View>
@@ -129,7 +122,7 @@ var ProfilePage = React.createClass({
           />
         </View>
 
-        <View style={_cstyles.section_divider_line} ></View>
+        
         <View style={{height: 50 * _cvals.dscale, width: windowSize.width}}>
         </View>
 

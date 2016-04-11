@@ -8,7 +8,7 @@ var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
 var PopoverSelect = require('./popoverselect')
 import * as _ctools from '../libs/customtools.js'
-
+import * as _rowRenders from '../smallparts/popoverselectrowrenders'
 
 var {
   AppRegistry,
@@ -49,6 +49,12 @@ var PopoverSelector = React.createClass({
       selectorRenderMode = 'default'
     }
 
+    var renderRow = this.props.renderRow
+    if (this.props.magic == 'player') {
+      renderRow = _rowRenders.playerRenderRow
+    }
+
+    
     return {
       /* NOTE SELECTION PASSED IN ARE OBJECTS, SELECTION
       USED INTERNALLY ARE INDICES
@@ -57,6 +63,7 @@ var PopoverSelector = React.createClass({
       mode: mode,
       renderSelector: renderSelector,
       accesses: 0,
+      renderRow: renderRow
     };
   },
 
@@ -71,7 +78,8 @@ var PopoverSelector = React.createClass({
       harvestSelection: harvestSelection_default,
       selectedStyle: { backgroundColor: _cvals.skbluelight },
       renderSelector: null,
-      renderRow: defaultRenderRow
+      renderRow: _rowRenders.defaultRenderRow,
+      magic: 'none'
     };
   },
 
@@ -82,6 +90,7 @@ var PopoverSelector = React.createClass({
       renderSelector,
       items,
       harvestSelection,
+      harvestArgs,
       renderRow,
       selection,
       minSelect,
@@ -111,6 +120,13 @@ var PopoverSelector = React.createClass({
 
       if (this.state.selection.length > 2) {
         selectionText += ', ...'
+      }
+
+      if (this.props.magic == 'player') {
+        selectionText = "Edit Team"
+        if (this.state.selection.length < 1) {
+          selectionText = "Select Team"
+        }
       }
 
       if (selectionText.length > 23) {
@@ -147,14 +163,15 @@ var PopoverSelector = React.createClass({
         title: this.props.title,
         items: this.props.items,
         harvestSelection: this.harvestSelection,
-        renderRow: this.props.renderRow,
+        renderRow: this.state.renderRow,
         selection: this.state.selection,
         minSelect: this.props.minSelect,
         maxSelect: this.props.maxSelect,
         navigator: this.props.navigator,
         selectedStyle: this.props.selectedStyle,
         mode: this.state.mode,
-        update: this.update
+        update: this.update,
+        magic: this.props.magic
       }
     })
   },
@@ -163,7 +180,12 @@ var PopoverSelector = React.createClass({
     this.setState({selection: selection})
     var iselect = _ctools.traceIndices(this.props.items,
                                             this.state.selection)
-    this.props.harvestSelection(iselect)
+    if (this.props.harvestArgs == undefined) {
+      this.props.harvestSelection(iselect)
+    }
+    else {
+      this.props.harvestSelection(iselect, this.props.harvestArgs)
+    }
     this.props.navigator.pop()
   },
 

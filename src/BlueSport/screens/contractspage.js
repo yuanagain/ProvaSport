@@ -33,23 +33,10 @@ var {
   TouchableOpacity,
   TouchableHighlight,
   ListView,
+  ScrollView,
   Modal,
 } = React;
 
-var dummyselections = [
-  {'name': '1', 'descr': 'Description 1'},
-  {'name': '2', 'descr': 'Description 2'},
-  {'name': '3', 'descr': 'Description 3'},
-  {'name': '4', 'descr': 'Description 4'},
-  {'name': '5', 'descr': 'Description 5'},
-  {'name': '6', 'descr': 'Description 6'},
-  {'name': '7', 'descr': 'Description 7'},
-  {'name': '8', 'descr': 'Description 8'},
-  {'name': '9', 'descr': 'Description 9'},
-]
-
-
-var items = ["Item 1", "Item 2"];
 
 var ContractsPage = React.createClass({
 
@@ -57,18 +44,13 @@ var ContractsPage = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => this.rowChanged(r1, r2)})
     return (
       {
-        item: "Select Item",
-        isVisible: false,
-        username: '',
-        password: '',
-        scoreData: [(21, 5), (10, 21), (21, 12)],
-        dataSource: ds.cloneWithRows([[21, 5], [10, 21], [21, 12]]),
         selectedSport: ["Tennis"],
-        selectedContract: "None Selected",
+        selectedContract: ["None Selected"],
         selectedTeam1: [],
         selectedTeam2: [],
         selection: [],
-
+        teams: [[],[],],
+        num_teams: [2],
         SomeData: [{'key': 1, 'scores': [21,  2]},
                    {'key': 2, 'scores': [11, 21]},
                    {'key': 3, 'scores': [12, 21]},
@@ -82,6 +64,35 @@ var ContractsPage = React.createClass({
       loginFunction,
       ...props
     } = this.props;
+
+
+    var indices = []
+    for (var i = 0; i < this.state.num_teams; i++) {
+      indices.push(i)
+    }
+
+    var harvesters = []
+    for (var i = 0; i < this.state.num_teams; i++) {
+      harvesters.push((data) => this.setTeam(indices[i], data))
+    }
+
+    var teamselectors = []
+    for (var i = 0; i < this.state.num_teams; i++) {
+      teamselectors.push(
+        <View>
+          <PopoverSelector
+            title={'Team ' + String(i + 1)}
+            magic={'player'}
+            items={[0, 1]}
+            navigator={this.props.navigator}
+            selection={this.state.teams[i]}
+            harvestSelection={this.setTeam}
+            harvestArgs={i}
+          />
+          <View style={_cstyles.section_divider_line}></View>
+        </View>
+        )
+    }
 
     return (
     <View style={styles.container}>
@@ -113,22 +124,20 @@ var ContractsPage = React.createClass({
         </View>
 
         <PopoverSelector
-          title={'Team 1'}
-          items={['Player 1', 'Player 2', 'Player 3']}
+          title={'Number of Teams'}
+          items={[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}
           navigator={this.props.navigator}
-          selection={[]}
+          selection={this.state.num_teams}
+          harvestSelection={this.setNumTeams}
+          mode={'single'}
         />
         <View style={_cstyles.section_divider_line}>
         </View>
 
-        <PopoverSelector
-          title={'Team 2'}
-          items={['Player 4', 'Player 5', 'Player 6']}
-          navigator={this.props.navigator}
-          selection={[]}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
+        <ScrollView style={{height: 300 * _cvals.dscale,
+                            width: windowSize.with}}>
+        {teamselectors}
+        </ScrollView>
 
       </View>
 
@@ -177,10 +186,19 @@ var ContractsPage = React.createClass({
     );
   },
 
+  setTeam: function(players, index) {
+    this.state.teams[index] = players
+    this.setState({teams: this.state.teams})
+    console.log(index)
+    console.log(this.state.teams)
+  },
+
+  setNumTeams: function(num) {
+    this.setState({num_teams: num})
+  },
+
   setSport: function(selection) {
     this.setState({selectedSport: selection})
-    console.log("SELECTED SPORT: " + String(this.state.selectedSport))
-    this.forceUpdate()
   },
 
   goBack: function() {
