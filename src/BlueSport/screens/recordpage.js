@@ -3,7 +3,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton');
 
 // var ScoreRowRecord = require('./scorerowrecord')
 
@@ -149,13 +149,10 @@ var RecordPage = React.createClass({
         </View>
       </View>
       <View style={_cstyles.buttons_container}>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+        <WideButton
+          text="Record"
           onPress={this.props.loginFunction}
-          >
-          {'Record'}
-        </Button>
+          />
       </View>
     </View>
     );

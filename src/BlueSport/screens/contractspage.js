@@ -3,7 +3,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton')
 
 // var ScoreRowRecord = require('./scorerowrecord')
 
@@ -131,38 +131,25 @@ var ContractsPage = React.createClass({
       </View>
 
       <View style={_cstyles.buttons_container}>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+        <WideButton
+          text="View Team Page"
           onPress={this.toTeamPage}
-          >
-          {'View Team Page'}
-        </Button>
+        />
         <View style={{height: 1}}></View>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+        <WideButton
+          text="View RR Page"
           onPress={this.toRR}
-          >
-          {'View RR Page'}
-        </Button>
+        />
         <View style={{height: 1}}></View>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+        <WideButton
+          text="View Bracket Page"
           onPress={this.toBracket}
-          >
-          {'View Bracket Page'}
-        </Button>
+        />
         <View style={{height: 1}}></View>
 
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
-
-          >
-          {'Create'}
-        </Button>
+        <WideButton
+          text="Create"
+        />
       </View>
     </View>
     );

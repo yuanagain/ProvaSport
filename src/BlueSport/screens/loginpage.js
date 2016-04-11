@@ -3,7 +3,8 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton');
+var Button = require('react-native-button')
 
 var _cvals = require('../styles/customvals');
 var _cstyles= require('../styles/customstyles');
@@ -18,6 +19,7 @@ var {
   TextInput,
   Image,
   Platform,
+  AndroidDatePicker,
 } = React;
 
 var LoginPage = React.createClass({
@@ -78,16 +80,14 @@ var LoginPage = React.createClass({
       </View>
 
       <View style={styles.buttons_container}>
-        <Button
+        <WideButton
           style={styles.login_button}
-          styleDisabled={{color: 'grey'}}
+          text="Sign In"
           onPress={this.props.navToHomeFunc}
-          >
-          Sign In
-        </Button>
+          />
         <Button
           style={styles.signup_button}
-          styleDisabled={{color: 'grey'}}
+          text="New user? Sign Up!"
           onPress={this.onSignUpPress}
           >
           New user? Sign Up!
