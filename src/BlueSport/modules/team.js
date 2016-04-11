@@ -21,6 +21,7 @@ var default_team = {
     "name": "Loading",
     "players": [],
     "matches": [],
+    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
 };
 
 module.exports = {_GetTeam, default_team};

@@ -173,7 +173,7 @@ function changeEmail(oldEmail, NewEmail, password) {
 }
 
 /* Create New User with Login */
-function createUser(email, password) {
+function createUser(email, password, callback) {
   ref.createUser({
     email    : email,
     password : password
@@ -187,7 +187,7 @@ function createUser(email, password) {
 }
 
 /* Login existing user */
-function login(email, password) {
+function login(email, password, callback) {
   ref.authWithPassword({
     email    : email,
     password : password
@@ -206,8 +206,10 @@ function login(email, password) {
        default:
          console.log("Error logging user in:", error);
      }
+     callback(false);
    } else {
       console.log("Authenticated successfully with payload:", authData);
+      callback(true);
     }
   });
 }
@@ -297,11 +299,11 @@ var default_user = {
   "email": "Loading",
   "playerid": 0,
   "prof_pic": "loading",
-  "nationality": "playerid",
-  "gender": "could be VERY tricky",
-  "dateCreated": 0,
+  "nationality": "USA",
+  "gender": "gender",
+  "birthday": 0,
   "sports": [-1]
 };
 
 
-module.exports = {_GetUser, default_user};
+module.exports = {_GetUser, default_user, createUser};
