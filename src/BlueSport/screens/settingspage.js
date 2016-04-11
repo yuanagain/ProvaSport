@@ -3,7 +3,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton');
 
 var DynamicList = require('../bigparts/dynamiclist')
 var _cvals = require('../styles/customvals')
@@ -54,25 +54,22 @@ var SettingsPage = React.createClass({
       <View>
         <Header title={"SETTINGS"}
                 navigator={this.props.navigator} />
-
-        <PopoverSelector
-          title={'Sports'}
-          items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-          navigator={this.props.navigator}
-          selection={['Tennis']}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}></View>
-
+        <View style={_cstyles.body_container}>
+          <PopoverSelector
+            title={'Sports'}
+            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            navigator={this.props.navigator}
+            selection={['Tennis']}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}></View>
+        </View>
       </View>
       <View style={_cstyles.buttons_container}>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+        <WideButton
+          text="Save Changes"
           onPress={this.props.loginFunction}
-          >
-          {'Save Changes'}
-        </Button>
+          />
       </View>
     </View>
     );

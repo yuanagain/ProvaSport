@@ -3,7 +3,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton');
 
 // var ScoreRowRecord = require('./scorerowrecord')
 
@@ -73,68 +73,66 @@ var RecordPage = React.createClass({
         <Header title={"RECORD"}
                 navigator={this.props.navigator} />
 
-        <PopoverSelector
-          title={'Contract'}
-          items={['Default']}
-          navigator={this.props.navigator}
-          selection={this.state.contract}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Sport'}
-          items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-          navigator={this.props.navigator}
-          selection={['Tennis']}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Team 1'}
-          magic={'player'}
-          items={[0, 1]}
-          navigator={this.props.navigator}
-          selection={this.state.teams[0]}
-          harvestSelection={this.setTeams}
-          harvestArgs={0}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Team 2'}
-          magic={'player'}
-          items={[0, 1]}
-          navigator={this.props.navigator}
-          selection={this.state.teams[1]}
-          harvestSelection={this.setTeams}
-          harvestArgs={1}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <View>
-          <Text style={_cstyles.section_header_text}>{"Record Match"}</Text>
-        </View>
-
-
-        <DynamicList
-          items={this.state.scores}
-          magic={'scores'}
-          harvest={this.setScores}
+        <View style={_cstyles.body_container}>
+          <PopoverSelector
+            title={'Contract'}
+            items={['Default']}
+            navigator={this.props.navigator}
+            selection={this.state.contract}
           />
-      </View>
-      <View style={_cstyles.buttons_container}>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
-          onPress={this.record}
-          >
-          {'Record'}
-        </Button>
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Sport'}
+            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            navigator={this.props.navigator}
+            selection={['Tennis']}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Team 1'}
+            magic={'player'}
+            items={[0, 1]}
+            navigator={this.props.navigator}
+            selection={this.state.teams[0]}
+            harvestSelection={this.setTeams}
+            harvestArgs={0}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Team 2'}
+            magic={'player'}
+            items={[0, 1]}
+            navigator={this.props.navigator}
+            selection={this.state.teams[1]}
+            harvestSelection={this.setTeams}
+            harvestArgs={1}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <DynamicList
+            items={[[1,2], [3,5], [5,6]]}
+            magic={'scores'}
+          />
+          <DynamicList
+            items={this.state.scores}
+            magic={'scores'}
+            harvest={this.setScores}
+            />
+        </View>
+        <View style={_cstyles.buttons_container}>
+          <WideButton
+            text="Record"
+            onPress={this.props.loginFunction}
+            />
+        </View>
       </View>
     </View>
     );
