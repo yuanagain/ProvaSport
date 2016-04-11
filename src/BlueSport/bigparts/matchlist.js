@@ -22,28 +22,29 @@ var {
 
 var MatchList = React.createClass({
   getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      dataSource: ds.cloneWithRows(this.props.data),
+      matches: []
     };
   },
   getDefaultProps: function() {
     return (
       {
-        data: ['row 1', 'row 2', 'row 3', 'row 4',]
+        matches: [0, 1]
       }
     )
   },
   render: function() {
 
     var {
-      data,
+      matches,
       ...props
     } = this.props;
 
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var dataSource = ds.cloneWithRows(this.props.matches),
     return (
       <ListView
-        dataSource={this.state.dataSource}
+        dataSource={dataSource}
         renderRow={this.renderMatchRow}
         style={styles.listView}
       />

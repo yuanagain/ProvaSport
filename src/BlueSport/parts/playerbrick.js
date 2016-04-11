@@ -32,10 +32,12 @@ var PlayerBrick = React.createClass({
       id: "ProfilePage" + String(_ctools.randomKey()),
       component: ProfilePage,
       passProps: {
-        navigator: this.props.navigator
+        navigator: this.props.navigator,
+        playerid: this.props.playerid
       }
     })
   },
+
   getInitialState: function() {
     return (
       {
