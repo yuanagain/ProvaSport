@@ -19,8 +19,8 @@ function _GetTeam(teamid, callback) {
 
 var default_team = {
     "name": "Loading",
-    "players": [-1],
-    "matches": [-1]
+    "players": [],
+    "matches": [],
 };
 
 module.exports = {_GetTeam, default_team};

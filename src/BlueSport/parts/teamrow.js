@@ -40,7 +40,7 @@ var TeamRow = React.createClass({
   createPlayerBricks: function(playerid, i) {
     // TODO Somehow navigator is not being passed.
     return (
-      <PlayerBrick key={i} player={playerid}
+      <PlayerBrick key={i} playerid={playerid}
           navigator={this.props.navigator} />
     )
   },
@@ -71,7 +71,6 @@ var TeamRow = React.createClass({
   fetchTeam: function(data) {
     this.state.team = data
     this.setState({loaded : true})
-    console.log(data)
   },
 
   componentDidMount: function () {
