@@ -46,44 +46,18 @@ var items = ["Item 1", "Item 2"];
 var RecordPage = React.createClass({
 
   getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => this.rowChanged(r1, r2)})
+  
     return (
       {
-        item: "Select Item",
         isVisible: false,
-        username: '',
-        password: '',
-        scoreData: [(21, 5), (10, 21), (21, 12)],
-        dataSource: ds.cloneWithRows([[21, 5], [10, 21], [21, 12]]),
-        selectedSport: "None Selected",
-        selectedContract: "None Selected",
+        selectedSport: ["None Selected"],
+        selectedContract: ["None Selected"],
         selectedTeam1: [],
         selectedTeam2: [],
-        selection: [],
-
-        SomeData: [{'key': 1, 'scores': [21,  2]},
-                   {'key': 2, 'scores': [11, 21]},
-                   {'key': 3, 'scores': [12, 21]},
-                   {'key': 4, 'scores': [11, 14]}]
+        contract: ['Default'],
+        scores: [[1,2], [3,5], [5,6]],
+        teams: [[],[],]
       },
-      {
-        match:
-          {
-      			"datetime": 1770090,
-      			"sport": "basketba",
-      			"scores": [[0,5,7],[1,8,9],[2,3,4]],
-      			"tournamentid": 99,
-      			"winner": 1,
-      			"data": {},
-      			"teams": [10],
-      			"payoutdata": {
-      				"xp": 100,
-      				"cash": 100
-      			},
-      			"location": 0
-      		},
-        matchid: 0,
-      }
     );
   },
   render: function() {
@@ -99,12 +73,11 @@ var RecordPage = React.createClass({
         <Header title={"RECORD"}
                 navigator={this.props.navigator} />
 
-
         <PopoverSelector
           title={'Contract'}
-          items={['Standard Contract']}
+          items={['Default']}
           navigator={this.props.navigator}
-          selection={[]}
+          selection={this.state.contract}
         />
         <View style={_cstyles.section_divider_line}>
         </View>
@@ -121,18 +94,24 @@ var RecordPage = React.createClass({
 
         <PopoverSelector
           title={'Team 1'}
-          items={['Player 1', 'Player 2', 'Player 3']}
+          magic={'player'}
+          items={[0, 1]}
           navigator={this.props.navigator}
-          selection={[]}
+          selection={this.state.teams[0]}
+          harvestSelection={this.setTeams}
+          harvestArgs={0}
         />
         <View style={_cstyles.section_divider_line}>
         </View>
 
         <PopoverSelector
           title={'Team 2'}
-          items={['Player 4', 'Player 5', 'Player 6']}
+          magic={'player'}
+          items={[0, 1]}
           navigator={this.props.navigator}
-          selection={[]}
+          selection={this.state.teams[1]}
+          harvestSelection={this.setTeams}
+          harvestArgs={1}
         />
         <View style={_cstyles.section_divider_line}>
         </View>
@@ -143,81 +122,22 @@ var RecordPage = React.createClass({
 
 
         <DynamicList
-          items={[[1,2], [3,5], [5,6]]}
+          items={this.state.scores}
           magic={'scores'}
+          harvest={this.setScores}
           />
       </View>
       <View style={_cstyles.buttons_container}>
         <Button
           style={_cstyles.wide_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this.props.loginFunction}
+          onPress={this.record}
           >
           {'Record'}
         </Button>
       </View>
     </View>
     );
-  },
-
-  goBack: function() {
-    this.props.navigator.pop()
-  },
-
-  gotoPopoverSelect: function(items) {
-    this.props.navigator.push({
-      id: "PopoverSelect",
-      component: PopoverSelect,
-      passProps: {
-        title: 'select stuff',
-        goBack: this.goBack,
-        confirmSelection: this.confirmSelection,
-        items: items,
-        selection: this.state.selection,
-      }
-    })
-  },
-
-  deleteGame: function(index) {
-
-    // reorder states
-    for (var i = 0; i < this.state.SomeData.length; i++) {
-
-      if (this.state.SomeData[i]['key'] == index) {
-
-        this.state.SomeData.splice(i, 1)
-        var SomeData = this.state.SomeData
-
-        this.setState({SomeData: SomeData})
-
-        return;
-      }
-    }
-  },
-
-  addGame: function(scores) {
-
-  },
-
-  onSelect: function(name) {
-
-    this.props.navigator.push({
-      id: "Select",
-      component: PopoverSelect,
-      passProps: {
-        name: name,
-        imageLink: 'http://facebook.github.io/react/img/logo_og.png',
-        descr: "Description Text",
-        goBack: this.goBack,
-
-      }
-    })
-  },
-
-  confirmSelection(selected) {
-    this.selected_1 = selected
-
-    this.goBack()
   },
 
   renderRow(rowData) {
@@ -228,8 +148,16 @@ var RecordPage = React.createClass({
     )
   },
 
-  updateGames: function() {
+  setTeams: function(team, index) {
+    this.state.teams[index] = team
+    this.setState({teams: this.state.teams})
+    console.log(index)
+    console.log(this.state.teams)
+  },
 
+  setScores: function(scores) {
+    this.setState({scores: scores})
+    console.log(scores)
   },
 
 });

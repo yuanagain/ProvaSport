@@ -117,17 +117,19 @@ var DynamicList = React.createClass({
   },
 
   harvest: function() {
-    this.props.harvest(iselect)
+    this.props.harvest(this.state.items)
   },
 
   addItem: function(data) {
-      this.state.items.push(data)
-      this.setState( {items: this.state.items} )
+    this.state.items.push(data)
+    this.setState( {items: this.state.items} )
+    this.harvest()
   },
 
   removeItem: function(index) {
     this.state.items.splice(index, 1)
     this.setState( {items: this.state.items} )
+    this.harvest()
   }
 });
 

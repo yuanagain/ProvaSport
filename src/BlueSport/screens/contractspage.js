@@ -189,8 +189,6 @@ var ContractsPage = React.createClass({
   setTeam: function(players, index) {
     this.state.teams[index] = players
     this.setState({teams: this.state.teams})
-    console.log(index)
-    console.log(this.state.teams)
   },
 
   setNumTeams: function(num) {
