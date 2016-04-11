@@ -5,6 +5,7 @@ This module contains standard custom styling data for all apps
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var React = require('react-native');
+var {Platform} = React
 
 var dscale = windowSize.height / 667
 var slength = 75 * dscale
@@ -19,7 +20,7 @@ const _cvals = {
   normalTextSize: 20 * dscale,
   detailTextSize: 14 * dscale,
   dscale: dscale,
-  headerHeight: 65 * dscale,
+  headerHeight: (Platform.OS === 'ios') ? 65 * dscale : 50 * dscale,
   slength: slength,
   bricklength: (slength) * 2.5 - 2,
   brickheight: ((slength) * 3 / 5 - 4 * dscale),

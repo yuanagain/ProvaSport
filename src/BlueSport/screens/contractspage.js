@@ -3,7 +3,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton')
 
 // var ScoreRowRecord = require('./scorerowrecord')
 
@@ -91,73 +91,81 @@ var ContractsPage = React.createClass({
         <Header title={"CREATE"}
                 navigator={this.props.navigator} />
 
+        <View style={_cstyles.body_container}>
+          <PopoverSelector
+            title={'Event Type'}
+            items={['Single Match', 'Elimination ', 'Round Robin']}
+            navigator={this.props.navigator}
+            selection={[]}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
 
-        <PopoverSelector
-          title={'Event Type'}
-          items={['Single Match', 'Elimination ', 'Round Robin']}
-          navigator={this.props.navigator}
-          selection={[]}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}>
+          <PopoverSelector
+            title={'Sport'}
+            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            navigator={this.props.navigator}
+            selection={this.state.selectedSport}
+            harvestSelection={this.setSport}
+            maxSelect={1}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Team 1'}
+            items={['Player 1', 'Player 2', 'Player 3']}
+            navigator={this.props.navigator}
+            selection={[]}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Team 2'}
+            items={['Player 4', 'Player 5', 'Player 6']}
+            navigator={this.props.navigator}
+            selection={[]}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Number of Teams'}
+            items={[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}
+            navigator={this.props.navigator}
+            selection={this.state.num_teams}
+            harvestSelection={this.setNumTeams}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <ScrollView style={{height: 200 * _cvals.dscale,
+                              width: windowSize.with}}>
+            {teamselectors}
+          </ScrollView>
         </View>
-
-        <PopoverSelector
-          title={'Sport'}
-          items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-          navigator={this.props.navigator}
-          selection={this.state.selectedSport}
-          harvestSelection={this.setSport}
-          maxSelect={1}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Number of Teams'}
-          items={[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}
-          navigator={this.props.navigator}
-          selection={this.state.num_teams}
-          harvestSelection={this.setNumTeams}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <ScrollView style={{height: 300 * _cvals.dscale,
-                            width: windowSize.with}}>
-        {teamselectors}
-        </ScrollView>
-
       </View>
 
       <View style={_cstyles.buttons_container}>
         <View style={{height: 1}}></View>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+        <WideButton
+          text="View RR Page"
           onPress={this.toRR}
-          >
-          {'View RR Page'}
-        </Button>
+        />
         <View style={{height: 1}}></View>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+        <WideButton
+          text="View Bracket Page"
           onPress={this.toBracket}
-          >
-          {'View Bracket Page'}
-        </Button>
+        />
         <View style={{height: 1}}></View>
 
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
-
-          >
-          {'Create'}
-        </Button>
+        <WideButton
+          text="Create"
+        />
       </View>
     </View>
     );

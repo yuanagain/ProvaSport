@@ -2,7 +2,6 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
@@ -62,43 +61,51 @@ var MatchPage = React.createClass({
                   navigator={this.props.navigator} />
           <ScrollView style={styles.container}
                       contentContainerStyle={styles.content}>
+            <View style={_cstyles.body_container}>
+              <SimpleRow title={"Date"} value={""+(new Date(this.state.match.datetime)).toDateString()} />
+              <View style={_cstyles.section_divider_line} ></View>
 
-            <SimpleRow title={"Date"} value={_ctools.toDate(new Date(this.state.match.datetime))} />
-            <View style={_cstyles.section_divider_line} ></View>
+              <SimpleRow title={"Date"} value={_ctools.toDate(new Date(this.state.match.datetime))} />
+              <View style={_cstyles.section_divider_line} ></View>
 
-            <SimpleRow title={"Sport"} value={this.state.match.sport} />
-            <View style={_cstyles.section_divider_line} ></View>
+              <SimpleRow title={"Location"} value={this.state.match.location} />
+              <View style={_cstyles.section_divider_line} ></View>
 
-            <SimpleRow title={"Location"} value={this.state.match.location} />
-            <View style={_cstyles.section_divider_line} ></View>
+              <TeamBlock title={"Team 1"}
+                         teamid={this.state.match.teams[0]}
+                         value={""}
+                         navigator={this.props.navigator}/>
 
-            <TeamBlock teamid={this.state.match.teams[0]}
-                       value={""}
-                       navigator={this.props.navigator}/>
+              <TeamBlock teamid={this.state.match.teams[0]}
+                         value={""}
+                         navigator={this.props.navigator}/>
 
-            <TeamRow  teamid={this.state.match.teams[0]}
-                      navigator={this.props.navigator} />
+              <TeamRow teamid={this.state.match.teams[0]}
+                       navigator={this.props.navigator} />
 
-            <View style={_cstyles.section_divider_line} ></View>
+              <TeamBlock title={"Team 2"}
+                         teamid={this.state.match.teams[1]}
+                         value={""}
+                         navigator={this.props.navigator}/>
 
-            <TeamBlock teamid={this.state.match.teams[1]}
-                       getTeam={this.state.getTeams}
-                       value={""}
-                       navigator={this.props.navigator}/>
+              <TeamBlock teamid={this.state.match.teams[1]}
+                         getTeam={this.state.getTeams}
+                         value={""}
+                         navigator={this.props.navigator}/>
 
-            <TeamRow  teamid={this.state.match.teams[1]}
-                      navigator={this.props.navigator} />
+              <TeamRow  teamid={this.state.match.teams[1]}
+                        navigator={this.props.navigator} />
 
-            <View style={_cstyles.section_divider_line} ></View>
+              <View style={_cstyles.section_divider_line} ></View>
 
-            <SimpleRow title={"Scores"} value={""} />
-            <DynamicList
-              items={this.state.match.scores}
-              magic={'scores_fixed'}
-            />
+              <SimpleRow title={"Scores"} value={""} />
+              <DynamicList
+                items={this.state.match.scores}
+                magic={'scores_fixed'}
+              />
 
-            <View style={_cstyles.section_divider_line} ></View>
-
+              <View style={_cstyles.section_divider_line} ></View>
+            </View>
           </ScrollView>
         </View>
       );

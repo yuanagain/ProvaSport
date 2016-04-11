@@ -1,9 +1,7 @@
 'use strict';
-
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
@@ -65,72 +63,70 @@ var ProfilePage = React.createClass({
         <Image source={{uri: this.state.player.prof_pic}}
                style={styles.pic} />
 
-       <SimpleRow
-         title={'Name'}
-         value={this.state.player.name.full}/>
+        <View style={_cstyles.body_container}>
+          <SimpleRow
+            title={'Name'}
+            value={this.state.player.name.full}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}></View>
 
-       <SimpleRow
-         title={'Nationality'}
-         value={this.state.player.nationality}/>
+          <SimpleRow
+            title={'Nationality'}
+            value={this.state.player.nationality}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}></View>
 
-       <SimpleRow
-         title={'Level'}
-         value={this.state.player.level}/>
+          <SimpleRow
+            title={'Level'}
+            value={this.state.player.level}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}></View>
 
-        <PayoutSection
-          title={'Earnings'}
-          earnings={_ctools.cumulativeEarnings(this.state.player.earnings)}
-        />
+          <PayoutSection
+            title={'Earnings'}
+            earnings={_ctools.cumulativeEarnings(this.state.player.earnings)}
+          />
 
-        <PayoutListing
-          earnings={this.state.player.earnings} />
+          <PayoutListing
+            earnings={this.state.player.earnings} />
 
+          <View style={_cstyles.section_divider_line}></View>
 
-        <View style={_cstyles.section_divider_line}></View>
+          <SimpleRow
+            title={'Sports'}
+            value={this.state.player.sports}/>
 
+          <View style={_cstyles.section_divider_line}></View>
 
+          <SimpleRow
+            title={'Location'}
+            value={this.state.player.home}/>
 
-        <SimpleRow
-          title={'Sports'}
-          value={this.state.player.sports}/>
+          <View style={_cstyles.section_divider_line}></View>
 
-        <View style={_cstyles.section_divider_line}></View>
-
-        <SimpleRow
-          title={'Location'}
-          value={this.state.player.home}/>
-
-        <View style={_cstyles.section_divider_line}></View>
+          <SimpleRow
+            title={'Teams'}
+            value={_ctools.shortString(this.state.player.teams)}/>
 
         <SimpleRow
           title={'Teams'}
           value={this.state.player.teams.length}
           onPress={this.toTeamListing} />
-
         <View style={_cstyles.section_divider_line}></View>
 
         <SimpleRow title={"Recent Matches"} 
                    value={this.state.player.matches.length} 
                    />
+          <View style={styles.matches}>
+            <MatchList
+              navigator={this.props.navigator}
+            />
+          </View>
 
-        <View style={styles.matches}>
-          <MatchList
-            navigator={this.props.navigator}
-          />
+          <View style={{height: 50 * _cvals.dscale, width: windowSize.width}}>
+          </View>
         </View>
-
-        
-        <View style={{height: 50 * _cvals.dscale, width: windowSize.width}}>
-        </View>
-
       </ScrollView>
-
       <View style={_cstyles.buttons_container}>
       </View>
     </View>

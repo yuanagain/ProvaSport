@@ -2,7 +2,6 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var MatchList = require('../bigparts/matchlist')
 var Header = require('../parts/header')

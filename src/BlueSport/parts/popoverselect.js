@@ -6,7 +6,7 @@ OLD DEPRECATED
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton');
 
 var SelectionRow = require('./selectionrow')
 
@@ -76,13 +76,10 @@ var PopoverSelect = React.createClass({
       </View>
       <View style={styles.buttons_container}>
         <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+          text="Confirm Selection"
           onPress={this.confirmSelection}
-          disabled={this.validateSelectionCount}
-          >
-          {'Confirm Selection'}
-        </Button>
+          isDisabled={this.validateSelectionCount}
+        />
       </View>
     </View>
     );

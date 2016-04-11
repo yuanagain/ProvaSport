@@ -2,7 +2,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton')
 
 var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
@@ -73,14 +73,11 @@ var PopoverSelect = React.createClass({
       </View>
       <View style={[styles.buttons_container,
                      this.canConfirm()]}>
-        <Button
-          style={[_cstyles.wide_button, this.canConfirm()]}
-          styleDisabled={{backgroundColor: 'grey'}}
+        <WideButton
+          text="Confirm Selection"
           onPress={this.harvestSelection}
           disabled={this.isDisabled()}
-          >
-          {'Confirm Selection'}
-        </Button>
+        />
       </View>
     </View>
     );

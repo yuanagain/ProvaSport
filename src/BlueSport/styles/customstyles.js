@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var Dimensions = require('Dimensions');
-
 var windowSize = Dimensions.get('window');
 
 var {
@@ -11,7 +10,8 @@ var {
   View,
   Text,
   TextInput,
-  Image
+  Image,
+  Platform,
 } = React;
 
 let _cvals = require('./customvals')
@@ -21,7 +21,7 @@ var CustomStylesDefault = StyleSheet.create({
     color: 'white',
     fontSize: 30 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
-    // marginTop: 30 * _cvals.dscale,
+    marginBottom: (Platform.OS === 'ios') ? 0 : _cvals.headerHeight / 8,
   },
   section_header_text: {
     color: 'black',
@@ -34,7 +34,7 @@ var CustomStylesDefault = StyleSheet.create({
     fontSize: 23 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
     paddingHorizontal: 8 * _cvals.dscale,
-    marginVertical: 4 * _cvals.dscale,
+    marginBottom: 4 * _cvals.dscale,
   },
   standard_text: {
     color: 'black',
@@ -55,7 +55,6 @@ var CustomStylesDefault = StyleSheet.create({
     height: _cvals.headerHeight,
     width: windowSize.width,
     flexDirection: 'row',
-
     alignItems: 'flex-end',
     backgroundColor: _cvals.skblue,
     justifyContent: 'space-between',
@@ -98,12 +97,16 @@ var CustomStylesDefault = StyleSheet.create({
     height: 1,
     opacity: 0.3,
     marginVertical: 0.5 ,
-    width: windowSize.width
+    width: 2 * windowSize.width,
+    marginLeft: -100 * _cvals.dscale,
   },
   indented_container: {
     marginLeft: 40 * _cvals.dscale,
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  body_container: {
+    marginLeft: (Platform.OS === 'ios') ? 0 : _cvals.stdmargin,
   },
   centeredText: {
     textAlign: 'center',
@@ -132,7 +135,7 @@ var CustomStylesDefault = StyleSheet.create({
     height: 28 * _cvals.dscale,
     width: 28 * _cvals.dscale,
     marginLeft: 12 * _cvals.dscale,
-    paddingTop: 10
+    marginTop: (Platform.OS === 'ios') ? 0 : _cvals.headerHeight / 10,
   },
   right_arrow: {
     height: 28 * _cvals.dscale,
