@@ -24,18 +24,18 @@ var {
 } = React;
 
 
-var PlayerBrick = React.createClass({
+var PlayerSquare = React.createClass({
 
   onPress: function() {
-    var ProfilePage = require('../screens/profilepage')
-    this.props.navigator.push({
-      id: "ProfilePage" + String(_ctools.randomKey()),
-      component: ProfilePage,
-      passProps: {
-        navigator: this.props.navigator,
-        playerid: this.props.playerid
-      }
-    })
+    // var ProfilePage = require('../screens/profilepage')
+    // this.props.navigator.push({
+    //   id: "ProfilePage" + String(_ctools.randomKey()),
+    //   component: ProfilePage,
+    //   passProps: {
+    //     navigator: this.props.navigator,
+    //     playerid: this.props.playerid
+    //   }
+    // })
   },
 
   getInitialState: function() {
@@ -65,20 +65,15 @@ var PlayerBrick = React.createClass({
     }
 
     return (
-      <TouchableOpacity style={styles.playerbrick}
+      <TouchableOpacity style={styles.playersquare}
                         onPress={() => this.onPress()}>
-        <View style={[styles.center, styles.left]} >
+        <TouchableOpacity style={[styles.icon, ]}>
           <Image style={styles.im}
                  source={{uri: this.state.player.prof_pic}}/>
-        </View>
-        <View style={styles.right}>
-          <View >
-            <Text style={[_cstyles.detail_text]}>{this.state.player.name.first}</Text>
-          </View>
-          <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</Text>
-          </View>
-        </View>
+          <Text style={[_cstyles.standard_text]}>
+            {_ctools.getInitials(this.state.player)}
+          </Text>
+        </TouchableOpacity>
       </TouchableOpacity>
     );
   },
@@ -100,13 +95,12 @@ var PlayerBrick = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  playerbrick: {
-    height: _cvals.brickheight,
-    width: _cvals.bricklength,
+  playersquare: {
+    height: _cvals.slength,
+    width: _cvals.slength,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
-    paddingLeft: 4,
   },
   im: {
     height: _cvals.thumbslength,
@@ -120,6 +114,13 @@ var styles = StyleSheet.create({
   },
   right: {
 
+  },
+  icon: {
+    height: _cvals.slength,
+    width: _cvals.slength,
+    marginHorizontal: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   border: {
     borderWidth: 1,
@@ -142,4 +143,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = PlayerBrick;
+module.exports = PlayerSquare;

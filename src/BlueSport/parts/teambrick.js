@@ -24,16 +24,28 @@ var {
 } = React;
 
 
-var PlayerBrick = React.createClass({
+var TeamBrick = React.createClass({
 
-  onPress: function() {
+  toTeamPage: function() {
+    var TeamPage = require('../screens/teampage')
+    this.props.navigator.push({
+      id: "TeamPage" + String(_ctools.randomKey()),
+      component: TeamPage,
+      passProps: {
+        navigator: this.props.navigator,
+        teamid: this.props.teamid
+      }
+    })
+  },
+
+  toTeamPage: function() {
     var ProfilePage = require('../screens/profilepage')
     this.props.navigator.push({
       id: "ProfilePage" + String(_ctools.randomKey()),
       component: ProfilePage,
       passProps: {
         navigator: this.props.navigator,
-        playerid: this.props.playerid
+        playerid: this.props.teamid
       }
     })
   },
@@ -41,7 +53,7 @@ var PlayerBrick = React.createClass({
   getInitialState: function() {
     return (
       {
-        player: Player.default_player,
+        team: Team.default_team,
         loaded: false,
       }
     );
@@ -49,7 +61,7 @@ var PlayerBrick = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        playerid: -1,
+        teamid: -1,
       }
     )
   },
@@ -59,10 +71,6 @@ var PlayerBrick = React.createClass({
       navigator,
       ...props
     } = this.props;
-
-    if (this.state.loaded == false) {
-      return (<View></View>)
-    }
 
     return (
       <TouchableOpacity style={styles.playerbrick}
@@ -84,9 +92,9 @@ var PlayerBrick = React.createClass({
   },
 
   fetchPlayer: function(data) {
+    this.state.player = data
     this.setState({loaded : true})
-    this.setState({player : data})
-    
+    // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   componentDidMount: function () {
@@ -142,4 +150,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = PlayerBrick;
+module.exports = TeamBrick;

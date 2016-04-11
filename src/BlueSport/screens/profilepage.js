@@ -110,11 +110,14 @@ var ProfilePage = React.createClass({
 
         <SimpleRow
           title={'Teams'}
-          value={_ctools.shortString(this.state.player.teams)}/>
+          value={this.state.player.teams.length}
+          onPress={this.toTeamListing} />
 
         <View style={_cstyles.section_divider_line}></View>
 
-        <SimpleRow title={"Recent Matches"} value={this.state.player.matches.length} />
+        <SimpleRow title={"Recent Matches"} 
+                   value={this.state.player.matches.length} 
+                   />
 
         <View style={styles.matches}>
           <MatchList
@@ -152,6 +155,18 @@ var ProfilePage = React.createClass({
   componentWillReceiveProps: function(nextProps) {
     console.log("\n\n Props: "+nextProps)
     Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+  },
+
+  toTeamListing() {
+    var TeamListingPage = require('../screens/teamlistingpage')
+    this.props.navigator.push({
+      id: "TeamListing",
+      component: TeamListingPage,
+      passProps: {
+        navigator: this.props.navigator,
+        teams: this.state.player.teams
+      }
+    })
   },
 
 });

@@ -20,10 +20,10 @@ var {
   ListView
 } = React;
 
-var dummymatches = [[{'item': [3,4], 'type': 'blank'}, {'item': [3,4],  'type': 'icon' }, {'item': [3,4], 'type': 'icon' }, {'item': [3,4], 'type': 'icon' },],
-                    [{'item': 'Player 1', 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],
-                    [{'item': 'Player 2', 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],
-                    [{'item': 'Player 3', 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],]
+var dummymatches = [[{'item': [3,4], 'type': 'blank'}, {'item': 0,  'type': 'icon' }, {'item': 1, 'type': 'icon' }, {'item': 0, 'type': 'icon' },],
+                    [{'item': 0, 'type': 'player'}, {'item': 0, 'type': 'empty'}, {'item': 1, 'type': 'match'}, {'item': 0, 'type': 'match'},],
+                    [{'item': 1, 'type': 'player'}, {'item': 1, 'type': 'match'}, {'item': 0, 'type': 'empty'}, {'item': 1, 'type': 'match'},],
+                    [{'item': 0, 'type': 'player'}, {'item': 0, 'type': 'match'}, {'item': 1, 'type': 'match'}, {'item': 0, 'type': 'empty'},],]
 
 
 var RoundRobinPage = React.createClass({

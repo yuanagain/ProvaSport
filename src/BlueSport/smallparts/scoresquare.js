@@ -12,6 +12,8 @@ var _const = require('../libs/constants')
 import * as _ctools from '../libs/customtools.js'
 import * as Player from '../modules/player'
 
+var Match = require('../modules/match')
+
 var {
   AppRegistry,
   StyleSheet,
@@ -24,24 +26,24 @@ var {
 } = React;
 
 
-var PlayerBrick = React.createClass({
+var ScoreSquare = React.createClass({
 
   onPress: function() {
-    var ProfilePage = require('../screens/profilepage')
-    this.props.navigator.push({
-      id: "ProfilePage" + String(_ctools.randomKey()),
-      component: ProfilePage,
-      passProps: {
-        navigator: this.props.navigator,
-        playerid: this.props.playerid
-      }
-    })
+    // var ProfilePage = require('../screens/profilepage')
+    // this.props.navigator.push({
+    //   id: "ProfilePage" + String(_ctools.randomKey()),
+    //   component: ProfilePage,
+    //   passProps: {
+    //     navigator: this.props.navigator,
+    //     playerid: this.props.playerid
+    //   }
+    // })
   },
 
   getInitialState: function() {
     return (
       {
-        player: Player.default_player,
+        match: Match.default_match,
         loaded: false,
       }
     );
@@ -49,13 +51,13 @@ var PlayerBrick = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        playerid: -1,
+        matchid: -1,
       }
     )
   },
   render: function() {
     var {
-      playerid,
+      matchid,
       navigator,
       ...props
     } = this.props;
@@ -64,49 +66,41 @@ var PlayerBrick = React.createClass({
       return (<View></View>)
     }
 
+    var tally = _ctools.getTally(this.state.match)
     return (
-      <TouchableOpacity style={styles.playerbrick}
+      <TouchableOpacity style={styles.playersquare}
                         onPress={() => this.onPress()}>
-        <View style={[styles.center, styles.left]} >
-          <Image style={styles.im}
-                 source={{uri: this.state.player.prof_pic}}/>
-        </View>
-        <View style={styles.right}>
-          <View >
-            <Text style={[_cstyles.detail_text]}>{this.state.player.name.first}</Text>
-          </View>
-          <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</Text>
-          </View>
-        </View>
+        <TouchableOpacity style={[styles.icon, ]}>
+          <Text style={[_cstyles.standard_text]}>
+            {tally[0] + ' - ' + tally[1]}
+          </Text>
+        </TouchableOpacity>
       </TouchableOpacity>
     );
   },
 
-  fetchPlayer: function(data) {
+  fetchMatch: function(data) {
     this.setState({loaded : true})
-    this.setState({player : data})
-    
+    this.setState({match : data})
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    Match._GetMatch(this.props.matchid, this.fetchMatch)
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    Match._GetMatch(this.props.matchid, this.fetchMatch)
   },
 });
 
 var styles = StyleSheet.create({
-  playerbrick: {
-    height: _cvals.brickheight,
-    width: _cvals.bricklength,
+  playersquare: {
+    height: _cvals.slength,
+    width: _cvals.slength,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
-    paddingLeft: 4,
   },
   im: {
     height: _cvals.thumbslength,
@@ -120,6 +114,13 @@ var styles = StyleSheet.create({
   },
   right: {
 
+  },
+  icon: {
+    height: _cvals.slength,
+    width: _cvals.slength,
+    marginHorizontal: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   border: {
     borderWidth: 1,
@@ -142,4 +143,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = PlayerBrick;
+module.exports = ScoreSquare;

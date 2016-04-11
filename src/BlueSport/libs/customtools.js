@@ -107,7 +107,47 @@ var cumulativeEarnings = function(earnings) {
   return out
 }
 
+var getInitials = function(player) {
+  return player.name.first.charAt(0) + player.name.last.charAt(0)
+}
+
+var getWinner = function(match) {
+  var tally = 0
+  for (var i = 0; i < match.scores.length; i++) {
+    if (match.scores[0] > match.scores[1]) {
+      tally += 1
+    }
+    else if (match.scores[0] < match.scores[1]) {
+      tally -= 1
+    }
+  }
+  if (tally > 0) {
+    return this.match.teams[0]
+  }
+  if (tally < 0) {
+    return this.match.teams[1]
+  }
+  return this.match.teams[0]
+}
+
+var getTally = function(match) {
+  var tally = [0, 0, 0]
+  for (var i = 0; i < match.scores.length; i++) {
+    if (match.scores[0] > match.scores[1]) {
+      tally[0] += 1
+    }
+    if (match.scores[0] < match.scores[1]) {
+      tally[1] += 1
+    }
+    else {
+      tally[2] += 1
+    }
+  }
+  return tally
+}
+
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
                   selectionNeedles, toDate, shortString,
-                  cumulativeEarnings};
+                  cumulativeEarnings, getInitials, getWinner,
+                  getTally};

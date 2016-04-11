@@ -27,7 +27,11 @@ function _GetPlayer(playerid, callback) {
     });
 }
   var default_player = {
-    "name" : "Loading",
+    "name" : {
+      "first": "Loading",
+      "last": "Loading",
+      "full": "Loading",
+    },
     "userid" : -1,
     "prof_pic": "Loading",
     "elo": 0.0,

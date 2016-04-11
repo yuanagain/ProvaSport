@@ -24,7 +24,7 @@ var {
 } = React;
 
 
-var PlayerBrick = React.createClass({
+var MatchBrick = React.createClass({
 
   onPress: function() {
     var ProfilePage = require('../screens/profilepage')
@@ -60,10 +60,6 @@ var PlayerBrick = React.createClass({
       ...props
     } = this.props;
 
-    if (this.state.loaded == false) {
-      return (<View></View>)
-    }
-
     return (
       <TouchableOpacity style={styles.playerbrick}
                         onPress={() => this.onPress()}>
@@ -84,9 +80,9 @@ var PlayerBrick = React.createClass({
   },
 
   fetchPlayer: function(data) {
+    this.state.player = data
     this.setState({loaded : true})
-    this.setState({player : data})
-    
+    // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   componentDidMount: function () {

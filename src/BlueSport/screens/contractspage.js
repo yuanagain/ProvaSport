@@ -66,20 +66,10 @@ var ContractsPage = React.createClass({
     } = this.props;
 
 
-    var indices = []
-    for (var i = 0; i < this.state.num_teams; i++) {
-      indices.push(i)
-    }
-
-    var harvesters = []
-    for (var i = 0; i < this.state.num_teams; i++) {
-      harvesters.push((data) => this.setTeam(indices[i], data))
-    }
-
     var teamselectors = []
     for (var i = 0; i < this.state.num_teams; i++) {
       teamselectors.push(
-        <View>
+        <View key={i}>
           <PopoverSelector
             title={'Team ' + String(i + 1)}
             magic={'player'}
@@ -88,6 +78,7 @@ var ContractsPage = React.createClass({
             selection={this.state.teams[i]}
             harvestSelection={this.setTeam}
             harvestArgs={i}
+            key={i}
           />
           <View style={_cstyles.section_divider_line}></View>
         </View>
@@ -142,20 +133,6 @@ var ContractsPage = React.createClass({
       </View>
 
       <View style={_cstyles.buttons_container}>
-        <Button
-            style={_cstyles.wide_button}
-            styleDisabled={{color: 'grey'}}
-            onPress={this.toTeamListingPage}
-            >
-            {'View Team Listing Page'}
-        </Button>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
-          onPress={this.toTeamPage}
-          >
-          {'View Team Page'}
-        </Button>
         <View style={{height: 1}}></View>
         <Button
           style={_cstyles.wide_button}
