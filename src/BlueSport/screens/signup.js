@@ -11,6 +11,8 @@ var Button = require('react-native-button')
 var AddImageIcon = require('../assets/add.png')
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 
+import * as User from '../modules/userdata'
+
 var {
   StyleSheet,
   ScrollView,
@@ -42,15 +44,15 @@ var SignUpPage = React.createClass({
 
   showImagePicker: function() {
     var options = {
-      title: 'Select Avatar', 
+      title: 'Select Avatar',
       cancelButtonTitle: 'Cancel',
-      takePhotoButtonTitle: 'Take Photo...', 
-      chooseFromLibraryButtonTitle: 'Choose from Library...', 
-      mediaType: 'photo', 
+      takePhotoButtonTitle: 'Take Photo...',
+      chooseFromLibraryButtonTitle: 'Choose from Library...',
+      mediaType: 'photo',
       storageOptions: {
         skipBackup: true
       },
-      allowsEditing: true, 
+      allowsEditing: true,
     };
 
     ImagePickerManager.showImagePicker(options, (response) => {
@@ -77,7 +79,7 @@ var SignUpPage = React.createClass({
       ...props
     } = this.props;
 
-    // Known issue with DatePickerIOS results in warnings. This suppresses the 
+    // Known issue with DatePickerIOS results in warnings. This suppresses the
     // yellow warning boxes. React Native team is currently working on this.
     // See https://github.com/facebook/react-native/issues/4547 for first.
     // See https://github.com/facebook/react-native/issues/41 for second.
@@ -213,7 +215,7 @@ var SignUpPage = React.createClass({
   },
 
   validName() {
-    return (this.state.name.length >= 1) 
+    return (this.state.name.length >= 1)
   },
 
   onSubmit() {
@@ -290,7 +292,10 @@ var SignUpPage = React.createClass({
       )
     }
     else {
+      /* Valid Login? now authenticate? */
+
       this.props.navToHomeFunc.call()
+
     }
   },
 });
@@ -344,7 +349,7 @@ var styles = StyleSheet.create({
   input: {
     height: 40 * _cvals.dscale,
     fontSize: _cvals.standard_text,
-    paddingLeft: 10 * _cvals.dscale, 
+    paddingLeft: 10 * _cvals.dscale,
   },
   input_row: {
     paddingTop: 10 * _cvals.dscale,

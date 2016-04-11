@@ -49,7 +49,7 @@ var PlayerBrick = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        playerid: 0,
+        playerid: -1,
       }
     )
   },
@@ -91,7 +91,7 @@ var PlayerBrick = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchTeam)
+    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
   },
 });
 

@@ -127,7 +127,7 @@ var styles = StyleSheet.create({
 
   },
   matches: {
-    height: 200 * _cvals.dscale
+    height: 340 * _cvals.dscale
   }
 })
 
