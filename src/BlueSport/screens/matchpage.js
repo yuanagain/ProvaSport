@@ -54,9 +54,6 @@ var MatchPage = React.createClass({
       ...props
     } = this.props;
 
-    console.log("teams")
-    console.log(this.state.match.teams)
-
     //if (this.state.loaded) {
       return (
         <View>

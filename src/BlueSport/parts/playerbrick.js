@@ -32,7 +32,8 @@ var PlayerBrick = React.createClass({
       id: "ProfilePage" + String(_ctools.randomKey()),
       component: ProfilePage,
       passProps: {
-        navigator: this.props.navigator
+        navigator: this.props.navigator,
+        playerid: this.props.playerid
       }
     })
   },
@@ -47,7 +48,7 @@ var PlayerBrick = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        playerid: 0,
+        playerid: -1,
       }
     )
   },
@@ -84,7 +85,11 @@ var PlayerBrick = React.createClass({
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.player, this.fetchPlayer)
+    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+  },
+  
+  componentWillReceiveProps: function(nextProps) {
+    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
   },
 });
 

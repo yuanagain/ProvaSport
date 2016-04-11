@@ -53,12 +53,13 @@ var ProfilePage = React.createClass({
   },
   render: function() {
     var {
+      playerid,
       player,
       team,
       loginFunction,
       ...props
     } = this.props;
-
+    console.log(this.props.playerid);
     return (
     <View style={styles.container}>
       <View>
@@ -154,8 +155,10 @@ var ProfilePage = React.createClass({
   componentDidMount: function () {
     // this.state.match = this.props.match
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
-    /* Player._CreateNewPlayer(Player.newDefault_player) */
-
+  },
+  componentWillReceiveProps: function(nextProps) {
+    console.log("\n\n Props: "+nextProps)
+    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
   },
 
 });

@@ -4,8 +4,8 @@
   Actual Login may require Firebase Token Handler
  */
 
-var userRef= require("firebase");
-userRef = new Firebase("https://shining-torch-4767.firebaseio.com/user");
+var ref= require("firebase");
+ref = new Firebase("https://shining-torch-4767.firebaseio.com/user");
 
 
     ref.onAuth(authDataCallback);
@@ -43,17 +43,16 @@ function authHandler() {
 }
 
 /* register new user */
-function function create() {
+function create() {
   /*Actual login*/
   var isNewUser = true;
-  var ref = new Firebase("FireURL");
   ref.onAuth(function(authData) {
     if (authData && isNewUser) {
       // save the user's profile into the database so we can list users,
       // use them in Security and Firebase Rules, and show profiles
       ref.child("users").child(authData.uid).set({
         provider: authData.provider,
-        name: getName(authData)
+        name: authData.password.email
       });
     }
   });
@@ -106,16 +105,15 @@ function deleteFriend(friendid) {
   */
 function setName(strName) {
   User.name = strName;
-  var ref = new Firebase(FireURL + "/user/");
   ref.set(User);
 }
 /*
  * Set profile picture
  */
-function setProfPic(ImgURL) {
-  if(imgURL !=== "") throw new err;
+function setProfPic(imgURL) {
+  if(imgURL !== "") throw new err;
   var p = new Player(User.playerid);
-  p.setProfPic(ImsgURL);
+  p.setProfPic(imgURL);
 }
 
 /* Add sport */
@@ -130,13 +128,11 @@ function reportMatch(tupleObj, matchid) {
 }
 /* schedule match // returns match object if successful, -1 otherwise */
 function scheduleMatch(matchid, timeObj) {
-  var ref = new Firebase(FireURL+"/match/");
   ref.set(new Match(matchid)); //inadequate API to deal with this should be
   //handled in the Match Class not here
 }
 /* join tournament // returns tournament object if successful, -1 otherwise */
 function joinTournament(tournamentid) {
-  var ref = new Firebase(FireURL+"/player/"+User.playerid+"/tournaments/"+tournamentid);
   //set both player object AND tournamnet object
   ref.push(tournamentid);
 }
@@ -157,7 +153,6 @@ create team // returns team object if successful, -1 otherwise
   */
 function createTeam(teamid) {
   var team = new Team(teamid);
-  var ref = new Firebase(FireURL + "/team/");
   /* TODO ERROR API INADEQUACY NEED TO BREAK API RULES FOR CORRECT JSON OBJECT */
   ref.set(team);
 }
@@ -300,8 +295,13 @@ promise.then(function(value){
 var default_user = {
   "name": "Loading",
   "email": "Loading",
-  "playerid": 0
+  "playerid": 0,
+  "prof_pic": "loading",
+  "nationality": "playerid",
+  "gender": "could be VERY tricky",
+  "dateCreated": 0,
+  "sports": [-1]
 };
 
 
-module.exports = {_userFunctions, default_user};
+module.exports = {_GetUser, default_user};
