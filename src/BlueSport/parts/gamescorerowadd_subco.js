@@ -96,6 +96,7 @@ function isNumeric(n) {
 
 var styles = StyleSheet.create({
   big_container: {
+    alignSelf: 'flex-start',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

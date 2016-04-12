@@ -15,6 +15,7 @@ var PopoverSelector = require('../bigparts/popoverselector')
 var Header = require('../parts/header')
 import * as _ctools from '../libs/customtools.js'
 var SimpleRow = require('../smallparts/simplerow')
+var TextField = require('../smallparts/textfield')
 
 var {
   AppRegistry,
@@ -22,6 +23,7 @@ var {
   View,
   Text,
   TextInput,
+  ScrollView,
   Image,
   TouchableOpacity,
   TouchableHighlight,
@@ -75,6 +77,14 @@ var RecordPage = React.createClass({
                 navigator={this.props.navigator} />
 
         <View style={_cstyles.body_container}>
+          <TextField
+            label="Match Name"
+            placeholder="Optional"
+            keyboardType='default'
+            onChangeText={(name) => this.setState({name})}
+          />
+
+
           <PopoverSelector
             title={'Contract'}
             items={['Default']}
@@ -122,11 +132,13 @@ var RecordPage = React.createClass({
             title={'Scores'}
             value={''}/>
 
-          <DynamicList
-            items={this.state.scores}
-            magic={'scores'}
-            harvest={this.setScores}
-            />
+          <ScrollView style={{height: 240 * _cvals.dscale}}>
+            <DynamicList
+              items={this.state.scores}
+              magic={'scores'}
+              harvest={this.setScores}
+              />
+          </ScrollView>
         </View>
       </View>
         <View style={_cstyles.buttons_container}>

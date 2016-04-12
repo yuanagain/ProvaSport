@@ -48,17 +48,10 @@ var ContractsPage = React.createClass({
     return (
       {
         selectedSport: ["Tennis"],
-        selectedContract: ["None Selected"],
-        selectedTeam1: [],
-        selectedTeam2: [],
         selection: [],
         event_type: [],
         teams: [[],[],],
         num_teams: [2],
-        SomeData: [{'key': 1, 'scores': [21,  2]},
-                   {'key': 2, 'scores': [11, 21]},
-                   {'key': 3, 'scores': [12, 21]},
-                   {'key': 4, 'scores': [11, 14]}]
       }
     );
   },
@@ -136,11 +129,12 @@ var ContractsPage = React.createClass({
           />
           <View style={_cstyles.section_divider_line}>
           </View>
-
-          <ScrollView style={{height: 300 * _cvals.dscale,
-                              width: windowSize.with}}>
-            {teamselectors}
-          </ScrollView>
+          <View>
+            <ScrollView style={{height: 330 * _cvals.dscale,
+                                width: windowSize.with}}>
+              {teamselectors}
+            </ScrollView>
+          </View>
         </View>
       </View>
 

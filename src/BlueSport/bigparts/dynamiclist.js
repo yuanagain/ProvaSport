@@ -51,6 +51,7 @@ var DynamicList = React.createClass({
     return {
       items: [],
       harvest: harvest_default,
+      style: {},
       renderRow: (rowdata) => <Text>{rowdata}</Text>
     };
   },
@@ -60,6 +61,7 @@ var DynamicList = React.createClass({
       items,
       harvest,
       renderRow,
+      style,
       ...props
     } = this.props;
 
@@ -76,7 +78,7 @@ var DynamicList = React.createClass({
       AddRow = ( <View></View> )
     }
     return (
-    <View style={styles.container}>
+    <View style={[styles.container, this.props.style]}>
 
       <ListView
         dataSource={ds.cloneWithRows(_ctools.supplementIndex(this.state.items))}
