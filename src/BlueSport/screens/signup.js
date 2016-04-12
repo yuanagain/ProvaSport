@@ -10,6 +10,7 @@ var PopoverSelector = require('../bigparts/popoverselector')
 var WideButton = require('../smallparts/widebutton');
 var AddImageIcon = require('../assets/add.png')
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
+var TextField = require('../smallparts/textfield')
 
 import * as User from '../modules/userdata'
 
@@ -294,28 +295,7 @@ var SignUpPage = React.createClass({
 });
 
 // Layout for labels and text fields
-var TextField = React.createClass({
-  render: function() {
-    return(
-      <View>
-        <View style={styles.input_row}>
-          <Text style={_cstyles.section_header_text}>{this.props.label}</Text>
-            <TextInput
-              style={[styles.input, _cstyles.standard_text]}
-              placeholder={this.props.placeholder}
-              underlineColorAndroid='rgba(0,0,0,0)' 
-              secureTextEntry={this.props.secureTextEntry}
-              autoCorrect={false}
-              maxLength={35}
-              keyboardType={this.props.keyboardType}
-              onChangeText={this.props.onChangeText}
-            />
-        </View>
-        <View style={_cstyles.divider_line}/>
-      </View>
-    );
-  }
-});
+
 
 /* Not Currently supporting birthdays
 var DatePicker = React.createClass({

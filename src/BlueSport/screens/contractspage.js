@@ -20,8 +20,11 @@ var TeamPage = require('../screens/teampage')
 var Header = require('../parts/header')
 
 var TeamListingPage = require('../screens/teamlistingpage')
+var TextField = require('../smallparts/textfield')
 
 import * as _ctools from '../libs/customtools.js'
+
+
 
 var {
   AppRegistry,
@@ -49,6 +52,7 @@ var ContractsPage = React.createClass({
         selectedTeam1: [],
         selectedTeam2: [],
         selection: [],
+        event_type: [],
         teams: [[],[],],
         num_teams: [2],
         SomeData: [{'key': 1, 'scores': [21,  2]},
@@ -92,11 +96,19 @@ var ContractsPage = React.createClass({
                 navigator={this.props.navigator} />
 
         <View style={_cstyles.body_container}>
+            <TextField
+              label="Event Name"
+              placeholder="Event Name"
+              keyboardType='default'
+              onChangeText={(name) => this.setState({name})}
+            />
+
           <PopoverSelector
             title={'Event Type'}
             items={['Single Match', 'Elimination ', 'Round Robin']}
             navigator={this.props.navigator}
-            selection={[]}
+            selection={this.state.event_type}
+            harvest={this.setEventType}
             mode={'single'}
           />
           <View style={_cstyles.section_divider_line}>
@@ -133,29 +145,32 @@ var ContractsPage = React.createClass({
       </View>
 
       <View style={_cstyles.buttons_container}>
-        <View style={{height: 1}}></View>
-        <WideButton
-          text="View RR Page"
-          onPress={this.toRR}
-        />
-        <View style={{height: 1}}></View>
-        <WideButton
-          text="View Bracket Page"
-          onPress={this.toBracket}
-        />
-        <View style={{height: 1}}></View>
 
         <WideButton
           text="Create"
+          onPress={()=>this.create()}
         />
       </View>
     </View>
     );
   },
 
+  create: function() {
+    if (this.state.event_type[0] == 'Round Robin') {
+      this.toRR()
+    }
+    if (this.state.event_type[0] == 'Elimination ') {
+      this.toBracket()
+    }
+  },
+
   setTeam: function(players, index) {
     this.state.teams[index] = players
     this.setState({teams: this.state.teams})
+  },
+
+  setEventType: function(event_type) {
+    this.setState({event_type: event_type})
   },
 
   setNumTeams: function(num) {
