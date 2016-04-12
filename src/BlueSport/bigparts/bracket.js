@@ -226,13 +226,15 @@ var Bracket = React.createClass({
 
         <ScrollView showsHorizontalScrollIndicator={true}
                     showsVerticalScrollIndicator={true}
-                    contentContainerStyle={[styles.container,
-                                            {width: width, height: 400}]}>
+                    style={{height: 500 * _cvals.dsc}}
+                    contentContainerStyle={[styles.scroll, {height: height + 10, width: width}]}>
+          <View style={styles.container}>
           {columns}
           <Final data={1}
                  level={this.props.matches.length}
                  marginBottom={height / 2}
                  navigator={this.props.navigator} />
+          </View>
         </ScrollView>
     );
   },
@@ -292,6 +294,9 @@ var Final = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  scroll: {
+    justifyContent: 'center'
+  },
   container: {
     flexDirection: 'row',
     flex: 1,

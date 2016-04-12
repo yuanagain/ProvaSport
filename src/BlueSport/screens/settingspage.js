@@ -13,6 +13,7 @@ var PopoverSelector = require('../bigparts/popoverselector')
 var Header = require('../parts/header')
 
 import * as _ctools from '../libs/customtools.js'
+var Bracket = require('../bigparts/bracket')
 
 var {
   AppRegistry,
@@ -23,16 +24,19 @@ var {
   Image,
   TouchableOpacity,
   TouchableHighlight,
-  ListView,
+  ScrollView,
   Modal,
 } = React;
 
-var items = ["Item 1", "Item 2"];
+var dummymatches = [[[0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1] ],
+                    [[0, 1], [0, 1], [0, 1], [0, 1] ],
+                    [[0, 1], [0, 1]],
+                    [[0, 1], ]]
 
 var SettingsPage = React.createClass({
 
   getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => this.rowChanged(r1, r2)})
+    
     return (
       {
         selectedTeam1: [],
@@ -63,6 +67,13 @@ var SettingsPage = React.createClass({
             mode={'single'}
           />
           <View style={_cstyles.section_divider_line}></View>
+
+          <ScrollView style={{width: 200, height: 200}}
+                      contentContainerStyle={{width: 400, height: 400, backgroundColor: 'blue'}} >
+            <Text>{"Hey"}</Text>
+
+          </ScrollView>
+          
         </View>
       </View>
       <View style={_cstyles.buttons_container}>

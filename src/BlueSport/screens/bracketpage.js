@@ -62,6 +62,7 @@ var RoundRobinPage = React.createClass({
               navigator={this.props.navigator} />
 
       <View style={styles.bracket_container}>
+
       <Bracket matches={dummymatches}
                   navigator={this.props.navigator} />
 
