@@ -62,8 +62,6 @@ var MatchPage = React.createClass({
           <ScrollView style={styles.container}
                       contentContainerStyle={styles.content}>
             <View style={_cstyles.body_container}>
-              <SimpleRow title={"Date"} value={""+(new Date(this.state.match.datetime)).toDateString()} />
-              <View style={_cstyles.section_divider_line} ></View>
 
               <SimpleRow title={"Date"} value={_ctools.toDate(new Date(this.state.match.datetime))} />
               <View style={_cstyles.section_divider_line} ></View>
@@ -71,10 +69,9 @@ var MatchPage = React.createClass({
               <SimpleRow title={"Location"} value={this.state.match.location} />
               <View style={_cstyles.section_divider_line} ></View>
 
-              <TeamBlock title={"Team 1"}
-                         teamid={this.state.match.teams[0]}
-                         value={""}
-                         navigator={this.props.navigator}/>
+              <SimpleRow title={"Sport"} value={this.state.match.sport} />
+              <View style={_cstyles.section_divider_line} ></View>
+
 
               <TeamBlock teamid={this.state.match.teams[0]}
                          value={""}
@@ -83,10 +80,6 @@ var MatchPage = React.createClass({
               <TeamRow teamid={this.state.match.teams[0]}
                        navigator={this.props.navigator} />
 
-              <TeamBlock title={"Team 2"}
-                         teamid={this.state.match.teams[1]}
-                         value={""}
-                         navigator={this.props.navigator}/>
 
               <TeamBlock teamid={this.state.match.teams[1]}
                          getTeam={this.state.getTeams}

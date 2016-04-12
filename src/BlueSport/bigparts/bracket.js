@@ -7,7 +7,8 @@ var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
-var PlayerBrick = require('../parts/playerbrick')
+var TeamBrick = require('../parts/teambrick')
+var MatchBrick = require('../parts/matchbrick')
 
 import * as _ctools from '../libs/customtools.js'
 
@@ -22,9 +23,215 @@ var {
 } = React;
 
 var defaultHeight = _cvals.slength / 2 * _cvals.dscale + 1
+
+
 // ==================================================
-// Style up first for visibility to getDefaultProps
+//
 // ==================================================
+
+var Fork = React.createClass({
+  getInitialState: function() {
+    var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2
+    var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
+
+    if (this.props.level == 0) {
+      fmargin = 0
+    }
+
+    return (
+      {
+        match: this.props.data,
+        fmargin: fmargin,
+        fheight: fheight,
+      }
+    );
+  },
+
+  getDefaultProps: function() {
+    return (
+      {
+        level: 0,
+
+      }
+    )
+  },
+
+  render: function() {
+    var {
+      data,
+      level,
+      navigator,
+      ...props
+    } = this.props;
+
+    var bricks = []
+    for (var i = 0; i < 2; i++) {
+      if (this.props.level == 0) {
+        bricks.push(
+          <TeamBrick teamid={this.props.data[i]}
+                     navigator={this.props.navigator} />
+          )
+      }
+      else {
+        bricks.push(
+         <MatchBrick matchid={this.props.data[i]}
+                     navigator={this.props.navigator} />
+        )
+      }
+    }
+
+    return (
+      <View style={[styles.fork_wrapper, {marginVertical: 0}]}>
+        <View style={[styles.fork, ]}>
+          <View style={[{marginVertical: this.state.fmargin}]}>
+            {bricks[0]}
+            <View style={[_cstyles.hline, styles.hline]}></View>
+          </View>
+          <View style={[{marginVertical: this.state.fmargin}]}>
+            {bricks[1]}
+            <View style={[_cstyles.hline, styles.hline]}></View>
+          </View>
+        </View>
+        <View style={styles.vline_wrapper}>
+          <View style={[_cstyles.vline,
+                        {height: this.state.fheight,
+                         marginBottom: this.state.fmargin,
+                         marginLeft: 0}]}>
+          </View>
+        </View>
+      </View>
+    )
+  }
+});
+
+var ForkColumn = React.createClass({
+  render: function() {
+    var {
+      column,
+      navigator,
+      level,
+      ...props
+    } = this.props;
+
+    var forks = [];
+    for (var i = 0; i < this.props.column.length; i++) {
+      forks.push(<Fork navigator={this.props.navigator}
+                       level={this.props.level}
+                       data={this.props.column[i]}
+                       key={i} />);
+    }
+    return (
+      <View style={styles.column}>
+        {forks}
+      </View>
+    )
+  }
+})
+
+var Bracket = React.createClass({
+
+  getInitialState: function() {
+    return (
+      {
+        mode: 'normal',
+        matches: this.props.matches,
+        scrollstyle: styles.scroll,
+      }
+    );
+  },
+
+  getDefaultProps: function() {
+    return (
+      {
+      }
+    )
+  },
+
+  render: function() {
+    var {
+      matches,
+      ...props
+    } = this.props;
+
+    var tslength = _const.slength + 2 * _cvals.dscale
+    var height = Math.pow(2, this.props.matches.length) * (_const.slength + 2)
+    var width = _cvals.bricklength * (this.state.matches.length + 1) + 20
+
+    var columns = [];
+    for (var i = 0; i < this.props.matches.length; i++) {
+        columns.push(<ForkColumn navigator={this.props.navigator}
+                        level={i}
+
+                        column={this.props.matches[i]}
+                        key={i} />);
+    }
+
+    return (
+        <ScrollView 
+                    showsVerticalScrollIndicator={true}
+                    contentContainerStyle={[styles.container,
+                                            {width: width, height: height}]}>
+
+          {columns}
+          <Final data={1}
+                 level={this.props.matches.length}
+                 marginBottom={height / 2}
+                 navigator={this.props.navigator} />
+        </ScrollView>
+    );
+  },
+});
+
+var Final = React.createClass({
+  getInitialState: function() {
+    // TODO: CHECK MATH HERE
+    var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2 * 3/ 4
+    var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
+
+    if (this.props.level == 0) {
+      fmargin = 0
+    }
+
+    return (
+      {
+        match: this.props.data,
+        fmargin: fmargin,
+        fheight: fheight,
+      }
+    );
+  },
+
+  getDefaultProps: function() {
+    return (
+      {
+        level: 0,
+
+      }
+    )
+  },
+
+  render: function() {
+    var {
+      data,
+      level,
+      marginBottom,
+      navigator,
+      ...props
+    } = this.props;
+
+    return (
+      <View style={[styles.fork_wrapper, {marginRight: 16 * _cvals.dscale}]}>
+        <View style={[styles.fork, {marginLeft: 1}]}>
+          <View style={[{marginTop: this.state.fmargin}]}>
+            <MatchBrick matchid={this.props.data}
+                         navigator={this.props.navigator} />
+            <View style={[_cstyles.hline, styles.hline, ]}></View>
+          </View>
+        </View>
+      </View>
+    )
+  }
+});
 
 var styles = StyleSheet.create({
   scroll: {
@@ -80,209 +287,6 @@ var styles = StyleSheet.create({
     flex: 1,
   }
 })
-
-// ==================================================
-//
-// ==================================================
-
-var Fork = React.createClass({
-  getInitialState: function() {
-    var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2
-    var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
-
-    if (this.props.level == 0) {
-      fmargin = 0
-    }
-
-    return (
-      {
-        type: this.props.data['type'],
-        match: this.props.data,
-        fmargin: fmargin,
-        fheight: fheight,
-      }
-    );
-  },
-
-  getDefaultProps: function() {
-    return (
-      {
-        style: styles.scroll,
-        level: 0,
-
-      }
-    )
-  },
-
-  render: function() {
-    var {
-      data,
-      level,
-      navigator,
-      ...props
-    } = this.props;
-
-    return (
-      <View style={[styles.fork_wrapper, {marginVertical: 0}]}>
-        <TouchableOpacity style={[styles.fork, ]}>
-          <View style={[{marginVertical: this.state.fmargin}]}>
-            <PlayerBrick player={this.state.match['team1']}
-                         navigator={this.props.navigator} />
-            <View style={[_cstyles.hline, styles.hline]}></View>
-          </View>
-          <View style={[{marginVertical: this.state.fmargin}]}>
-            <PlayerBrick player={this.state.match['team2']}
-                         navigator={this.props.navigator} />
-            <View style={[_cstyles.hline, styles.hline]}></View>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.vline_wrapper}>
-          <View style={[_cstyles.vline,
-                        {height: this.state.fheight,
-                         marginBottom: this.state.fmargin,
-                         marginLeft: 0}]}>
-          </View>
-        </View>
-      </View>
-    )
-  }
-});
-
-var ForkColumn = React.createClass({
-  render: function() {
-    var {
-      column,
-      navigator,
-      level,
-      ...props
-    } = this.props;
-
-    var forks = [];
-    for (var i = 0; i < this.props.column.length; i++) {
-      forks.push(<Fork navigator={this.props.navigator}
-                       level={this.props.level}
-
-                       data={this.props.column[i]}
-                       key={i} />);
-    }
-    return (
-      <View style={styles.column}>
-        {forks}
-      </View>
-    )
-  }
-})
-
-var Bracket = React.createClass({
-
-  getInitialState: function() {
-    return (
-      {
-        mode: 'normal',
-        matches: this.props.matches,
-        scrollstyle: styles.scroll,
-      }
-    );
-  },
-
-  getDefaultProps: function() {
-    return (
-      {
-        style: styles.scroll,
-      }
-    )
-  },
-
-  render: function() {
-    var {
-      matches,
-      style,
-      ...props
-    } = this.props;
-
-    var tslength = _const.slength + 2 * _cvals.dscale
-    var height = Math.pow(2, this.props.matches.length) * (_const.slength + 2)
-    var width = _cvals.bricklength * (this.state.matches.length + 1) + 20
-
-    var columns = [];
-    for (var i = 0; i < this.props.matches.length; i++) {
-        columns.push(<ForkColumn navigator={this.props.navigator}
-                        level={i}
-
-                        column={this.props.matches[i]}
-                        key={i} />);
-    }
-
-    return (
-      <View style={[this.props.style, ]}>
-        <ScrollView style={[{}]}
-                    contentContainerStyle={[styles.container,
-                                            {width: width, }]}>
-
-          {columns}
-          <Final data={{'team1': 'WINNER'}}
-                 level={this.props.matches.length}
-                 marginBottom={height / 2}
-                 navigator={this.props.navigator} />
-        </ScrollView>
-      </View>
-    );
-  },
-});
-
-var Final = React.createClass({
-  getInitialState: function() {
-    // TODO: CHECK MATH HERE
-    var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2 * 3/ 4
-    var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
-
-    if (this.props.level == 0) {
-      fmargin = 0
-    }
-
-    return (
-      {
-        type: this.props.data['type'],
-        match: this.props.data,
-        fmargin: fmargin,
-        fheight: fheight,
-      }
-    );
-  },
-
-  getDefaultProps: function() {
-    return (
-      {
-        style: styles.scroll,
-        level: 0,
-
-      }
-    )
-  },
-
-  render: function() {
-    var {
-      data,
-      level,
-      marginBottom,
-      navigator,
-      ...props
-    } = this.props;
-
-    return (
-      <View style={[styles.fork_wrapper, {marginRight: 16 * _cvals.dscale}]}>
-        <TouchableOpacity style={[styles.fork, {marginLeft: 1}]}>
-          <View style={[{marginTop: this.state.fmargin}]}>
-            <PlayerBrick player={this.state.match['team1']}
-                         navigator={this.props.navigator} />
-            <View style={[_cstyles.hline, styles.hline, ]}></View>
-          </View>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-});
-
 
 
 module.exports = Bracket;

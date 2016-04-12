@@ -10,8 +10,7 @@ var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
 import * as _ctools from '../libs/customtools.js'
-import * as Match from '../modules/match'
-var TeamBrick = require('../parts/teambrick')
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -25,24 +24,24 @@ var {
 } = React;
 
 
-var MatchBrick = React.createClass({
+var TeamSquare = React.createClass({
 
   onPress: function() {
-    var MatchPage = require('../screens/matchpage')
-    this.props.navigator.push({
-      id: "MatchPage" + String(_ctools.randomKey()),
-      component: MatchPage,
-      passProps: {
-        navigator: this.props.navigator,
-        playerid: this.props.matchid
-      }
-    })
+    // var ProfilePage = require('../screens/profilepage')
+    // this.props.navigator.push({
+    //   id: "ProfilePage" + String(_ctools.randomKey()),
+    //   component: ProfilePage,
+    //   passProps: {
+    //     navigator: this.props.navigator,
+    //     playerid: this.props.playerid
+    //   }
+    // })
   },
 
   getInitialState: function() {
     return (
       {
-        match: Match.default_match,
+        team: Team.default_team,
         loaded: false,
       }
     );
@@ -50,59 +49,59 @@ var MatchBrick = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        matchid: -1,
+        teamid: -1,
       }
     )
   },
   render: function() {
     var {
-      matchid,
+      teamid,
       navigator,
       ...props
     } = this.props;
 
+    if (this.state.loaded == false) {
+      return (<View></View>)
+    }
+
     return (
-        <TouchableOpacity onPress={this.onPress}>
-          <TeamBrick teamid={_ctools.getWinner(this.state.match)}
-                     navigator={this.props.navigator}
-                     disabled={true} />
-          <View style={styles.scores}>
-            <Text style={_cstyles.detail_text}>
-              {_ctools.getScoreString(this.state.match)}
-            </Text>
-          </View>
+      <TouchableOpacity style={styles.teamsquare}
+                        onPress={() => this.onPress()}>
+        <TouchableOpacity style={[styles.icon, ]}>
+          <Image style={styles.im}
+                 source={{uri: this.state.team.thumbnail}}/>
+          <Text style={[_cstyles.detail_text]}
+                numberOfLines={2}>
+            {this.state.team.name}
+          </Text>
         </TouchableOpacity>
+      </TouchableOpacity>
     );
   },
 
-  fetchMatch: function(data) {
-    this.state.match = data
+  fetchTeam: function(data) {
     this.setState({loaded : true})
+    this.setState({team : data})
+    
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Match._GetMatch(this.props.matchid, this.fetchMatch)
+    Team._GetTeam(this.props.teamid, this.fetchTeam)
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Match._GetMatch(nextProps.matchid, this.fetchMatch)
+    Team._GetTeam(nextProps.teamid, this.fetchTeam)
   },
 });
 
 var styles = StyleSheet.create({
-  scores: {
-    height: 20 * _cvals.dscale,
-    marginBottom: -20 * _cvals.dscale,
-    paddingLeft: 5 * _cvals.dscale
-  },
-  matchbrick: {
-    height: _cvals.brickheight,
-    width: _cvals.bricklength,
+  teamsquare: {
+    height: _cvals.slength,
+    width: _cvals.slength,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
-    paddingLeft: 4,
   },
   im: {
     height: _cvals.thumbslength,
@@ -116,6 +115,13 @@ var styles = StyleSheet.create({
   },
   right: {
 
+  },
+  icon: {
+    height: _cvals.slength,
+    width: _cvals.slength,
+    marginHorizontal: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   border: {
     borderWidth: 1,
@@ -138,4 +144,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = MatchBrick;
+module.exports = TeamSquare;

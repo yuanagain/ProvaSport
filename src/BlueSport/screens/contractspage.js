@@ -115,24 +115,6 @@ var ContractsPage = React.createClass({
           </View>
 
           <PopoverSelector
-            title={'Team 1'}
-            items={['Player 1', 'Player 2', 'Player 3']}
-            navigator={this.props.navigator}
-            selection={[]}
-          />
-          <View style={_cstyles.section_divider_line}>
-          </View>
-
-          <PopoverSelector
-            title={'Team 2'}
-            items={['Player 4', 'Player 5', 'Player 6']}
-            navigator={this.props.navigator}
-            selection={[]}
-          />
-          <View style={_cstyles.section_divider_line}>
-          </View>
-
-          <PopoverSelector
             title={'Number of Teams'}
             items={[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}
             navigator={this.props.navigator}
@@ -143,7 +125,7 @@ var ContractsPage = React.createClass({
           <View style={_cstyles.section_divider_line}>
           </View>
 
-          <ScrollView style={{height: 200 * _cvals.dscale,
+          <ScrollView style={{height: 300 * _cvals.dscale,
                               width: windowSize.with}}>
             {teamselectors}
           </ScrollView>

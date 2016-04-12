@@ -14,6 +14,7 @@ var _cstyles  = require('../styles/customstyles')
 var PopoverSelector = require('../bigparts/popoverselector')
 var Header = require('../parts/header')
 import * as _ctools from '../libs/customtools.js'
+var SimpleRow = require('../smallparts/simplerow')
 
 var {
   AppRegistry,
@@ -55,7 +56,7 @@ var RecordPage = React.createClass({
         selectedTeam1: [],
         selectedTeam2: [],
         contract: ['Default'],
-        scores: [[1,2], [3,5], [5,6]],
+        scores: [],
         teams: [[],[],]
       },
     );
@@ -116,6 +117,10 @@ var RecordPage = React.createClass({
           />
           <View style={_cstyles.section_divider_line}>
           </View>
+
+          <SimpleRow
+            title={'Scores'}
+            value={''}/>
 
           <DynamicList
             items={this.state.scores}

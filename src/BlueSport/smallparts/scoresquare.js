@@ -29,15 +29,15 @@ var {
 var ScoreSquare = React.createClass({
 
   onPress: function() {
-    // var ProfilePage = require('../screens/profilepage')
-    // this.props.navigator.push({
-    //   id: "ProfilePage" + String(_ctools.randomKey()),
-    //   component: ProfilePage,
-    //   passProps: {
-    //     navigator: this.props.navigator,
-    //     playerid: this.props.playerid
-    //   }
-    // })
+    var MatchPage = require('../screens/matchpage')
+    this.props.navigator.push({
+      id: "MatchPage" + String(this.props.matchid),
+      component: MatchPage,
+      passProps: {
+        navigator: this.props.navigator,
+        playerid: this.props.matchid
+      }
+    })
   },
 
   getInitialState: function() {
@@ -67,14 +67,15 @@ var ScoreSquare = React.createClass({
     }
 
     var tally = _ctools.getTally(this.state.match)
+    console.log(tally)
     return (
       <TouchableOpacity style={styles.playersquare}
                         onPress={() => this.onPress()}>
-        <TouchableOpacity style={[styles.icon, ]}>
+        <View style={[styles.icon, ]}>
           <Text style={[_cstyles.standard_text]}>
             {tally[0] + ' - ' + tally[1]}
           </Text>
-        </TouchableOpacity>
+        </View>
       </TouchableOpacity>
     );
   },

@@ -34,7 +34,7 @@ var CustomStylesDefault = StyleSheet.create({
     fontSize: 23 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
     paddingHorizontal: 8 * _cvals.dscale,
-    marginBottom: 4 * _cvals.dscale,
+    marginBottom: (Platform.OS === 'ios') ? 0 : 4 * _cvals.dscale,
   },
   standard_text: {
     color: 'black',

@@ -20,8 +20,6 @@ var {
   TouchableOpacity,
 } = React;
 
-
-
 var slength = _cvals.slength
 
 var RRMatchSquare = React.createClass({
@@ -42,17 +40,17 @@ var RRMatchSquare = React.createClass({
     if (this.state.type == 'match') {
       var ScoreSquare = require('../smallparts/scoresquare')
       return (
-        <TouchableOpacity style={[styles.match, styles.border]}>
+        <View style={[styles.match, styles.border]}>
           <ScoreSquare matchid={this.state.item}
                        navigator={this.props.navigator} />
-        </TouchableOpacity>
+        </View>
       )
     }
     if (this.state.type == 'icon') {
-      var PlayerSquare = require('../parts/playersquare')
+      var TeamSquare = require('../parts/teamsquare')
       return (
         <TouchableOpacity style={[styles.icon, ]}>
-          <PlayerSquare playerid={this.state.item}
+          <TeamSquare teamid={this.state.item}
                         navigator={this.props.navigator} />
         </TouchableOpacity>
       )
@@ -71,11 +69,18 @@ var RRMatchSquare = React.createClass({
     }
     if (this.state.type == 'player') {
       var PlayerBrick = require('../parts/playerbrick')
-      console.log("======")
-      console.log(this.state.item)
       return (
         <TouchableOpacity style={[styles.player, styles.border]}>
           <PlayerBrick playerid={this.state.item}
+                       navigator={this.props.navigator} />
+        </TouchableOpacity>
+      )
+    }
+    if (this.state.type == 'team') {
+      var TeamBrick = require('../parts/teambrick')
+      return (
+        <TouchableOpacity style={[styles.player, styles.border]}>
+          <TeamBrick teamid={this.state.item}
                        navigator={this.props.navigator} />
         </TouchableOpacity>
       )

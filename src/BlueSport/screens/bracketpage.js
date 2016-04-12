@@ -18,9 +18,19 @@ var {
   ListView
 } = React;
 
-var dummymatches = [[{'team1': 'Player 1', 'team2': 'Player 2' },  {'team1': 'Player 3', 'team2': 'Player 4' }, {'team1': 'Player 5', 'team2': 'Player 6' }, {'team1': 'Player 7', 'team2': 'Player 8' }],
-                    [{'team1': 'Player 1', 'team2': 'Player 3' }, {'team1': 'Player 5', 'team2': 'Player 8' }],
-                    [{'team1': 'Player 3', 'team2': 'Player 5' }],]
+var dummymatches = [[[0, 1], [0, 1], [0, 1], [0, 1] ],
+                    [[0, 1], [0, 1]],
+                    [[0, 1], ] ]
+
+// need to fix height, width computations.
+
+// var dummymatches = [[[0, 1], [0, 1], ],
+//                     [[0, 1], ]]
+
+// var dummymatches = [[[0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1] ],
+//                     [[0, 1], [0, 1], [0, 1], [0, 1] ],
+//                     [[0, 1], [0, 1]],
+//                     [[0, 1], ]]
 
 var RoundRobinPage = React.createClass({
   getDefaultProps: function() {
@@ -32,9 +42,8 @@ var RoundRobinPage = React.createClass({
   },
 
   getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    
     return {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
     };
   },
 
@@ -52,8 +61,11 @@ var RoundRobinPage = React.createClass({
               mode={'nav'}
               navigator={this.props.navigator} />
 
+      <View style={styles.bracket_container}>
       <Bracket matches={dummymatches}
                   navigator={this.props.navigator} />
+
+      </View>
     </View>
     );
   },
@@ -65,6 +77,12 @@ var styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start'
+  },
+  bracket_container: {
+    height: 555 * _cvals.dscale,
+    width: windowSize.width - 4,
+    borderWidth: 1,
+    borderColor: 'black'
   }
 })
 

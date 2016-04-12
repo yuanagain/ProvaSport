@@ -41,7 +41,7 @@ var SimpleRow= React.createClass({
     } = this.props;
 
     return (
-      <View style={[styles.container, ,]}>
+      <View style={[styles.container,]}>
         <View style={styles.title}>
           <Text style={[_cstyles.header_text,
                         {fontWeight: 'normal'}]}>
@@ -73,14 +73,16 @@ var styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    alignItems: 'flex-end',
     alignSelf: 'flex-start',
-    width: windowSize.width / 2
+    width: windowSize.width / 2,
   },
 
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     flex: 0,
+    alignItems: 'center',
     paddingRight: _cvals.stdmargin,
     width: windowSize.width
   },

@@ -104,10 +104,6 @@ var ProfilePage = React.createClass({
 
           <View style={_cstyles.section_divider_line}></View>
 
-          <SimpleRow
-            title={'Teams'}
-            value={_ctools.shortString(this.state.player.teams)}/>
-
         <SimpleRow
           title={'Teams'}
           value={this.state.player.teams.length}

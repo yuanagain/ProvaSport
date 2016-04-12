@@ -10,7 +10,7 @@ var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
 import * as _ctools from '../libs/customtools.js'
-import * as Player from '../modules/player'
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -27,6 +27,9 @@ var {
 var TeamBrick = React.createClass({
 
   toTeamPage: function() {
+    if (this.props.disabled) {
+      return
+    }
     var TeamPage = require('../screens/teampage')
     this.props.navigator.push({
       id: "TeamPage" + String(_ctools.randomKey()),
@@ -38,14 +41,14 @@ var TeamBrick = React.createClass({
     })
   },
 
-  toTeamPage: function() {
+  toPlayerPage: function() {
     var ProfilePage = require('../screens/profilepage')
     this.props.navigator.push({
       id: "ProfilePage" + String(_ctools.randomKey()),
       component: ProfilePage,
       passProps: {
         navigator: this.props.navigator,
-        playerid: this.props.teamid
+        playerid: this.state.team.players[0]
       }
     })
   },
@@ -62,6 +65,7 @@ var TeamBrick = React.createClass({
     return (
       {
         teamid: -1,
+        disabled: false,
       }
     )
   },
@@ -69,46 +73,62 @@ var TeamBrick = React.createClass({
     var {
       playerid,
       navigator,
+      disabled,
       ...props
     } = this.props;
 
+    if (this.props.disabled) {
+      return (
+        <View style={styles.teambrick}>
+          <View style={[styles.center, styles.left]} >
+            <Image style={styles.im}
+                   source={{uri: this.state.team.thumbnail}}/>
+          </View>
+          <View style={styles.right}>
+              <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}
+                    numberOfLines={2} >
+                    {this.state.team.name}
+              </Text>
+          </View>
+        </View>
+        )
+    }
+
     return (
-      <TouchableOpacity style={styles.playerbrick}
-                        onPress={() => this.onPress()}>
+      <TouchableOpacity style={styles.teambrick}
+                        onPress={() => this.toTeamPage()}>
         <View style={[styles.center, styles.left]} >
           <Image style={styles.im}
-                 source={{uri: this.state.player.prof_pic}}/>
+                 source={{uri: this.state.team.thumbnail}}/>
         </View>
         <View style={styles.right}>
-          <View >
-            <Text style={[_cstyles.detail_text]}>{this.state.player.name.first}</Text>
-          </View>
-          <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</Text>
-          </View>
+            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}
+                  numberOfLines={2} >
+                  {this.state.team.name}
+            </Text>
         </View>
       </TouchableOpacity>
     );
   },
 
-  fetchPlayer: function(data) {
-    this.state.player = data
+  fetchTeam: function(data) {
+    this.state.team = data
     this.setState({loaded : true})
     // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    Team._GetTeam(this.props.teamid, this.fetchTeam)
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    Team._GetTeam(nextProps.teamid, this.fetchTeam)
   },
 });
 
 var styles = StyleSheet.create({
-  playerbrick: {
+  teambrick: {
     height: _cvals.brickheight,
     width: _cvals.bricklength,
     flexDirection: 'row',
@@ -127,7 +147,9 @@ var styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   right: {
-
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: _cvals.thumbslength + 5 * _cvals.dscale,
   },
   border: {
     borderWidth: 1,
@@ -146,7 +168,9 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   compress: {
-    marginTop: _cvals.dscale * -4
+    marginTop: _cvals.dscale * -4,
+    flexDirection: 'column',
+    justifyContent: 'center',
   }
 });
 

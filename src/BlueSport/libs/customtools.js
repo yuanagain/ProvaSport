@@ -122,21 +122,21 @@ var getWinner = function(match) {
     }
   }
   if (tally > 0) {
-    return this.match.teams[0]
+    return match.teams[0]
   }
   if (tally < 0) {
-    return this.match.teams[1]
+    return match.teams[1]
   }
-  return this.match.teams[0]
+  return match.teams[0]
 }
 
 var getTally = function(match) {
   var tally = [0, 0, 0]
   for (var i = 0; i < match.scores.length; i++) {
-    if (match.scores[0] > match.scores[1]) {
+    if (match.scores[i][0] > match.scores[i][1]) {
       tally[0] += 1
     }
-    if (match.scores[0] < match.scores[1]) {
+    if (match.scores[i][0] < match.scores[i][1]) {
       tally[1] += 1
     }
     else {
@@ -146,8 +146,17 @@ var getTally = function(match) {
   return tally
 }
 
+
+var getScoreString = function(match) {
+  var scoreString = ""
+  for (var i = 0; i < match.scores.length; i++) {
+    scoreString += match.scores[i][0] + ' - ' + match.scores[i][1] + ', '
+  }
+  return scoreString.slice(0, -2)
+}
+
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
                   selectionNeedles, toDate, shortString,
                   cumulativeEarnings, getInitials, getWinner,
-                  getTally};
+                  getTally, getScoreString};

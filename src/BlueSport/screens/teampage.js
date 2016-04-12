@@ -68,9 +68,6 @@ var TeamPage = React.createClass({
           <View style={_cstyles.section_divider_line} ></View>
 
           <SimpleRow title={"Members"} value={this.state.team.players.length} />
-          <SimpleRow navigator={this.props.navigator} />
-
-          <SimpleRow title={"Members"} value={this.state.team.players.length} />
           <View style={_cstyles.section_divider_line} ></View>
 
           <SimpleRow navigator={this.props.navigator} />
