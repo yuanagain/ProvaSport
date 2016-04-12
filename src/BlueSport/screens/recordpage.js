@@ -100,7 +100,7 @@ var RecordPage = React.createClass({
             items={[0, 1]}
             navigator={this.props.navigator}
             selection={this.state.teams[0]}
-            harvestSelection={this.setTeams}
+            harvest={this.setTeams}
             harvestArgs={0}
           />
           <View style={_cstyles.section_divider_line}>
@@ -112,7 +112,7 @@ var RecordPage = React.createClass({
             items={[0, 1]}
             navigator={this.props.navigator}
             selection={this.state.teams[1]}
-            harvestSelection={this.setTeams}
+            harvest={this.setTeams}
             harvestArgs={1}
           />
           <View style={_cstyles.section_divider_line}>

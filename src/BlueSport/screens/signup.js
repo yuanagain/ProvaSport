@@ -166,7 +166,7 @@ var SignUpPage = React.createClass({
                 items={['Country1', 'Country2', 'Country3']}
                 maxSelect={1}
                 navigator={this.props.navigator}
-                harvestSelection={(country) => this.setState({country})}
+                harvest={(country) => this.setState({country})}
               />
             </View>
             <View style={_cstyles.divider_line}/>
@@ -176,7 +176,7 @@ var SignUpPage = React.createClass({
                 title={'Sports'}
                 items={['Sport1', 'Sport2', 'Sport3']}
                 navigator={this.props.navigator}
-                harvestSelection={(sports) => this.setState({sports})}
+                harvest={(sports) => this.setState({sports})}
               />
             </View>
             <View style={_cstyles.divider_line}/>

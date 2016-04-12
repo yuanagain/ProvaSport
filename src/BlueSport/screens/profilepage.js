@@ -42,6 +42,7 @@ var ProfilePage = React.createClass({
       {
         playerid: 0,
         teamid: 0,
+        mode: 'nav'
       }
     )
   },
@@ -55,7 +56,7 @@ var ProfilePage = React.createClass({
     <View style={styles.container}>
       <View>
         <Header title={this.state.player.name.full}
-                mode={'nav'}
+                mode={this.props.mode}
                 navigator={this.props.navigator} />
       </View>
       <ScrollView styles={[styles.scroll, {height: windowSize.width}]}
@@ -110,16 +111,20 @@ var ProfilePage = React.createClass({
           onPress={this.toTeamListing} />
         <View style={_cstyles.section_divider_line}></View>
 
+        <SimpleRow title={"Career Matches"} 
+                   value={this.state.player.matches.length} 
+                   onPress={()=>this.toMatchListing()}/>
+        <View style={_cstyles.section_divider_line}></View>
+
         <SimpleRow title={"Recent Matches"} 
                    value={this.state.player.matches.length} 
                    />
+
           <View style={styles.matches}>
             <MatchList
+              matches={this.state.player.matches.slice(0, 3)}
               navigator={this.props.navigator}
             />
-          </View>
-
-          <View style={{height: 50 * _cvals.dscale, width: windowSize.width}}>
           </View>
         </View>
       </ScrollView>
@@ -157,6 +162,18 @@ var ProfilePage = React.createClass({
       passProps: {
         navigator: this.props.navigator,
         teams: this.state.player.teams
+      }
+    })
+  },
+
+  toMatchListing() {
+    var MatchListingPage = require('../screens/matchlistingpage')
+    this.props.navigator.push({
+      id: "TeamListing",
+      component: MatchListingPage,
+      passProps: {
+        navigator: this.props.navigator,
+        matches: this.state.player.matches
       }
     })
   },

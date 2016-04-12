@@ -70,7 +70,8 @@ var TeamPage = React.createClass({
           <SimpleRow title={"Members"} value={this.state.team.players.length} />
           <View style={_cstyles.section_divider_line} ></View>
 
-          <SimpleRow navigator={this.props.navigator} />
+          <SimpleRow title={"Matches Played"} value={"TBD"}
+                     navigator={this.props.navigator} />
           <View style={_cstyles.section_divider_line} ></View>
   
           <SimpleRow title={"Recent Matches"} value={""} />

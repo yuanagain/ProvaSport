@@ -28,7 +28,7 @@ var MatchList = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        matches: [0, 1]
+        matches: []
       }
     )
   },

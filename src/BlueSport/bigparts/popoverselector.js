@@ -74,7 +74,7 @@ var PopoverSelector = React.createClass({
       selection: [],
       minSelect: 0,
       maxSelect: Infinity,
-      harvestSelection: harvestSelection_default,
+      harvest: harvest_default,
       selectedStyle: { backgroundColor: _cvals.skbluelight },
       renderSelector: null,
       renderRow: _rowRenders.defaultRenderRow,
@@ -88,7 +88,7 @@ var PopoverSelector = React.createClass({
       mode,
       renderSelector,
       items,
-      harvestSelection,
+      harvest,
       harvestArgs,
       renderRow,
       selection,
@@ -161,7 +161,7 @@ var PopoverSelector = React.createClass({
         style: this.props.style,
         title: this.props.title,
         items: this.props.items,
-        harvestSelection: this.harvestSelection,
+        harvest: this.harvest,
         renderRow: this.state.renderRow,
         selection: this.state.selection,
         minSelect: this.props.minSelect,
@@ -175,15 +175,15 @@ var PopoverSelector = React.createClass({
     })
   },
 
-  harvestSelection: function(selection) {
+  harvest: function(selection) {
     this.setState({selection: selection})
     var iselect = _ctools.traceIndices(this.props.items,
                                             this.state.selection)
     if (this.props.harvestArgs == undefined) {
-      this.props.harvestSelection(iselect)
+      this.props.harvest(iselect)
     }
     else {
-      this.props.harvestSelection(iselect, this.props.harvestArgs)
+      this.props.harvest(iselect, this.props.harvestArgs)
     }
     this.props.navigator.pop()
   },
@@ -215,7 +215,7 @@ var PopoverSelector = React.createClass({
 
 });
 
-function harvestSelection_default(selection) {
+function harvest_default(selection) {
   //console.log("SELECTION: " + String(selection))
 }
 

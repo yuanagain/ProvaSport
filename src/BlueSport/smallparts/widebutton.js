@@ -35,13 +35,13 @@ var WideButton = React.createClass({
     } = this.props;
 
     return (
-      <TouchableHighlight
+      <TouchableOpacity
         style={[styles.button, this.canConfirm()]}
         onPress={this.props.onPress}>
         <View>
           <Text style={styles.buttonText}> {this.props.text} </Text>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   },
 
@@ -64,6 +64,7 @@ button: {
     shadowOffset: {width: 0, height: -1},
     padding: 5 * _cvals.dscale,
     alignItems: 'center',
+
     justifyContent: 'center'
   },
 
@@ -72,7 +73,7 @@ buttonText: {
   textAlign: 'center',
   fontSize: 24 * _cvals.dscale,
   fontFamily: 'avenir',
-  
+  fontWeight: 'bold',
 },
 
 })

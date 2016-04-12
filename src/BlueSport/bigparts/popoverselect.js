@@ -46,7 +46,7 @@ var PopoverSelect = React.createClass({
   render: function() {
     var {
       title,
-      harvestSelection,
+      harvest,
       renderRow,
       selection,
       minSelect,
@@ -75,7 +75,7 @@ var PopoverSelect = React.createClass({
                      this.canConfirm()]}>
         <WideButton
           text="Confirm Selection"
-          onPress={this.harvestSelection}
+          onPress={this.harvest}
           disabled={this.isDisabled()}
         />
       </View>
@@ -113,10 +113,10 @@ var PopoverSelect = React.createClass({
     return _ctools.inRange(this.props.minSelect, this.props.maxSelect, this.state.selection.length)
   },
 
-  harvestSelection: function() {
+  harvest: function() {
     this.state.selection.sort()
     this.setState( {selection: this.state.selection })
-    this.props.harvestSelection(this.state.selection)
+    this.props.harvest(this.state.selection)
     this.props.update()
   },
 
@@ -141,7 +141,7 @@ var PopoverSelect = React.createClass({
       if (this.props.mode == 'single') {
         this.setState({selection: [index]})
         console.log(this.state.selection)
-        this.harvestSelection()
+        this.harvest()
         return
       }
     }

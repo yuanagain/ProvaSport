@@ -76,7 +76,7 @@ var ContractsPage = React.createClass({
             items={[0, 1]}
             navigator={this.props.navigator}
             selection={this.state.teams[i]}
-            harvestSelection={this.setTeam}
+            harvest={this.setTeam}
             harvestArgs={i}
             key={i}
           />
@@ -107,7 +107,7 @@ var ContractsPage = React.createClass({
             items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
             navigator={this.props.navigator}
             selection={this.state.selectedSport}
-            harvestSelection={this.setSport}
+            harvest={this.setSport}
             maxSelect={1}
             mode={'single'}
           />
@@ -119,7 +119,7 @@ var ContractsPage = React.createClass({
             items={[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}
             navigator={this.props.navigator}
             selection={this.state.num_teams}
-            harvestSelection={this.setNumTeams}
+            harvest={this.setNumTeams}
             mode={'single'}
           />
           <View style={_cstyles.section_divider_line}>
