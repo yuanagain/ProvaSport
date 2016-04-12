@@ -79,8 +79,6 @@ var getForkMargin = function(level) {
   for (var i = 0; i < level; i++) {
     mult += Math.pow(2, i - 1)
   }
-  console.log("===========")
-  console.log(level)
   return mult * (_cvals.brickheight + 1)
 }
 
@@ -213,7 +211,7 @@ var Bracket = React.createClass({
     } = this.props;
 
     var tslength = _const.slength + 2 * _cvals.dscale
-    var height = Math.pow(2, this.props.matches.length) * (_const.slength + 2)
+    var height = Math.pow(2, this.props.matches.length) * (_cvals.brickheight + 1)
     var width = _cvals.bricklength * (this.state.matches.length + 1) + 20
 
     var columns = [];
@@ -225,11 +223,11 @@ var Bracket = React.createClass({
     }
 
     return (
-        <ScrollView 
+
+        <ScrollView showsHorizontalScrollIndicator={true}
                     showsVerticalScrollIndicator={true}
                     contentContainerStyle={[styles.container,
-                                            {width: width, height: height}]}>
-
+                                            {width: width, height: 400}]}>
           {columns}
           <Final data={1}
                  level={this.props.matches.length}
@@ -278,8 +276,9 @@ var Final = React.createClass({
     } = this.props;
 
     return (
-      <View style={[styles.fork_wrapper, {marginRight: 16 * _cvals.dscale}]}>
-        <View style={[styles.fork, {marginLeft: 1}]}>
+      <View style={styles.column}>
+      <View style={[styles.fork_wrapper, ]}>
+        <View style={[styles.fork ]}>
           <View style={[{marginTop: this.state.fmargin}]}>
             <MatchBrick matchid={this.props.data}
                          navigator={this.props.navigator} />
@@ -287,17 +286,12 @@ var Final = React.createClass({
           </View>
         </View>
       </View>
+      </View>
     )
   }
 });
 
 var styles = StyleSheet.create({
-  scroll: {
-    flexDirection: 'column',
-    flex: 1,
-    padding: 15 * _cvals.dscale,
-    width: windowSize.width,
-  },
   container: {
     flexDirection: 'row',
     flex: 1,
