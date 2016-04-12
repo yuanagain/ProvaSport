@@ -68,12 +68,6 @@ var SettingsPage = React.createClass({
           />
           <View style={_cstyles.section_divider_line}></View>
 
-          <ScrollView style={{width: 200, height: 200}}
-                      contentContainerStyle={{width: 400, height: 400, backgroundColor: 'blue'}} >
-            <Text>{"Hey"}</Text>
-
-          </ScrollView>
-          
         </View>
       </View>
       <View style={_cstyles.buttons_container}>
