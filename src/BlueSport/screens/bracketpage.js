@@ -81,7 +81,7 @@ var styles = StyleSheet.create({
   bracket_container: {
     height: 555 * _cvals.dscale,
     width: windowSize.width - 4,
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: 'black'
   }
 })

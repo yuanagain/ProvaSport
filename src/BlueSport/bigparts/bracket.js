@@ -26,17 +26,76 @@ var defaultHeight = _cvals.slength / 2 * _cvals.dscale + 1
 
 
 // ==================================================
-//
+
+var fork_styles = StyleSheet.create({
+  fork_wrapper: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginLeft: 0,
+    flex: 1,
+  },
+  fork: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    flex: 1,
+  },
+  vline_wrapper: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    width: 1,
+    alignSelf: 'flex-end',
+    flex: 1,
+  },
+  column: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  hline: {
+    width: _cvals.bricklength,
+    flex: 1,
+    backgroundColor: 'black',
+    height: 1,
+  },
+  vline: {
+    //marginVertical: 1
+    flex: 1,
+    backgroundColor: 'black',
+    width: 1,
+  },
+});
+
+
+var getForkMargin = function(level) {
+  var mult = 0;
+  for (var i = 0; i < level; i++) {
+    mult += Math.pow(2, i - 1)
+  }
+  console.log("===========")
+  console.log(level)
+  return mult * (_cvals.brickheight + 1)
+}
+
+var getForkHeight = function(level) {
+  return Math.pow(2, level) * (_cvals.brickheight + 1) + 1
+}
+
 // ==================================================
 
 var Fork = React.createClass({
   getInitialState: function() {
-    var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2
-    var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
-
-    if (this.props.level == 0) {
-      fmargin = 0
-    }
+    // var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2
+    // var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
+    var fmargin = getForkMargin(this.props.level)
+    var fheight = getForkHeight(this.props.level)
 
     return (
       {
@@ -81,19 +140,19 @@ var Fork = React.createClass({
     }
 
     return (
-      <View style={[styles.fork_wrapper, {marginVertical: 0}]}>
-        <View style={[styles.fork, ]}>
+      <View style={[fork_styles.fork_wrapper, {marginVertical: 0}]}>
+        <View style={[fork_styles.fork, ]}>
           <View style={[{marginVertical: this.state.fmargin}]}>
             {bricks[0]}
-            <View style={[_cstyles.hline, styles.hline]}></View>
+            <View style={[fork_styles.hline]}></View>
           </View>
           <View style={[{marginVertical: this.state.fmargin}]}>
             {bricks[1]}
-            <View style={[_cstyles.hline, styles.hline]}></View>
+            <View style={[fork_styles.hline]}></View>
           </View>
         </View>
-        <View style={styles.vline_wrapper}>
-          <View style={[_cstyles.vline,
+        <View style={fork_styles.vline_wrapper}>
+          <View style={[fork_styles.vline,
                         {height: this.state.fheight,
                          marginBottom: this.state.fmargin,
                          marginLeft: 0}]}>
@@ -161,7 +220,6 @@ var Bracket = React.createClass({
     for (var i = 0; i < this.props.matches.length; i++) {
         columns.push(<ForkColumn navigator={this.props.navigator}
                         level={i}
-
                         column={this.props.matches[i]}
                         key={i} />);
     }
@@ -185,8 +243,8 @@ var Bracket = React.createClass({
 var Final = React.createClass({
   getInitialState: function() {
     // TODO: CHECK MATH HERE
-    var fmargin = defaultHeight * (Math.pow(3, (this.props.level - 1))) / 2 * 3/ 4
-    var fheight = defaultHeight  * (Math.pow(2, (this.props.level)))
+    var fmargin = getForkMargin(this.props.level)
+    var fheight = getForkHeight(this.props.level)
 
     if (this.props.level == 0) {
       fmargin = 0
@@ -281,10 +339,13 @@ var styles = StyleSheet.create({
   hline: {
     width: _cvals.bricklength,
     flex: 1,
+    backgroundColor: 'black',
+    height: 1,
   },
   vline: {
     //marginVertical: 1
     flex: 1,
+    backgroundColor: 'black',
   }
 })
 
