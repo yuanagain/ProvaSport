@@ -140,17 +140,7 @@ var SignUpPage = React.createClass({
             onChangeText={(name) => this.setState({name})}
           />
 
-          <View style={styles.input_row}>
-            <Text style={_cstyles.section_header_text}>Birthday</Text>
-            <View style={styles.date_picker_container}>
-              <DatePickerIOS
-                date={this.state.date}
-                mode="date"
-                maximumDate={new Date(Date.now())}
-                onDateChange={(date) => this.setState({date})}
-              />
-            </View>
-          </View>
+
           <View style={_cstyles.divider_line}/>
 
           <View style={styles.input_row}>
@@ -264,38 +254,52 @@ var SignUpPage = React.createClass({
         ]
       )
     }
-    else if (this.state.gender == null) {
-      Alert.alert(
-        'Invalid Gender',
-        'Please select a gender',
-        [
-          {text: 'OK'},
-        ]
-      )
-    }
-    else if (this.state.country == null) {
-      Alert.alert(
-        'Invalid Country',
-        'Please select a country',
-        [
-          {text: 'OK'},
-        ]
-      )
-    }
-    else if (this.state.sports == null) {
-      Alert.alert(
-        'Invalid Country',
-        'Please select at least 1 sport',
-        [
-          {text: 'OK'},
-        ]
-      )
-    }
+    /* 
+     * else if (this.state.gender == null) {
+     *   Alert.alert(
+     *     'Invalid Gender',
+     *     'Please select a gender',
+     *     [
+     *       {text: 'OK'},
+     *     ]
+     *   )
+     * }
+     * else if (this.state.country == null) {
+     *   Alert.alert(
+     *     'Invalid Country',
+     *     'Please select a country',
+     *     [
+     *       {text: 'OK'},
+     *     ]
+     *   )
+     * }
+     * else if (this.state.sports == null) {
+     *   Alert.alert(
+     *     'Invalid Country',
+     *     'Please select at least 1 sport',
+     *     [
+     *       {text: 'OK'},
+     *     ]
+     *   )
+     * }
+     */
     else {
-      /* Valid Login? now authenticate? */
+      /* Valid Login? now authenticate?*/
+      var email = this.state.email;
+      var pass = this.state.password;
+      var promise = new Promise(function(resolve) {
 
-      this.props.navToHomeFunc.call()
-
+        var result = User.createUser(email, pass)
+          resolve(result)
+      });
+      promise.then(function(value){
+        if(value == -1){
+          console.log("incorrect user creation");
+        }
+        else {
+          console.log(value);
+        }
+      });
     }
   },
 });

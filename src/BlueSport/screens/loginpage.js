@@ -8,6 +8,7 @@ var Button = require('react-native-button');
 var _cvals = require('../styles/customvals');
 
 var SignUpPage = require('./signup')
+import * as User from '../modules/userdata'
 
 var {
   AppRegistry,
@@ -73,7 +74,7 @@ var LoginPage = React.createClass({
         <Button
           style={styles.login_button}
           styleDisabled={{color: 'grey'}}
-          onPress={this.props.navToHomeFunc}
+          onPress={this.onSignInPress}
           >
           Sign In
         </Button>
@@ -91,13 +92,33 @@ var LoginPage = React.createClass({
   },
 
   onSignUpPress: function(name) {
+
     this.props.navigator.push({
       id: "SignUpPage",
       component: SignUpPage,
       passProps: {
         navToHomeFunc: this.props.navToHomeFunc
       }
+
     })
+  },
+  onSignInPress: function(name) {
+      /* Valid Login? now authenticate?*/
+      var callback = this.props.navToHomeFunc;
+      var email = this.state.username;
+      var pass = this.state.password;
+      var promise = new Promise(function(resolve) {
+        var Authdata = User.login(email, pass);
+        resolve(Authdata)
+      });
+      promise.then(function(value){
+        if(value){
+          callback.call()
+        }
+        else {
+          console.log("Unable to Login")
+        }
+      });
   },
 
 });

@@ -12,6 +12,7 @@
     "react-native-button": "^1.4.2",
     "react-native-dropdown": "0.0.6",
     "react-native-image-picker": "^0.18.5",
-    "react-native-tab-navigator": "^0.2.17"
+    "react-native-tab-navigator": "^0.2.17",
+    "react-native-uploader": "0.0.9"
   }
 }

@@ -5,15 +5,15 @@
  */
 
 var ref= require("firebase");
-ref = new Firebase("https://shining-torch-4767.firebaseio.com/user");
+ref = new Firebase("https://shining-torch-4767.firebaseio.com");
 
 
-    ref.onAuth(authDataCallback);
+ref.onAuth(authDataCallback);
 
     /* LOGIN TODO
     On Shutdown: ref.unauth(); to deauthorize.
     */
-function somethin() {
+function something() {
     if (isNew){
       newName();
     }
@@ -153,12 +153,15 @@ create team // returns team object if successful, -1 otherwise
   */
 function createTeam(teamid) {
   var team = new Team(teamid);
-  /* TODO ERROR API INADEQUACY NEED TO BREAK API RULES FOR CORRECT JSON OBJECT */
-  ref.set(team);
+  /* TODO make sure they cannot overwrite data return -1 if failure */
+  ref.child("team").child(teamid).set(team, function(err) {
+    callback(-1);
+  });
+  callback(teamid);
 }
 
 //change Email data of user
-function changeEmail(oldEmail, NewEmail, password) {
+function changeEmail(oldEmail, NewEmail, password, callback) {
   ref.changeEmail({
     oldEmail :oldEmail,
     newEmail : newEmail,
@@ -173,21 +176,36 @@ function changeEmail(oldEmail, NewEmail, password) {
 }
 
 /* Create New User with Login */
-function createUser(email, password, callback) {
-  ref.createUser({
-    email    : email,
-    password : password
-  }, function(error, userData) {
-    if (error) {
-      console.log("Error creating user:", error);
-    } else {
-      console.log("Successfully created user account with uid:", userData.uid);
-    }
-  });
+function createUser(email, password) {
+    ref.createUser({
+      email    : email,
+      password : password
+    }, function(error, userData) {
+      if (error) {
+        console.log("Error creating user:", error);
+        return -1;
+      } else {
+        console.log("Successfully created user account with uid:", userData.uid);
+        return userData.uid;
+      }
+    });
 }
+/*
+function setAllUserData(uid, obj, callback) {
+  ref.onAuth(function(authData) {
+  if (authData) {
+    // save the user's profile into the database so we can list users,
+    // use them in Security and Firebase Rules, and show profiles
+    ref.child("users").child(authData.uid).set({
+      provider: authData.provider,
+      data: obj
+    });
+  }
+});
 
+}*/
 /* Login existing user */
-function login(email, password, callback) {
+function login(email, password) {
   ref.authWithPassword({
     email    : email,
     password : password
@@ -206,13 +224,31 @@ function login(email, password, callback) {
        default:
          console.log("Error logging user in:", error);
      }
-     callback(false);
+      return null;
    } else {
       console.log("Authenticated successfully with payload:", authData);
-      callback(true);
+      return authData;
     }
   });
 }
+
+/* Create New User with Login */
+function createUser(email, password) {
+    ref.createUser({
+      email    : email,
+      password : password
+    }, function(error, userData) {
+      if (error) {
+        console.log("Error creating user:", error);
+        return -1;
+      } else {
+        console.log("Successfully created user account with uid:", userData.uid);
+        return userData.uid;
+      }
+    });
+}
+
+
 
 /* Forgotten password and in-app reset */
 function changePassword(oldPass, newPass, email) {
@@ -281,17 +317,17 @@ function saveUser(authData) {
 }
 function _GetUser(uid, callback){
 /* would we ever get a User?*/
-var promise = new Promise(function(resolve, reject) {
-    ref.child(uid).on("value", function(snapshot) {
-      var user = snapshot.val();
-      resolve(user);
-    });
- });
-promise.then(function(value){
-  callback(value);
-}).catch(function(){
-  console.log("Failed");
-});
+  var promise = new Promise(function(resolve, reject) {
+      ref.child(uid).on("value", function(snapshot) {
+        var user = snapshot.val();
+        resolve(user);
+      });
+   });
+  promise.then(function(value){
+    callback(value);
+  }).catch(function(){
+    console.log("Failed");
+  });
 }
 
 var default_user = {
@@ -306,4 +342,4 @@ var default_user = {
 };
 
 
-module.exports = {_GetUser, default_user, createUser};
+module.exports = {_GetUser, default_user, createUser, login, logout};
