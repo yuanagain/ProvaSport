@@ -1,0 +1,15 @@
+The following link is really helpful to understand the project setup: http://www.pro-react.com/materials/appendixA/. Cred @ Lukas.
+
+To start server:
+	node_modules/.bin/webpack-dev-server
+
+If you encounter a 404 error, try:
+	losf -w -n -i tcp:8080
+	kill -9 [problematic PID]
+
+Alternatively:
+	killall -9 node
+
+Don’t forget:
+	cd web_code
+	npm install
