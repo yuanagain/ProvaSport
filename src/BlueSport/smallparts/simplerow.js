@@ -45,7 +45,7 @@ var SimpleRow= React.createClass({
         <View style={styles.title}>
           <Text style={[_cstyles.header_text,
                         {fontWeight: 'normal'}]}>
-            {this.props.title}
+            {this.props.title + ' '}
           </Text>
         </View>
 

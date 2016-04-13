@@ -105,7 +105,7 @@ var ContractsPage = React.createClass({
 
           <PopoverSelector
             title={'Event Type'}
-            items={['Single Match', 'Elimination ', 'Round Robin']}
+            items={['Single Match', 'Elimination', 'Round Robin']}
             navigator={this.props.navigator}
             selection={this.state.event_type}
             harvest={this.setEventType}
@@ -160,7 +160,7 @@ var ContractsPage = React.createClass({
     if (this.state.event_type[0] == 'Round Robin') {
       this.toRR()
     }
-    if (this.state.event_type[0] == 'Elimination ') {
+    if (this.state.event_type[0] == 'Elimination') {
       this.toBracket()
     }
   },

@@ -24,7 +24,7 @@ var defaultRenderRow = function(rowText) {
     <View>
       <View style={default_styles.rowContainer}>
         <Text style={_cstyles.section_header_text}>
-          {rowText}
+          {rowText + ' '}
         </Text>
       </View>
     </View>

@@ -71,7 +71,7 @@ var TeamSquare = React.createClass({
           <Image style={styles.im}
                  source={{uri: this.state.team.thumbnail}}/>
           <Text style={[_cstyles.detail_text]}
-                numberOfLines={2}>
+                numberOfLines={1}>
             {this.state.team.name}
           </Text>
         </TouchableOpacity>
