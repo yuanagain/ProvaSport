@@ -71,13 +71,13 @@ var TeamBrick = React.createClass({
   },
   render: function() {
     var {
-      playerid,
+      teamid,
       navigator,
       disabled,
       ...props
     } = this.props;
 
-    if (this.props.disabled) {
+    if (this.props.disabled || this.state.team.name == 'BYE ') {
       return (
         <View style={styles.teambrick}>
           <View style={[styles.center, styles.left]} >

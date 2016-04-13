@@ -140,8 +140,6 @@ var ProfilePage = React.createClass({
   },
   fetchTeam: function(data) {
     this.state.team = data
-    console.log("DATA SUCCESSFULLY FETCHED")
-    console.log(data);
     this.setState({loaded : true})
   },
 
@@ -150,7 +148,6 @@ var ProfilePage = React.createClass({
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
   },
   componentWillReceiveProps: function(nextProps) {
-    console.log("\n\n Props: "+nextProps)
     Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
   },
 

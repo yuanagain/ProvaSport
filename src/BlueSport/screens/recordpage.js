@@ -84,7 +84,13 @@ var RecordPage = React.createClass({
             onChangeText={(name) => this.setState({name})}
           />
 
-
+          <TextField
+            label="Location"
+            placeholder="Optional"
+            keyboardType='default'
+            onChangeText={(location) => this.setState({location})}
+          />
+          
           <PopoverSelector
             title={'Contract'}
             items={['Default']}

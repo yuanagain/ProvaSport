@@ -211,11 +211,11 @@ var Bracket = React.createClass({
     } = this.props;
 
     var tslength = _const.slength + 2 * _cvals.dscale
-    var height = Math.pow(2, this.props.matches.length) * (_cvals.brickheight + 1)
-    var width = _cvals.bricklength * (this.state.matches.length + 1) + 20
+    var height = Math.pow(2, this.props.matches.length - 1) * (_cvals.brickheight + 1)
+    var width = _cvals.bricklength * (this.state.matches.length) + 20
 
     var columns = [];
-    for (var i = 0; i < this.props.matches.length; i++) {
+    for (var i = 0; i < this.props.matches.length - 1; i++) {
         columns.push(<ForkColumn navigator={this.props.navigator}
                         level={i}
                         column={this.props.matches[i]}
@@ -230,8 +230,8 @@ var Bracket = React.createClass({
                     contentContainerStyle={[styles.scroll, {height: height + 10, width: width}]}>
           <View style={styles.container}>
           {columns}
-          <Final data={1}
-                 level={this.props.matches.length}
+          <Final data={this.props.matches[this.props.matches.length - 1]}
+                 level={this.props.matches.length - 1}
                  marginBottom={height / 2}
                  navigator={this.props.navigator} />
           </View>

@@ -8,11 +8,13 @@ var WideButton = require('../smallparts/widebutton');
 var DynamicList = require('../bigparts/dynamiclist')
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
+import * as _ctools from '../libs/customtools.js'
+import * as _clogic from '../libs/customlogic.js'
 var PopoverSelector = require('../bigparts/popoverselector')
 
 var Header = require('../parts/header')
 
-import * as _ctools from '../libs/customtools.js'
+
 var Bracket = require('../bigparts/bracket')
 
 var {
@@ -28,10 +30,15 @@ var {
   Modal,
 } = React;
 
-var dummymatches = [[[0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1] ],
-                    [[0, 1], [0, 1], [0, 1], [0, 1] ],
-                    [[0, 1], [0, 1]],
-                    [[0, 1], ]]
+var t1 = {
+  teams: [1, 2, 3],
+  matches: [1, 2, 3],
+}
+
+var t2 = {
+  teams: [1, 2, 3, 4, 5, 6, 7, 8],
+  matches: [1, 2, 3, 4, 5, 6, 7],
+}
 
 var SettingsPage = React.createClass({
 
@@ -79,6 +86,12 @@ var SettingsPage = React.createClass({
     </View>
     );
   },
+
+  componentDidMount: function() {
+    console.log(_clogic.RRMatrix(t1))
+    console.log(_clogic.bracketMatrix(t2))
+    console.log(_clogic.createTrace(4))
+  }
 
 
 });

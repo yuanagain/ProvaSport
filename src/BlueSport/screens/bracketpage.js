@@ -7,6 +7,8 @@ var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
 var Header = require('../parts/header')
 var Bracket = require('../bigparts/bracket')
+import * as _clogic from '../libs/customlogic.js'
+var Tournament = require('../modules/tournament')
 
 var {
   AppRegistry,
@@ -18,38 +20,37 @@ var {
   ListView
 } = React;
 
-var dummymatches = [[[0, 1], [0, 1], [0, 1], [0, 1] ],
-                    [[0, 1], [0, 1]],
-                    [[0, 1], ] ]
 
-// need to fix height, width computations.
+var t2 = {
+  teams: [1, 0, 1, 0, 1, 0, 1, 0],
+  matches: [1, 0, 1, 0, 1, 0, 1],
+}
 
-// var dummymatches = [[[0, 1], [0, 1], ],
-//                     [[0, 1], ]]
-
-var dummymatches = [[[0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1] ],
-                    [[0, 1], [0, 1], [0, 1], [0, 1] ],
-                    [[0, 1], [0, 1]],
-                    [[0, 1], ]]
+var t3 = {
+  teams: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+  matches: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+}
 
 var RoundRobinPage = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        matches: dummymatches,
+        tournament: Tournament.default_tournament,
+        tournamentid: 0,
+        loaded: false
       }
     )
   },
 
   getInitialState: function() {
-    
     return {
+      matches: t3
     };
   },
 
   render: function() {
     var {
-      name,
+      tournamentid,
       navigator,
       ...props
     } = this.props;
@@ -63,13 +64,27 @@ var RoundRobinPage = React.createClass({
 
       <View style={styles.bracket_container}>
 
-      <Bracket matches={dummymatches}
-                  navigator={this.props.navigator} />
+      <Bracket matches={_clogic.bracketMatrix(t3)} //this.state.tournament
+               navigator={this.props.navigator} />
 
       </View>
     </View>
     );
   },
+
+  fetchTournament: function(data) {
+    this.state.tournament = data
+    this.setState({loaded : true})
+  },
+
+  componentDidMount: function () {
+    Tournament._GetTournament(this.props.tournamentid, this.fetchTournament)
+  },
+  componentWillReceiveProps: function(nextProps) {
+    Tournament._GetTournament(nextProps.tournamentid, this.fetchTournament)
+  },
+
+
 });
 
 var styles = StyleSheet.create({

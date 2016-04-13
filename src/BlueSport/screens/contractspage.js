@@ -89,12 +89,19 @@ var ContractsPage = React.createClass({
                 navigator={this.props.navigator} />
 
         <View style={_cstyles.body_container}>
-            <TextField
-              label="Event Name"
-              placeholder="Event Name"
-              keyboardType='default'
-              onChangeText={(name) => this.setState({name})}
-            />
+          <TextField
+            label="Event Name"
+            placeholder="Event Name"
+            keyboardType='default'
+            onChangeText={(name) => this.setState({name})}
+          />
+
+          <TextField
+            label="Location"
+            placeholder="Optional"
+            keyboardType='default'
+            onChangeText={(location) => this.setState({location})}
+          />
 
           <PopoverSelector
             title={'Event Type'}
@@ -130,7 +137,7 @@ var ContractsPage = React.createClass({
           <View style={_cstyles.section_divider_line}>
           </View>
           <View>
-            <ScrollView style={{height: 330 * _cvals.dscale,
+            <ScrollView style={{height: 250 * _cvals.dscale,
                                 width: windowSize.with}}>
               {teamselectors}
             </ScrollView>
@@ -141,7 +148,7 @@ var ContractsPage = React.createClass({
       <View style={_cstyles.buttons_container}>
 
         <WideButton
-          text="Create"
+          text="Create Tournament"
           onPress={()=>this.create()}
         />
       </View>

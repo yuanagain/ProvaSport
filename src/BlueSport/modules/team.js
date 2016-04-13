@@ -24,4 +24,12 @@ var default_team = {
     "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
 };
 
-module.exports = {_GetTeam, default_team};
+var bye = {
+    "name": "BYE ",
+    "players": [],
+    "matches": [],
+    "teamid": 0,
+    "thumbnail": " "
+};
+
+module.exports = {_GetTeam, default_team, bye};
