@@ -54,7 +54,7 @@ var SimpleRow= React.createClass({
             onPress={this.props.onPress}>
           <Text style={[_cstyles.header_text,
                         {color: _cvals.skblue, fontWeight: 'normal'}]}>
-            {this.props.value}
+            {this.props.value  + ' '}
           </Text>
         </TouchableOpacity>
       </View>

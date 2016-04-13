@@ -121,16 +121,9 @@ var SignUpPage = React.createClass({
             </TouchableOpacity>
           </View>
           <View style={_cstyles.body_container}>
-            <TextField
-              label="Username"
-              placeholder="username"
-              secureTextEntry={false}
-              keyboardType='default'
-              onChangeText={(username) => this.setState({username})}
-            />
 
             <TextField
-              label="Email"
+              label="Email "
               placeholder="user@email.com"
               secureTextEntry={false}
               keyboardType='email-address'
@@ -138,7 +131,7 @@ var SignUpPage = React.createClass({
             />
 
             <TextField
-              label="Password"
+              label="Password "
               placeholder="password"
               secureTextEntry={true}
               keyboardType='default'
@@ -146,7 +139,7 @@ var SignUpPage = React.createClass({
             />
 
             <TextField
-              label="Confirm Password"
+              label="Confirm Password "
               placeholder="password"
               secureTextEntry={true}
               keyboardType='default'
@@ -154,8 +147,16 @@ var SignUpPage = React.createClass({
             />
 
             <TextField
-              label="Name"
-              placeholder="name"
+              label="First Name "
+              placeholder="First Name"
+              secureTextEntry={false}
+              keyboardType='default'
+              onChangeText={(name) => this.setState({name})}
+            />
+
+            <TextField
+              label="Last Name "
+              placeholder="Last Name"
               secureTextEntry={false}
               keyboardType='default'
               onChangeText={(name) => this.setState({name})}
@@ -163,8 +164,8 @@ var SignUpPage = React.createClass({
 
             <View style={[styles.input_row, styles.selector]}>
               <PopoverSelector
-                title={'Country'}
-                items={['Country1', 'Country2', 'Country3']}
+                title={'Country '}
+                items={['USA', 'Canada', 'Great Britain']}
                 maxSelect={1}
                 navigator={this.props.navigator}
                 harvest={(country) => this.setState({country})}
@@ -175,7 +176,8 @@ var SignUpPage = React.createClass({
             <View style={[styles.input_row, styles.selector]}>
               <PopoverSelector
                 title={'Sports'}
-                items={['Sport1', 'Sport2', 'Sport3']}
+                items={['Tennis', 'Basketball', 'Soccer', 'Squash', 
+                        'Badminton', 'Football', 'Baseball', ]}
                 navigator={this.props.navigator}
                 harvest={(sports) => this.setState({sports})}
               />

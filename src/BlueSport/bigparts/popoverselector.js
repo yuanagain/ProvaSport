@@ -21,11 +21,12 @@ var {
 } = React;
 
 var defaultRenderRow = function(rowText) {
+  console.log('running')
   return (
     <View>
       <View style={default_styles.rowContainer}>
         <Text style={_cstyles.section_header_text}>
-          {rowText}
+          {rowText + ' '}
         </Text>
       </View>
     </View>
@@ -131,6 +132,7 @@ var PopoverSelector = React.createClass({
       if (selectionText.length > 23) {
         selectionText = selectionText.substr(0, 20) + '...'
       }
+      selectionText += ' '
 
       return (
         <TouchableOpacity onPress={this.enterSelector}>
@@ -202,7 +204,7 @@ var PopoverSelector = React.createClass({
     return (
       <View style={styles.defaultRenderSelector}>
         <Text style={_cstyles.section_header_text}>
-          {this.props.title}
+          {this.props.title }
         </Text>
         <Text style={[_cstyles.standard_text,
                       {color: _cvals.skblue,

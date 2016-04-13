@@ -78,21 +78,21 @@ var RecordPage = React.createClass({
 
         <View style={_cstyles.body_container}>
           <TextField
-            label="Match Name"
+            label="Match Name "
             placeholder="Optional"
             keyboardType='default'
             onChangeText={(name) => this.setState({name})}
           />
 
           <TextField
-            label="Location"
+            label="Location "
             placeholder="Optional"
             keyboardType='default'
             onChangeText={(location) => this.setState({location})}
           />
 
           <PopoverSelector
-            title={'Contract'}
+            title={'Contract '}
             items={['Default']}
             navigator={this.props.navigator}
             selection={this.state.contract}
@@ -101,7 +101,7 @@ var RecordPage = React.createClass({
           </View>
 
           <PopoverSelector
-            title={'Sport'}
+            title={'Sport '}
             items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
             navigator={this.props.navigator}
             selection={['Tennis']}
@@ -135,10 +135,10 @@ var RecordPage = React.createClass({
           </View>
 
           <SimpleRow
-            title={'Scores'}
+            title={'Scores '}
             value={''}/>
 
-          <ScrollView style={{height: 150 * _cvals.dscale}}>
+          <ScrollView style={{height: 130 * _cvals.dscale}}>
             <DynamicList
               items={this.state.scores}
               magic={'scores'}

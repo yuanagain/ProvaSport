@@ -7,7 +7,8 @@ var windowSize = Dimensions.get('window');
 var React = require('react-native');
 var {Platform} = React
 
-var dscale = windowSize.height / 667
+var dscale = windowSize.width / 375
+var vscale = windowSize.height / 667
 var slength = 75 * dscale
 
 const _cvals = {
@@ -16,9 +17,9 @@ const _cvals = {
   skblue: '#4A90E2',
   skbluelight: '#a6c9f2',
   sklightgreen: "#7ED321",
-  headerTextSize: 24 * dscale,
-  normalTextSize: 20 * dscale,
-  detailTextSize: 14 * dscale,
+  headerTextSize: 28 * dscale,
+  normalTextSize: 24 * dscale,
+  detailTextSize: 18 * dscale,
   dscale: dscale,
   headerHeight: (Platform.OS === 'ios') ? 65 * dscale : 50 * dscale,
   slength: slength,

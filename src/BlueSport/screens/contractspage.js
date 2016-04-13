@@ -127,7 +127,7 @@ var ContractsPage = React.createClass({
           </View>
 
           <PopoverSelector
-            title={'Number of Teams'}
+            title={'Team Count'}
             items={[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}
             navigator={this.props.navigator}
             selection={this.state.num_teams}

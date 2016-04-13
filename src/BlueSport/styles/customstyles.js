@@ -25,25 +25,25 @@ var CustomStylesDefault = StyleSheet.create({
   },
   section_header_text: {
     color: 'black',
-    fontSize: 26 * _cvals.dscale,
+    fontSize: 29 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
     paddingHorizontal: 10 * _cvals.dscale,
   },
   header_text: {
     color: 'black',
-    fontSize: 23 * _cvals.dscale,
+    fontSize: 26 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
     paddingHorizontal: 8 * _cvals.dscale,
     marginBottom: (Platform.OS === 'ios') ? 0 : 4 * _cvals.dscale,
   },
   standard_text: {
     color: 'black',
-    fontSize: 20 * _cvals.dscale,
+    fontSize: 24 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
   },
   detail_text: {
     color: 'black',
-    fontSize: 16 * _cvals.dscale,
+    fontSize: 20 * _cvals.dscale,
     fontFamily: _cvals.mainfont,
   },
   light_text: {
@@ -135,7 +135,7 @@ var CustomStylesDefault = StyleSheet.create({
     height: 28 * _cvals.dscale,
     width: 28 * _cvals.dscale,
     marginLeft: 12 * _cvals.dscale,
-    marginTop: (Platform.OS === 'ios') ? 0 : _cvals.headerHeight / 10,
+    marginTop: _cvals.headerHeight / 9, // (Platform.OS === 'ios') ? 0 : 
   },
   right_arrow: {
     height: 28 * _cvals.dscale,

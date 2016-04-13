@@ -87,16 +87,16 @@ var MatchPage = React.createClass({
                       contentContainerStyle={styles.content}>
             <View style={_cstyles.body_container}>
 
-              <SimpleRow title={"Date"} value={_ctools.toDate(new Date(this.state.match.datetime))} />
+              <SimpleRow title={"Date "} value={_ctools.toDate(new Date(this.state.match.datetime))} />
               <View style={_cstyles.section_divider_line} ></View>
 
-              <SimpleRow title={"Status"} value={"Complete"} />
+              <SimpleRow title={"Status "} value={"Complete"} />
               <View style={_cstyles.section_divider_line} ></View>
 
-              <SimpleRow title={"Location"} value={this.state.match.location} />
+              <SimpleRow title={"Location "} value={this.state.match.location} />
               <View style={_cstyles.section_divider_line} ></View>
 
-              <SimpleRow title={"Sport"} value={this.state.match.sport} />
+              <SimpleRow title={"Sport "} value={this.state.match.sport} />
               <View style={_cstyles.section_divider_line} ></View>
 
 
@@ -118,7 +118,7 @@ var MatchPage = React.createClass({
 
               <View style={_cstyles.section_divider_line} ></View>
 
-              <SimpleRow title={"Scores"} value={""} />
+              <SimpleRow title={"Scores "} value={""} />
               <DynamicList
                 items={this.state.match.scores}
                 magic={'scores_fixed'}

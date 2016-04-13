@@ -71,7 +71,7 @@ button: {
 buttonText: {
   color: 'white',
   textAlign: 'center',
-  fontSize: 24 * _cvals.dscale,
+  fontSize: 30 * _cvals.dscale,
   fontFamily: 'avenir',
   fontWeight: 'bold',
 },
