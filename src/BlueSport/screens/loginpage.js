@@ -90,7 +90,7 @@ var LoginPage = React.createClass({
           text="New user? Sign Up!"
           onPress={this.onSignUpPress}
           >
-          New user? Sign Up!
+          {'New user? Sign Up!'}
         </Button>
       </View>
 
