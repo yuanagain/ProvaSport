@@ -11,7 +11,8 @@ var _cstyles= require('../styles/customstyles');
 
 var SignUpPage = require('./signup')
 import * as User from '../modules/userdata'
-
+//import Store from 'react-native-store';
+//import * as coreData from '../modules/coreData'
 
 var {
   AppRegistry,
@@ -116,21 +117,25 @@ var LoginPage = React.createClass({
       var callback = this.props.navToHomeFunc;
       var email = this.state.username;
       var pass = this.state.password;
+      /*
+       * var coreData = {
+       *   "user": User.default_user,
+       *   "player": Player.default_player
+       * };
+       */
       var promise = new Promise(function(resolve) {
-        var Authdata = User.login(email, pass);
-        resolve(Authdata)
+        resolve(User.login(email, pass))
+        // watch this it might jump the gun
       });
-      promise.then(function(value){
-        if(value){
-          callback.call()
-        }
-        else {
-          console.log("Unable to Login")
-        }
+      promise.then(function (value) {
+      /*
+       *   coreData = loadCore(value.uid);
+       *   Store.add(coreData);
+       * }).then(function () {
+       */
+        callback()
       });
-      this.props.navToHomeFunc.call()
   },
-
 });
 
 

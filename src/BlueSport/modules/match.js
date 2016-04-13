@@ -16,7 +16,24 @@ function _GetMatch(matchid, callback) {
       console.log("Failed");
     });
 }
-
+function setMatch(matchid, obj, callback) {
+  var promise = new Promise(function(resolve, reject) {
+      matchdb.child(matchid).set(obj, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          reject();
+        } else {
+          console.log("Data saved successfully.");
+          resolve(obj);
+        }
+      });
+    });
+  promise.then(function(value){
+    callback(value);
+  }).catch(function(){
+    console.log("Failed");
+  });
+}
 var default_match =
   {
         "datetime": 0,
@@ -33,5 +50,9 @@ var default_match =
         "location": "LOADING"
   };
 
-
-module.exports = {_GetMatch, default_match};
+/* 
+ * setMatch(35, default_match, function(){
+ *   console.log(" ");
+ * })
+ */
+module.exports = {_GetMatch, default_match, setMatch};
