@@ -93,7 +93,7 @@ var LoginPage = React.createClass({
           style={styles.signup_button}
           onPress={this.onSignUpPress}
           >
-          {'New user? Sign Up!'}
+          {"New user? Sign Up!"}
         </Button>
       </View>
     </View>
@@ -128,6 +128,7 @@ var LoginPage = React.createClass({
           console.log("Unable to Login")
         }
       });
+      this.props.navToHomeFunc.call()
   },
 
 });
