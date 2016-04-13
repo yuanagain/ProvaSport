@@ -78,7 +78,7 @@ var SignUpPage = React.createClass({
   async showDatePicker(stateKey, options) {
     try {
       var newState = {};
-      const {action, year, month, day} = await DatePickerAndroid.open(options);      
+      const {action, year, month, day} = await DatePickerAndroid.open(options);
       if (action === DatePickerAndroid.dismissedAction) {
         newState[stateKey + 'Text'] = 'dismissed';
       } else {
@@ -161,22 +161,36 @@ var SignUpPage = React.createClass({
               keyboardType='default'
               onChangeText={(name) => this.setState({name})}
             />
+            <View style={_cstyles.divider_line}/>
+
+            <View style={styles.input_row}>
+            <PopoverSelector
+                title={'Gender'}
+                items={['Male', 'Female']}
+                maxSelect={1}
+                navigator={this.props.navigator}
+                harvestSelection={(gender) => this.setState({gender})}
+              />
+            </View>
+            <View style={_cstyles.divider_line}/>
+
 
             <View style={[styles.input_row, styles.selector]}>
               <PopoverSelector
-                title={'Country '}
+                title={'Country'}
                 items={['USA', 'Canada', 'Great Britain']}
                 maxSelect={1}
                 navigator={this.props.navigator}
                 harvest={(country) => this.setState({country})}
               />
             </View>
+
             <View style={_cstyles.divider_line}/>
 
             <View style={[styles.input_row, styles.selector]}>
               <PopoverSelector
                 title={'Sports'}
-                items={['Tennis', 'Basketball', 'Soccer', 'Squash', 
+                items={['Tennis', 'Basketball', 'Soccer', 'Squash',
                         'Badminton', 'Football', 'Baseball', ]}
                 navigator={this.props.navigator}
                 harvest={(sports) => this.setState({sports})}
@@ -185,7 +199,8 @@ var SignUpPage = React.createClass({
             <View style={_cstyles.divider_line}/>
           </View>
           <WideButton
-            text="Submit"
+            text={"Submit"}
+
             onPress={this.onSubmit}
           />
         </ScrollView>
@@ -215,16 +230,18 @@ var SignUpPage = React.createClass({
   },
 
   onSubmit() {
-    if (!this.validUsername()) {
-      Alert.alert(
-        'Invalid Username',
-        'Username must be at least 6 characters long',
-        [
-          {text: 'OK'},
-        ]
-      )
-    }
-    else if (!this.validEmail()) {
+    /*
+     * if (!this.validUsername()) {
+     *   Alert.alert(
+     *     'Invalid Username',
+     *     'Username must be at least 6 characters long',
+     *     [
+     *       {text: 'OK'},
+     *     ]
+     *   )
+     * }
+     */
+    if (!this.validEmail()) {
       Alert.alert(
         'Invalid Email',
         'Invalid email address',
@@ -260,38 +277,53 @@ var SignUpPage = React.createClass({
         ]
       )
     }
-    else if (this.state.gender == null) {
-      Alert.alert(
-        'Invalid Gender',
-        'Please select a gender',
-        [
-          {text: 'OK'},
-        ]
-      )
-    }
-    else if (this.state.country == null) {
-      Alert.alert(
-        'Invalid Country',
-        'Please select a country',
-        [
-          {text: 'OK'},
-        ]
-      )
-    }
-    else if (this.state.sports == null) {
-      Alert.alert(
-        'Invalid Country',
-        'Please select at least 1 sport',
-        [
-          {text: 'OK'},
-        ]
-      )
-    }
+    /*
+     * else if (this.state.gender == null) {
+     *   Alert.alert(
+     *     'Invalid Gender',
+     *     'Please select a gender',
+     *     [
+     *       {text: 'OK'},
+     *     ]
+     *   )
+     * }
+     * else if (this.state.country == null) {
+     *   Alert.alert(
+     *     'Invalid Country',
+     *     'Please select a country',
+     *     [
+     *       {text: 'OK'},
+     *     ]
+     *   )
+     * }
+     * else if (this.state.sports == null) {
+     *   Alert.alert(
+     *     'Invalid Country',
+     *     'Please select at least 1 sport',
+     *     [
+     *       {text: 'OK'},
+     *     ]
+     *   )
+     * }
+     */
     else {
-      /* Valid Login? now authenticate? */
+      /* Valid Login? now authenticate?*/
+      var email = this.state.email;
+      var pass = this.state.password;
+      var promise = new Promise(function(resolve) {
 
-      this.props.navToHomeFunc.call()
+      var result = User.createUser(email, pass)
+          resolve(result)
+      });
+      promise.then(function(value){
+        if(value == -1){
+          console.log("incorrect user creation");
+        }
+        else {
+          console.log(value);
 
+        }
+      });
     }
   },
 });
