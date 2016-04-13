@@ -1,9 +1,7 @@
 'use strict';
-
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
@@ -51,7 +49,7 @@ var PayoutSection= React.createClass({
         <View style={styles.title}>
           <Text style={[_cstyles.header_text,
                         {alignSelf: 'flex-start', fontWeight: 'normal'}]}>
-            {this.props.title}
+            {this.props.title  + ' '}
           </Text>
         </View>
 
@@ -70,7 +68,7 @@ var PayoutSection= React.createClass({
                        {color: _cvals.skblue, fontWeight: 'normal',
                         paddingVertical: _cvals.stdmargin / 2}]}>
             {'\t' + this.state.plus +
-              +String(this.props.earnings['xp']) + ' EXP'}
+              +String(this.props.earnings['xp']) + ' XP'}
           </Text>
 
         </View>
@@ -86,6 +84,7 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'flex-end',
     width: windowSize.width / 3,
+    paddingRight: _cvals.stdmargin,
   },
   title: {
     flexDirection: 'row',

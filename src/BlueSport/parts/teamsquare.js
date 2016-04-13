@@ -1,14 +1,16 @@
 'use strict';
+
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
+var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
 import * as _ctools from '../libs/customtools.js'
-import * as Player from '../modules/player'
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -22,24 +24,24 @@ var {
 } = React;
 
 
-var PlayerBrick = React.createClass({
+var TeamSquare = React.createClass({
 
   onPress: function() {
-    var ProfilePage = require('../screens/profilepage')
-    this.props.navigator.push({
-      id: "ProfilePage" + String(_ctools.randomKey()),
-      component: ProfilePage,
-      passProps: {
-        navigator: this.props.navigator,
-        playerid: this.props.playerid
-      }
-    })
+    // var ProfilePage = require('../screens/profilepage')
+    // this.props.navigator.push({
+    //   id: "ProfilePage" + String(_ctools.randomKey()),
+    //   component: ProfilePage,
+    //   passProps: {
+    //     navigator: this.props.navigator,
+    //     playerid: this.props.playerid
+    //   }
+    // })
   },
 
   getInitialState: function() {
     return (
       {
-        player: Player.default_player,
+        team: Team.default_team,
         loaded: false,
       }
     );
@@ -47,13 +49,13 @@ var PlayerBrick = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        playerid: -1,
+        teamid: -1,
       }
     )
   },
   render: function() {
     var {
-      playerid,
+      teamid,
       navigator,
       ...props
     } = this.props;
@@ -63,48 +65,43 @@ var PlayerBrick = React.createClass({
     }
 
     return (
-      <TouchableOpacity style={styles.playerbrick}
+      <TouchableOpacity style={styles.teamsquare}
                         onPress={() => this.onPress()}>
-        <View style={[styles.center, styles.left]} >
+        <TouchableOpacity style={[styles.icon, ]}>
           <Image style={styles.im}
-                 source={{uri: this.state.player.prof_pic}}/>
-        </View>
-        <View style={styles.right}>
-          <View >
-            <Text style={[_cstyles.detail_text]}>{this.state.player.name.first}</Text>
-          </View>
-          <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</Text>
-          </View>
-        </View>
+                 source={{uri: this.state.team.thumbnail}}/>
+          <Text style={[_cstyles.detail_text]}
+                numberOfLines={1}>
+            {this.state.team.name}
+          </Text>
+        </TouchableOpacity>
       </TouchableOpacity>
     );
   },
 
-  fetchPlayer: function(data) {
+  fetchTeam: function(data) {
     this.setState({loaded : true})
-    this.setState({player : data})
+    this.setState({team : data})
     
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    Team._GetTeam(this.props.teamid, this.fetchTeam)
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    Team._GetTeam(nextProps.teamid, this.fetchTeam)
   },
 });
 
 var styles = StyleSheet.create({
-  playerbrick: {
-    height: _cvals.brickheight,
-    width: _cvals.bricklength,
+  teamsquare: {
+    height: _cvals.slength,
+    width: _cvals.slength,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
-    paddingLeft: 4,
   },
   im: {
     height: _cvals.thumbslength,
@@ -118,6 +115,13 @@ var styles = StyleSheet.create({
   },
   right: {
 
+  },
+  icon: {
+    height: _cvals.slength,
+    width: _cvals.slength,
+    marginHorizontal: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   border: {
     borderWidth: 1,
@@ -140,4 +144,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = PlayerBrick;
+module.exports = TeamSquare;

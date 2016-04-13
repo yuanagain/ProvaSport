@@ -3,7 +3,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton')
 
 // var ScoreRowRecord = require('./scorerowrecord')
 
@@ -20,8 +20,11 @@ var TeamPage = require('../screens/teampage')
 var Header = require('../parts/header')
 
 var TeamListingPage = require('../screens/teamlistingpage')
+var TextField = require('../smallparts/textfield')
 
 import * as _ctools from '../libs/customtools.js'
+
+
 
 var {
   AppRegistry,
@@ -33,23 +36,10 @@ var {
   TouchableOpacity,
   TouchableHighlight,
   ListView,
+  ScrollView,
   Modal,
 } = React;
 
-var dummyselections = [
-  {'name': '1', 'descr': 'Description 1'},
-  {'name': '2', 'descr': 'Description 2'},
-  {'name': '3', 'descr': 'Description 3'},
-  {'name': '4', 'descr': 'Description 4'},
-  {'name': '5', 'descr': 'Description 5'},
-  {'name': '6', 'descr': 'Description 6'},
-  {'name': '7', 'descr': 'Description 7'},
-  {'name': '8', 'descr': 'Description 8'},
-  {'name': '9', 'descr': 'Description 9'},
-]
-
-
-var items = ["Item 1", "Item 2"];
 
 var ContractsPage = React.createClass({
 
@@ -57,22 +47,11 @@ var ContractsPage = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => this.rowChanged(r1, r2)})
     return (
       {
-        item: "Select Item",
-        isVisible: false,
-        username: '',
-        password: '',
-        scoreData: [(21, 5), (10, 21), (21, 12)],
-        dataSource: ds.cloneWithRows([[21, 5], [10, 21], [21, 12]]),
         selectedSport: ["Tennis"],
-        selectedContract: "None Selected",
-        selectedTeam1: [],
-        selectedTeam2: [],
         selection: [],
-
-        SomeData: [{'key': 1, 'scores': [21,  2]},
-                   {'key': 2, 'scores': [11, 21]},
-                   {'key': 3, 'scores': [12, 21]},
-                   {'key': 4, 'scores': [11, 14]}]
+        event_type: [],
+        teams: [[],[],],
+        num_teams: [2],
       }
     );
   },
@@ -83,104 +62,124 @@ var ContractsPage = React.createClass({
       ...props
     } = this.props;
 
+
+    var teamselectors = []
+    for (var i = 0; i < this.state.num_teams; i++) {
+      teamselectors.push(
+        <View key={i}>
+          <PopoverSelector
+            title={'Team ' + String(i + 1)}
+            magic={'player'}
+            items={[0, 1]}
+            navigator={this.props.navigator}
+            selection={this.state.teams[i]}
+            harvest={this.setTeam}
+            harvestArgs={i}
+            key={i}
+          />
+          <View style={_cstyles.section_divider_line}></View>
+        </View>
+        )
+    }
+
     return (
     <View style={styles.container}>
       <View>
         <Header title={"CREATE"}
                 navigator={this.props.navigator} />
 
+        <View style={_cstyles.body_container}>
+          <TextField
+            label="Event Name"
+            placeholder="Event Name"
+            keyboardType='default'
+            onChangeText={(name) => this.setState({name})}
+          />
 
-        <PopoverSelector
-          title={'Event Type'}
-          items={['Single Match', 'Elimination ', 'Round Robin']}
-          navigator={this.props.navigator}
-          selection={[]}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}>
+          <TextField
+            label="Location"
+            placeholder="Optional"
+            keyboardType='default'
+            onChangeText={(location) => this.setState({location})}
+          />
+
+          <PopoverSelector
+            title={'Event Type'}
+            items={['Single Match', 'Elimination', 'Round Robin']}
+            navigator={this.props.navigator}
+            selection={this.state.event_type}
+            harvest={this.setEventType}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Sport '}
+            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            navigator={this.props.navigator}
+            selection={this.state.selectedSport}
+            harvest={this.setSport}
+            maxSelect={1}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+
+          <PopoverSelector
+            title={'Team Count'}
+            items={[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}
+            navigator={this.props.navigator}
+            selection={this.state.num_teams}
+            harvest={this.setNumTeams}
+            mode={'single'}
+          />
+          <View style={_cstyles.section_divider_line}>
+          </View>
+          <View>
+            <ScrollView style={{height: 200 * _cvals.dscale,
+                                width: windowSize.with}}>
+              {teamselectors}
+            </ScrollView>
+          </View>
         </View>
-
-        <PopoverSelector
-          title={'Sport'}
-          items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-          navigator={this.props.navigator}
-          selection={this.state.selectedSport}
-          harvestSelection={this.setSport}
-          maxSelect={1}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Team 1'}
-          items={['Player 1', 'Player 2', 'Player 3']}
-          navigator={this.props.navigator}
-          selection={[]}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
-        <PopoverSelector
-          title={'Team 2'}
-          items={['Player 4', 'Player 5', 'Player 6']}
-          navigator={this.props.navigator}
-          selection={[]}
-        />
-        <View style={_cstyles.section_divider_line}>
-        </View>
-
       </View>
 
       <View style={_cstyles.buttons_container}>
-        <Button
-            style={_cstyles.wide_button}
-            styleDisabled={{color: 'grey'}}
-            onPress={this.toTeamListingPage}
-            >
-            {'View Team Listing Page'}
-        </Button>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
-          onPress={this.toTeamPage}
-          >
-          {'View Team Page'}
-        </Button>
-        <View style={{height: 1}}></View>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
-          onPress={this.toRR}
-          >
-          {'View RR Page'}
-        </Button>
-        <View style={{height: 1}}></View>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
-          onPress={this.toBracket}
-          >
-          {'View Bracket Page'}
-        </Button>
-        <View style={{height: 1}}></View>
 
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
-
-          >
-          {'Create'}
-        </Button>
+        <WideButton
+          text="Create Tournament"
+          onPress={()=>this.create()}
+        />
       </View>
     </View>
     );
   },
 
+  create: function() {
+    if (this.state.event_type[0] == 'Round Robin') {
+      this.toRR()
+    }
+    if (this.state.event_type[0] == 'Elimination') {
+      this.toBracket()
+    }
+  },
+
+  setTeam: function(players, index) {
+    this.state.teams[index] = players
+    this.setState({teams: this.state.teams})
+  },
+
+  setEventType: function(event_type) {
+    this.setState({event_type: event_type})
+  },
+
+  setNumTeams: function(num) {
+    this.setState({num_teams: num})
+  },
+
   setSport: function(selection) {
     this.setState({selectedSport: selection})
-    console.log("SELECTED SPORT: " + String(this.state.selectedSport))
-    this.forceUpdate()
   },
 
   goBack: function() {

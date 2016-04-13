@@ -1,14 +1,17 @@
 'use strict';
+
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
+var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
 import * as _ctools from '../libs/customtools.js'
-import * as Player from '../modules/player'
+import * as Match from '../modules/match'
+var TeamBrick = require('../parts/teambrick')
 
 var {
   AppRegistry,
@@ -22,16 +25,16 @@ var {
 } = React;
 
 
-var PlayerBrick = React.createClass({
+var MatchBrick = React.createClass({
 
   onPress: function() {
-    var ProfilePage = require('../screens/profilepage')
+    var MatchPage = require('../screens/matchpage')
     this.props.navigator.push({
-      id: "ProfilePage" + String(_ctools.randomKey()),
-      component: ProfilePage,
+      id: "MatchPage" + String(_ctools.randomKey()),
+      component: MatchPage,
       passProps: {
         navigator: this.props.navigator,
-        playerid: this.props.playerid
+        playerid: this.props.matchid
       }
     })
   },
@@ -39,7 +42,7 @@ var PlayerBrick = React.createClass({
   getInitialState: function() {
     return (
       {
-        player: Player.default_player,
+        match: Match.default_match,
         loaded: false,
       }
     );
@@ -47,58 +50,53 @@ var PlayerBrick = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        playerid: -1,
+        matchid: -1,
       }
     )
   },
   render: function() {
     var {
-      playerid,
+      matchid,
       navigator,
       ...props
     } = this.props;
 
-    if (this.state.loaded == false) {
-      return (<View></View>)
-    }
-
     return (
-      <TouchableOpacity style={styles.playerbrick}
-                        onPress={() => this.onPress()}>
-        <View style={[styles.center, styles.left]} >
-          <Image style={styles.im}
-                 source={{uri: this.state.player.prof_pic}}/>
-        </View>
-        <View style={styles.right}>
-          <View >
-            <Text style={[_cstyles.detail_text]}>{this.state.player.name.first}</Text>
+        <TouchableOpacity onPress={this.onPress}>
+          <TeamBrick teamid={_ctools.getWinner(this.state.match)}
+                     navigator={this.props.navigator}
+                     disabled={true} />
+          <View style={styles.scores}>
+            <Text style={_cstyles.detail_text}>
+              {_ctools.getScoreString(this.state.match)}
+            </Text>
           </View>
-          <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
     );
   },
 
-  fetchPlayer: function(data) {
+  fetchMatch: function(data) {
+    this.state.match = data
     this.setState({loaded : true})
-    this.setState({player : data})
-    
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    Match._GetMatch(this.props.matchid, this.fetchMatch)
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    Match._GetMatch(nextProps.matchid, this.fetchMatch)
   },
 });
 
 var styles = StyleSheet.create({
-  playerbrick: {
+  scores: {
+    height: 20 * _cvals.dscale,
+    marginBottom: -20 * _cvals.dscale,
+    paddingLeft: 5 * _cvals.dscale
+  },
+  matchbrick: {
     height: _cvals.brickheight,
     width: _cvals.bricklength,
     flexDirection: 'row',
@@ -140,4 +138,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = PlayerBrick;
+module.exports = MatchBrick;

@@ -1,14 +1,16 @@
 'use strict';
+
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
+var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
 import * as _ctools from '../libs/customtools.js'
-import * as Player from '../modules/player'
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -22,16 +24,31 @@ var {
 } = React;
 
 
-var PlayerBrick = React.createClass({
+var TeamBrick = React.createClass({
 
-  onPress: function() {
+  toTeamPage: function() {
+    if (this.props.disabled) {
+      return
+    }
+    var TeamPage = require('../screens/teampage')
+    this.props.navigator.push({
+      id: "TeamPage" + String(_ctools.randomKey()),
+      component: TeamPage,
+      passProps: {
+        navigator: this.props.navigator,
+        teamid: this.props.teamid
+      }
+    })
+  },
+
+  toPlayerPage: function() {
     var ProfilePage = require('../screens/profilepage')
     this.props.navigator.push({
       id: "ProfilePage" + String(_ctools.randomKey()),
       component: ProfilePage,
       passProps: {
         navigator: this.props.navigator,
-        playerid: this.props.playerid
+        playerid: this.state.team.players[0]
       }
     })
   },
@@ -39,7 +56,7 @@ var PlayerBrick = React.createClass({
   getInitialState: function() {
     return (
       {
-        player: Player.default_player,
+        team: Team.default_team,
         loaded: false,
       }
     );
@@ -47,58 +64,71 @@ var PlayerBrick = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        playerid: -1,
+        teamid: -1,
+        disabled: false,
       }
     )
   },
   render: function() {
     var {
-      playerid,
+      teamid,
       navigator,
+      disabled,
       ...props
     } = this.props;
 
-    if (this.state.loaded == false) {
-      return (<View></View>)
+    if (this.props.disabled || this.state.team.name == 'BYE ') {
+      return (
+        <View style={styles.teambrick}>
+          <View style={[styles.center, styles.left]} >
+            <Image style={styles.im}
+                   source={{uri: this.state.team.thumbnail}}/>
+          </View>
+          <View style={styles.right}>
+              <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}
+                    numberOfLines={2} >
+                    {this.state.team.name}
+              </Text>
+          </View>
+        </View>
+        )
     }
 
     return (
-      <TouchableOpacity style={styles.playerbrick}
-                        onPress={() => this.onPress()}>
+      <TouchableOpacity style={styles.teambrick}
+                        onPress={() => this.toTeamPage()}>
         <View style={[styles.center, styles.left]} >
           <Image style={styles.im}
-                 source={{uri: this.state.player.prof_pic}}/>
+                 source={{uri: this.state.team.thumbnail}}/>
         </View>
         <View style={styles.right}>
-          <View >
-            <Text style={[_cstyles.detail_text]}>{this.state.player.name.first}</Text>
-          </View>
-          <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</Text>
-          </View>
+            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}
+                  numberOfLines={2} >
+                  {this.state.team.name}
+            </Text>
         </View>
       </TouchableOpacity>
     );
   },
 
-  fetchPlayer: function(data) {
+  fetchTeam: function(data) {
+    this.state.team = data
     this.setState({loaded : true})
-    this.setState({player : data})
-    
+    // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    Team._GetTeam(this.props.teamid, this.fetchTeam)
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    Team._GetTeam(nextProps.teamid, this.fetchTeam)
   },
 });
 
 var styles = StyleSheet.create({
-  playerbrick: {
+  teambrick: {
     height: _cvals.brickheight,
     width: _cvals.bricklength,
     flexDirection: 'row',
@@ -117,7 +147,9 @@ var styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   right: {
-
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: _cvals.thumbslength + 5 * _cvals.dscale,
   },
   border: {
     borderWidth: 1,
@@ -136,8 +168,10 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   compress: {
-    marginTop: _cvals.dscale * -4
+    marginTop: _cvals.dscale * -4,
+    flexDirection: 'column',
+    justifyContent: 'center',
   }
 });
 
-module.exports = PlayerBrick;
+module.exports = TeamBrick;

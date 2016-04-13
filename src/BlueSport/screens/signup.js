@@ -7,9 +7,10 @@ var windowSize = Dimensions.get('window')
 
 var Header = require('../parts/header')
 var PopoverSelector = require('../bigparts/popoverselector')
-var Button = require('react-native-button')
+var WideButton = require('../smallparts/widebutton');
 var AddImageIcon = require('../assets/add.png')
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
+var TextField = require('../smallparts/textfield')
 
 import * as User from '../modules/userdata'
 
@@ -21,8 +22,11 @@ var {
   TextInput,
   Image,
   DatePickerIOS,
+  DatePickerAndroid,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Alert,
+  Platform,
 } = React;
 
 var SignUpPage = React.createClass({
@@ -71,6 +75,23 @@ var SignUpPage = React.createClass({
     );
   },
 
+  async showDatePicker(stateKey, options) {
+    try {
+      var newState = {};
+      const {action, year, month, day} = await DatePickerAndroid.open(options);
+      if (action === DatePickerAndroid.dismissedAction) {
+        newState[stateKey + 'Text'] = 'dismissed';
+      } else {
+        var date = new Date(year, month, day);
+        newState[stateKey + 'Text'] = date.toLocaleDateString();
+        newState[stateKey + 'Date'] = date;
+      }
+      this.setState(newState);
+    } catch ({code, message}) {
+      console.warn(`Error in example '${stateKey}': `, message);
+    }
+  },
+
   render: function() {
     var {
       name,
@@ -99,89 +120,89 @@ var SignUpPage = React.createClass({
               <Image source={this.state.profImage} style={styles.avatar}/>
             </TouchableOpacity>
           </View>
+          <View style={_cstyles.body_container}>
 
-          <TextField
-            label="Username"
-            placeholder="username"
-            secureTextEntry={false}
-            keyboardType='default'
-            onChangeText={(username) => this.setState({username})}
-          />
-
-          <TextField
-            label="Email"
-            placeholder="user@email.com"
-            secureTextEntry={false}
-            keyboardType='email-address'
-            onChangeText={(email) => this.setState({email})}
-          />
-
-          <TextField
-            label="Password"
-            placeholder="password"
-            secureTextEntry={true}
-            keyboardType='default'
-            onChangeText={(password) => this.setState({password})}
-          />
-
-          <TextField
-            label="Confirm Password"
-            placeholder="password"
-            secureTextEntry={true}
-            keyboardType='default'
-            onChangeText={(passwordConf) => this.setState({passwordConf})}
-          />
-
-          <TextField
-            label="Name"
-            placeholder="name"
-            secureTextEntry={false}
-            keyboardType='default'
-            onChangeText={(name) => this.setState({name})}
-          />
-
-
-          <View style={_cstyles.divider_line}/>
-
-          <View style={styles.input_row}>
-          <PopoverSelector
-              title={'Gender'}
-              items={['Male', 'Female']}
-              maxSelect={1}
-              navigator={this.props.navigator}
-              harvestSelection={(gender) => this.setState({gender})}
+            <TextField
+              label="Email "
+              placeholder="user@email.com"
+              secureTextEntry={false}
+              keyboardType='email-address'
+              onChangeText={(email) => this.setState({email})}
             />
-          </View>
-          <View style={_cstyles.divider_line}/>
 
-          <View style={styles.input_row}>
+            <TextField
+              label="Password "
+              placeholder="password"
+              secureTextEntry={true}
+              keyboardType='default'
+              onChangeText={(password) => this.setState({password})}
+            />
+
+            <TextField
+              label="Confirm Password "
+              placeholder="password"
+              secureTextEntry={true}
+              keyboardType='default'
+              onChangeText={(passwordConf) => this.setState({passwordConf})}
+            />
+
+            <TextField
+              label="First Name "
+              placeholder="First Name"
+              secureTextEntry={false}
+              keyboardType='default'
+              onChangeText={(name) => this.setState({name})}
+            />
+
+            <TextField
+              label="Last Name "
+              placeholder="Last Name"
+              secureTextEntry={false}
+              keyboardType='default'
+              onChangeText={(name) => this.setState({name})}
+            />
+            <View style={_cstyles.divider_line}/>
+
+            <View style={styles.input_row}>
             <PopoverSelector
-              title={'Country'}
-              items={['Country1', 'Country2', 'Country3']}
-              maxSelect={1}
-              navigator={this.props.navigator}
-              harvestSelection={(country) => this.setState({country})}
-            />
-          </View>
-          <View style={_cstyles.divider_line}/>
+                title={'Gender'}
+                items={['Male', 'Female']}
+                maxSelect={1}
+                navigator={this.props.navigator}
+                harvestSelection={(gender) => this.setState({gender})}
+              />
+            </View>
+            <View style={_cstyles.divider_line}/>
 
-          <View style={styles.input_row}>
-            <PopoverSelector
-              title={'Sports'}
-              items={['Sport1', 'Sport2', 'Sport3']}
-              navigator={this.props.navigator}
-              harvestSelection={(sports) => this.setState({sports})}
-            />
-          </View>
-          <View style={_cstyles.divider_line}/>
 
-          <Button
-            style={_cstyles.wide_button}
-            styleDisabled={{color: 'grey'}}
+            <View style={[styles.input_row, styles.selector]}>
+              <PopoverSelector
+                title={'Country'}
+                items={['USA', 'Canada', 'Great Britain']}
+                maxSelect={1}
+                navigator={this.props.navigator}
+                harvest={(country) => this.setState({country})}
+              />
+            </View>
+
+            <View style={_cstyles.divider_line}/>
+
+            <View style={[styles.input_row, styles.selector]}>
+              <PopoverSelector
+                title={'Sports'}
+                items={['Tennis', 'Basketball', 'Soccer', 'Squash',
+                        'Badminton', 'Football', 'Baseball', ]}
+                navigator={this.props.navigator}
+                harvest={(sports) => this.setState({sports})}
+              />
+            </View>
+            <View style={_cstyles.divider_line}/>
+          </View>
+          <WideButton
+            text={"Submit"}
+
             onPress={this.onSubmit}
-          >
-          {'Submit'}
-        </Button>
+          />
         </ScrollView>
       </View>
     );
@@ -209,16 +230,18 @@ var SignUpPage = React.createClass({
   },
 
   onSubmit() {
-    if (!this.validUsername()) {
-      Alert.alert(
-        'Invalid Username',
-        'Username must be at least 6 characters long',
-        [
-          {text: 'OK'},
-        ]
-      )
-    }
-    else if (!this.validEmail()) {
+    /*
+     * if (!this.validUsername()) {
+     *   Alert.alert(
+     *     'Invalid Username',
+     *     'Username must be at least 6 characters long',
+     *     [
+     *       {text: 'OK'},
+     *     ]
+     *   )
+     * }
+     */
+    if (!this.validEmail()) {
       Alert.alert(
         'Invalid Email',
         'Invalid email address',
@@ -254,7 +277,7 @@ var SignUpPage = React.createClass({
         ]
       )
     }
-    /* 
+    /*
      * else if (this.state.gender == null) {
      *   Alert.alert(
      *     'Invalid Gender',
@@ -289,7 +312,7 @@ var SignUpPage = React.createClass({
       var pass = this.state.password;
       var promise = new Promise(function(resolve) {
 
-        var result = User.createUser(email, pass)
+      var result = User.createUser(email, pass)
           resolve(result)
       });
       promise.then(function(value){
@@ -298,6 +321,7 @@ var SignUpPage = React.createClass({
         }
         else {
           console.log(value);
+
         }
       });
     }
@@ -305,26 +329,33 @@ var SignUpPage = React.createClass({
 });
 
 // Layout for labels and text fields
-var TextField = React.createClass({
+
+
+/* Not Currently supporting birthdays
+var DatePicker = React.createClass({
   render: function() {
-    return(
-      <View>
-        <View style={styles.input_row}>
-          <Text style={_cstyles.section_header_text}>{this.props.label}</Text>
-            <TextInput
-              style={[styles.input, styles.blackFont]}
-              placeholder={this.props.placeholder}
-              secureTextEntry={this.props.secureTextEntry}
-              autoCorrect={false}
-              keyboardType={this.props.keyboardType}
-              onChangeText={this.props.onChangeText}
-            />
-        </View>
-        <View style={_cstyles.divider_line}/>
-      </View>
-    );
+    if (Platform.OS === 'ios') {
+      return (
+        <DatePickerIOS
+          date={this.state.date}
+          mode="date"
+          maximumDate={new Date(Date.now())}
+          onDateChange={(date) => this.setState({date})}
+        />
+      )
+    }
+    else {
+      <TouchableWithoutFeedback
+        onPress={this.showDatePicker.bind(this, 'max', {
+          date: this.state.maxDate,
+          maxDate: new Date(Date.now()),
+        })}>
+        <Text>Select a Date</Text>
+      </TouchableWithoutFeedback>
+    }
   }
 })
+*/
 
 var styles = StyleSheet.create({
   // Height bound necessary for ScrollView to work as expected
@@ -339,9 +370,9 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatar: {
-    borderRadius: 60,
-    width: 120,
-    height: 120,
+    borderRadius: 60 * _cvals.dscale,
+    width: 120 * _cvals.dscale,
+    height: 120 * _cvals.dscale,
   },
   date_picker_container: {
     alignItems: 'center',
@@ -353,11 +384,13 @@ var styles = StyleSheet.create({
   input: {
     height: 40 * _cvals.dscale,
     fontSize: _cvals.standard_text,
-    paddingLeft: 10 * _cvals.dscale,
+    padding: (Platform.OS === 'ios') ? 10 * _cvals.dscale : 0
   },
   input_row: {
-    paddingTop: 10 * _cvals.dscale,
-    paddingLeft: 10 * _cvals.dscale,
+    paddingTop: 5 * _cvals.dscale,
+  },
+  selector: {
+    paddingBottom: 5 * _cvals.dscale,
   },
   whiteFont: {
     color: "#FFF"

@@ -2,11 +2,10 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
-
+import * as _clogic from '../libs/customlogic.js'
 var RoundRobin = require('../bigparts/roundrobin')
 var Header = require('../parts/header')
 
@@ -20,24 +19,30 @@ var {
   ListView
 } = React;
 
-var dummymatches = [[{'item': [3,4], 'type': 'blank'}, {'item': [3,4],  'type': 'icon' }, {'item': [3,4], 'type': 'icon' }, {'item': [3,4], 'type': 'icon' },],
-                    [{'item': 'Player 1', 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],
-                    [{'item': 'Player 2', 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],
-                    [{'item': 'Player 3', 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],]
+var dummymatches = [[{'item': [3,4], 'type': 'blank'}, {'item': 0,  'type': 'icon' }, {'item': 1, 'type': 'icon' }, {'item': 0, 'type': 'icon' },],
+                    [{'item': 0, 'type': 'team'}, {'item': 0, 'type': 'empty'}, {'item': 1, 'type': 'match'}, {'item': 0, 'type': 'match'},],
+                    [{'item': 1, 'type': 'team'}, {'item': 1, 'type': 'match'}, {'item': 0, 'type': 'empty'}, {'item': 1, 'type': 'match'},],
+                    [{'item': 0, 'type': 'team'}, {'item': 0, 'type': 'match'}, {'item': 1, 'type': 'match'}, {'item': 0, 'type': 'empty'},],]
+
+
+var rr1 = {
+  teams: [1, 0, 1, 0, 1],
+  matches: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+}
 
 
 var RoundRobinPage = React.createClass({
   getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
     return {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      tournament: ""
     };
   },
 
   getDefaultProps: function() {
     return (
       {
-        matches: dummymatches,
+        matches: _clogic.RRMatrix(rr1)
       }
     )
   },

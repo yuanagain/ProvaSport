@@ -6,7 +6,7 @@ OLD DEPRECATED
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton');
 
 var SelectionRow = require('./selectionrow')
 
@@ -35,6 +35,7 @@ var PopoverSelect = React.createClass({
     return (
       {
         mode: 'normal', // or 'single'
+        magic: 'player'
       }
     )
   },
@@ -46,6 +47,13 @@ var PopoverSelect = React.createClass({
       mode,
       ...props
     } = this.props;
+
+
+    var renderRow = this.renderListingRow
+    if (this.props.magic == 'player') {
+      renderRow = this.renderPlayerRow
+    }
+
     return (
     <View style={styles.container}>
       <View style={styles.body_container}>
@@ -59,7 +67,7 @@ var PopoverSelect = React.createClass({
 
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderListingRow}
+          renderRow={renderRow}
           style={styles.listView}
         />
 
@@ -68,13 +76,10 @@ var PopoverSelect = React.createClass({
       </View>
       <View style={styles.buttons_container}>
         <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+          text="Confirm Selection"
           onPress={this.confirmSelection}
-          disabled={this.validateSelectionCount}
-          >
-          {'Confirm Selection'}
-        </Button>
+          isDisabled={this.validateSelectionCount}
+        />
       </View>
     </View>
     );
@@ -95,6 +100,18 @@ var PopoverSelect = React.createClass({
         name={rowData['name']}
         selected={this.isSelected(rowData)}
         description_text={rowData['descr']}
+        valid={this.validateSelectionCount}
+        />
+    )
+  },
+
+  renderPlayerRow(rowData) {
+    var PlayerSelectionRow = require('../smallparts/playerselectionrow')
+    return (
+        <PlayerSelectionRow
+        onSelect={this.onSelect}
+        data={rowData}
+        selected={this.isSelected(rowData)}
         valid={this.validateSelectionCount}
         />
     )

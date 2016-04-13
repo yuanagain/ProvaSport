@@ -2,7 +2,6 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
@@ -29,7 +28,7 @@ var MatchList = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        matches: [0, 1]
+        matches: []
       }
     )
   },
@@ -74,14 +73,6 @@ var styles = StyleSheet.create({
     backgroundColor: 'transparent',
     opacity: 1.00,
     marginTop: 0,
-  },
-  header_container: {
-    // height: windowSize.height * 6 / 10,
-    width: windowSize.width,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    backgroundColor: 'transparent',
-    height: 40,
   },
   section_container: {
     width: windowSize.width,

@@ -35,7 +35,7 @@ var TeamListingPage = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        teamids: [0],
+        teams: [],
       }
     )
   },
@@ -48,7 +48,7 @@ var TeamListingPage = React.createClass({
     } = this.props;
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var dataSource = ds.cloneWithRows(this.props.teamids)
+    var dataSource = ds.cloneWithRows(this.props.teams)
     //if (this.state.loaded) {
     return (
       <View>

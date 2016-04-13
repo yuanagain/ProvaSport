@@ -2,8 +2,6 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
-
 
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
@@ -53,6 +51,7 @@ var DynamicList = React.createClass({
     return {
       items: [],
       harvest: harvest_default,
+      style: {},
       renderRow: (rowdata) => <Text>{rowdata}</Text>
     };
   },
@@ -62,6 +61,7 @@ var DynamicList = React.createClass({
       items,
       harvest,
       renderRow,
+      style,
       ...props
     } = this.props;
 
@@ -78,7 +78,7 @@ var DynamicList = React.createClass({
       AddRow = ( <View></View> )
     }
     return (
-    <View style={styles.container}>
+    <View style={[styles.container, this.props.style]}>
 
       <ListView
         dataSource={ds.cloneWithRows(_ctools.supplementIndex(this.state.items))}
@@ -117,17 +117,19 @@ var DynamicList = React.createClass({
   },
 
   harvest: function() {
-    this.props.harvest(iselect)
+    this.props.harvest(this.state.items)
   },
 
   addItem: function(data) {
-      this.state.items.push(data)
-      this.setState( {items: this.state.items} )
+    this.state.items.push(data)
+    this.setState( {items: this.state.items} )
+    this.harvest()
   },
 
   removeItem: function(index) {
     this.state.items.splice(index, 1)
     this.setState( {items: this.state.items} )
+    this.harvest()
   }
 });
 

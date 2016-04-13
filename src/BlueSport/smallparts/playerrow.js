@@ -1,7 +1,9 @@
 'use strict';
+
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
+var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
@@ -22,19 +24,7 @@ var {
 } = React;
 
 
-var PlayerBrick = React.createClass({
-
-  onPress: function() {
-    var ProfilePage = require('../screens/profilepage')
-    this.props.navigator.push({
-      id: "ProfilePage" + String(_ctools.randomKey()),
-      component: ProfilePage,
-      passProps: {
-        navigator: this.props.navigator,
-        playerid: this.props.playerid
-      }
-    })
-  },
+var PlayerRow = React.createClass({
 
   getInitialState: function() {
     return (
@@ -58,33 +48,25 @@ var PlayerBrick = React.createClass({
       ...props
     } = this.props;
 
-    if (this.state.loaded == false) {
-      return (<View></View>)
-    }
-
     return (
-      <TouchableOpacity style={styles.playerbrick}
-                        onPress={() => this.onPress()}>
+      <View style={styles.playerbrick} >
         <View style={[styles.center, styles.left]} >
           <Image style={styles.im}
                  source={{uri: this.state.player.prof_pic}}/>
         </View>
         <View style={styles.right}>
           <View >
-            <Text style={[_cstyles.detail_text]}>{this.state.player.name.first}</Text>
-          </View>
-          <View style={styles.compress}>
-            <Text style={[_cstyles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</Text>
+            <Text style={[_cstyles.header_text]}>{this.state.player.name.full} </Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </ View>
     );
   },
 
   fetchPlayer: function(data) {
+    this.state.player = data
     this.setState({loaded : true})
-    this.setState({player : data})
-    
+    // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   componentDidMount: function () {
@@ -110,7 +92,7 @@ var styles = StyleSheet.create({
     height: _cvals.thumbslength,
     width: _cvals.thumbslength,
     borderRadius: _cvals.thumbslength / 2,
-    marginRight: 4 * _cvals.dscale,
+    marginHorizontal: 4 * _cvals.dscale,
   },
   left:{
     alignSelf: 'center',
@@ -140,4 +122,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = PlayerBrick;
+module.exports = PlayerRow;

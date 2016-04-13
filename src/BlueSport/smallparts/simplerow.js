@@ -1,9 +1,7 @@
 'use strict';
-
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
@@ -43,11 +41,11 @@ var SimpleRow= React.createClass({
     } = this.props;
 
     return (
-      <View style={[styles.container, ,]}>
+      <View style={[styles.container,]}>
         <View style={styles.title}>
           <Text style={[_cstyles.header_text,
                         {fontWeight: 'normal'}]}>
-            {this.props.title}
+            {this.props.title + ' '}
           </Text>
         </View>
 
@@ -56,7 +54,7 @@ var SimpleRow= React.createClass({
             onPress={this.props.onPress}>
           <Text style={[_cstyles.header_text,
                         {color: _cvals.skblue, fontWeight: 'normal'}]}>
-            {this.props.value}
+            {this.props.value  + ' '}
           </Text>
         </TouchableOpacity>
       </View>
@@ -75,14 +73,16 @@ var styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    alignItems: 'flex-end',
     alignSelf: 'flex-start',
-    width: windowSize.width / 2
+    width: windowSize.width / 2,
   },
 
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     flex: 0,
+    alignItems: 'center',
     paddingRight: _cvals.stdmargin,
     width: windowSize.width
   },

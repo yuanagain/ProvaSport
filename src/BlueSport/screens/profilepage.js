@@ -1,9 +1,7 @@
 'use strict';
-
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
@@ -14,10 +12,7 @@ var PayoutListing = require('../smallparts/payoutlisting')
 var SimpleRow = require('../smallparts/simplerow')
 var MatchList = require('../bigparts/matchlist')
 
-
-
 import * as Player from '../modules/player'
-// var _GetTeam = require('../modules/team')
 
 var {
   AppRegistry,
@@ -33,7 +28,6 @@ var {
 } = React;
 
 var ProfilePage = React.createClass({
-
   getInitialState: function() {
 
     return (
@@ -48,23 +42,21 @@ var ProfilePage = React.createClass({
       {
         playerid: 0,
         teamid: 0,
+        mode: 'nav'
       }
     )
   },
   render: function() {
     var {
       playerid,
-      player,
-      team,
       loginFunction,
       ...props
     } = this.props;
-    console.log(this.props.playerid);
     return (
     <View style={styles.container}>
       <View>
-        <Header title={"Player"}
-                mode={'nav'}
+        <Header title={this.state.player.name.full}
+                mode={this.props.mode}
                 navigator={this.props.navigator} />
       </View>
       <ScrollView styles={[styles.scroll, {height: windowSize.width}]}
@@ -72,69 +64,70 @@ var ProfilePage = React.createClass({
         <Image source={{uri: this.state.player.prof_pic}}
                style={styles.pic} />
 
-       <SimpleRow
-         title={'Name'}
-         value={this.state.player.name.full}/>
+        <View style={_cstyles.body_container}>
+          <SimpleRow
+            title={'Name'}
+            value={this.state.player.name.full}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}></View>
 
-       <SimpleRow
-         title={'Nationality'}
-         value={this.state.player.nationality}/>
+          <SimpleRow
+            title={'Nationality'}
+            value={this.state.player.nationality}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}></View>
 
-       <SimpleRow
-         title={'Level'}
-         value={this.state.player.level}/>
+          <SimpleRow
+            title={'Level'}
+            value={this.state.player.level}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}></View>
 
-        <PayoutSection
-          title={'Earnings'}
-          earnings={_ctools.cumulativeEarnings(this.state.player.earnings)}
-        />
+          <PayoutSection
+            title={'Earnings'}
+            earnings={_ctools.cumulativeEarnings(this.state.player.earnings)}
+          />
 
-        <PayoutListing
-          earnings={this.state.player.earnings} />
+          <PayoutListing
+            earnings={this.state.player.earnings} />
 
+          <View style={_cstyles.section_divider_line}></View>
 
-        <View style={_cstyles.section_divider_line}></View>
+          <SimpleRow
+            title={'Sports'}
+            value={this.state.player.sports}/>
 
+          <View style={_cstyles.section_divider_line}></View>
 
+          <SimpleRow
+            title={'Location'}
+            value={this.state.player.home}/>
 
-        <SimpleRow
-          title={'Sports'}
-          value={this.state.player.sports}/>
-
-        <View style={_cstyles.section_divider_line}></View>
-
-        <SimpleRow
-          title={'Location'}
-          value={this.state.player.home}/>
-
-        <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}></View>
 
         <SimpleRow
           title={'Teams'}
-          value={_ctools.shortString(this.state.player.teams)}/>
-
+          value={this.state.player.teams.length}
+          onPress={this.toTeamListing} />
         <View style={_cstyles.section_divider_line}></View>
 
-        <SimpleRow title={"Recent Matches"} value={this.state.player.matches.length} />
+        <SimpleRow title={"Career Matches"} 
+                   value={this.state.player.matches.length} 
+                   onPress={()=>this.toMatchListing()}/>
+        <View style={_cstyles.section_divider_line}></View>
 
-        <View style={styles.matches}>
-          <MatchList
-            navigator={this.props.navigator}
-          />
+        <SimpleRow title={"Recent Matches"} 
+                   value={this.state.player.matches.length} 
+                   />
+
+          <View style={styles.matches}>
+            <MatchList
+              matches={this.state.player.matches.slice(0, 3)}
+              navigator={this.props.navigator}
+            />
+          </View>
         </View>
-
-        <View style={_cstyles.section_divider_line} ></View>
-        <View style={{height: 50 * _cvals.dscale, width: windowSize.width}}>
-        </View>
-
       </ScrollView>
-
       <View style={_cstyles.buttons_container}>
       </View>
     </View>
@@ -147,8 +140,6 @@ var ProfilePage = React.createClass({
   },
   fetchTeam: function(data) {
     this.state.team = data
-    console.log("DATA SUCCESSFULLY FETCHED")
-    console.log(data);
     this.setState({loaded : true})
   },
 
@@ -157,8 +148,31 @@ var ProfilePage = React.createClass({
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
   },
   componentWillReceiveProps: function(nextProps) {
-    console.log("\n\n Props: "+nextProps)
     Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+  },
+
+  toTeamListing() {
+    var TeamListingPage = require('../screens/teamlistingpage')
+    this.props.navigator.push({
+      id: "TeamListing",
+      component: TeamListingPage,
+      passProps: {
+        navigator: this.props.navigator,
+        teams: this.state.player.teams
+      }
+    })
+  },
+
+  toMatchListing() {
+    var MatchListingPage = require('../screens/matchlistingpage')
+    this.props.navigator.push({
+      id: "TeamListing",
+      component: MatchListingPage,
+      passProps: {
+        navigator: this.props.navigator,
+        matches: this.state.player.matches
+      }
+    })
   },
 
 });

@@ -2,7 +2,6 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles = require('../styles/customstyles')
@@ -50,33 +49,35 @@ var FriendsPage = React.createClass({
       <Header title={"TEAM"}
               mode={'nav'}
               navigator={this.props.navigator} />
-      <ScrollView style={styles.container}
-                  contentContainerStyle={styles.content}>
+      
+        <ScrollView style={styles.container}
+                    contentContainerStyle={styles.content}>
+          <View style={_cstyles.body_container}>
+            <SimpleRow title={"Team Name"} value={"Princeton Tigers"} />
+            <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Team Name"} value={"Princeton Tigers"} />
-        <View style={_cstyles.section_divider_line} ></View>
+            <SimpleRow title={"Sport"} value={"Badminton"} />
+            <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Sport"} value={"Badminton"} />
-        <View style={_cstyles.section_divider_line} ></View>
+            <SimpleRow title={"Location"} value={"MBBC"} />
+            <View style={_cstyles.section_divider_line} ></View>
 
-        <SimpleRow title={"Location"} value={"MBBC"} />
-        <View style={_cstyles.section_divider_line} ></View>
+            <SimpleRow title={"Members"} value={"3"} />
+            <SimpleRow navigator={this.props.navigator} />
 
-        <SimpleRow title={"Members"} value={"3"} />
-        <SimpleRow navigator={this.props.navigator} />
+            <View style={_cstyles.section_divider_line} ></View>
+            <SimpleRow title={"Recent Matches"} value={"4"} />
 
-        <View style={_cstyles.section_divider_line} ></View>
-        <SimpleRow title={"Recent Matches"} value={"4"} />
+            <View style={styles.matches}>
+              <MatchList
+                navigator={this.props.navigator}
+              />
+            </View>
 
-        <View style={styles.matches}>
-          <MatchList
-            navigator={this.props.navigator}
-          />
-        </View>
-
-        <View style={_cstyles.section_divider_line} ></View>
-
-      </ScrollView>
+            <View style={_cstyles.section_divider_line} ></View>
+          </View>
+        </ScrollView>
+      </View>
     </View>
     );
   },

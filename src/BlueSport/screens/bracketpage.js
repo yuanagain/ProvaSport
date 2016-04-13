@@ -2,13 +2,13 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
-
 
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
 var Header = require('../parts/header')
 var Bracket = require('../bigparts/bracket')
+import * as _clogic from '../libs/customlogic.js'
+var Tournament = require('../modules/tournament')
 
 var {
   AppRegistry,
@@ -20,29 +20,37 @@ var {
   ListView
 } = React;
 
-var dummymatches = [[{'team1': 'Player 1', 'team2': 'Player 2' },  {'team1': 'Player 3', 'team2': 'Player 4' }, {'team1': 'Player 5', 'team2': 'Player 6' }, {'team1': 'Player 7', 'team2': 'Player 8' }],
-                    [{'team1': 'Player 1', 'team2': 'Player 3' }, {'team1': 'Player 5', 'team2': 'Player 8' }],
-                    [{'team1': 'Player 3', 'team2': 'Player 5' }],]
+
+var t2 = {
+  teams: [1, 0, 1, 0, 1, 0, 1, 0],
+  matches: [1, 0, 1, 0, 1, 0, 1],
+}
+
+var t3 = {
+  teams: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+  matches: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+}
 
 var RoundRobinPage = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        matches: dummymatches,
+        tournament: Tournament.default_tournament,
+        tournamentid: 0,
+        loaded: false
       }
     )
   },
 
   getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      matches: t3
     };
   },
 
   render: function() {
     var {
-      name,
+      tournamentid,
       navigator,
       ...props
     } = this.props;
@@ -54,11 +62,29 @@ var RoundRobinPage = React.createClass({
               mode={'nav'}
               navigator={this.props.navigator} />
 
-      <Bracket matches={dummymatches}
-                  navigator={this.props.navigator} />
+      <View style={styles.bracket_container}>
+
+      <Bracket matches={_clogic.bracketMatrix(t3)} //this.state.tournament
+               navigator={this.props.navigator} />
+
+      </View>
     </View>
     );
   },
+
+  fetchTournament: function(data) {
+    this.state.tournament = data
+    this.setState({loaded : true})
+  },
+
+  componentDidMount: function () {
+    Tournament._GetTournament(this.props.tournamentid, this.fetchTournament)
+  },
+  componentWillReceiveProps: function(nextProps) {
+    Tournament._GetTournament(nextProps.tournamentid, this.fetchTournament)
+  },
+
+
 });
 
 var styles = StyleSheet.create({
@@ -67,6 +93,12 @@ var styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start'
+  },
+  bracket_container: {
+    height: 555 * _cvals.dscale,
+    width: windowSize.width - 4,
+    borderWidth: 0,
+    borderColor: 'black'
   }
 })
 

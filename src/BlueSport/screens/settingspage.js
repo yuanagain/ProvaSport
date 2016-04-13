@@ -3,16 +3,19 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton');
 
 var DynamicList = require('../bigparts/dynamiclist')
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
+import * as _ctools from '../libs/customtools.js'
+import * as _clogic from '../libs/customlogic.js'
 var PopoverSelector = require('../bigparts/popoverselector')
 
 var Header = require('../parts/header')
 
-import * as _ctools from '../libs/customtools.js'
+
+var Bracket = require('../bigparts/bracket')
 
 var {
   AppRegistry,
@@ -23,16 +26,24 @@ var {
   Image,
   TouchableOpacity,
   TouchableHighlight,
-  ListView,
+  ScrollView,
   Modal,
 } = React;
 
-var items = ["Item 1", "Item 2"];
+var t1 = {
+  teams: [1, 2, 3],
+  matches: [1, 2, 3],
+}
+
+var t2 = {
+  teams: [1, 2, 3, 4, 5, 6, 7, 8],
+  matches: [1, 2, 3, 4, 5, 6, 7],
+}
 
 var SettingsPage = React.createClass({
 
   getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => this.rowChanged(r1, r2)})
+    
     return (
       {
         selectedTeam1: [],
@@ -54,29 +65,33 @@ var SettingsPage = React.createClass({
       <View>
         <Header title={"SETTINGS"}
                 navigator={this.props.navigator} />
+        <View style={_cstyles.body_container}>
+          <PopoverSelector
+            title={'Sports'}
+            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            navigator={this.props.navigator}
+            selection={['Tennis']}
+            
+          />
+          <View style={_cstyles.section_divider_line}></View>
 
-        <PopoverSelector
-          title={'Sports'}
-          items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-          navigator={this.props.navigator}
-          selection={['Tennis']}
-          mode={'single'}
-        />
-        <View style={_cstyles.section_divider_line}></View>
-
+        </View>
       </View>
       <View style={_cstyles.buttons_container}>
-        <Button
-          style={_cstyles.wide_button}
-          styleDisabled={{color: 'grey'}}
+        <WideButton
+          text="Save Changes"
           onPress={this.props.loginFunction}
-          >
-          {'Save Changes'}
-        </Button>
+          />
       </View>
     </View>
     );
   },
+
+  componentDidMount: function() {
+    console.log(_clogic.RRMatrix(t1))
+    console.log(_clogic.bracketMatrix(t2))
+    console.log(_clogic.createTrace(4))
+  }
 
 
 });

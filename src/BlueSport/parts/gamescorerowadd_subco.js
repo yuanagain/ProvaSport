@@ -83,7 +83,7 @@ var GameScoreRowAdd_subco = React.createClass({
   onIconPress: function() {
     if (_ctools.isValidScore(this.state.val1)
         && _ctools.isValidScore(this.state.val2)) {
-      this.props.harvest([this.state.val1, this.state.val2])
+      this.props.harvest([parseInt(this.state.val1), parseInt(this.state.val2)])
       this.setState({val1: null, val2: null})
       console.log('is numeric')
     }
@@ -96,6 +96,7 @@ function isNumeric(n) {
 
 var styles = StyleSheet.create({
   big_container: {
+    alignSelf: 'flex-start',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

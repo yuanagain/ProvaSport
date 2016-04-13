@@ -3,12 +3,15 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton');
+var Button = require('react-native-button')
 
 var _cvals = require('../styles/customvals');
+var _cstyles= require('../styles/customstyles');
 
 var SignUpPage = require('./signup')
 import * as User from '../modules/userdata'
+
 
 var {
   AppRegistry,
@@ -16,7 +19,9 @@ var {
   View,
   Text,
   TextInput,
-  Image
+  Image,
+  Platform,
+  AndroidDatePicker,
 } = React;
 
 var LoginPage = React.createClass({
@@ -36,6 +41,12 @@ var LoginPage = React.createClass({
       ...props
     } = this.props;
 
+    // Known issue on Android, doesn't cause any problems
+    console.ignoredYellowBox = [
+      'Warning: Native component for',
+      'Possible',
+    ];
+
     return (
     <View style={styles.container}>
 
@@ -48,10 +59,9 @@ var LoginPage = React.createClass({
       <View style={styles.inputs_container}>
 
         <TextInput
-        style={styles.email_input}
-
+        style={styles.login_input}
+        underlineColorAndroid='rgba(0,0,0,0)'
         onChangeText={(username) => this.setState({username})}
-
         value={this.state.username}
         placeholder={"user@email.com"}
         autoCapitalize={"none"}
@@ -61,7 +71,8 @@ var LoginPage = React.createClass({
         </View>
 
         <TextInput
-        style={styles.email_input}
+        style={styles.login_input}
+        underlineColorAndroid='rgba(0,0,0,0)'
         onChangeText={(password) => this.setState({password})}
         value={this.state.password}
         placeholder={"Password"}
@@ -71,22 +82,20 @@ var LoginPage = React.createClass({
       </View>
 
       <View style={styles.buttons_container}>
-        <Button
+        <WideButton
+          text={"Sign In"}
           style={styles.login_button}
           styleDisabled={{color: 'grey'}}
           onPress={this.onSignInPress}
-          >
-          Sign In
-        </Button>
+          />
+
         <Button
           style={styles.signup_button}
-          styleDisabled={{color: 'grey'}}
           onPress={this.onSignUpPress}
           >
-          New user? Sign Up!
+          {"New user? Sign Up!"}
         </Button>
       </View>
-
     </View>
     );
   },
@@ -127,45 +136,47 @@ var LoginPage = React.createClass({
 var styles = StyleSheet.create({
   title_text: {
     color: 'white',
-    fontSize: 50,
-    fontFamily: 'avenir',
-    padding: 10
+    fontSize: 50 * _cvals.dscale,
+    fontFamily: _cvals.mainfont,
+    padding: 10 * _cvals.dscale
   },
   login_button: {
     color: 'white',
     //height: windowSize.height * 1 / 10,
-    //width: windowSize.width,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    fontSize: 30,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     textAlign: 'center',
+    fontSize: 30 * _cvals.dscale,
     backgroundColor: _cvals.skorange,
     width: windowSize.width,
-    padding: 12,
-    fontFamily: 'avenir',
+    paddingVertical: 12 * _cvals.dscale,
+    fontFamily: _cvals.mainfont,
     shadowRadius: 4,
     shadowColor: 'black',
     shadowOpacity: 0.5,
-    shadowOffset: {width: 0, height: 3}
+    shadowOffset: {width: 0, height: 3},
+
   },
   signup_button: {
-    fontSize: 20,
+    fontSize: 20 * _cvals.dscale,
     opacity: 1,
     color: 'white',
-    padding: 5,
-    margin: 10,
-    fontFamily: 'avenir',
+    padding: 5 * _cvals.dscale,
+    margin: 10 * _cvals.dscale,
+    fontFamily: _cvals.mainfont,
   },
-  email_input: {
-    height: 40,
+  login_input: {
+    height: 40 * _cvals.dscale,
     borderWidth: 0,
-    fontSize: 34,
+    fontSize: 34 * _cvals.dscale,
     textShadowColor: 'white',
     color: 'white',
-    margin: 10,
-    marginVertical: 18,
-    fontFamily: 'avenir',
+    margin: 10 * _cvals.dscale,
+    marginVertical: 18 * _cvals.dscale,
+    fontFamily: _cvals.mainfont,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 0
   },
   container: {
     flexDirection: 'column',
@@ -200,15 +211,15 @@ var styles = StyleSheet.create({
   },
   white_line: {
     backgroundColor: 'white',
-    height: 2,
+    height: 2 * _cvals.dscale,
     opacity: 0.3,
     width: windowSize.width
   },
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover', // or 'stretch'
-    width:320,
-    height:480,
+    width:320 * _cvals.dscale,
+    height:480 * _cvals.dscale,
   }
 })
 

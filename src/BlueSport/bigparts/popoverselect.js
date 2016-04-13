@@ -2,7 +2,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
+var WideButton = require('../smallparts/widebutton')
 
 var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
@@ -46,7 +46,7 @@ var PopoverSelect = React.createClass({
   render: function() {
     var {
       title,
-      harvestSelection,
+      harvest,
       renderRow,
       selection,
       minSelect,
@@ -73,14 +73,11 @@ var PopoverSelect = React.createClass({
       </View>
       <View style={[styles.buttons_container,
                      this.canConfirm()]}>
-        <Button
-          style={[_cstyles.wide_button, this.canConfirm()]}
-          styleDisabled={{backgroundColor: 'grey'}}
-          onPress={this.harvestSelection}
+        <WideButton
+          text="Confirm Selection"
+          onPress={this.harvest}
           disabled={this.isDisabled()}
-          >
-          {'Confirm Selection'}
-        </Button>
+        />
       </View>
     </View>
     );
@@ -116,10 +113,10 @@ var PopoverSelect = React.createClass({
     return _ctools.inRange(this.props.minSelect, this.props.maxSelect, this.state.selection.length)
   },
 
-  harvestSelection: function() {
+  harvest: function() {
     this.state.selection.sort()
     this.setState( {selection: this.state.selection })
-    this.props.harvestSelection(this.state.selection)
+    this.props.harvest(this.state.selection)
     this.props.update()
   },
 
@@ -144,7 +141,7 @@ var PopoverSelect = React.createClass({
       if (this.props.mode == 'single') {
         this.setState({selection: [index]})
         console.log(this.state.selection)
-        this.harvestSelection()
+        this.harvest()
         return
       }
     }

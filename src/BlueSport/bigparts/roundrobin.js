@@ -3,13 +3,10 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-var Button = require('react-native-button');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
-
-var PlayerBrick = require('../parts/playerbrick')
 
 import * as _ctools from '../libs/customtools.js'
 
@@ -22,10 +19,6 @@ var {
   ScrollView,
   TouchableOpacity,
 } = React;
-
-var dummymatches = [[{'item': [3,4], 'type': 'blank'}, {'item': [3,4],  'type': 'icon' }, {'item': [3,4], 'type': 'icon' },],
-                    [{'item': [3,4], 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],
-                    [{'item': [3,4], 'type': 'player'}, {'item': [3,4], 'type': 'match'}, {'item': [3,4], 'type': 'match'},],]
 
 var slength = _cvals.slength
 
@@ -45,27 +38,49 @@ var RRMatchSquare = React.createClass({
       ...props
     } = this.props;
     if (this.state.type == 'match') {
+      var ScoreSquare = require('../smallparts/scoresquare')
       return (
-        <TouchableOpacity style={[styles.match, styles.border]}>
-          <Text style={[_cstyles.standard_text]}>
-            {String(this.state.item[0]) + ' - ' + String(this.state.item[1])}
-          </Text>
-        </TouchableOpacity>
+        <View style={[styles.match, styles.border]}>
+          <ScoreSquare matchid={this.state.item}
+                       navigator={this.props.navigator} />
+        </View>
       )
     }
     if (this.state.type == 'icon') {
+      var TeamSquare = require('../parts/teamsquare')
       return (
         <TouchableOpacity style={[styles.icon, ]}>
-          <Text style={[_cstyles.standard_text]}>
-            {'Initials'}
-          </Text>
+          <TeamSquare teamid={this.state.item}
+                        navigator={this.props.navigator} />
         </TouchableOpacity>
       )
     }
+    if (this.state.type == "empty") {
+      return (
+      <TouchableOpacity style={[styles.match, styles.border]}
+                        onPress={() => this.onPress()}>
+        <TouchableOpacity style={[styles.icon, ]}>
+          <Text style={[_cstyles.standard_text]}>
+            {""}
+          </Text>
+        </TouchableOpacity>
+      </TouchableOpacity>
+      )
+    }
     if (this.state.type == 'player') {
+      var PlayerBrick = require('../parts/playerbrick')
       return (
         <TouchableOpacity style={[styles.player, styles.border]}>
-          <PlayerBrick player={this.state.item}
+          <PlayerBrick playerid={this.state.item}
+                       navigator={this.props.navigator} />
+        </TouchableOpacity>
+      )
+    }
+    if (this.state.type == 'team') {
+      var TeamBrick = require('../parts/teambrick')
+      return (
+        <TouchableOpacity style={[styles.player, styles.border]}>
+          <TeamBrick teamid={this.state.item}
                        navigator={this.props.navigator} />
         </TouchableOpacity>
       )
@@ -140,6 +155,13 @@ var RoundRobin = React.createClass({
 var styles = StyleSheet.create({
   scroll: {
 
+  },
+  playersquare: {
+    height: _cvals.slength,
+    width: _cvals.slength,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
   },
   container: {
     flexDirection: 'column',

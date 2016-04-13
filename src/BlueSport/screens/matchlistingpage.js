@@ -20,32 +20,37 @@ var {
 } = React;
 
 
-var NewsFeedPage = React.createClass({
+var MatchListingPage = React.createClass({
   getInitialState: function() {
-    return {
+    return ({
       isRefreshing: false,
-    };
+    });
   },
   getDefaultProps: function() {
     return (
       {
+        mode: 'nav',
+        title: "MATCHES",
       }
     )
   },
   render: function() {
     var {
-      name,
+      matches,
+      navigator,
       ...props
     } = this.props;
 
     return (
     <View style={styles.container}>
 
-    <Header title={"NEWS"} navigator={this.props.navigator} />
+    <Header title={this.props.title} 
+            navigator={this.props.navigator} 
+            mode={this.props.mode} />
 
       <MatchList
         navigator={this.props.navigator}
-        matches={[0, 1]}
+        matches={this.props.matches}
       />
 
       <View style={styles.divider_line}>
@@ -54,9 +59,6 @@ var NewsFeedPage = React.createClass({
     );
   },
 
-  goBack: function() {
-    this.props.navigator.pop()
-  },
 })
 
 var styles = StyleSheet.create({
@@ -69,21 +71,6 @@ var styles = StyleSheet.create({
     opacity: 1.00,
     marginTop: 0,
   },
-  header_container: {
-    width: windowSize.width,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    backgroundColor: 'transparent',
-    height: 40,
-  },
-  section_container: {
-    width: windowSize.width,
-    backgroundColor: 'transparent',
-    opacity: 1.0,
-  },
-  listView: {
-    backgroundColor: 'transparent',
-  }
 })
 
-module.exports = NewsFeedPage;
+module.exports = MatchListingPage;
