@@ -4,7 +4,6 @@ var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var WideButton = require('../smallparts/widebutton');
-var Button = require('react-native-button')
 
 var _cvals = require('../styles/customvals');
 var _cstyles= require('../styles/customstyles');
@@ -22,6 +21,7 @@ var {
   TextInput,
   Image,
   Platform,
+  TouchableOpacity,
   AndroidDatePicker,
 } = React;
 
@@ -90,12 +90,15 @@ var LoginPage = React.createClass({
           onPress={this.onSignInPress}
           />
 
-        <Button
+        <TouchableOpacity
           style={styles.signup_button}
-          onPress={this.onSignUpPress}
-          >
-          {"New user? Sign Up!"}
-        </Button>
+          onPress={this.onSignUpPress} >
+          <Text style={{fontFamily: _cvals.mainfont,
+                        fontSize: 20 * _cvals.dscale,
+                        color: 'white',}}>
+            {"New user? Sign Up!"}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
     );
@@ -164,13 +167,14 @@ var styles = StyleSheet.create({
 
   },
   signup_button: {
-    fontSize: 20 * _cvals.dscale,
+
     opacity: 1,
     color: 'white',
     padding: 5 * _cvals.dscale,
     margin: 10 * _cvals.dscale,
-    fontFamily: _cvals.mainfont,
+
   },
+
   login_input: {
     height: 40 * _cvals.dscale,
     borderWidth: 0,
