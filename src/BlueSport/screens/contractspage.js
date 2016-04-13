@@ -115,7 +115,7 @@ var ContractsPage = React.createClass({
           </View>
 
           <PopoverSelector
-            title={'Sport'}
+            title={'Sport '}
             items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
             navigator={this.props.navigator}
             selection={this.state.selectedSport}
@@ -137,7 +137,7 @@ var ContractsPage = React.createClass({
           <View style={_cstyles.section_divider_line}>
           </View>
           <View>
-            <ScrollView style={{height: 250 * _cvals.dscale,
+            <ScrollView style={{height: 200 * _cvals.dscale,
                                 width: windowSize.with}}>
               {teamselectors}
             </ScrollView>

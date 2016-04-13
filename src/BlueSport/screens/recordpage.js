@@ -58,7 +58,7 @@ var RecordPage = React.createClass({
         selectedTeam1: [],
         selectedTeam2: [],
         contract: ['Default'],
-        scores: [],
+        scores: [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],],
         teams: [[],[],]
       },
     );
@@ -72,7 +72,7 @@ var RecordPage = React.createClass({
 
     return (
     <View style={styles.container}>
-      <View>
+      <View style={{height: 400 *_cvals.dscale}} >
         <Header title={"RECORD"}
                 navigator={this.props.navigator} />
 
@@ -90,7 +90,7 @@ var RecordPage = React.createClass({
             keyboardType='default'
             onChangeText={(location) => this.setState({location})}
           />
-          
+
           <PopoverSelector
             title={'Contract'}
             items={['Default']}
@@ -138,7 +138,7 @@ var RecordPage = React.createClass({
             title={'Scores'}
             value={''}/>
 
-          <ScrollView style={{height: 240 * _cvals.dscale}}>
+          <ScrollView style={{height: 150 * _cvals.dscale}}>
             <DynamicList
               items={this.state.scores}
               magic={'scores'}
