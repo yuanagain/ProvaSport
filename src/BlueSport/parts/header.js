@@ -80,8 +80,8 @@ var Header = React.createClass({
 
 var styles = StyleSheet.create({
   button: {
-    height: 40,
-    width: 40,
+    height: 40 * _cvals.dscale,
+    width: 40 * _cvals.dscale,
   },
   disabled: {
     opacity: 0.0

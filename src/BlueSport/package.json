@@ -9,8 +9,6 @@
     "firebase": "^2.4.2",
     "react": "^0.14.7",
     "react-native": "^0.22.2",
-    "react-native-button": "^1.4.2",
-    "react-native-dropdown": "0.0.6",
     "react-native-image-picker": "^0.18.5",
     "react-native-store": "^0.4.1",
     "react-native-tab-navigator": "^0.2.17",

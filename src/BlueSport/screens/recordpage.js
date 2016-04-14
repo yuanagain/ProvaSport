@@ -150,7 +150,7 @@ var RecordPage = React.createClass({
         <View style={_cstyles.buttons_container}>
           <WideButton
             text="Record"
-            onPress={this.props.loginFunction}
+            onPress={()=>this.submit()}
             />
         </View>
 
@@ -169,14 +169,16 @@ var RecordPage = React.createClass({
   setTeams: function(team, index) {
     this.state.teams[index] = team
     this.setState({teams: this.state.teams})
-    console.log(index)
-    console.log(this.state.teams)
   },
 
   setScores: function(scores) {
     this.setState({scores: scores})
-    console.log(scores)
   },
+
+  submit: function() {
+    console.log("SUBMITTING")
+  }
+
 
 });
 

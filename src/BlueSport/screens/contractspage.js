@@ -24,8 +24,6 @@ var TextField = require('../smallparts/textfield')
 
 import * as _ctools from '../libs/customtools.js'
 
-
-
 var {
   AppRegistry,
   StyleSheet,

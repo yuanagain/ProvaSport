@@ -63,7 +63,7 @@ var MatchPage = React.createClass({
                                 onPressLeft={()=>console.log("Left")} />
     } 
 
-    if (true) {
+    if (false) {
       // if this match can be edited by the player
       buttons = <WideButtonPair textRight={"Accept"}
                                 textLeft={"Decline"}
@@ -71,7 +71,7 @@ var MatchPage = React.createClass({
                                 onPressLeft={()=>console.log("Left")} />
     }
 
-    if (true) {
+    if (false) {
       // if this match can be edited by the player
       buttons = <WideButton text={"Record"}
                             onPress={()=>console.log("Log")} />
