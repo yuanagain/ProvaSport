@@ -308,21 +308,14 @@ var SignUpPage = React.createClass({
      */
     else {
       /* Valid Login? now authenticate?*/
+      var callback = this.props.navToHomeFunc;
       var email = this.state.email;
       var pass = this.state.password;
-      var promise = new Promise(function(resolve) {
 
-      var result = User.createUser(email, pass)
-          resolve(result)
-      });
-      promise.then(function(value){
-        if(value == -1){
-          console.log("incorrect user creation");
-        }
-        else {
-          console.log(value);
-
-        }
+      (User.createUser(email, pass)).then(function(value) {
+        console.log("USERID:   "+value);
+      }).then(callback).catch(function () {
+        console.log("Creation Failed");
       });
     }
   },

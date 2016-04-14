@@ -9,6 +9,8 @@ function fetchPlayer(playerid) {
     });
   });
 }
+
+
 function fetchUser(userid) {
   return new Promise(function (resolve) {
     ref.child('user').child(userid).on("value", function() {
@@ -16,6 +18,8 @@ function fetchUser(userid) {
     });
   });
 }
+
+
 function loadCore(userid) {
   var user;
   var player;
