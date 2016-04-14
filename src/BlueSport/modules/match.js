@@ -18,7 +18,7 @@ function _GetMatch(matchid, callback) {
 }
 
 
-function setMatch(matchid, obj, callback) {
+function _SetMatch(matchid, obj, callback) {
   var promise = new Promise(function(resolve, reject) {
       matchdb.child(matchid).set(obj, function(error) {
         if (error) {
@@ -111,4 +111,4 @@ var default_match =
   * })
   */
   //_CreateMatch(default_match, function(val) {console.log("new Match: " + val)})
-module.exports = {_GetMatch, default_match, setMatch};
+module.exports = {_GetMatch, default_match, setMatch, createMatch, _SetMatch, _CreateMatch};
