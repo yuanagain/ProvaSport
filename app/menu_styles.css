@@ -1,0 +1,51 @@
+/*
+Source: http://jsfiddle.net/dannymarkov/vfcfndxj/1/?utm_source=website&utm_medium=embed&utm_campaign=vfcfndxj/show
+Author: Dan Markov
+Date accessed: Sunday, April 10
+*/
+
+* {
+    padding:0;
+    margin:0;
+}
+
+html{
+    font:14px normal Arial, sans-serif;
+    color:#626771;
+    background-color:#fff;
+}
+
+body{
+    padding:60px;
+    text-align: center;
+}
+
+ul{
+    list-style:none;
+    display: inline-block;
+}
+
+/* Edit this for the menu items */
+ul li{
+    display: inline-block;
+    padding: 25px 20px;
+    margin-top: -15px;
+    cursor:pointer;
+    background-color:#4A90E2;
+    color:white;
+    transition:0.3s;
+}
+
+ul li:hover {
+  background-color:#F5A623;
+}
+
+ul li.focused{
+    color:#F5A623;
+    background-color:#41c7c2;
+}
+
+p{
+    padding-top:15px;
+    font-size:12px;
+}
