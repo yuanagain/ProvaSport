@@ -31,18 +31,15 @@ var {
   Modal,
 } = React;
 
-var dummyselections = [
-  {'name': '1', 'descr': 'Description 1'},
-  {'name': '2', 'descr': 'Description 2'},
-  {'name': '3', 'descr': 'Description 3'},
-  {'name': '4', 'descr': 'Description 4'},
-  {'name': '5', 'descr': 'Description 5'},
-  {'name': '6', 'descr': 'Description 6'},
-  {'name': '7', 'descr': 'Description 7'},
-  {'name': '8', 'descr': 'Description 8'},
-  {'name': '9', 'descr': 'Description 9'},
-]
-
+var blank_form = {   
+        isVisible: false,      
+        name: "",
+        location: "",
+        contract: ["Default"],
+        sport: [],
+        teams: [[],[],],
+        scores: [],
+      }
 
 var items = ["Item 1", "Item 2"];
 
@@ -51,18 +48,17 @@ var RecordPage = React.createClass({
   getInitialState: function() {
   
     return (
-      {
-        isVisible: false,
-        selectedSport: ["None Selected"],
-        selectedContract: ["None Selected"],
-        selectedTeam1: [],
-        selectedTeam2: [],
-        contract: ['Default'],
-        scores: [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],],
-        teams: [[],[],]
-      },
+      this.props.form
     );
   },
+
+  getDefaultProps: function() {
+    return ({
+      mode: '',
+      form: blank_form
+    })
+  },
+
   render: function() {
     var {
       name,
@@ -74,37 +70,41 @@ var RecordPage = React.createClass({
     <View style={styles.container}>
       <View style={{height: 400 *_cvals.dscale}} >
         <Header title={"RECORD"}
+                mode={this.props.mode}
                 navigator={this.props.navigator} />
 
         <View style={_cstyles.body_container}>
           <TextField
-            label="Match Name "
+            label="Match Name"
             placeholder="Optional"
             keyboardType='default'
-            onChangeText={(name) => this.setState({name})}
+            onChangeText={(name) => this.setName(name)}
           />
 
           <TextField
-            label="Location "
+            label="Location"
             placeholder="Optional"
             keyboardType='default'
-            onChangeText={(location) => this.setState({location})}
+            onChangeText={(location) => this.setLocation(location)}
           />
 
           <PopoverSelector
-            title={'Contract '}
+            title={'Contract'}
             items={['Default']}
             navigator={this.props.navigator}
             selection={this.state.contract}
+            mode={'single'}
+            harvest={this.setContract}
           />
           <View style={_cstyles.section_divider_line}>
           </View>
 
           <PopoverSelector
-            title={'Sport '}
+            title={'Sport'}
             items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
             navigator={this.props.navigator}
-            selection={['Tennis']}
+            selection={this.state.sport}
+            harvest={this.setSport}
             mode={'single'}
           />
           <View style={_cstyles.section_divider_line}>
@@ -158,7 +158,35 @@ var RecordPage = React.createClass({
     );
   },
 
-  renderRow(rowData) {
+
+  setName: function(name) {
+    if (true) {
+      this.setState({name})
+    }
+  },
+
+  setLocation: function(location) {
+    if (true) {
+      this.setState({location})
+    }
+  },
+
+  reset: function() {
+    this.setState({ selectedSport: ["Tennis"] })
+    this.setState({ teams: [[],[]] })
+    this.setState({ scores: [] })
+    this.setState({ contract: ['Default'] })
+
+        //     selectedSport: ["None Selected"],
+        // selectedContract: ["None Selected"],
+        // selectedTeam1: [],
+        // selectedTeam2: [],
+        // contract: ['Default'],
+        // scores: [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],],
+        // teams: [[],[],]
+  },
+
+  renderRow: function(rowData) {
     return (
       <ScoreRowRecord
         scores={rowData}

@@ -108,7 +108,7 @@ class BlueSport extends Component {
             >
             <Navigator
               ref='recordRef'
-              initialRoute={{name: 'RecordPage', component: RecordPage}}
+              initialRoute={{name: 'RecordPage', component: RecordPage,  }}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );
@@ -128,7 +128,7 @@ class BlueSport extends Component {
             >
             <Navigator
               ref='profRef'
-              initialRoute={{name: 'ProfilePage', component: ProfilePage}}
+              initialRoute={{name: 'ProfilePage', component: ProfilePage, passProps: {mode: 'root'} }}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );
