@@ -26,6 +26,17 @@ function _GetPlayer(playerid, callback) {
       console.log("Failed");
     });
 }
+
+/*possilby add stuff like isOnTeam etc.*/
+function GetPlayer(playerid) {
+  /* var match = new Match(matchid); */
+    return new Promise(function(resolve, reject) {
+        playerdataRef.child(playerid).on("value", function(snapshot) {
+          var player = snapshot.val();
+          resolve(player);
+        });
+     });
+}
   var default_player = {
     "name" : {
       "first": "Loading",

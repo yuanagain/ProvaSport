@@ -43,16 +43,15 @@ function authHandler() {
 }
 
 /* register new user */
-function create() {
+function create(authData, object) {
   /*Actual login*/
   var isNewUser = true;
   ref.onAuth(function(authData) {
     if (authData && isNewUser) {
       // save the user's profile into the database so we can list users,
       // use them in Security and Firebase Rules, and show profiles
-      ref.child("users").child(authData.uid).set({
-        provider: authData.provider,
-        name: authData.password.email
+      ref.child("user").child(authData.uid).set({
+        object
       });
     }
   });
@@ -177,17 +176,19 @@ function changeEmail(oldEmail, NewEmail, password, callback) {
 
 /* Create New User with Login */
 function createUser(email, password) {
-    ref.createUser({
-      email    : email,
-      password : password
-    }, function(error, userData) {
-      if (error) {
-        console.log("Error creating user:", error);
-        return -1;
-      } else {
-        console.log("Successfully created user account with uid:", userData.uid);
-        return userData.uid;
-      }
+    return new Promise(function(resolve, reject) {
+      ref.createUser({
+        email    : email,
+        password : password
+      }, function(error, userData) {
+        if (error) {
+          console.log("Error creating user:", error);
+          resolve(-1);
+        } else {
+          console.log("Successfully created user account with uid:", userData.uid);
+          resolve(userData.uid);
+        }
+      });
     });
 }
 /*
@@ -206,48 +207,33 @@ function setAllUserData(uid, obj, callback) {
 }*/
 /* Login existing user */
 function login(email, password) {
-  ref.authWithPassword({
-    email    : email,
-    password : password
-  }, function(error, authData) {
-    if (error) {
-     switch (error.code) {
-       case "INVALID_EMAIL":
-         console.log("The specified user account email is invalid.");
-         break;
-       case "INVALID_PASSWORD":
-         console.log("The specified user account password is incorrect.");
-         break;
-       case "INVALID_USER":
-         console.log("The specified user account does not exist.");
-         break;
-       default:
-         console.log("Error logging user in:", error);
-     }
-      return null;
-   } else {
-      console.log("Authenticated successfully with payload:", authData);
-      return authData;
-    }
-  });
-}
-
-/* Create New User with Login */
-function createUser(email, password) {
-    ref.createUser({
+  return new Promise(function(resolve, reject) {
+    ref.authWithPassword({
       email    : email,
       password : password
-    }, function(error, userData) {
+    }, function(error, authData) {
       if (error) {
-        console.log("Error creating user:", error);
-        return -1;
-      } else {
-        console.log("Successfully created user account with uid:", userData.uid);
-        return userData.uid;
+       switch (error.code) {
+         case "INVALID_EMAIL":
+           console.log("The specified user account email is invalid.");
+           break;
+         case "INVALID_PASSWORD":
+           console.log("The specified user account password is incorrect.");
+           break;
+         case "INVALID_USER":
+           console.log("The specified user account does not exist.");
+           break;
+         default:
+           console.log("Error logging user in:", error);
+       }
+        reject();
+     } else {
+        console.log("Authenticated successfully with payload:", authData);
+        resolve(authData);
       }
-    });
+    })
+  });
 }
-
 
 
 /* Forgotten password and in-app reset */
@@ -315,10 +301,20 @@ function saveUser(authData) {
     }
   });
 }
+function GetUser(uid){
+/* would we ever get a User?*/
+  return new Promise(function(resolve, reject) {
+      ref.child('user').child(uid).on("value", function(snapshot) {
+        var user = snapshot.val();
+        console.log(user);
+        resolve(user);
+      });
+   });
+}
 function _GetUser(uid, callback){
 /* would we ever get a User?*/
   var promise = new Promise(function(resolve, reject) {
-      ref.child(uid).on("value", function(snapshot) {
+      ref.child('user').child(uid).on("value", function(snapshot) {
         var user = snapshot.val();
         resolve(user);
       });
@@ -328,6 +324,18 @@ function _GetUser(uid, callback){
   }).catch(function(){
     console.log("Failed");
   });
+}
+function setUser(uid, obj) {
+  return new Promise(function(resolve, reject){
+    if (obj){
+      ref.child('user').child(uid).set(obj)
+      console.log("created object USER")
+    }
+    else {
+      ref.child('user').child(uid).set(default_user)
+      consle.log("created Default User")
+    }
+  })
 }
 
 var default_user = {
@@ -340,6 +348,9 @@ var default_user = {
   "birthday": 0,
   "sports": [-1]
 };
+//createUser("dummy@dummy.com", "test123").then(function(value){console.log(value)})
+//setUser(35, default_user)
 
+//GetUser(35)
 
-module.exports = {_GetUser, default_user, createUser, login, logout};
+module.exports = {_GetUser, GetUser, default_user, createUser, login, logout,setUser};

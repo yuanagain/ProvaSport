@@ -170,6 +170,7 @@ var RecordPage = React.createClass({
       this.setState({location})
     }
   },
+  
 
   reset: function() {
     this.setState({ selectedSport: ["Tennis"] })

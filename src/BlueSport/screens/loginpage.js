@@ -10,7 +10,8 @@ var _cstyles= require('../styles/customstyles');
 
 var SignUpPage = require('./signup')
 import * as User from '../modules/userdata'
-//import Store from 'react-native-store';
+import * as Player from '../modules/player'
+import Store from 'react-native-store';
 //import * as coreData from '../modules/coreData'
 
 var {
@@ -126,18 +127,32 @@ var LoginPage = React.createClass({
        *   "player": Player.default_player
        * };
        */
-      var promise = new Promise(function(resolve) {
-        resolve(User.login(email, pass))
+       var uid = 0;
+       const DB = {
+         'user': Store.model("user"),
+         'player': Store.model("player")
+       }
+        User.login(email, pass).then(function(value){
+          console.log("USERID:  "+value.uid);
+          /*REDO with multiple functions and callbacks not promises
+           * User.GetUser(uid).then(function(value){
+           *   DB.user.add(value).then(function(){
+           *     console.log("Stored User "+value);
+           *
+           *       Player._GetPlayer(value.playerid).then(function (val) {
+           *         DB.player.add(val).then(function() {
+           *           console.log("Stored Player");
+           *         });
+           *       });
+           *
+           *   });
+           * });
+           */
+        }).then(callback).catch(function() {
+          console.log("INVALID LOGIN");
+        });
+
         // watch this it might jump the gun
-      });
-      promise.then(function (value) {
-      /*
-       *   coreData = loadCore(value.uid);
-       *   Store.add(coreData);
-       * }).then(function () {
-       */
-        callback()
-      });
   },
 });
 

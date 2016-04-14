@@ -16,7 +16,9 @@ function _GetMatch(matchid, callback) {
       console.log("Failed");
     });
 }
-function setMatch(matchid, obj, callback) {
+
+
+function _SetMatch(matchid, obj, callback) {
   var promise = new Promise(function(resolve, reject) {
       matchdb.child(matchid).set(obj, function(error) {
         if (error) {
@@ -35,6 +37,53 @@ function setMatch(matchid, obj, callback) {
   });
 }
 
+function setMatch(matchid, obj) {
+  return new Promise(function(resolve, reject) {
+      matchdb.child(matchid).set(obj, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          reject();
+        } else {
+          console.log("Data saved successfully.");
+          resolve(obj);
+        }
+      });
+    });
+}
+function createMatch(obj) {
+  return new Promise(function(resolve, reject) {
+      var newRef = matchdb.push();
+      newRef.set(obj, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          reject();
+        } else {
+          console.log("Data CREATED successfully "+ newRef.key());
+          resolve(newRef.key());
+        }
+      });
+    });
+}
+function _CreateMatch(obj, callback) {
+  var promise = new Promise(function(resolve, reject) {
+      var newRef = matchdb.push();
+      newRef.set(obj, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          reject();
+        } else {
+          console.log("Data CREATED successfully "+ newRef.key());
+          resolve(newRef.key());
+        }
+      });
+    })
+    promise.then(function (value) {
+      callback(value)
+    }).catch(function() {
+      console.log("Something went wrong in _CreateMatch")
+    });
+}
+
 var default_match =
   {
         "datetime": 0,
@@ -50,10 +99,16 @@ var default_match =
         },
         "location": "LOADING"
   };
-
-/* 
+//console.log(createMatch(default_match));
+/*
  * setMatch(35, default_match, function(){
  *   console.log(" ");
  * })
  */
-module.exports = {_GetMatch, default_match, setMatch};
+ /*
+  * createMatch(default_match).then(function (value) {
+  *   console.log(value);
+  * })
+  */
+  //_CreateMatch(default_match, function(val) {console.log("new Match: " + val)})
+module.exports = {_GetMatch, default_match, setMatch, createMatch, _SetMatch, _CreateMatch};
