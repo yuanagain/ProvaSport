@@ -47,7 +47,7 @@ var styles = StyleSheet.create({
     height: windowSize.height
   },
   input: {
-    height: 40 * _cvals.dscale,
+    height: 50 * _cvals.dscale,
     fontSize: _cvals.standard_text,
     padding: (Platform.OS === 'ios') ? 10 * _cvals.dscale : 0
   },
