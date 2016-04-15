@@ -3,6 +3,8 @@
 
   Actual Login may require Firebase Token Handler
  */
+import Store from 'react-native-store';
+
 
 var ref= require("firebase");
 ref = new Firebase("https://shining-torch-4767.firebaseio.com");
@@ -395,5 +397,13 @@ var default_user = {
 //setUser(35, default_user)
 
 //GetUser(35)
+/* 
+ * const DB = {
+ *   'user': Store.model('user'),
+ *   'player': Store.model('player')
+ * }
+ * DB.player.destroy();
+ * DB.user.destroy();
+ */
 
 module.exports = {_GetUser, GetUser, default_user, createUser, login, _Login, logout, setUser};
