@@ -150,8 +150,12 @@ var PopoverSelector = React.createClass({
     }
   },
 
-  // to force view re-render
-  update: function() {
+  componentWillReceiveProps: function(nextProps) {
+    console.log(nextProps.selection)
+    console.log(nextProps.items)
+    // this.setState({selection: _ctools.selectionNeedles(this.props.items, nextProps.selection)})
+    console.log("=======")
+    console.log(_ctools.selectionNeedles(nextProps.items, nextProps.selection))
   },
 
   enterSelector: function() {
@@ -179,14 +183,16 @@ var PopoverSelector = React.createClass({
   harvest: function(selection) {
     this.setState({selection: selection})
     var iselect = _ctools.traceIndices(this.props.items,
-                                            this.state.selection)
+                                       this.state.selection)
     if (this.props.harvestArgs == undefined) {
       this.props.harvest(iselect)
     }
     else {
+
       this.props.harvest(iselect, this.props.harvestArgs)
     }
     this.props.navigator.pop()
+
   },
 
   defaultRenderSelector: function() {

@@ -23,6 +23,7 @@ var TextField = React.createClass({
         <View style={styles.input_row}>
           <Text style={_cstyles.section_header_text}>{this.props.label}</Text>
             <TextInput
+              value={this.props.value}
               style={[styles.input, _cstyles.standard_text]}
               placeholder={this.props.placeholder}
               underlineColorAndroid='rgba(0,0,0,0)' 

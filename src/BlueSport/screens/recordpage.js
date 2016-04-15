@@ -17,6 +17,8 @@ import * as _ctools from '../libs/customtools.js'
 var SimpleRow = require('../smallparts/simplerow')
 var TextField = require('../smallparts/textfield')
 
+import * as Match from '../modules/match'
+
 var {
   AppRegistry,
   StyleSheet,
@@ -75,6 +77,7 @@ var RecordPage = React.createClass({
 
         <View style={_cstyles.body_container}>
           <TextField
+            value={this.state.name}
             label="Match Name"
             placeholder="Optional"
             keyboardType='default'
@@ -82,6 +85,7 @@ var RecordPage = React.createClass({
           />
 
           <TextField
+            value={this.state.location}
             label="Location"
             placeholder="Optional"
             keyboardType='default'
@@ -170,21 +174,22 @@ var RecordPage = React.createClass({
       this.setState({location})
     }
   },
-  
 
-  reset: function() {
-    this.setState({ selectedSport: ["Tennis"] })
-    this.setState({ teams: [[],[]] })
-    this.setState({ scores: [] })
-    this.setState({ contract: ['Default'] })
 
-        //     selectedSport: ["None Selected"],
-        // selectedContract: ["None Selected"],
-        // selectedTeam1: [],
-        // selectedTeam2: [],
-        // contract: ['Default'],
-        // scores: [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],],
-        // teams: [[],[],]
+  reset: function() {  // TODO need to get this to reset popover selectors
+    // console.log(this.state.teams)
+    this.setState({name: ""})
+    this.setState({location: ""})
+    this.setState({scores: []})
+    // this.setState(blank_form)
+    // this.setState({contract: ["Default"]})
+    // this.setState({sport: []})
+    // this.setState({teams: [[],[],]})
+    // console.log(this.state.teams)
+  },
+
+  submit: function() {
+    this.reset()
   },
 
   renderRow: function(rowData) {
@@ -204,10 +209,9 @@ var RecordPage = React.createClass({
     this.setState({scores: scores})
   },
 
-  submit: function() {
-    console.log("SUBMITTING")
-  }
-
+  setSport: function(sport) {
+    this.setState({sport: sport})
+  },
 
 });
 
