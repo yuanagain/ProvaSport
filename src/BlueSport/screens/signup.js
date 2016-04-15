@@ -41,6 +41,7 @@ var SignUpPage = React.createClass({
 
   getInitialState() {
     return {
+      user: User.default_user,
       name: '',
       gender: null,
       birthDate: new Date(),
