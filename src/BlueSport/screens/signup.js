@@ -163,18 +163,6 @@ var SignUpPage = React.createClass({
             />
             <View style={_cstyles.divider_line}/>
 
-            <View style={styles.input_row}>
-            <PopoverSelector
-                title={'Gender'}
-                items={['Male', 'Female']}
-                maxSelect={1}
-                navigator={this.props.navigator}
-                harvestSelection={(gender) => this.setState({gender})}
-              />
-            </View>
-            <View style={_cstyles.divider_line}/>
-
-
             <View style={[styles.input_row, styles.selector]}>
               <PopoverSelector
                 title={'Country'}
