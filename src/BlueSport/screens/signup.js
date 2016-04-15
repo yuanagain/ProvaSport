@@ -35,7 +35,8 @@ var SignUpPage = React.createClass({
     return {
       name: '',
       gender: null,
-      date: new Date(),
+      birthDate: new Date(),
+      age: '',
       email: '',
       username: '',
       password: '',
@@ -161,6 +162,15 @@ var SignUpPage = React.createClass({
               keyboardType='default'
               onChangeText={(name) => this.setState({name})}
             />
+
+            <TextField
+              label="Age "
+              placeholder="Age"
+              secureTextEntry={false}
+              keyboardType='numeric'
+              onChangeText={(name) => this.setState({name})}
+            />
+
             <View style={_cstyles.divider_line}/>
 
             <View style={[styles.input_row, styles.selector]}>
