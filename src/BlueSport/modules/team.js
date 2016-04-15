@@ -27,7 +27,7 @@ var default_team = {
 
 function _SetTeam(obj, teamid, callback) {
   var promise = new Promise(function(resolve, reject) {
-      teamdb.child(teamid).(obj, function(error) {
+      teamdb.child(teamid).set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
           reject();
