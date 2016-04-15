@@ -36,6 +36,7 @@ function _SetMatch(matchid, obj, callback) {
     console.log("Failed");
   });
 }
+
 function setMatch(matchid, obj) {
   return new Promise(function(resolve, reject) {
       matchdb.child(matchid).set(obj, function(error) {
@@ -82,7 +83,6 @@ function _CreateMatch(obj, callback) {
       console.log("Something went wrong in _CreateMatch")
     });
 }
-
 
 var default_match =
   {
