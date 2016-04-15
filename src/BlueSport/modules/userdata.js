@@ -7,9 +7,6 @@
 var ref= require("firebase");
 ref = new Firebase("https://shining-torch-4767.firebaseio.com");
 
-
-ref.onAuth(authDataCallback);
-
     /* LOGIN TODO
     On Shutdown: ref.unauth(); to deauthorize.
     */
@@ -133,7 +130,7 @@ function scheduleMatch(matchid, timeObj) {
 /* join tournament // returns tournament object if successful, -1 otherwise */
 function joinTournament(tournamentid) {
   //set both player object AND tournamnet object
-  ref.push(tournamentid);
+  ref.child('player').child(playerid).child("tournaments").push(tournamentid);
 }
 /* create tournament // returns tournament object if successful, -1 otherwise */
 function createTournament() {
@@ -232,6 +229,39 @@ function login(email, password) {
         resolve(authData);
       }
     })
+  });
+}
+/* Login existing user */
+function _Login(email, password, callback) {
+  var promise = new Promise(function(resolve, reject) {
+    ref.authWithPassword({
+      email    : email,
+      password : password
+    }, function(error, authData) {
+      if (error) {
+       switch (error.code) {
+         case "INVALID_EMAIL":
+           console.log("The specified user account email is invalid.");
+           break;
+         case "INVALID_PASSWORD":
+           console.log("The specified user account password is incorrect.");
+           break;
+         case "INVALID_USER":
+           console.log("The specified user account does not exist.");
+           break;
+         default:
+           console.log("Error logging user in:", error);
+       }
+        reject();
+     } else {
+        resolve(authData);
+      }
+    })
+  });
+  promise.then(function(value) {
+    callback(value);
+  }).catch(function() {
+    console.log("ERROR logging in");
   });
 }
 
@@ -337,6 +367,19 @@ function setUser(uid, obj) {
     }
   })
 }
+//sets the user to the specificed object
+function _SetUser(uid, obj) {
+  return new Promise(function(resolve, reject){
+    if (obj){
+      ref.child('user').child(uid).set(obj)
+      console.log("created object USER")
+    }
+    else {
+      ref.child('user').child(uid).set(default_user)
+      consle.log("created Default User")
+    }
+  })
+}
 
 var default_user = {
   "name": "Loading",
@@ -353,4 +396,4 @@ var default_user = {
 
 //GetUser(35)
 
-module.exports = {_GetUser, GetUser, default_user, createUser, login, logout,setUser};
+module.exports = {_GetUser, GetUser, default_user, createUser, login, _Login, logout, setUser};

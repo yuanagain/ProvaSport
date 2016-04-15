@@ -12,7 +12,13 @@ var SignUpPage = require('./signup')
 import * as User from '../modules/userdata'
 import * as Player from '../modules/player'
 import Store from 'react-native-store';
-//import * as coreData from '../modules/coreData'
+
+
+//database name and constant for storing data
+const DB = {
+  'user': Store.model("user"),
+  'player': Store.model("player")
+}
 
 var {
   AppRegistry,
@@ -118,7 +124,6 @@ var LoginPage = React.createClass({
   },
   onSignInPress: function(name) {
       /* Valid Login? now authenticate?*/
-      var callback = this.props.navToHomeFunc;
       var email = this.state.username;
       var pass = this.state.password;
       /*
@@ -128,32 +133,28 @@ var LoginPage = React.createClass({
        * };
        */
        var uid = 0;
-       const DB = {
-         'user': Store.model("user"),
-         'player': Store.model("player")
-       }
-        User.login(email, pass).then(function(value){
-          console.log("USERID:  "+value.uid);
-          /*REDO with multiple functions and callbacks not promises
-           * User.GetUser(uid).then(function(value){
-           *   DB.user.add(value).then(function(){
-           *     console.log("Stored User "+value);
-           *
-           *       Player._GetPlayer(value.playerid).then(function (val) {
-           *         DB.player.add(val).then(function() {
-           *           console.log("Stored Player");
-           *         });
-           *       });
-           *
-           *   });
-           * });
-           */
-        }).then(callback).catch(function() {
-          console.log("INVALID LOGIN");
-        });
-
+       DB.user.find().then(resp => console.log(resp))
+       DB.player.find().then(resp => console.log(resp))
+       User._Login(email, pass, this.grabUser);
         // watch this it might jump the gun
   },
+  grabUser: function(authdata) {
+    var uid = authdata.uid;
+    /*TODO change back to uid*/
+    User._GetUser(35, this.handleUser);
+
+  },
+  handleUser: function(user){
+    //this might throw an exception when inccorrect email
+    var callback = this.handlePlayer;
+    var playerid = user.playerid;
+    DB.user.add(user).then(function(){
+      Player._GetPlayer(playerid, callback)
+    });
+  },
+  handlePlayer: function(player){
+    DB.user.add(player).then(this.props.navToHomeFunc);
+  }
 });
 
 

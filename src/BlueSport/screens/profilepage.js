@@ -13,6 +13,14 @@ var SimpleRow = require('../smallparts/simplerow')
 var MatchList = require('../bigparts/matchlist')
 
 import * as Player from '../modules/player'
+import Store from 'react-native-store';
+
+
+//database name and constant for storing data
+const DB = {
+  'user': Store.model("user"),
+  'player': Store.model("player")
+}
 
 var {
   AppRegistry,
@@ -111,13 +119,13 @@ var ProfilePage = React.createClass({
           onPress={this.toTeamListing} />
         <View style={_cstyles.section_divider_line}></View>
 
-        <SimpleRow title={"Career Matches"} 
-                   value={this.state.player.matches.length} 
+        <SimpleRow title={"Career Matches"}
+                   value={this.state.player.matches.length}
                    onPress={()=>this.toMatchListing()}/>
         <View style={_cstyles.section_divider_line}></View>
 
-        <SimpleRow title={"Recent Matches"} 
-                   value={this.state.player.matches.length} 
+        <SimpleRow title={"Recent Matches"}
+                   value={this.state.player.matches.length}
                    />
 
           <View style={styles.matches}>
