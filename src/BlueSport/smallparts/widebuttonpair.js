@@ -73,31 +73,27 @@ var styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   buttonLeft: {
-      backgroundColor: 'grey',
-      width: windowSize.width / 2,
-      shadowRadius: 4 * _cvals.dscale,
-      shadowColor: 'black',
-      shadowOpacity: 0.2,
-      shadowOffset: {width: 0, height: -1},
-      padding: 5 * _cvals.dscale,
-      alignItems: 'center',
-
-      justifyContent: 'center'
-    },
-
+    backgroundColor: 'grey',
+    width: windowSize.width / 2,
+    shadowRadius: 4 * _cvals.dscale,
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: -1},
+    padding: 5 * _cvals.dscale,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   buttonRight: {
-      backgroundColor: _cvals.skorange,
-      width: windowSize.width / 2,
-      shadowRadius: 4 * _cvals.dscale,
-      shadowColor: 'black',
-      shadowOpacity: 0.2,
-      shadowOffset: {width: 0, height: -1},
-      padding: 5 * _cvals.dscale,
-      alignItems: 'center',
-
-      justifyContent: 'center'
-    },
-
+    backgroundColor: _cvals.skorange,
+    width: windowSize.width / 2,
+    shadowRadius: 4 * _cvals.dscale,
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: -1},
+    padding: 5 * _cvals.dscale,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   buttonText: {
     color: 'white',
     textAlign: 'center',
@@ -105,7 +101,6 @@ var styles = StyleSheet.create({
     fontFamily: 'avenir',
     fontWeight: 'bold',
   },
-
 })
 
 module.exports = WideButtonPair;

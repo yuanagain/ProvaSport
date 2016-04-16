@@ -88,13 +88,6 @@ var styles = StyleSheet.create({
     width: rowWidth,
     height: rowHeight,
   },
-  input: {
-
-    height: rowHeight * 0.8,
-    width: 40 * _cvals.dscale,
-    borderColor: 'gray',
-    borderWidth: 0.5
-  },
   left: {
     justifyContent: 'center'
   },

@@ -69,21 +69,6 @@ var styles = StyleSheet.create({
     opacity: 1.00,
     marginTop: 0,
   },
-  header_container: {
-    width: windowSize.width,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    backgroundColor: 'transparent',
-    height: 40,
-  },
-  section_container: {
-    width: windowSize.width,
-    backgroundColor: 'transparent',
-    opacity: 1.0,
-  },
-  listView: {
-    backgroundColor: 'transparent',
-  }
 })
 
 module.exports = NewsFeedPage;

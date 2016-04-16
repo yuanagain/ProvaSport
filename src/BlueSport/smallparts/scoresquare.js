@@ -103,19 +103,6 @@ var styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
   },
-  im: {
-    height: _cvals.thumbslength,
-    width: _cvals.thumbslength,
-    borderRadius: _cvals.thumbslength / 2,
-    marginRight: 4 * _cvals.dscale,
-  },
-  left:{
-    alignSelf: 'center',
-    justifyContent: 'space-between',
-  },
-  right: {
-
-  },
   icon: {
     height: _cvals.slength,
     width: _cvals.slength,
@@ -123,25 +110,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  border: {
-    borderWidth: 1,
-    borderColor: 'black',
-  },
-  matchrow: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    alignSelf: 'flex-end',
-    margin: 1
-  },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  compress: {
-    marginTop: _cvals.dscale * -4
-  }
 });
 
 module.exports = ScoreSquare;

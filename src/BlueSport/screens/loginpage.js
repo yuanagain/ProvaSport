@@ -183,14 +183,11 @@ var styles = StyleSheet.create({
 
   },
   signup_button: {
-
     opacity: 1,
     color: 'white',
     padding: 5 * _cvals.dscale,
     margin: 10 * _cvals.dscale,
-
   },
-
   login_input: {
     height: 40 * _cvals.dscale,
     borderWidth: 0,

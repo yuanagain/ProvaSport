@@ -85,27 +85,7 @@ var TeamBlock = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  values: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignSelf: 'flex-end',
-    width: windowSize.width / 2 - _cvals.stdmargin
-  },
 
-  title: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignSelf: 'flex-start',
-    width: windowSize.width / 2
-  },
-
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    flex: 0,
-    paddingRight: _cvals.stdmargin,
-    width: windowSize.width
-  },
 })
 
 module.exports = TeamBlock;

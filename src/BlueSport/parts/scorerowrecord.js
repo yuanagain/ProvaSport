@@ -1,8 +1,8 @@
 'use strict';
-
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
+var _cvals = require('../styles/customvals')
 
 var {
   AppRegistry,
@@ -12,16 +12,7 @@ var {
   TextInput,
 } = React;
 
-var _cvals = require('../styles/customvals')
-
-var mainfont = 'avenir'
 var rowheight = 100
-
-// SHARED FORMATTING.
-// TODO: make univeral
-var lightgreen = "#7ED321"
-var mainfont = 'avenir'
-var skblue = '#4A90E2'
 
 var ScoreRowRecord = React.createClass({
   getInitialState: function() {
@@ -89,7 +80,7 @@ var styles = StyleSheet.create({
     color: _cvals.skblue,
     fontWeight: 'bold',
     fontSize: 24,
-    fontFamily: mainfont,
+    fontFamily: _cvals.mainfont,
   },
   content_container: {
     flexDirection: 'row',

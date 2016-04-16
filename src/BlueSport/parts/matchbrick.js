@@ -96,46 +96,6 @@ var styles = StyleSheet.create({
     marginBottom: -20 * _cvals.dscale,
     paddingLeft: 5 * _cvals.dscale
   },
-  matchbrick: {
-    height: _cvals.brickheight,
-    width: _cvals.bricklength,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-    paddingLeft: 4,
-  },
-  im: {
-    height: _cvals.thumbslength,
-    width: _cvals.thumbslength,
-    borderRadius: _cvals.thumbslength / 2,
-    marginRight: 4 * _cvals.dscale,
-  },
-  left:{
-    alignSelf: 'center',
-    justifyContent: 'space-between',
-  },
-  right: {
-
-  },
-  border: {
-    borderWidth: 1,
-    borderColor: 'black',
-  },
-  matchrow: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    alignSelf: 'flex-end',
-    margin: 1
-  },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  compress: {
-    marginTop: _cvals.dscale * -4
-  }
 });
 
 module.exports = MatchBrick;

@@ -221,47 +221,13 @@ function harvest_default(selection) {
 }
 
 var styles = StyleSheet.create({
-  selected_style: {
-    // opacity: 0.5,
-    backgroundColor: _cvals.skbluelight
-  },
+  
   defaultRenderSelector: {
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  container: {
-    flexDirection: 'column',
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    backgroundColor: 'transparent',
-    margin: 0,
-  },
-  body_container: {
-    flexDirection: 'column',
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    backgroundColor: 'transparent',
-    marginTop: 0,
-  },
-  section_container: {
-    width: windowSize.width,
-    backgroundColor: 'transparent'
-  },
-  listView: {
-    backgroundColor: 'transparent',
-  },
-  buttons_container: {
-      //height: windowSize.height * 1 / 10,
-      width: windowSize.width,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 0,
-      backgroundColor: 'transparent',
-    },
 })
 
 var default_styles = StyleSheet.create({

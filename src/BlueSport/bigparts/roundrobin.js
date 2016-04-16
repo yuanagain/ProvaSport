@@ -153,16 +153,7 @@ var RoundRobin = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  scroll: {
 
-  },
-  playersquare: {
-    height: _cvals.slength,
-    width: _cvals.slength,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-  },
   container: {
     flexDirection: 'column',
     flex: 1,
@@ -204,10 +195,6 @@ var styles = StyleSheet.create({
     alignSelf: 'flex-end',
     margin: 1
   },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
 })
 
 module.exports = RoundRobin;

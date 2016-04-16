@@ -86,16 +86,6 @@ var styles = StyleSheet.create({
     // TODO BOUND HEIGHT HERE
     flex: 1
   },
-  content: {
-    flex: 1,
-    width: windowSize.width,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-
-  },
-  section: {
-
-  },
 })
 
 module.exports = TeamListingPage;

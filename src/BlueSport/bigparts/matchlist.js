@@ -65,20 +65,6 @@ var MatchList = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    backgroundColor: 'transparent',
-    opacity: 1.00,
-    marginTop: 0,
-  },
-  section_container: {
-    width: windowSize.width,
-    backgroundColor: 'transparent',
-    opacity: 1.0,
-  },
   listView: {
     backgroundColor: 'transparent',
   }

@@ -175,11 +175,6 @@ var styles = StyleSheet.create({
     alignItems: 'flex-start',
 
   },
-  button_container: {
-    backgroundColor: 'grey',
-    height: 40,
-
-  },
 })
 
 module.exports = MatchPage;
