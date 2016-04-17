@@ -36,6 +36,7 @@ var {
   ListView,
   ScrollView,
   Modal,
+  Platform,
 } = React;
 
 
@@ -135,8 +136,7 @@ var ContractsPage = React.createClass({
           <View style={_cstyles.section_divider_line}>
           </View>
           <View>
-            <ScrollView style={{height: 200 * _cvals.dscale,
-                                width: windowSize.with}}>
+            <ScrollView style={styles.team_scroll}>
               {teamselectors}
             </ScrollView>
           </View>
@@ -298,6 +298,10 @@ var styles = StyleSheet.create({
     backgroundColor: 'transparent',
     opacity: 1.00,
   },
+  team_scroll: {
+    height: (Platform === 'ios') ? 200 * _cvals.dscale : windowSize.height / 4.4, 
+    width: windowSize.width,
+  }
 })
 
 module.exports = ContractsPage;
