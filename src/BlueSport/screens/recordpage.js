@@ -28,7 +28,7 @@ var {
   TouchableOpacity,
   TouchableHighlight,
   ListView,
-  Modal,
+  Platform,
 } = React;
 
 var blank_form = {   
@@ -138,7 +138,7 @@ var RecordPage = React.createClass({
             title={'Scores '}
             value={''}/>
 
-          <ScrollView style={{height: 130 * _cvals.dscale}}>
+          <ScrollView style={{height: 75 * _cvals.dscale}}>
             <DynamicList
               items={this.state.scores}
               magic={'scores'}
@@ -221,6 +221,9 @@ var styles = StyleSheet.create({
     backgroundColor: 'transparent',
     opacity: 1.00,
   },
+  scores_scroll: {
+    height: (Platform === 'ios') ? 130 * _cvals.dscale : 75 * _cvals.dscale,
+  }
 })
 
 module.exports = RecordPage;
