@@ -6,7 +6,9 @@ var InfiniteGrid = require('react-infinite-grid');
 var Newsfeed = React.createClass({
   getInitialState: function() {
     return {
-      focused: 0
+      focused: 0,
+      width: window.innerWidth,
+      height: window.innerHeight,
     };
   },
   clicked: function(index) {
@@ -14,15 +16,27 @@ var Newsfeed = React.createClass({
       focused: index
     });
   },
+  updateDimensions: function() {
+    this.setState({width: $(window).width(), height: $(window).height()});
+  },
+  componentWillMount: function() {
+    this.updateDimensions();
+  },
+  componentDidMount: function() {
+    window.addEventListener("resize", this.updateDimensions);
+  },
+  componentWillUnmount: function() {
+    window.removeEventListener("resize", this.updateDimensions);
+  },
   render: function() {
     var self = this;
     return (
-      <div id="newsfeed_container" style={newsfeed}>
-        <div id="leftColumn" style={leftColumn}>
+      <div id="newsfeed_container" style={Object.assign({width: this.state.width, height: this.state.height}, newsfeed)}>
+        <div id="leftColumn" style={Object.assign({width: this.state.width, height: this.state.height}, leftColumn)}>
           <div id="entry" style={entry}>
           </div>
         </div>
-        <div id="rightColumn" style={rightColumn}>
+        <div id="rightColumn" style={Object.assign({width: this.state.width, height: this.state.height}, rightColumn)}>
         </div>
       </div>
     );
@@ -30,10 +44,7 @@ var Newsfeed = React.createClass({
 });
 
 // Styling
-var width = window.innerWidth;
 var newsfeed = {
-  width: width,
-  height: window.innerHeight,
   backgroundColor: 'red',
   margin: 'auto',
   padding: 10,
@@ -42,14 +53,12 @@ var newsfeed = {
   marginTop: 0,
 };
 var leftColumn = {
-  height: window.innerHeight,
   width: 600,
   backgroundColor: 'blue',
   float: 'left',
   flex: 1,
 };
 var rightColumn = {
-  height: window.innerHeight,
   backgroundColor: 'green',
   flex: 1,
 };
