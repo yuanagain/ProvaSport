@@ -18,6 +18,7 @@ var {
   Image,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } = React;
 
 var slength = _cvals.slength
@@ -137,18 +138,36 @@ var RoundRobin = React.createClass({
     var renderRow = (matchrow) => <RRMatchRow navigator={this.props.navigator}
                                               matchrow={matchrow}
                                               key={_ctools.randomKey()} />;
-
-    return (
-      <View>
-        <ScrollView style={[styles.scroll,
-                            {width: windowSize.width },
-                            this.props.style]}
-                    contentContainerStyle={[styles.container,
-                                            {width: width, height: height}]}>
-            {this.state.matches.map(renderRow)}
-        </ScrollView>
-      </View>
-    );
+    if (Platform.OS === 'ios') {
+        return (
+          <View>
+            <ScrollView style={[styles.scroll,
+                                {width: windowSize.width },
+                                this.props.style]}
+                        contentContainerStyle={[styles.container,
+                                                {width: width, height: height}]}
+                        >
+                {this.state.matches.map(renderRow)}
+            </ScrollView>
+          </View>
+        );
+    }
+    else {
+        return (
+          <View>
+            <ScrollView>
+              <ScrollView style={[styles.scroll,
+                                  {width: windowSize.width },
+                                  this.props.style]}
+                          contentContainerStyle={[styles.container,
+                                                  {width: width, height: height}]}
+                          horizontal={true}>
+                  {this.state.matches.map(renderRow)}
+              </ScrollView>
+            </ScrollView>
+          </View>
+        );
+    }
   },
 });
 

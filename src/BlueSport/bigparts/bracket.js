@@ -20,6 +20,7 @@ var {
   Image,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } = React;
 
 var defaultHeight = _cvals.slength / 2 * _cvals.dscale + 1
@@ -222,21 +223,42 @@ var Bracket = React.createClass({
                         key={i} />);
     }
 
-    return (
-
-        <ScrollView showsHorizontalScrollIndicator={true}
-                    showsVerticalScrollIndicator={true}
-                    style={{height: 500 * _cvals.dsc}}
-                    contentContainerStyle={[styles.scroll, {height: height + 10, width: width}]}>
-          <View style={styles.container}>
-          {columns}
-          <Final data={this.props.matches[this.props.matches.length - 1]}
-                 level={this.props.matches.length - 1}
-                 marginBottom={height / 2}
-                 navigator={this.props.navigator} />
-          </View>
-        </ScrollView>
-    );
+    if (Platform.OS ==='ios') {
+        return (
+            <ScrollView showsHorizontalScrollIndicator={true}
+                        showsVerticalScrollIndicator={true}
+                        style={{height: 500 * _cvals.dsc}}
+                        contentContainerStyle={[styles.scroll, {height: height + 10, width: width}]}
+                        >
+              <View style={styles.container}>
+              {columns}
+              <Final data={this.props.matches[this.props.matches.length - 1]}
+                     level={this.props.matches.length - 1}
+                     marginBottom={height / 2}
+                     navigator={this.props.navigator} />
+              </View>
+            </ScrollView>
+        );
+    }
+    else {
+        return (
+          <ScrollView>
+            <ScrollView showsHorizontalScrollIndicator={true}
+                        showsVerticalScrollIndicator={true}
+                        style={{height: 500 * _cvals.dsc}}
+                        contentContainerStyle={[styles.scroll, {height: height + 10, width: width}]}
+                        horizontal={true}>
+              <View style={styles.container}>
+              {columns}
+              <Final data={this.props.matches[this.props.matches.length - 1]}
+                     level={this.props.matches.length - 1}
+                     marginBottom={height / 2}
+                     navigator={this.props.navigator} />
+              </View>
+            </ScrollView>
+          </ScrollView>
+        );
+    }
   },
 });
 
