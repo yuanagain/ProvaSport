@@ -49,6 +49,7 @@ var GameScoreRowAdd_subco = React.createClass({
 
           <View style={[styles.val1_container, styles.center, styles.input_border]}>
             <TextInput
+              keyboardType={'numeric'}
               style={[_cstyles.standard_text, _cstyles.centeredText, styles.input]}
               onChangeText={(val1) => this.setState({val1})}
               value={this.state.val1}
@@ -63,13 +64,12 @@ var GameScoreRowAdd_subco = React.createClass({
 
           <View style={[styles.val2_container, styles.center, styles.input_border]}>
             <TextInput
+              keyboardType={'numeric'}
               style={[_cstyles.standard_text, _cstyles.centeredText, styles.input]}
               onChangeText={(val2) => this.setState({val2})}
               value={this.state.val2}
             />
           </View>
-
-
 
         </View>
         <View style={[styles.rightmost, styles.center]}>
@@ -108,7 +108,7 @@ var styles = StyleSheet.create({
     height: rowHeight,
   },
   input: {
-    height: rowHeight * 0.7,
+    height: rowHeight * 0.85,
     width: 39 * _cvals.dscale,
     alignSelf: 'center',
     padding: 0,

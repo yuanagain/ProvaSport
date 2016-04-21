@@ -108,7 +108,7 @@ var createBracket = function(data) {
   var placements = new Array(teams.length)
   var trace = createTrace(depth)
   for (var i = 0; i < trace.length; i++) {
-    placements[i] = teams[trace[i]]
+    placements[i] = teams[trace[i] - 1]
   }
 
   for (var i = 0; i < placements.length; i += 2) {

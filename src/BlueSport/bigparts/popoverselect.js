@@ -83,6 +83,11 @@ var PopoverSelect = React.createClass({
     );
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({selection: nextProps.selection})
+    this.setState({dataSource: ds.cloneWithRows(_ctools.supplementIndex(this.props.items)) })
+  },
+
   // used to hide confirm button in single case
   canConfirm: function() {
     if (this.props.mode == "single") {
@@ -117,12 +122,11 @@ var PopoverSelect = React.createClass({
     this.state.selection.sort()
     this.setState( {selection: this.state.selection })
     this.props.harvest(this.state.selection)
-    this.props.update()
+
   },
 
   cancelSelection: function() {
     this.props.cancelSelection([])
-    this.props.update()
   },
 
   toggleSelect: function(index) {
@@ -140,7 +144,6 @@ var PopoverSelect = React.createClass({
       this.state.selection.push(index)
       if (this.props.mode == 'single') {
         this.setState({selection: [index]})
-        console.log(this.state.selection)
         this.harvest()
         return
       }

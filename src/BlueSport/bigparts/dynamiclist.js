@@ -56,6 +56,10 @@ var DynamicList = React.createClass({
     };
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({items: nextProps.items})
+  },
+
   render: function() {
     var {
       items,
