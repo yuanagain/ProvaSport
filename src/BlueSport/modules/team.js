@@ -1,7 +1,17 @@
+/*
+ * Imports
+ */
+import * as User from '../modules/userdata'
+import * as Player from '../modules/player'
+import * as Tournament from '../modules/tournament'
+import * as Trophy from '../modules/trophy'
+import * as Match from '../modules/match'
+
 var teamdb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 teamdb = new Firebase("https://shining-torch-4767.firebaseio.com/team");
 /*possilby add stuff like isOnTeam etc.*/
+
 function _GetTeam(teamid, callback) {
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
@@ -24,6 +34,16 @@ var default_team = {
     "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
 };
 
+function updatePlayers(teamid, playerArray) {
+  teamdb.child(teamid).update({
+    "players": playerArray,
+  })
+}
+function updateMatches(teamid, matchArray) {
+  teamdb.child(teamid).update({
+    "matches": matchArray,
+  })
+}
 
 function _SetTeam(obj, teamid, callback) {
   var promise = new Promise(function(resolve, reject) {
@@ -44,7 +64,8 @@ function _SetTeam(obj, teamid, callback) {
   });
 }
 
-
+/* needs and object for th full data of a team fields
+  */
 function createTeam(obj) {
   return new Promise(function(resolve, reject) {
       var newRef = teamdb.push();

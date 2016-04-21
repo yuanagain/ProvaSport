@@ -1,3 +1,14 @@
+/*
+ *
+ * Imports
+ */
+import * as User from '../modules/userdata'
+import * as Player from '../modules/player'
+import * as Team from '../mdoules/team'
+import * as Tournament from '../modules/tournamnet'
+import * as Trophy from '../modules/trophy'
+import * as Match from '../modules/match'
+
 
 /*
  * WARNING: methods wait on database download before returning.
@@ -37,7 +48,13 @@ function GetPlayer(playerid) {
         });
      });
 }
+function enterTournment(player, playerid, tournamentid) {
+  player.tournaments.append(torunamentid);
+  Tournament.addPlayer(tournamentid, playerid).then(resp => if (resp){
+    set
+  return player;
 
+}
 function _CreatePlayer(callback) {
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {

@@ -1,11 +1,57 @@
+/*
+ *
+ * Imports
+ */
+import * as User from '../modules/userdata'
+import * as Player from '../modules/player'
+import * as Team from '../mdoules/team'
+import * as Trophy from '../modules/trophy'
+import * as Match from '../modules/match'
 
-/* for the real time accessing of data when it changes*/
-/* TODO check if specTournament reference works  */
-var specTourndb;
+
 var tourndb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 tourndb = new Firebase("https://shining-torch-4767.firebaseio.com/tournament");
 /*player object within Player class*/
+
+
+/* needs and object for th full data of a team fields
+  */
+function createTournament(obj) {
+  return new Promise(function(resolve, reject) {
+      var newRef = tourndb.push();
+      newRef.set(obj, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          reject();
+        } else {
+          console.log("Data CREATED successfully "+ newRef.key());
+          resolve(newRef.key());
+        }
+      });
+    });
+}
+
+function _CreateTournament(obj, callback) {
+  var promise = new Promise(function(resolve, reject) {
+      var newRef = tourndb.push();
+      newRef.set(obj, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          reject();
+        } else {
+          console.log("Data CREATED successfully "+ newRef.key());
+          resolve(newRef.key());
+        }
+      });
+    })
+    promise.then(function (value) {
+      callback(value)
+    }).catch(function() {
+      console.log("Something went wrong in _CreateTeam")
+    });
+}
+
 function _GetTournament(tournamentid, callback) {
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
@@ -23,13 +69,20 @@ function _GetTournament(tournamentid, callback) {
   var default_tournament =
   {
       "type": "Loading",
-      "teams": [], //alphabetical list of teams or sorted by priority
+      "teams": [-1], //alphabetical list of teams or sorted by priority
       "location": "Loading", /*tuple of  Latitude and Longitude*/
-      "dates": [],
+      "dates": [-1],
       "sport": "Loading",
-      "matches": []
+      "matches": [-1]
   };
-
+function makeTournament(matches, teams, location, type){
+ var newTourn = $.extend( true, {}, default_tournament);
+ newTourn.matches = matches;
+ newTourn.teams = teams;
+ newTourn.location = location;
+ newTourn.type = type;
+ return createTournament(newTourn);
+}
 
 
 class Tournament {

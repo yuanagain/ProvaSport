@@ -21,6 +21,9 @@ const DB = {
   'user': Store.model("user"),
   'player': Store.model("player")
 }
+//clear out the DB
+DB.user.remove();
+DB.player.remove()
 
 var {
   StyleSheet,

@@ -3,6 +3,16 @@
 
   Actual Login may require Firebase Token Handler
  */
+ /*
+  * Imports
+  */
+ import * as User from '../modules/userdata'
+ import * as Player from '../modules/player'
+ import * as Team from '../mdoules/team'
+ import * as Trophy from '../modules/trophy'
+ import * as Match from '../modules/match'
+
+
 import Store from 'react-native-store';
 
 
@@ -74,22 +84,28 @@ function newTrophy(trophyid) {
 }
 
 /* Change Player's earnings to New earnings JSONObject
-*
-*
+* update data must be of the form:
+* {
+*  "key": updatedvalue
+* }
 */
-function updateEarnings(newEarnings) {
-  new Firebase(FireURL+"/player/"+User.playerid).child(earnings).update(newEarnings);
+function updateUser(uid, updateData) {
+  ref.child('user').child(uid).update({
+    updateData
+  });
 }
 
 
-/* HUGE API TODO how to request a friend? instead of force them to be together? */
+/*  CHANGED TO PLAYER MODULE
+HUGE API  how to request a friend? instead of force them to be together?
 function addFriend(friendid) {
   var p = new Player(this.User.playerid);
   p.addFriend(friendid);
 }
+*/
 
-
-/* Delete friend: */
+/* CHANGED TO PLAYER
+Delete friend:
 function deleteFriend(friendid) {
   if(err) { return null;}
   var p = new Player(User.playerid);
@@ -97,19 +113,18 @@ function deleteFriend(friendid) {
   friends.filter(friendid);
   ref.child("player").child(this.User.playerid).update({"friends":friends});
 }
-
+*/
 /* set the users name
 
   */
-function setName(strName) {
-  User.name = strName;
-  ref.set(User);
+function setName(uid, strName) {
+  ref.child('user').child(uid).update({"name": strName});
 }
-/*
+/* ADDED To PLAYER
  * Set profile picture
  */
 function setProfPic(imgURL) {
-  if(imgURL !== "") throw new err;
+  if(imgURL === "") throw new err;
   var p = new Player(User.playerid);
   p.setProfPic(imgURL);
 }
@@ -146,17 +161,18 @@ function joinTeam(teamid) {
   var team = new Team(teamid);
   team.addPlayer(user.playerid); //check concurrency condition
 }
-/*
+/* CHANGED to TEAM and Match
 create team // returns team object if successful, -1 otherwise
-  */
+
 function createTeam(teamid) {
   var team = new Team(teamid);
-  /* TODO make sure they cannot overwrite data return -1 if failure */
+  /* TODO make sure they cannot overwrite data return -1 if failure
   ref.child("team").child(teamid).set(team, function(err) {
     callback(-1);
   });
   callback(teamid);
 }
+*/
 
 //change Email data of user
 function changeEmail(oldEmail, NewEmail, password, callback) {
@@ -310,7 +326,7 @@ function removeUser(strEmail, strPassword) {
   });
 }
 
-/* NEEDS WORK Sign in with Facebook */
+/* NEEDS WORK Sign in with Facebook
 function FBlogin() {
   ref.authWithOAuthRedirect("Facebook", authHandler);
 }
@@ -397,7 +413,7 @@ var default_user = {
 //setUser(35, default_user)
 
 //GetUser(35)
-/* 
+/*
  * const DB = {
  *   'user': Store.model('user'),
  *   'player': Store.model('player')

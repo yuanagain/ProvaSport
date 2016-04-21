@@ -1,3 +1,17 @@
+
+/*
+ *
+ * Imports
+ */
+import * as User from '../modules/userdata'
+import * as Player from '../modules/player'
+import * as Team from '../mdoules/team'
+import * as Tournament from '../modules/tournamnet'
+import * as Trophy from '../modules/trophy'
+import * as Match from '../modules/match'
+
+
+
 var matchdb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 matchdb = new Firebase("https://shining-torch-4767.firebaseio.com/match");
@@ -15,6 +29,15 @@ function _GetMatch(matchid, callback) {
     }).catch(function(){
       console.log("Failed");
     });
+}
+function getMatch(matchid) {
+  /* var match = new Match(matchid); */
+    return new Promise(function(resolve, reject) {
+        matchdb.child(matchid).on("value", function(snapshot) {
+          var match = snapshot.val();
+          resolve(match);
+        });
+     });
 }
 
 
@@ -64,6 +87,13 @@ function createMatch(obj) {
       });
     });
 }
+function makeMatch(matchobj, team1, team2) {
+  createTeam(team1, team1)
+}
+function makeMatchA() {
+  Team._CreateTeam(teamobj2).then(makematch(team1, team2));
+}
+
 function _CreateMatch(obj, callback) {
   var promise = new Promise(function(resolve, reject) {
       var newRef = matchdb.push();
@@ -82,6 +112,35 @@ function _CreateMatch(obj, callback) {
     }).catch(function() {
       console.log("Something went wrong in _CreateMatch")
     });
+}
+function updateMatch(matchid, data) {
+  matchdb.child(matchid).update({
+    data
+  })
+}
+function updateScores(matchid, data) {
+  matchdb.child(matchid).update({
+    "scores": data
+  })
+}
+
+//THIS may not work...
+function selectScores(matchid, index, num = 1){
+  getMatch(matchid).then(function (value) {
+    value.scores.splice(index, num);
+  })
+}
+/*Update the status of the match
+  0- 4 for code numbers
+  */
+function updateStatus(matchid, code) {
+  matchdb.child(matchid).update({
+    "status": code
+  })
+}
+
+function functionName() {
+
 }
 
 var default_match =

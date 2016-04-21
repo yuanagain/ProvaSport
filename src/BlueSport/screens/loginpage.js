@@ -19,6 +19,10 @@ const DB = {
   'user': Store.model("user"),
   'player': Store.model("player")
 }
+//clear out the DB
+// will complete on app creation beating the sign-in
+DB.user.remove();
+DB.player.remove()
 
 var {
   AppRegistry,
