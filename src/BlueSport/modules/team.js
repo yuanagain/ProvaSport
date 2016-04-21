@@ -39,6 +39,7 @@ function updatePlayers(teamid, playerArray) {
     "players": playerArray,
   })
 }
+
 function updateMatches(teamid, matchArray) {
   teamdb.child(teamid).update({
     "matches": matchArray,

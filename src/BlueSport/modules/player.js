@@ -4,8 +4,8 @@
  */
 import * as User from '../modules/userdata'
 import * as Player from '../modules/player'
-import * as Team from '../mdoules/team'
-import * as Tournament from '../modules/tournamnet'
+import * as Team from '../modules/team'
+import * as Tournament from '../modules/tournament'
 import * as Trophy from '../modules/trophy'
 import * as Match from '../modules/match'
 
@@ -48,13 +48,15 @@ function GetPlayer(playerid) {
         });
      });
 }
-function enterTournment(player, playerid, tournamentid) {
-  player.tournaments.append(torunamentid);
-  Tournament.addPlayer(tournamentid, playerid).then(resp => if (resp){
-    set
-  return player;
-
-}
+/* 
+ * function enterTournment(player, playerid, tournamentid) {
+ *   player.tournaments.append(torunamentid);
+ *   Tournament.addPlayer(tournamentid, playerid).then(resp => if (resp){
+ *     set
+ *   return player;
+ *
+ * }
+ */
 function _CreatePlayer(callback) {
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
@@ -89,10 +91,10 @@ function _CreatePlayer(callback) {
     "home": "LOADING",
     "sports": "LOADING",
     "imageURL": "Loading",
-    "friends": [0],
-    "teams": [-1],
-    "matches": [-1],
-    "tournaments": [-1]
+    "friends": [],
+    "teams": [],
+    "matches": [],
+    "tournaments": []
   };
 
 module.exports = {_GetPlayer, default_player};

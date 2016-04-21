@@ -5,8 +5,8 @@
  */
 import * as User from '../modules/userdata'
 import * as Player from '../modules/player'
-import * as Team from '../mdoules/team'
-import * as Tournament from '../modules/tournamnet'
+import * as Team from '../modules/team'
+import * as Tournament from '../modules/tournament'
 import * as Trophy from '../modules/trophy'
 import * as Match from '../modules/match'
 
@@ -134,12 +134,12 @@ function selectScores(matchid, index, num = 1){
   0- 4 for code numbers
   */
 function updateStatus(matchid, code) {
-  matchdb.child(matchid).update({
+  matchdb.child(matchid).set({
     "status": code
   })
 }
 
-function functionName() {
+function getPlayerStatus() {
 
 }
 
@@ -155,6 +155,10 @@ var default_match =
         "payoutdata": {
           "xp": -1,
           "cash": -1
+        },
+        "status": {
+          '0': 0,
+          '1': 1
         },
         "location": "LOADING"
   };

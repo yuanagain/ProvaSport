@@ -5,7 +5,7 @@
 import * as User from '../modules/userdata'
 import * as Player from '../modules/player'
 import * as Team from '../modules/team'
-import * as Tournament from '../modules/tournamnet'
+import * as Tournament from '../modules/tournament'
 import * as Match from '../modules/match'
 
 var trophydb = require("firebase");

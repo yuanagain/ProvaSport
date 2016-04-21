@@ -38,9 +38,11 @@ var MatchPage = React.createClass({
       }
     );
   },
+  //somehow find a way to tie use to team to match
   getDefaultProps: function() {
     return (
       {
+        userteamid: 1,
         matchid: 0,
       }
     )
@@ -56,15 +58,18 @@ var MatchPage = React.createClass({
     } = this.props;
 
     var buttons = <View></View>
-    if (true) {
+
+      //console.log("MATCHSTAT  "+ this.state.match.status[this.props.userteamid])
+    if (this.state.match.status['0'] == 3) {
+      console.log("MATCH  "+ this.state.match.status['0'])
       // if this is an unconfirmed match
       buttons = <WideButtonPair textRight={"Confirm"}
                                 textLeft={"Adjust"}
-                                onPressRight={()=>console.log("Right")}
+                                onPressRight={()=>console.log("Confirmed") setStatus(4, 0, )}
                                 onPressLeft={()=>console.log("Left")} />
-    } 
+    }
 
-    if (false) {
+    if (this.state.match.status['0'] == 0) {
       // if this match can be edited by the player
       buttons = <WideButtonPair textRight={"Accept"}
                                 textLeft={"Decline"}
@@ -72,14 +77,14 @@ var MatchPage = React.createClass({
                                 onPressLeft={()=>console.log("Left")} />
     }
 
-    if (false) {
+    if (this.state.match.status['0'] == 2) {
       // if this match can be edited by the player
       buttons = <WideButton text={"Record"}
                             onPress={()=>console.log("Log")} />
     }
 
     return (
-      <View style={styles.container}>        
+      <View style={styles.container}>
         <View>
           <Header title={"MATCH"}
                 mode={'nav'}
@@ -159,7 +164,7 @@ var MatchPage = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    flex: 1, 
+    flex: 1,
     justifyContent: 'space-between',
   },
   scroll_container: {

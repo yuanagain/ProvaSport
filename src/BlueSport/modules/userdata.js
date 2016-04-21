@@ -6,9 +6,8 @@
  /*
   * Imports
   */
- import * as User from '../modules/userdata'
  import * as Player from '../modules/player'
- import * as Team from '../mdoules/team'
+ import * as Team from '../modules/team'
  import * as Trophy from '../modules/trophy'
  import * as Match from '../modules/match'
 

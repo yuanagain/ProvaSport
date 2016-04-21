@@ -34,8 +34,8 @@ var {
   Platform,
 } = React;
 
-var blank_form = {   
-        isVisible: false,      
+var blank_form = {
+        isVisible: false,
         name: "",
         location: "",
         contract: ["Default"],
@@ -44,7 +44,7 @@ var blank_form = {
         scores: [],
       }
 
-var reset_form = {       
+var reset_form = {
         name: "",
         location: "",
         contract: ["Default"],
@@ -185,7 +185,7 @@ var RecordPage = React.createClass({
     }
   },
 
-  reset: function() { 
+  reset: function() {
     this.setState(reset_form)
     this.setState({teams: [[],[],]})
     this.setState({scores: []})
@@ -241,7 +241,7 @@ var RecordPage = React.createClass({
       teams: [this.teams[0].teamid, this.teams[1].teamid]
     }
     Match._CreateMatch(match, this.confirmSubmit)
-    
+
   },
 
   confirmSubmit: function(match) {
