@@ -13,6 +13,14 @@ var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var TextField = require('../smallparts/textfield')
 
 import * as User from '../modules/userdata'
+import Store from 'react-native-store';
+
+
+//database name and constant for storing data
+const DB = {
+  'user': Store.model("user"),
+  'player': Store.model("player")
+}
 
 var {
   StyleSheet,
@@ -33,6 +41,7 @@ var SignUpPage = React.createClass({
 
   getInitialState() {
     return {
+      user: User.default_user,
       name: '',
       gender: null,
       birthDate: new Date(),
@@ -309,14 +318,24 @@ var SignUpPage = React.createClass({
       var callback = this.props.navToHomeFunc;
       var email = this.state.email;
       var pass = this.state.password;
-
-      (User.createUser(email, pass)).then(function(value) {
-        console.log("USERID:   "+value);
-      }).then(callback).catch(function () {
-        console.log("Creation Failed");
-      });
+      var setUser = this.state.user;
+      User.createUser(email, pass).then(function(value) {
+        var uid = value;
+        User.setUser(uid, setUser);
+      }).catch(function(){console.log("COULD NOT CREATE USER")})
     }
   },
+  storeUser: function (user) {
+    var callback = this.storePlayer;
+    var playerid = user.playerid;
+    DB.user.add(user).then(function(){
+      Player._CreatePlayer(callback)
+    })
+    //create player
+  },
+  storeplayer: function (player) {
+    DB.player.add(player).then(this.props.navToHomeFunc);
+  }
 });
 
 // Layout for labels and text fields

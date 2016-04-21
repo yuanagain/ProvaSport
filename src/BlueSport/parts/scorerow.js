@@ -3,8 +3,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
-
-var mainfont = 'avenir'
+var _cvals = require('../styles/customvals')
 
 var {
   AppRegistry,
@@ -45,17 +44,10 @@ var ScoreRow = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  title_text: {
-    color: 'black',
-    fontSize: 20,
-    fontFamily: mainfont,
-    fontWeight: 'bold',
-    padding: 10
-  },
   value_text: {
     color: 'black',
     fontSize: 20,
-    fontFamily: mainfont,
+    fontFamily: _cvals.mainfont,
     padding: 10,
   },
   column_r_r: {

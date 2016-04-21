@@ -37,6 +37,23 @@ function GetPlayer(playerid) {
         });
      });
 }
+
+function _CreatePlayer(callback) {
+  /* var match = new Match(matchid); */
+    var promise = new Promise(function(resolve, reject) {
+        var newRef = playerdataRef.child(playerid).push("value", function(snapshot) {
+          var player = snapshot.val();
+          resolve(newRef.key());
+        });
+     });
+    promise.then(function(value){
+      callback(value);
+    }).catch(function(){
+      console.log("Failed");
+    });
+}
+
+
   var default_player = {
     "name" : {
       "first": "Loading",
@@ -56,9 +73,9 @@ function GetPlayer(playerid) {
     "sports": "LOADING",
     "imageURL": "Loading",
     "friends": [0],
-    "teams": [],
-    "matches": [],
-    "tournaments": []
+    "teams": [-1],
+    "matches": [-1],
+    "tournaments": [-1]
   };
 
 module.exports = {_GetPlayer, default_player};

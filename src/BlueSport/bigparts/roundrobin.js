@@ -18,6 +18,7 @@ var {
   Image,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } = React;
 
 var slength = _cvals.slength
@@ -137,32 +138,41 @@ var RoundRobin = React.createClass({
     var renderRow = (matchrow) => <RRMatchRow navigator={this.props.navigator}
                                               matchrow={matchrow}
                                               key={_ctools.randomKey()} />;
-
-    return (
-      <View>
-        <ScrollView style={[styles.scroll,
-                            {width: windowSize.width },
-                            this.props.style]}
-                    contentContainerStyle={[styles.container,
-                                            {width: width, height: height}]}>
-            {this.state.matches.map(renderRow)}
-        </ScrollView>
-      </View>
-    );
+    if (Platform.OS === 'ios') {
+        return (
+          <View>
+            <ScrollView style={[styles.scroll,
+                                {width: windowSize.width },
+                                this.props.style]}
+                        contentContainerStyle={[styles.container,
+                                                {width: width, height: height}]}
+                        >
+                {this.state.matches.map(renderRow)}
+            </ScrollView>
+          </View>
+        );
+    }
+    else {
+        return (
+          <View>
+            <ScrollView>
+              <ScrollView style={[styles.scroll,
+                                  {width: windowSize.width },
+                                  this.props.style]}
+                          contentContainerStyle={[styles.container,
+                                                  {width: width, height: height}]}
+                          horizontal={true}>
+                  {this.state.matches.map(renderRow)}
+              </ScrollView>
+            </ScrollView>
+          </View>
+        );
+    }
   },
 });
 
 var styles = StyleSheet.create({
-  scroll: {
 
-  },
-  playersquare: {
-    height: _cvals.slength,
-    width: _cvals.slength,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-  },
   container: {
     flexDirection: 'column',
     flex: 1,
@@ -204,10 +214,6 @@ var styles = StyleSheet.create({
     alignSelf: 'flex-end',
     margin: 1
   },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
 })
 
 module.exports = RoundRobin;

@@ -5,7 +5,6 @@ var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 var _cvals = require('../styles/customvals')
 
-
 var {
   AppRegistry,
   StyleSheet,
@@ -16,15 +15,7 @@ var {
   TouchableOpacity,
 } = React;
 
-var mainfont = 'avenir'
 var rowheight = 60 * _cvals.dscale
-
-
-// SHARED FORMATTING.
-// TODO: make univeral
-var lightgreen = "#7ED321"
-var mainfont = 'avenir'
-var skblue = '#4A90E2'
 
 var SelectionRow = React.createClass({
   getInitialState: function() {
@@ -105,31 +96,18 @@ var styles = StyleSheet.create({
   description_text: {
     color: 'black',
     fontSize: 14 * _cvals.dscale,
-    fontFamily: mainfont,
+    fontFamily: _cvals.mainfont,
   },
   name_text: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize: 24 * _cvals.dscale,
-    fontFamily: mainfont,
-  },
-  column_r_r: {
-    alignSelf: 'flex-end',
-    backgroundColor: 'transparent',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-    width: windowSize.width / 2 - 10,
+    fontSize: _cvals.normalTextSize,
+    fontFamily: _cvals.mainfont,
   },
   container: {
     flexDirection: 'row',
     height: rowheight,
     width: windowSize.width
-  },
-  columns_container: {
-    flexDirection: 'row',
-    flex: 0,
-    width: windowSize.width,
   },
   content_container: {
     margin: 5,
@@ -144,13 +122,6 @@ var styles = StyleSheet.create({
     backgroundColor: _cvals.skblue
   },
   thumbnail: {
-    height: rowheight,
-    width: rowheight,
-    borderRadius: 0,
-    marginHorizontal: 0,
-    marginVertical: 0,
-  },
-  thumbnail_selected: {
     height: rowheight,
     width: rowheight,
     borderRadius: 0,

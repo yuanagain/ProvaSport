@@ -71,7 +71,7 @@ var PopoverSelect = React.createClass({
         <View style={styles.divider_line}>
         </View>
       </View>
-      <View style={[styles.buttons_container,
+      <View style={[_cstyles.buttons_container,
                      this.canConfirm()]}>
         <WideButton
           text="Confirm Selection"
@@ -235,10 +235,6 @@ var styles = StyleSheet.create({
   row: {
     width: windowSize.width
   },
-  selected_style: {
-    // opacity: 0.5,
-    backgroundColor: _cvals.skbluelight
-  },
   container: {
     flexDirection: 'column',
     flex: 1,
@@ -257,22 +253,9 @@ var styles = StyleSheet.create({
     opacity: 1.00,
     marginTop: 0,
   },
-  section_container: {
-    width: windowSize.width,
-    backgroundColor: 'transparent',
-    opacity: 1.0,
-  },
   listView: {
     backgroundColor: 'transparent',
   },
-  buttons_container: {
-      //height: windowSize.height * 1 / 10,
-      width: windowSize.width,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 0,
-      backgroundColor: 'transparent',
-    },
 })
 
 module.exports = PopoverSelect;

@@ -3,6 +3,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
+var _cvals = require('../styles/customvals')
 
 var {
   AppRegistry,
@@ -12,14 +13,7 @@ var {
   Image,
 } = React;
 
-var mainfont = 'avenir'
 var rowheight = 100
-
-// SHARED FORMATTING.
-// TODO: make univeral
-var lightgreen = "#7ED321"
-var mainfont = 'avenir'
-var skblue = '#4A90E2'
 
 var NewsFeedMatchRow = React.createClass({
   getInitialState: function() {
@@ -85,26 +79,26 @@ var styles = StyleSheet.create({
   value_text: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize: 24,
-    fontFamily: mainfont,
+    fontSize: _cvals.normalTextSize,
+    fontFamily: _cvals.mainfont,
   },
   scores_text: {
     color: 'black',
     fontSize: 20,
     margin: 3,
     opacity: 0.7,
-    fontFamily: mainfont,
+    fontFamily: _cvals.mainfont,
   },
   winner_text: {
-    color: skblue,
+    color: _cvals.skblue,
     fontWeight: 'bold',
-    fontSize: 24,
-    fontFamily: mainfont,
+    fontSize: _cvals.normalTextSize,
+    fontFamily: _cvals.mainfont,
   },
   detail_text: {
     color: 'black',
-    fontSize: 18,
-    fontFamily: mainfont,
+    fontSize: _cvals.detailTextSize,
+    fontFamily: _cvals.mainfont,
     color: 'grey',
     marginVertical: 4,
   },
