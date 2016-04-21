@@ -30,16 +30,6 @@ var {
   Modal,
 } = React;
 
-var t1 = {
-  teams: [1, 2, 3],
-  matches: [1, 2, 3],
-}
-
-var t2 = {
-  teams: [1, 2, 3, 4, 5, 6, 7, 8],
-  matches: [1, 2, 3, 4, 5, 6, 7],
-}
-
 var SettingsPage = React.createClass({
 
   getInitialState: function() {
@@ -49,6 +39,7 @@ var SettingsPage = React.createClass({
         selectedTeam1: [],
         selectedTeam2: [],
         selection: [],
+        sport: [],
       }
     );
   },
@@ -59,7 +50,6 @@ var SettingsPage = React.createClass({
       navigator,
       ...props
     } = this.props;
-
     return (
     <View style={styles.container}>
       <View>
@@ -70,8 +60,8 @@ var SettingsPage = React.createClass({
             title={'Sports'}
             items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
             navigator={this.props.navigator}
-            selection={['Tennis']}
-            
+            selection={this.state.sport}
+            harvest={this.setSport}
           />
           <View style={_cstyles.section_divider_line}></View>
 
@@ -87,12 +77,13 @@ var SettingsPage = React.createClass({
     );
   },
 
-  componentDidMount: function() {
-    console.log(_clogic.RRMatrix(t1))
-    console.log(_clogic.bracketMatrix(t2))
-    console.log(_clogic.createTrace(4))
-  }
+  setSport: function(selection) {
+    this.setState({sport: selection})
+  },
 
+  componentDidMount: function() {
+    console.log(_clogic.createTrace(4))
+  },
 
 });
 

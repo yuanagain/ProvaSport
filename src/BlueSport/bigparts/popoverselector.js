@@ -151,11 +151,8 @@ var PopoverSelector = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    console.log(nextProps.selection)
-    console.log(nextProps.items)
-    // this.setState({selection: _ctools.selectionNeedles(this.props.items, nextProps.selection)})
-    console.log("=======")
-    console.log(_ctools.selectionNeedles(nextProps.items, nextProps.selection))
+    this.setState({selection: _ctools.selectionNeedles(this.props.items, nextProps.selection)})
+
   },
 
   enterSelector: function() {
@@ -196,6 +193,7 @@ var PopoverSelector = React.createClass({
   },
 
   defaultRenderSelector: function() {
+
     var selectionText = "Select"
 
     if (this.state.selection.length == 1) {

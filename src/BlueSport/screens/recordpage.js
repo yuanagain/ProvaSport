@@ -18,6 +18,7 @@ var SimpleRow = require('../smallparts/simplerow')
 var TextField = require('../smallparts/textfield')
 
 import * as Match from '../modules/match'
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -43,12 +44,21 @@ var blank_form = {
         scores: [],
       }
 
+var reset_form = {       
+        name: "",
+        location: "",
+        contract: ["Default"],
+        sport: [],
+        teams: [[],[],],
+        scores: [],
+      }
+
 var items = ["Item 1", "Item 2"];
 
 var RecordPage = React.createClass({
 
   getInitialState: function() {
-  
+    this.teamids = [-1, -1]
     return (
       this.props.form
     );
@@ -153,7 +163,7 @@ var RecordPage = React.createClass({
       </View>
         <View style={_cstyles.buttons_container}>
           <WideButton
-            text="Record"
+            text="Record Activity"
             onPress={()=>this.submit()}
             />
         </View>
@@ -175,20 +185,67 @@ var RecordPage = React.createClass({
     }
   },
 
-
-  reset: function() {  // TODO need to get this to reset popover selectors
-    // console.log(this.state.teams)
-    this.setState({name: ""})
-    this.setState({location: ""})
+  reset: function() { 
+    this.setState(reset_form)
+    this.setState({teams: [[],[],]})
     this.setState({scores: []})
-    // this.setState(blank_form)
-    // this.setState({contract: ["Default"]})
-    // this.setState({sport: []})
-    // this.setState({teams: [[],[],]})
-    // console.log(this.state.teams)
   },
 
+  // attempt to create ad hoc teams
+  // TODO: recall teams
+  createTeams: function() {
+    var team1 = {
+      "name": "Team",
+      "players": [this.state.teams[0]],
+      "matches": [],
+      "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
+    }
+    var team2 = {
+      "name": "Team",
+      "players": [this.state.teams[1]],
+      "matches": [],
+      "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
+    }
+
+    Team._CreateTeam(team1, this.harvestTeam1)
+    Team._CreateTeam(team2, this.harvestTeam2)
+  },
+
+  harvestTeam1: function(team) {
+    this.teams[0] = team
+    if (this.teams[1] != -1) {
+      this.submitMatch()
+    }
+  },
+
+  harvestTeam2: function(team) {
+    this.teams[1] = team
+    if (this.teams[0] != -1) {
+      this.submitMatch()
+    }
+  },
+
+  // get submission in action
   submit: function() {
+    this.createTeams()
+  },
+
+  // run once both teams have been created
+  // TODO: add match to teams' and players' match lists
+  submitMatch: function() {
+    var match = {
+      name: this.state.name,
+      location: this.state.location,
+      contract: this.state.contract,
+      sport: this.state.sport[0],
+      teams: [this.teams[0].teamid, this.teams[1].teamid]
+    }
+    Match._CreateMatch(match, this.confirmSubmit)
+    
+  },
+
+  confirmSubmit: function(match) {
+    console.log(match)
     this.reset()
   },
 
