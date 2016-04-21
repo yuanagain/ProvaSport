@@ -118,10 +118,6 @@ var styles = StyleSheet.create({
     width: windowSize.width,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-
-  },
-  section: {
-
   },
   matches: {
     height: 340 * _cvals.dscale

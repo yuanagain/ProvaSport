@@ -24,7 +24,8 @@ var {
   Text,
   TextInput,
   ScrollView,
-  Image
+  Image,
+  Platform,
 } = React;
 
 var MatchPage = React.createClass({
@@ -79,12 +80,11 @@ var MatchPage = React.createClass({
 
     return (
       <View style={styles.container}>        
-        <View style={{height: 500 * _cvals.dscale}}>
+        <View>
           <Header title={"MATCH"}
                 mode={'nav'}
                 navigator={this.props.navigator} />
-          <ScrollView style={styles.scroll_container}
-                      contentContainerStyle={styles.content}>
+          <ScrollView style={styles.scroll_container}>
             <View style={_cstyles.body_container}>
 
               <SimpleRow title={"Date "} value={_ctools.toDate(new Date(this.state.match.datetime))} />
@@ -165,19 +165,15 @@ var styles = StyleSheet.create({
   scroll_container: {
     width: windowSize.width,
     flexDirection: 'column',
-    // TODO BOUND HEIGHT HERE
-    flex: 1
+    flex: 1,
+    height: (Platform === 'ios') ? windowSize.height / 1.33 : windowSize.height / 1.43,
   },
+  // Not sure this is needed, removed for now
   content: {
     flex: 1,
     width: windowSize.width,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-
-  },
-  button_container: {
-    backgroundColor: 'grey',
-    height: 40,
 
   },
 })

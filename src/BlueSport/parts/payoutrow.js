@@ -3,6 +3,7 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
+var _cvals = require('../styles/customvals')
 
 var {
   AppRegistry,
@@ -10,12 +11,6 @@ var {
   View,
   Text,
 } = React;
-
-// SHARED FORMATTING.
-// TODO: make univeral
-var lightgreen = "#7ED321"
-var mainfont = 'avenir'
-var skblue = '#4A90E2'
 
 var PayoutRow = React.createClass({
   getInitialState: function() {
@@ -41,11 +36,11 @@ var PayoutRow = React.createClass({
         </View>
         <View style={styles.column_r_r}>
 
-          <Text style={[styles.value_text, {color: lightgreen}]}>
+          <Text style={[styles.value_text, {color: _cvals.sklightgreen}]}>
             {'$' + String(this.props.payouts[0])}
           </Text>
 
-          <Text style={[styles.value_text, {color: skblue}]}>
+          <Text style={[styles.value_text, {color: _cvals.skblue}]}>
             {'\t' + String(this.props.payouts[1]) + ' EXP'}
           </Text>
         </View>
@@ -58,7 +53,7 @@ var styles = StyleSheet.create({
   value_text: {
     color: 'black',
     fontSize: 20,
-    fontFamily: mainfont,
+    fontFamily: _cvals.mainfont,
     padding: 10,
   },
   column_r_r: {

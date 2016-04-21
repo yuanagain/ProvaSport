@@ -55,7 +55,7 @@ var WideButton = React.createClass({
 });
 
 var styles = StyleSheet.create({
-button: {
+  button: {
     backgroundColor: _cvals.skorange,
     width: windowSize.width,
     shadowRadius: 4 * _cvals.dscale,
@@ -64,18 +64,16 @@ button: {
     shadowOffset: {width: 0, height: -1},
     padding: 5 * _cvals.dscale,
     alignItems: 'center',
-
     justifyContent: 'center'
   },
 
-buttonText: {
-  color: 'white',
-  textAlign: 'center',
-  fontSize: 30 * _cvals.dscale,
-  fontFamily: 'avenir',
-  fontWeight: 'bold',
-},
-
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 30 * _cvals.dscale,
+    fontFamily: 'avenir',
+    fontWeight: 'bold',
+  },
 })
 
 module.exports = WideButton;

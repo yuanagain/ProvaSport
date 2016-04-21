@@ -67,15 +67,16 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignSelf: 'flex-end',
-    width: windowSize.width / 2 - _cvals.stdmargin
+    //width: windowSize.width / 2 - _cvals.stdmargin,
+    flex: .5,
   },
 
   title: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
     alignSelf: 'flex-start',
-    width: windowSize.width / 2,
+    //width: windowSize.width / 2,
   },
 
   container: {

@@ -190,10 +190,6 @@ function harvest_default(items) {
 }
 
 var styles = StyleSheet.create({
-  selected_style: {
-    opacity: 0.5,
-    backgroundColor: _cvals.skorange
-  },
   container: {
     flexDirection: 'column',
     flex: 1,

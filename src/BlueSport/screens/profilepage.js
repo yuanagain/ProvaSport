@@ -203,9 +203,6 @@ var styles = StyleSheet.create({
     // width: windowSize.width,
     height: 300,
   },
-  contentContainerStyle: {
-    flex: 1,
-  },
   matches: {
     height: 200 * _cvals.dscale
   }
