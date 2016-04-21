@@ -13,7 +13,7 @@ var RRMatrix = function(tournament) {
       if (i == 0) {
         if (j == 0) {
           row.push({'item': false, 'type': 'blank'})
-        } 
+        }
         else {
           row.push({'item': teams[j - 1], 'type': 'icon'})
         }
@@ -73,7 +73,7 @@ var createTournament = function(data) {
 
   // compute list of matches
 
-  
+
   if (type == "Elimination ") {
     // add byes if necessary
     if (team.length % 2 != 0) {
@@ -82,7 +82,10 @@ var createTournament = function(data) {
     }
   }
 }
+/* takes in data of the form :
 
+
+  */
 var createRR = function(data) {
   var matches = []
   var teams = data.teams
@@ -90,10 +93,12 @@ var createRR = function(data) {
   for (var i = 0; i < teams.length; i++) {
     for (var j = 0; j < teams.length; j++) {
       if (i < j) {
-        matches.push("new match i, j")
+        matches.concat({})
+
       }
     }
   }
+  matchidlist = Matches.createFromList(matches);
 }
 
 var createBracket = function(data) {

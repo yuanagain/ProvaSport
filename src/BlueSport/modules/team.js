@@ -26,6 +26,15 @@ function _GetTeam(teamid, callback) {
       console.log("Failed");
     });
 }
+function getTeam(teamid) {
+  /* var match = new Match(matchid); */
+    return new Promise(function(resolve, reject) {
+        teamdb.child(teamid).on("value", function(snapshot) {
+          var team = snapshot.val();
+          resolve(team);
+        });
+     });
+}
 
 var default_team = {
     "name": "Loading",
@@ -75,7 +84,7 @@ function createTeam(obj) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data CREATED successfully "+ newRef.key());
+          console.log("Data CREATED successfully createT "+ newRef.key());
           resolve(newRef.key());
         }
       });
@@ -90,18 +99,17 @@ function _CreateTeam(obj, callback) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data CREATED successfully "+ newRef.key());
+          console.log("Data CREATED successfully _CreateT "+ newRef.key());
           resolve(newRef.key());
         }
       });
     })
     promise.then(function (value) {
       callback(value)
-    }).catch(function() {
-      console.log("Something went wrong in _CreateTeam")
+    }).catch(function(error) {
+      console.log("Something went wrong in _CreateTeam"+ error)
     });
 }
-
 var bye = {
     "name": "BYE ",
     "players": [],
@@ -110,4 +118,4 @@ var bye = {
     "thumbnail": " "
 };
 
-module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam};
+module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam, getTeam};

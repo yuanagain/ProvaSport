@@ -21,7 +21,7 @@ const DB = {
   'user': Store.model("user"),
   'player': Store.model("player")
 }
-DB.player.get().then(resp => console.log(resp.playerid))
+//DB.player.get().then(resp => console.log(resp.playerid))
 var {
   AppRegistry,
   StyleSheet,

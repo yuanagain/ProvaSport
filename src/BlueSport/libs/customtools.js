@@ -158,9 +158,29 @@ var getScoreString = function(match) {
   }
   return scoreString.slice(0, -2)
 }
-
+var codeToString= function(code){
+  switch (code) {
+    case 0:
+      return "Unplayed"
+      break;
+    case 1:
+      return "Played"
+      break;
+    case 2:
+      return "Recording needed"
+      break;
+    case 3:
+      return "Confirmation/Changes"
+      break;
+    case 4:
+      return "Completed"
+      break;
+    default:
+      return "Unplayed"
+  }
+}
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
                   selectionNeedles, toDate, shortString,
                   cumulativeEarnings, getInitials, getWinner,
-                  getTally, getScoreString};
+                  getTally, getScoreString, codeToString};

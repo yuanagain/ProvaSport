@@ -55,7 +55,7 @@ function _SetMatch(matchid, obj, callback) {
     });
   promise.then(function(value){
     callback(value);
-  }).catch(function(){
+  }).catch(function() {
     console.log("Failed");
   });
 }
@@ -109,8 +109,8 @@ function _CreateMatch(obj, callback) {
     })
     promise.then(function (value) {
       callback(value)
-    }).catch(function() {
-      console.log("Something went wrong in _CreateMatch")
+    }).catch(function(err) {
+      console.log("Something went wrong in _CreateMatch"+err)
     });
 }
 function updateMatch(matchid, data) {
@@ -118,10 +118,12 @@ function updateMatch(matchid, data) {
     data
   })
 }
+
 function updateScores(matchid, data) {
   matchdb.child(matchid).update({
     "scores": data
   })
+//  return getMatch(matchid)
 }
 
 //THIS may not work...
@@ -134,15 +136,55 @@ function selectScores(matchid, index, num = 1){
   0- 4 for code numbers
   */
 function updateStatus(matchid, code) {
-  matchdb.child(matchid).set({
+  matchdb.child(matchid).update({
     "status": code
   })
 }
 
-function getPlayerStatus() {
+function changeStatus(matchid, code) {
+  getMatch(matchid).then(function(value){
 
+  })
+  return new Promise(function(resolve, reject) {
+      matchdb.child(matchid).set(obj, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          reject();
+        } else {
+          console.log("Data saved successfully.");
+          resolve(obj);
+        }
+      });
+    });
+}
+/* from a list go in and creat all those objects and make them all */
+function createFromList(matchlist) {
+  for (;;) {
+    Match.createMatch(query, callback, auxarg)
+  }
+}
+function populate(data, index) {
+  this.array[index] = data
+  // if this.array no longer contains uninitialized entries
+  if (this.array.indexOf(-1) == -1) {
+    this.finalize() //submits the torunament and then go into all players and teams and add their 
+  }
+  //use index to modify a specific Location
+  //query last returning query
+  //all other elements are not -1
 }
 
+
+/*  IDEA:
+   "status": {
+      '0': {
+        'playerid': 'attitude'
+        },
+      '1': 1
+    },
+
+    BUT we will begin with integer codes  and work up*/
+//actual team id team id indexed status
 var default_match =
   {
         "datetime": 0,
@@ -160,6 +202,7 @@ var default_match =
           '0': 0,
           '1': 1
         },
+        "name": "matchesHaveNames?",
         "location": "LOADING"
   };
 //console.log(createMatch(default_match));
@@ -174,4 +217,6 @@ var default_match =
   * })
   */
   //_CreateMatch(default_match, function(val) {console.log("new Match: " + val)})
-module.exports = {_GetMatch, default_match, setMatch, createMatch, _SetMatch, _CreateMatch};
+  //updateScores(1, [[98,89],[0,1]]) TESTED SUCCESSFULLY
+module.exports = {_GetMatch, default_match, setMatch, createMatch, _SetMatch,
+                  _CreateMatch, updateScores, updateStatus};

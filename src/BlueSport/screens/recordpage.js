@@ -67,7 +67,17 @@ var RecordPage = React.createClass({
   getDefaultProps: function() {
     return ({
       mode: '',
-      form: blank_form
+      form: blank_form,
+      match: {
+              name: "",
+              location: "",
+              contract: ["Default"],
+              sport: [],
+              teams: [[],[],],
+              scores: [],
+            },
+    matchid: -1,
+    teams: [[],[],]
     })
   },
 
@@ -77,7 +87,7 @@ var RecordPage = React.createClass({
       loginFunction,
       ...props
     } = this.props;
-
+    //console.log(this.props.match);
     return (
     <View style={styles.container}>
       <View style={{height: 400 *_cvals.dscale}} >
@@ -154,7 +164,7 @@ var RecordPage = React.createClass({
 
           <ScrollView style={{height: 75 * _cvals.dscale}}>
             <DynamicList
-              items={this.state.scores}
+              items={this.props.match.scores}
               magic={'scores'}
               harvest={this.setScores}
               />
@@ -194,40 +204,51 @@ var RecordPage = React.createClass({
   // attempt to create ad hoc teams
   // TODO: recall teams
   createTeams: function() {
+    console.log(this.state.teams[1])
     var team1 = {
       "name": "Team",
-      "players": [this.state.teams[0]],
+      "players": this.state.teams[0],
       "matches": [],
       "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
     }
     var team2 = {
       "name": "Team",
-      "players": [this.state.teams[1]],
+      "players": this.state.teams[1],
       "matches": [],
       "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
     }
-
-    Team._CreateTeam(team1, this.harvestTeam1)
-    Team._CreateTeam(team2, this.harvestTeam2)
+    Team.createTeam(team1, this.harvestTeam1).then(resp=>this.state.teams[0] = resp)
+    Team.createTeam(team2, this.harvestTeam2).then(resp=>this.state.teams[1] = resp).then(this.submitMatch())
   },
 
   harvestTeam1: function(team) {
-    this.teams[0] = team
-    if (this.teams[1] != -1) {
-      this.submitMatch()
+    var team2 = {
+      "name": "Team",
+      "players": this.state.teams[1],
+      "matches": [],
+      "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
     }
+    //console.log("checkpoint 1")
+    this.props.teams[0] = team;
+    Team._CreateTeam(team2, this.harvestTeam2)
   },
 
   harvestTeam2: function(team) {
-    this.teams[1] = team
-    if (this.teams[0] != -1) {
-      this.submitMatch()
-    }
+    this.props.teams[1] = team;
+    //console.log("checkpoint 2")
+    this.submitMatch()
   },
 
   // get submission in action
   submit: function() {
-    this.createTeams()
+    if (this.props.matchid == -1){
+      this.createTeams()
+    }
+    else {
+      this.props.match.status[0] = 3;
+      Match.setMatch(this.props.matchid, this.props.match).then(this.props.navigator.pop())
+      //Match.updateStatus(this.props.matchid, 3)
+    }
   },
 
   // run once both teams have been created
@@ -237,9 +258,15 @@ var RecordPage = React.createClass({
       name: this.state.name,
       location: this.state.location,
       contract: this.state.contract,
-      sport: this.state.sport[0],
-      teams: [this.teams[0].teamid, this.teams[1].teamid]
+      sport: this.state.sport,
+      teams: [this.state.teams[0], this.state.teams[1]],
+      status: 0,
+      payoutdata: {
+        xp : 100,
+        cash: 100,
+      },
     }
+    console.log(match)
     Match._CreateMatch(match, this.confirmSubmit)
 
   },

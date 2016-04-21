@@ -3,7 +3,6 @@
  * Imports
  */
 import * as User from '../modules/userdata'
-import * as Player from '../modules/player'
 import * as Team from '../modules/team'
 import * as Tournament from '../modules/tournament'
 import * as Trophy from '../modules/trophy'
@@ -48,7 +47,7 @@ function GetPlayer(playerid) {
         });
      });
 }
-/* 
+/*
  * function enterTournment(player, playerid, tournamentid) {
  *   player.tournaments.append(torunamentid);
  *   Tournament.addPlayer(tournamentid, playerid).then(resp => if (resp){

@@ -35,6 +35,8 @@ var MatchPage = React.createClass({
         match: Match.default_match,
         teams: [Team.default_team, Team.default_team],
         loaded: false,
+        team1: Team.default_team,
+        team2: Team.default_team
       }
     );
   },
@@ -61,26 +63,26 @@ var MatchPage = React.createClass({
 
       //console.log("MATCHSTAT  "+ this.state.match.status[this.props.userteamid])
     if (this.state.match.status['0'] == 3) {
-      console.log("MATCH  "+ this.state.match.status['0'])
+      //console.log("MATCH  "+ this.state.match.status['0'])
       // if this is an unconfirmed match
       buttons = <WideButtonPair textRight={"Confirm"}
                                 textLeft={"Adjust"}
-                                onPressRight={()=>console.log("Confirmed") setStatus(4, 0, )}
-                                onPressLeft={()=>console.log("Left")} />
+                                onPressRight={()=>this.changeStatus(4)}
+                                onPressLeft={()=>this.toRecordPage()} />
     }
 
     if (this.state.match.status['0'] == 0) {
       // if this match can be edited by the player
       buttons = <WideButtonPair textRight={"Accept"}
                                 textLeft={"Decline"}
-                                onPressRight={()=>console.log("Right")}
+                                onPressRight={()=>this.changeStatus(2)}
                                 onPressLeft={()=>console.log("Left")} />
     }
 
     if (this.state.match.status['0'] == 2) {
       // if this match can be edited by the player
       buttons = <WideButton text={"Record"}
-                            onPress={()=>console.log("Log")} />
+                            onPress={()=> this.toRecordPage()} />
     }
 
     return (
@@ -95,7 +97,7 @@ var MatchPage = React.createClass({
               <SimpleRow title={"Date "} value={_ctools.toDate(new Date(this.state.match.datetime))} />
               <View style={_cstyles.section_divider_line} ></View>
 
-              <SimpleRow title={"Status "} value={"Complete"} />
+              <SimpleRow title={"Status "} value={_ctools.codeToString(this.state.match.status[0])} />
               <View style={_cstyles.section_divider_line} ></View>
 
               <SimpleRow title={"Location "} value={this.state.match.location} />
@@ -146,11 +148,21 @@ var MatchPage = React.createClass({
     return this.state.match.teams[1]
   },
 
+  loadTeams: function() {
+    Team.getTeam(this.state.match.teams[0]).then(resp=>this.setState({team1: resp})).catch(function(){
+      console.log("");
+    });
+    Team.getTeam(this.state.match.teams[1]).then(resp=>this.setState({team2: resp})).catch(function(){
+      console.log("");
+    });
+  },
+
   fetchMatch: function(data) {
     this.state.match = data
     this.setState({match: data})
     console.log(data)
     this.setState({loaded : true})
+    this.loadTeams()
   },
 
   componentDidMount: function () {
@@ -159,6 +171,33 @@ var MatchPage = React.createClass({
 
   },
 
+  toRecordPage: function() {
+    var RecordPage = require('../screens/recordpage')
+    this.props.navigator.push({
+      id: "RecordingScores",
+      component: RecordPage,
+      passProps: {
+        navigator: this.props.navigator,
+        matchid: this.props.matchid,
+        match: this.state.match,
+        team1: this.state.team1,
+        team2: this.state.team2
+      }
+    })
+  },
+  changeStatus: function(code) {
+    this.state.match.status['0'] = code;
+    Match._SetMatch(this.props.matchid, this.state.match, this.changeA)
+  },
+  changeA: function(resp){
+    this.setState({match: resp});
+  }
+
+  /*
+   * setStatus: function(status) {
+   *   Match.setStatus(status)
+   * }
+   */
 });
 
 var styles = StyleSheet.create({
