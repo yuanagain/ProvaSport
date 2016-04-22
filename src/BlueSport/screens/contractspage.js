@@ -216,7 +216,7 @@ var ContractsPage = React.createClass({
   },
 
   addGame: function(scores) {
-
+    
   },
 
   onSelect: function(name) {
@@ -299,7 +299,7 @@ var styles = StyleSheet.create({
     opacity: 1.00,
   },
   team_scroll: {
-    height: (Platform === 'ios') ? 200 * _cvals.dscale : windowSize.height / 4.4, 
+    height: (Platform === 'ios') ? 200 * _cvals.dscale : windowSize.height / 4.4,
     width: windowSize.width,
   }
 })

@@ -268,10 +268,10 @@ var RecordPage = React.createClass({
     }
     console.log(match)
     Match._CreateMatch(match, this.confirmSubmit)
-
   },
 
   confirmSubmit: function(match) {
+    Player.addMatch(this.state.teams[0][0], match);
     console.log(match)
     this.reset()
   },

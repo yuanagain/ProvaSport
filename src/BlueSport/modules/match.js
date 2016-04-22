@@ -13,8 +13,11 @@ import * as Match from '../modules/match'
 
 
 var matchdb = require("firebase");
+var ref = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 matchdb = new Firebase("https://shining-torch-4767.firebaseio.com/match");
+ref = new Firebase("https://shining-torch-4767.firebaseio.com/");
+
 /*player object within Player class*/
 function _GetMatch(matchid, callback) {
   /* var match = new Match(matchid); */
@@ -90,9 +93,6 @@ function createMatch(obj) {
 function makeMatch(matchobj, team1, team2) {
   createTeam(team1, team1)
 }
-function makeMatchA() {
-  Team._CreateTeam(teamobj2).then(makematch(team1, team2));
-}
 
 function _CreateMatch(obj, callback) {
   var promise = new Promise(function(resolve, reject) {
@@ -157,17 +157,15 @@ function changeStatus(matchid, code) {
       });
     });
 }
-/* from a list go in and creat all those objects and make them all */
-function createFromList(matchlist) {
-  for (;;) {
-    Match.createMatch(query, callback, auxarg)
-  }
+/* from a list go in and create all those objects and make them all */
+function createForList(query, auxarg, callback) {
+
 }
 function populate(data, index) {
   this.array[index] = data
   // if this.array no longer contains uninitialized entries
   if (this.array.indexOf(-1) == -1) {
-    this.finalize() //submits the torunament and then go into all players and teams and add their 
+    this.finalize() //submits the torunament and then go into all players and teams and add their
   }
   //use index to modify a specific Location
   //query last returning query
@@ -205,6 +203,45 @@ var default_match =
         "name": "matchesHaveNames?",
         "location": "LOADING"
   };
+
+
+/* Simultanious update of match player test module to
+ * determine futhur use
+ * Then we create tournaments tonight
+ */
+function tieMatchTo(matchid, playerid, teamid) {
+  var path1= ref.child("match").child(matchid).child("teams")
+  var path2= ref.child("player").child(playerid)
+  var path3= ref.child("team").child(teamid)
+  //var path1 = "match/35/teams/1";
+  path1.set({0:teamid})
+
+  var pathTeams = path2.child("teams").push()
+  var pathMatches = path2.child("matches").push()
+  pathTeams.set(teamid);
+  pathMatches.set(matchid);
+
+  var path3Match = path3.child('matches').push()
+  var path3player = path3.child('players').push()
+  path3Match.set(matchid);
+  path3player.set(playerid);
+}
+
+//tieMatchTo(35, 1, 1)
+/*CHANGED ***************HOW TO PARSE ARRAYS************** TODO*/
+ref.child("match").child(35).child("teams").on("value", function(snapshot){
+  var obj = snapshot.val()
+  var arr = Object.keys(obj).map(function(k) {
+     return obj[k]
+   });
+   console.log(obj)
+  console.log(arr)
+  ref.child("match").child(35).child("teams").set(arr);
+})
+
+function makeMatchA() {
+  Team._CreateTeam(teamobj2).then(makematch(team1, team2));
+}
 //console.log(createMatch(default_match));
 /*
  * setMatch(35, default_match, function(){

@@ -72,6 +72,118 @@ function _CreatePlayer(callback) {
 }
 
 
+function addFriend(playerid, friend) {
+  var specificRef = playerdataRef.child(playerid).child('friends')
+  var list = []
+  specificRef.on('value', function(snap) { list = snap.val(); });
+  list.push(friend);
+  console.log(list);
+  specificRef.set(list);
+}
+
+function addMatch(playerid, matchid) {
+  var promise = new Promise(function(resolve, reject) {
+      playerdataRef.child(playerid).child('matches').on("value", function(snapshot) {
+        var matches = []
+        matches = snapshot.val();
+        resolve(matches);
+      });
+   });
+  promise.then(function(list){
+    list.push(matchid);
+    playerdataRef.child(playerid).child('matches').set(list)
+  }).catch(function(){
+    console.log("Failed");
+  });
+}
+
+
+function addTeam(playerid, teamid) {
+  var promise = new Promise(function(resolve, reject) {
+      playerdataRef.child(playerid).child('teams').on("value", function(snapshot) {
+        var teams = []
+        teams = snapshot.val();
+        resolve(teams);
+      });
+   });
+  promise.then(function(list){
+    list.push(teamid);
+    playerdataRef.child(playerid).child('teams').set(list)
+  }).catch(function(){
+    console.log("Failed");
+  });
+}
+
+
+function addTournament(playerid, torunamentid) {
+  var promise = new Promise(function(resolve, reject) {
+      playerdataRef.child(playerid).child('tournaments').on("value", function(snapshot) {
+        var tournaments = []
+        tournaments = snapshot.val();
+        resolve(tournaments);
+      });
+   });
+  promise.then(function(list){
+    list.push(tournamentid);
+    playerdataRef.child(playerid).child('tournaments').set(list)
+  }).catch(function(){
+    console.log("Failed");
+  });
+}
+
+function _AddMatch(playerid, matchid, callback) {
+  var promise = new Promise(function(resolve, reject) {
+      playerdataRef.child(playerid).child('matches').on("value", function(snapshot) {
+        var matches = []
+        matches = snapshot.val();
+        resolve(matches);
+      });
+   });
+  promise.then(function(list){
+    list.push(matchid);
+    playerdataRef.child(playerid).child('matches').set(list)
+    callback(list)
+  }).catch(function(){
+    console.log("Failed");
+  });
+}
+
+
+function _AddTeam(playerid, teamid, callback) {
+  var promise = new Promise(function(resolve, reject) {
+      playerdataRef.child(playerid).child('teams').on("value", function(snapshot) {
+        var teams = []
+        teams = snapshot.val();
+        resolve(teams);
+      });
+   });
+  promise.then(function(list){
+    list.push(teamid);
+    playerdataRef.child(playerid).child('teams').set(list)
+    callback(list)
+  }).catch(function(){
+    console.log("Failed");
+  });
+}
+
+
+function _AddTournament(playerid, tournamentid, callback) {
+  var promise = new Promise(function(resolve, reject) {
+      playerdataRef.child(playerid).child('tournaments').on("value", function(snapshot) {
+        var tournaments = []
+        tournaments = snapshot.val();
+        resolve(tournaments);
+      });
+   });
+  promise.then(function(list){
+    list.push(tournamentid);
+    playerdataRef.child(playerid).child('tournaments').set(list)
+    callback(list)
+  }).catch(function(err){
+    console.log("Failed to add Tournament to Player   " + err);
+  });
+}
+
   var default_player = {
     "name" : {
       "first": "Loading",
@@ -95,5 +207,7 @@ function _CreatePlayer(callback) {
     "matches": [],
     "tournaments": []
   };
+  //_AddTeam(0,1,function(resp){console.log(resp)}) //TESTED SUCCESSFULLY(and _AddTournament, an)
 
-module.exports = {_GetPlayer, default_player};
+module.exports = {_GetPlayer, default_player, addMatch, addTeam, addFriend,
+  addTournament, _AddTeam, _AddMatch, _AddTournament};

@@ -406,7 +406,7 @@ var default_user = {
   "nationality": "USA",
   "gender": "gender",
   "birthday": 0,
-  "sports": [-1]
+  "sports": []
 };
 //createUser("dummy@dummy.com", "test123").then(function(value){console.log(value)})
 //setUser(35, default_user)

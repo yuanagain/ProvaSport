@@ -36,13 +36,6 @@ function getTeam(teamid) {
      });
 }
 
-var default_team = {
-    "name": "Loading",
-    "players": [],
-    "matches": [],
-    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
-};
-
 function updatePlayers(teamid, playerArray) {
   teamdb.child(teamid).update({
     "players": playerArray,
@@ -53,6 +46,72 @@ function updateMatches(teamid, matchArray) {
   teamdb.child(teamid).update({
     "matches": matchArray,
   })
+}
+
+function addPlayer(teamid, playerid) {
+  var promise = new Promise(function(resolve, reject) {
+      teamdb.child(teamid).child('players').on("value", function(snapshot) {
+        var players = []
+        players = snapshot.val();
+        resolve(players);
+      });
+   });
+  promise.then(function(list){
+    list.push(playerid);
+    teamdb.child(teamid).child('players').set(list)
+  }).catch(function(){
+    console.log("Failed to add player to team");
+  });
+}
+
+function addMatch(teamid, matchid) {
+  var promise = new Promise(function(resolve, reject) {
+      teamdb.child(teamid).child('matches').on("value", function(snapshot) {
+        var matches = []
+        matches = snapshot.val();
+        resolve(matches);
+      });
+   });
+  promise.then(function(list){
+    list.push(matchid);
+    teamdb.child(teamid).child('matches').set(list)
+  }).catch(function(){
+    console.log("Failed to add match to team");
+  });
+}
+
+function _AddPlayer(teamid, playerid, callback) {
+  var promise = new Promise(function(resolve, reject) {
+      teamdb.child(teamid).child('players').on("value", function(snapshot) {
+        var players = []
+        players = snapshot.val();
+        resolve(players);
+      });
+   });
+  promise.then(function(list){
+    list.push(playerid);
+    teamdb.child(teamid).child('players').set(list)
+    callback(list)
+  }).catch(function(){
+    console.log("Failed to add player to team");
+  });
+}
+
+function _AddMatch(teamid, matchid, callback) {
+  var promise = new Promise(function(resolve, reject) {
+      teamdb.child(teamid).child('matches').on("value", function(snapshot) {
+        var matches = []
+        matches = snapshot.val();
+        resolve(matches);
+      });
+   });
+  promise.then(function(list){
+    list.push(matchid);
+    teamdb.child(teamid).child('matches').set(list)
+    callback(list)
+  }).catch(function(){
+    console.log("Failed to add match to team");
+  });
 }
 
 function _SetTeam(obj, teamid, callback) {
@@ -110,6 +169,14 @@ function _CreateTeam(obj, callback) {
       console.log("Something went wrong in _CreateTeam"+ error)
     });
 }
+
+var default_team = {
+    "name": "Loading",
+    "players": [],
+    "matches": [],
+    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
+};
+
 var bye = {
     "name": "BYE ",
     "players": [],
@@ -118,4 +185,5 @@ var bye = {
     "thumbnail": " "
 };
 
-module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam, getTeam};
+module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
+   getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer};
