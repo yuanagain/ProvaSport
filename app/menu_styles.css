@@ -46,4 +46,5 @@ ul li.focused{
 p{
     padding-top:15px;
     font-size:12px;
+    word-wrap: break-word;
 }

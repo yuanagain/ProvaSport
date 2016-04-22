@@ -98,7 +98,8 @@ var newsfeed = {
   backgroundColor: 'red',
 };
 
-ReactDOM.render(
-  <Menu items = {['HOME', 'PROFILE', 'MATCHES', 'TOURNAMENTS', 'ABOUT']}/>,
-  document.getElementById('header_container')
-);
+//ReactDOM.render(
+//  <Menu items = {['HOME', 'PROFILE', 'MATCHES', 'TOURNAMENTS', 'ABOUT']}/>,
+//  document.getElementById('header_container')
+//);
+export default Menu;

@@ -1,9 +1,5 @@
-// Mapping help: https://facebook.github.io/react/docs/tutorial.html
-// Accessed: April 20, 2016
-// Marked: https://github.com/chjj/marked
-// Accessed: April 20, 2016
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react';
+import Newsfeed from './newsfeed'
 
 var data = [
   {winner: 'James Smith', loser: 'Jen Johnson', result: 'beat', sport: 'tennis', date: 'April 20, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
@@ -20,111 +16,197 @@ var data = [
   {winner: 'Jessie Wang', loser: 'Joe Arnolds', result: 'beat', sport: 'tennis', date: 'April 10, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
 ];
 
-var Entry = React.createClass({
+var Profile = React.createClass({
   render: function() {
     return (
-      <span style={entry}>
-        <div style={text}>
-          {this.props.winner} {this.props.result} {this.props.loser} in a game of {this.props.sport}.
+      <div>
+        <div className="profile" style={header}>
         </div>
-        {this.props.children}
-      </span>
-    );
-  }
-});
-
-var Newsfeed = React.createClass({
-  render: function() {
-    return (
-      <div className="entry">
-        <EntryMap data={this.props.data} />
+        <div style={headerContents}>
+          <div style={image}>
+            <img src='http://facebook.github.io/react/img/logo_og.png' style={image}/>
+          </div>
+          <p style={name}> Jeremiah Jenkins </p>
+        </div>
+        <div style={content}>
+          <InfoBlock/>
+          <StatBlock/>
+        </div>
+        <div style={newsfeedContainer}>
+          <p style={newsfeedTitle}> ACTIVITY </p>
+          <Newsfeed data={data}/>
+        </div>
       </div>
     );
   }
 });
 
-var EntryMap = React.createClass({
+var InfoBlock = React.createClass({
+
   render: function() {
-    var vals = this.props.data.map(function(entry) {
-      return (
-        <Entry winner={entry.winner} result={entry.result} loser={entry.loser} sport={entry.sport}>
-          <div style={date}>
-            {entry.date}
-          </div>
-          <div style={pic_container}>
-            <img style={pic}
-              src = {entry.pic_a}
-            />
-            <div style={score}>
-              {entry.score_a}
-            </div>
-          </div>
-          <div style={pic_container}>
-            <img style={pic}
-              src = {entry.pic_b}
-            />
-            <div style={score}>
-              {entry.score_b}
-            </div>
-          </div>
-        </Entry>
-      );
-    });
     return (
-      <div className="entryMap">
-        {vals}
+      <div style={infoBlock}>
+        <p style={blockTitle}> PERSONAL INFO </p>
+        <div style={info}>
+          <InfoRow title="Location" contents="Princeton University"/>
+          <InfoRow title="Sports" contents="SportBall, GameFrisbee"/>
+          <InfoRow title="Availability" contents="24/7"/>
+          <InfoRow title="Affiliations" contents="Princeton"/>
+        </div>
       </div>
     );
   }
 });
 
-// Styling
-// width value is temp, obviously
-var width = window.innerWidth / 2.5;
-var entry = {
-  width: width,
-  backgroundColor: '#E6E6E6',
-  padding: 30,
-  margin: 30,
-  marginTop: 10,
-  fontFamily: 'avenir',
-  color: '#262626',
-  fontSize: 20,
+var StatBlock = React.createClass({
+
+  render: function() {
+    return (
+      <div style={statBlock}>
+        <p style={blockTitle}> STATS </p>
+        <div style={stats}>
+          <InfoRow title="Account" contents="$$$$"/>
+          <InfoRow title="Experience" contents="Over 9000"/>
+          <InfoRow title="Friends" contents="24"/>
+          <InfoRow title="Trophies" contents="0 :("/>
+        </div>
+      </div>
+    );
+  }
+});
+
+var InfoRow = React.createClass({
+
+  render: function() {
+    return (
+      <div style={infoRow}>
+        <div style={rowTitle}>
+          <p style={rowTitleText}> {this.props.title}</p>
+        </div>
+        <div style={rowContents}>
+          <p style={rowContentsText}> {this.props.contents} </p>
+        </div>
+      </div>
+
+    );
+  }
+});
+
+
+var mainfont = 'avenir';
+var blockBackground = '#E6E6E6';
+var leftMargin = 35;
+var titleFontSize = 24;
+
+var header = {
+  width: window.innerWidth,
+  height: 125,
+  backgroundColor: 'gray',
+  position: 'relative',
+  zIndex: -1,
+  marginLeft: -60
+};
+
+var headerContents = {
+  marginLeft: leftMargin,
+  marginTop: -85,
+  zIndex: 1,
+}
+
+var image = {
+  width: 150,
+  height: 150,
+  borderRadius: 75,
+  backgroundColor: 'black',
+};
+
+var name = {
+  fontFamily: mainfont,
+  color: 'white',
+  fontSize: 36,
+  paddingLeft: 175,
+  marginTop: -150,
+};
+
+var content = {
+  marginTop: 100,
+  marginLeft: leftMargin,
   display: 'block',
 };
-var text = {
-  width: width,
-  // float: 'left',
-  display: 'block',
-};
-var date = {
-//  float: 'left',
-  color: '#666666',
-  fontSize: 15,
-  padding: 10,
-  display: 'block',
-};
-var pic_container = {
-  height: 50,
-  paddingTop: 15,
-  display: 'block',
-};
-var pic = {
+
+var infoBlock = {
   float: 'left',
-  width: 45,
-  height: 45,
-  borderRadius: 50,
-};
-var score = {
+  display: 'block',
+}
+
+var info = {
+  width: 350,
+  backgroundColor: blockBackground,
   float: 'left',
-  color: '#262626',
-  fontSize: 25,
-  marginLeft: 25,
-  margin: 5,
-};
+  paddingBottom: 15,
+}
+
+var statBlock = {
+  float: 'right',
+}
+
+var stats = {
+  width: 350,
+  backgroundColor: blockBackground,
+  float: 'right',
+  paddingBottom: 15,
+}
+
+var blockTitle = {
+  fontColor: 'white',
+  fontFamily: mainfont,
+  fontSize: titleFontSize,
+  paddingBottom: 10,
+}
+
+var infoRow = {
+  paddingBottom: 0,
+  display: 'block',
+  clear: 'both',
+}
+
+var rowTitle = {
+  float: 'left',
+  paddingRight: 10,
+}
+
+var rowTitleText = {
+  fontFamily: mainfont,
+  fontSize: 18,
+  paddingLeft: 20,
+  fontWeight: 700
+}
+
+var rowContents = {
+  float: 'left',
+  paddingRight: 10,
+}
+
+var rowContentsText = {
+  fontSize: 18,
+  fontFamily: mainfont,
+}
+
+var newsfeedContainer = {
+  paddingLeft: 5,
+  marginTop: 350,
+}
+
+var newsfeedTitle = {
+  fontFamily: mainfont,
+  fontSize: titleFontSize,
+  paddingLeft: leftMargin,
+  paddingTop: 25,
+}
+
 
 //ReactDOM.render(
-//  <Newsfeed data={data} />,
-//  document.getElementById('newsfeed_container')
+//  <Profile/>,
+//  document.getElementById('profile_container')
 //);
-export default Newsfeed;
+export default Profile;

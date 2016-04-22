@@ -1,8 +1,11 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React from 'react';
+import ReadDOM from 'react-dom'
 import './menu_styles.css';
 import Menu from './menu';
-import Newsfeed from './newsfeed';
+//import Newsfeed from './newsfeed';
+import Profile from './profile';
 
-render(<Menu />, document.getElementById('root'));
-render(<Newsfeed />, document.getElementById('root'));
+
+
+ReactDOM.render(<Profile/>, document.getElementById('root'));
+
