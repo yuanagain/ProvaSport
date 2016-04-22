@@ -21,6 +21,7 @@ var {
   ScrollView,
   TouchableOpacity,
   Platform,
+  RefreshControl,
 } = React;
 
 var defaultHeight = _cvals.slength / 2 * _cvals.dscale + 1
@@ -260,6 +261,7 @@ var Bracket = React.createClass({
         );
     }
   },
+
 });
 
 var Final = React.createClass({

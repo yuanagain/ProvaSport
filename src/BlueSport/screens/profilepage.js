@@ -32,6 +32,7 @@ var {
   TouchableOpacity,
   ScrollView,
   ListView,
+  RefreshControl,
   Modal,
 } = React;
 
@@ -42,6 +43,7 @@ var ProfilePage = React.createClass({
       {
         player: Player.default_player,
         loaded: false,
+        isRefreshing: false,
       }
     );
   },
@@ -68,7 +70,16 @@ var ProfilePage = React.createClass({
                 navigator={this.props.navigator} />
       </View>
       <ScrollView styles={[styles.scroll, {height: windowSize.width}]}
-                  contentContainerStyle={styles.content} >
+                  contentContainerStyle={styles.content} 
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.isRefreshing}
+                      onRefresh={this.onRefresh}
+                      tintColor={'white'}
+                      colors={['#ff0000', '#00ff00', '#0000ff']}
+                      backgroundColor={_cvals.skorange}
+                    />
+                  }>
         <Image source={{uri: this.state.player.prof_pic}}
                style={styles.pic} />
 
@@ -119,6 +130,12 @@ var ProfilePage = React.createClass({
           onPress={this.toTeamListing} />
         <View style={_cstyles.section_divider_line}></View>
 
+        <SimpleRow
+          title={'Tournaments'}
+          value={this.state.player.tournaments.length}
+          onPress={this.toTournamentListing} />
+        <View style={_cstyles.section_divider_line}></View>
+
         <SimpleRow title={"Career Matches"}
                    value={this.state.player.matches.length}
                    onPress={()=>this.toMatchListing()}/>
@@ -151,6 +168,14 @@ var ProfilePage = React.createClass({
     this.setState({loaded : true})
   },
 
+  onRefresh: function() {
+    this.setState({isRefreshing: true})
+    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    setTimeout(() => {
+      this.setState({isRefreshing: false})
+    }, _cvals.timeout); 
+  },
+
   componentDidMount: function () {
     // this.state.match = this.props.match
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
@@ -167,6 +192,18 @@ var ProfilePage = React.createClass({
       passProps: {
         navigator: this.props.navigator,
         teams: this.state.player.teams
+      }
+    })
+  },
+
+  toTournamentListing() {
+    var TournamentListingPage = require('../screens/tournamentlistingpage')
+    this.props.navigator.push({
+      id: "Tournament",
+      component: TournamentListingPage,
+      passProps: {
+        navigator: this.props.navigator,
+        tournaments: this.state.player.tournaments
       }
     })
   },

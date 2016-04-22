@@ -26,6 +26,7 @@ var {
   ScrollView,
   Image,
   Platform,
+  RefreshControl,
 } = React;
 
 var MatchPage = React.createClass({
@@ -91,7 +92,16 @@ var MatchPage = React.createClass({
           <Header title={"MATCH"}
                 mode={'nav'}
                 navigator={this.props.navigator} />
-          <ScrollView style={styles.scroll_container}>
+          <ScrollView style={styles.scroll_container}
+                      refreshControl={
+                        <RefreshControl
+                          refreshing={this.state.isRefreshing}
+                          onRefresh={this.onRefresh}
+                          tintColor={'white'}
+                          colors={['#ff0000', '#00ff00', '#0000ff']}
+                          backgroundColor={_cvals.skorange}
+                        />
+                      }>
             <View style={_cstyles.body_container}>
 
               <SimpleRow title={"Date "} value={_ctools.toDate(new Date(this.state.match.datetime))} />
@@ -138,6 +148,14 @@ var MatchPage = React.createClass({
         {buttons}
       </View>
     );
+  },
+
+  onRefresh: function() {
+    this.setState({isRefreshing: true})
+    Match._GetMatch(this.props.matchid, this.fetchMatch)
+    setTimeout(() => {
+      this.setState({isRefreshing: false})
+    }, _cvals.timeout); 
   },
 
   getTeamid1: function() {

@@ -14,6 +14,7 @@ var slength = 75 * dscale
 const _cvals = {
   mainfont: 'avenir',
   skorange: '#F5A623',
+  skorangelight: '#f9cd86',
   skblue: '#4A90E2',
   skbluelight: '#a6c9f2',
   sklightgreen: "#7ED321",
@@ -27,6 +28,7 @@ const _cvals = {
   brickheight: ((slength) * 3 / 5 - 4 * dscale),
   thumbslength: ((slength) * 3 / 5 - 12 * dscale),
   stdmargin: 8 * dscale,
+  timeout: 1000,
 }
 
 module.exports = _cvals;
