@@ -26,6 +26,18 @@ function createTournament(obj) {
           reject();
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
+          obj.matches.forEach(function(matchid) {
+            Match.addTournament(matchid, newRef.key());
+          });
+          //bind team to tourn
+          obj.teams.forEach(function(teamid) {
+            Team.addTournament(teamid, value);
+            Team.getTeam(teamid).then(function(team){
+              team.players.forEach(function(playerid){
+                Player.addTournament(playerid, newRef.key())
+              });
+            });
+          });
           resolve(newRef.key());
         }
       });
@@ -46,6 +58,19 @@ function _CreateTournament(obj, callback) {
       });
     })
     promise.then(function (value) {
+      // add all matchid to players
+      obj.matches.forEach(function(matchid) {
+        Match.addTournament(matchid, value);
+      });
+      //bind team to tourn
+      obj.teams.forEach(function(teamid) {
+        Team.addTournament(teamid, value);
+        Team.getTeam(teamid).then(function(team){
+          team.players.forEach(function(playerid){
+            Player.addTournament(playerid, value)
+          });
+        });
+      });
       callback(value)
     }).catch(function() {
       console.log("Something went wrong in _CreateTeam")

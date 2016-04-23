@@ -8,7 +8,6 @@ import * as Player from '../modules/player'
 import * as Team from '../modules/team'
 import * as Tournament from '../modules/tournament'
 import * as Trophy from '../modules/trophy'
-import * as Match from '../modules/match'
 
 
 
@@ -85,6 +84,20 @@ function createMatch(obj) {
           reject();
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
+
+          obj.teams.forEach(function(teamid){
+            Team.addMatch(teamid, newRef.key());
+            //Get the team?
+            Team.getTeam(teamid).then(function(value){
+              value.players.forEach(function(playerid){
+                Player.addMatch(playerid, newRef.key())
+              });
+            });
+
+            /* if(obj.tournamentid != -1 ){
+              Player.addTournament(playerid, obj.tournamentid)
+            }*/
+          });
           resolve(newRef.key());
         }
       });
@@ -108,6 +121,21 @@ function _CreateMatch(obj, callback) {
       });
     })
     promise.then(function (value) {
+      // add all matchid to players
+      obj.teams.forEach(function(teamid){
+        Team.addMatch(teamid, value);
+        //Get the team?
+        Team.getTeam(teamid).then(function(team){
+          team.players.forEach(function(playerid){
+            Player.addMatch(playerid, value)
+          });
+        });
+
+        /* if(obj.tournamentid != -1 ){
+          Player.addTournament(playerid, obj.tournamentid)
+        }*/
+      });
+
       callback(value)
     }).catch(function(err) {
       console.log("Something went wrong in _CreateMatch"+err)
@@ -158,7 +186,7 @@ function changeStatus(matchid, code) {
     });
 }
 /* from a list go in and create all those objects and make them all */
-function createForList(query, auxarg, callback) {
+function createForList() {
 
 }
 function populate(data, index) {
@@ -210,21 +238,10 @@ var default_match =
  * Then we create tournaments tonight
  */
 function tieMatchTo(matchid, playerid, teamid) {
-  var path1= ref.child("match").child(matchid).child("teams")
-  var path2= ref.child("player").child(playerid)
-  var path3= ref.child("team").child(teamid)
-  //var path1 = "match/35/teams/1";
-  path1.set({0:teamid})
+   Match.addTeam(teamid);
+   Team.addMatch(matchid);
+   Player.addMatch(matchid);
 
-  var pathTeams = path2.child("teams").push()
-  var pathMatches = path2.child("matches").push()
-  pathTeams.set(teamid);
-  pathMatches.set(matchid);
-
-  var path3Match = path3.child('matches').push()
-  var path3player = path3.child('players').push()
-  path3Match.set(matchid);
-  path3player.set(playerid);
 }
 
 //tieMatchTo(35, 1, 1)

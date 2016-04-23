@@ -144,6 +144,9 @@ function createTeam(obj) {
           reject();
         } else {
           console.log("Data CREATED successfully createT "+ newRef.key());
+          obj.players.forEach(function(playerid){
+            Player.addTeam(playerid, value)
+          });
           resolve(newRef.key());
         }
       });
@@ -164,6 +167,9 @@ function _CreateTeam(obj, callback) {
       });
     })
     promise.then(function (value) {
+      obj.players.forEach(function(playerid){
+        Player.addTeam(playerid, value)
+      });
       callback(value)
     }).catch(function(error) {
       console.log("Something went wrong in _CreateTeam"+ error)
