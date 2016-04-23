@@ -12,7 +12,14 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.json$/, loader: "json" },
-      { test: /\.js$/, loader: 'babel', exclude: /node_modules/, query: {presets:['es2015', 'react']} },
+      { test: /\.js$/, loader: 'babel', exclude: /node_modules/, query: {
+                                                                  presets: [
+                                                                    'babel-preset-es2015',
+                                                                    'babel-preset-react',
+                                                                    'babel-preset-stage-0',
+                                                                  ].map(require.resolve),
+                                                                }
+ },
       { test: /\.css$/, loader: 'style!css?modules!postcss' },
     ]
   },
