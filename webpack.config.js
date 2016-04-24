@@ -21,7 +21,7 @@ module.exports = {
                                                                   ].map(require.resolve),
                                                                 }
  },
-      { { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
+      {test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader')},
     ]
   },
   postcss: [
@@ -32,8 +32,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: __dirname + "/app/main.html"
     }),
-    new webpack.HotModuleReplacementPlugin()
-    new ExtractTextPlugin('app.css')
+    new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin('app.css'),
   ],
 
   devServer: {
