@@ -11,6 +11,6 @@ import MatchBrick from './parts/matchbrick';
 import PlayerBrick from './parts/playerbrick';
 import TeamSquare from './parts/teamsquare';
 
-//ReactDOM.render(<Menu items = {['HOME', 'PROFILE', 'MATCHES', 'TOURNAMENTS', 'ABOUT']}/>, document.getElementById('root'));
-ReactDOM.render(<Bracket/>, document.getElementById('root'));
+ReactDOM.render(<Menu items = {['HOME', 'PROFILE', 'MATCHES', 'TOURNAMENTS', 'ABOUT']}/>, document.getElementById('root'));
+//ReactDOM.render(</>, document.getElementById('root'));
 
