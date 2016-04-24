@@ -1,12 +1,13 @@
 var webpack = require('webpack');
+const path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-source-map',
-  entry: __dirname + "/app/main.js",
+  entry: "./app/main.js",
   output: {
-    path: __dirname + "/build",
+    path: path.join(__dirname, 'app'),
     filename: "bundle.js"
   },
 
