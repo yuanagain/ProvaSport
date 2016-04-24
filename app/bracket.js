@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TeamBrick from './teambrick';
-import MatchBrick from './matchbrick';
+import TeamBrick from './parts/teambrick';
+import MatchBrick from './parts/matchbrick';
 
 var getForkMargin = function(level) {
   var mult = 0;

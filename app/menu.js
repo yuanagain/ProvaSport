@@ -5,6 +5,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+import './styles/menu_styles.css'
+
 // Header
 var Menu = React.createClass({
   getInitialState: function() {

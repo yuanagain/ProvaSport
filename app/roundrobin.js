@@ -1,7 +1,10 @@
 import React from 'react';
 
-import TeamBrick from './teambrick';
-import MatchBrick from './matchbrick';
+import TeamBrick from './parts/teambrick';
+import MatchBrick from './parts/matchbrick';
+import ScoreSquare from './parts/scoresquare';
+import TeamSquare from './parts/teamsquare';
+import PlayerBrick from './parts/playerbrick';
 
 
 var RRMatchSquare = React.createClass({
@@ -19,7 +22,7 @@ var RRMatchSquare = React.createClass({
     } = this.props;
 
     if (this.state.type == 'match') {
-      var ScoreSquare = require('./scoresquare')
+      var ScoreSquare = require('./parts/scoresquare')
       return (
         <div style={[styles.match, styles.border]}>
           <ScoreSquare matchid={this.state.item}/>
@@ -27,7 +30,7 @@ var RRMatchSquare = React.createClass({
         )
     }
     if (this.state.type == 'icon') {
-      var TeamSquare = require('./teamsquare')
+      var TeamSquare = require('./parts/teamsquare')
       return (
         <div style={[styles.icon, ]}>
           <TeamSquare teamid={this.state.item} />
@@ -46,7 +49,7 @@ var RRMatchSquare = React.createClass({
         )
     }
     if (this.state.type == 'player') {
-      var PlayerBrick = require('./playerbrick')
+      var PlayerBrick = require('./parts/playerbrick')
       return (
         <div style={[styles.player, styles.border]}>
           <PlayerBrick playerid={this.state.item}/>
@@ -54,7 +57,7 @@ var RRMatchSquare = React.createClass({
         )
     }
     if (this.state.type == 'team') {
-      var TeamBrick = require('./teambrick')
+      var TeamBrick = require('./parts/teambrick')
       return (
         <div style={[styles.player, styles.border]}>
         <TeamBrick teamid={this.state.item}/>
@@ -75,7 +78,7 @@ var RRMatchRow = React.createClass({
       matchrow,
     } = this.props;
 
-    var renderMatch = (data) => <RRMatchSquare data={data} key={_ctools.randomKey()} />;
+    var renderMatch = (data) => <RRMatchSquare data={data} key={randomKey()} />;
     return (
       <div style={styles.matchrow}>
         {this.props.matchrow.map(renderMatch)}
@@ -90,7 +93,7 @@ var RoundRobin = React.createClass({
     return (
     {
       mode: 'normal',
-      matches: this.props.matches,
+      matches: RRMatrix(rr1),
       scrollstyle: styles.scroll,
     }
     );
@@ -100,20 +103,17 @@ var RoundRobin = React.createClass({
     var {
       matches,
       style,
-      ...props
     } = this.props;
 
-    var tslength = slength + 2 * _cvals.dscale
+    var tslength = slength + 2
     var height = this.state.matches.length * tslength
     var width = height + tslength * 1.5
 
-    var renderRow = (matchrow) => <RRMatchRow navigator={this.props.navigator}
-    matchrow={matchrow}
-    key={_ctools.randomKey()} />;
+    var renderRow = (matchrow) => <RRMatchRow matchrow={matchrow}
+                                              key={randomKey()} />;
     return (
       <div>
         <div style={[styles.scroll,
-                    {width: windowSize.width},
                     this.props.style]}>
           {this.state.matches.map(renderRow)}
         </div>
@@ -122,6 +122,52 @@ var RoundRobin = React.createClass({
   },
 });
 
+var randomKey = function() {
+  return Math.random(1, 2^32 - 1)
+}
+
+var rr1 = {
+  teams: [1, 0, 1, 0, 1],
+  matches: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+}
+
+var RRMatrix = function(tournament) {
+  var teams = tournament.teams
+  var matches = tournament.matches
+  var matrix = []
+  var k = 0
+  for (var i = 0; i < teams.length + 1; i++) {
+    var row = []
+    for (var j = 0; j < teams.length + 1; j++) {
+      if (i == 0) {
+        if (j == 0) {
+          row.push({'item': false, 'type': 'blank'})
+        }
+        else {
+          row.push({'item': teams[j - 1], 'type': 'icon'})
+        }
+      }
+      else {
+        if (j == 0) {
+          row.push({'item': teams[i - 1], 'type': 'team'})
+        }
+        else if (i == j) {
+          row.push({'item': 0, 'type': 'empty'})
+        }
+        else if (i < j) {
+          row.push({'item': matches[k], 'type': 'match'})
+          k++
+        }
+        else if (i > j) {
+          row.push(matrix[j][i])
+        }
+      }
+    }
+    matrix.push(row)
+  }
+  return matrix
+}
+
 // TODO: Make universal
 var mainfont = 'avenir';
 var slength = 75;
@@ -129,12 +175,49 @@ var bricklength = slength * 2.5 - 2;
 var brickheight = ((slength) * 3 / 5 - 4);
 
 
-var fork_styles = {
-
-};
-
 var styles = {
 
+  container: {
+    flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    opacity: 1.00,
+    margin: 1,
+  },
+  match: {
+    height: slength,
+    width: slength,
+    marginHorizontal: 1,
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    height: slength,
+    width: slength,
+    marginHorizontal: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  player: {
+    height: slength,
+    width: 2.5 * slength,
+    marginHorizontal: 1,
+    justifyContent: 'center',
+  },
+  border: {
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  matchrow: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    alignSelf: 'flex-end',
+    margin: 1
+  },
 }
 
 export default RoundRobin;

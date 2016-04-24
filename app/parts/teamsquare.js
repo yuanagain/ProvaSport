@@ -1,4 +1,5 @@
 import React from 'react';
+import TeamBrick from './teambrick'
 
 var default_player = {
     "name" : {
@@ -26,9 +27,9 @@ var default_player = {
 var default_match = {
         "datetime": 0,
         "sport": "LOADING",
-        "scores": [["...","..."]],
+        "scores": [["0","1"],["0","1"],["0","1"],["0","1"]],
         "tournamentid": -1,
-        "winner": -1,
+        "winner": 1,
         "data": {},
         "teams": [0,0],
         "payoutdata": {
@@ -50,40 +51,27 @@ var default_team = {
 };
 
 
-var TeamBrick = React.createClass({
+var TeamSquare = React.createClass({
 
-  toTeamPage: function() {
-    if (this.props.disabled) {
-      return
-    }
-    /*var TeamPage = require('../screens/teampage')
-    this.props.navigator.push({
-      id: "TeamPage" + String(_ctools.randomKey()),
-      component: TeamPage,
-      passProps: {
-        navigator: this.props.navigator,
-        teamid: this.props.teamid
-      }
-    })*/
-  },
-
-  toPlayerPage: function() {
-    /*var ProfilePage = require('../screens/profilepage')
-    this.props.navigator.push({
-      id: "ProfilePage" + String(_ctools.randomKey()),
-      component: ProfilePage,
-      passProps: {
-        navigator: this.props.navigator,
-        playerid: this.state.team.players[0]
-      }
-    })*/
+  onPress: function() {
+    // var ProfilePage = require('../screens/profilepage')
+    // this.props.navigator.push({
+    //   id: "ProfilePage" + String(_ctools.randomKey()),
+    //   component: ProfilePage,
+    //   passProps: {
+    //     navigator: this.props.navigator,
+    //     playerid: this.props.playerid
+    //   }
+    // })
   },
 
   getInitialState: function() {
     return (
       {
         team: default_team,
-        loaded: false,
+        //loaded: false,
+        // Changed to true for testing
+        loaded: true,
       }
     );
   },
@@ -91,52 +79,34 @@ var TeamBrick = React.createClass({
     return (
       {
         teamid: -1,
-        disabled: false,
       }
     )
   },
   render: function() {
     var {
       teamid,
-      disabled,
     } = this.props;
 
-    if (this.props.disabled || this.state.team.name == 'BYE ') {
-      return (
-        <div style={styles.teambrick}>
-          <div style={[styles.center, styles.left]} >
-            <img style={styles.im}
-                 src='http://facebook.github.io/react/img/logo_og.png'/>
-          </div>
-          <div style={styles.right}>
-              <p style={styles.detail_text}>
-                    {this.state.team.name}
-              </p>
-          </div>
-        </div>
-        )
+    if (this.state.loaded == false) {
+      return (<div></div>)
     }
 
     return (
-      <div style={styles.teambrick}
-                        onPress={() => this.toTeamPage()}>
-        <div style={[styles.center, styles.left]} >
-            <img style={styles.im}
+      <div style={styles.teamsquare}>
+        <div style={[styles.icon, ]}>
+          <img style={styles.im}
                  src='http://facebook.github.io/react/img/logo_og.png'/>
-        </div>
-        <div style={styles.right}>
-            <p style={styles.detail_text}>
-                  {this.state.team.name}
-            </p>
+          <p style={styles.detail_text}>
+            {this.state.team.name}
+          </p>
         </div>
       </div>
     );
   },
 
   fetchTeam: function(data) {
-    this.state.team = data
     this.setState({loaded : true})
-    // _GetTeam(this.state.player.teams[0], this.fetchTeam)
+    this.setState({team : data})
   },
 
   componentDidMount: function () {
@@ -149,11 +119,13 @@ var TeamBrick = React.createClass({
   },
 });
 
+// TODO: Make universal
 var mainfont = 'avenir';
-var slength = 75;
+var slength = 100;
 var bricklength = slength * 2.5 - 2;
 var brickheight = ((slength) * 3 / 5 - 4);
 var thumbslength = ((slength) * 3 / 5 - 12);
+
 var styles = {
   detail_text: {
     color: 'black',
@@ -161,13 +133,12 @@ var styles = {
     fontFamily: mainfont,
     fontWeight: 500,
   },
-  teambrick: {
-    height: brickheight,
-    width: bricklength,
+  teamsquare: {
+    height: slength,
+    //width: slength,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
-    paddingLeft: 4,
   },
   im: {
     height: thumbslength,
@@ -176,19 +147,12 @@ var styles = {
     marginRight: 4,
     float: 'left',
   },
-  left:{
-    alignSelf: 'center',
-    justifyContent: 'space-between',
-  },
-  right: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height: thumbslength + 5,
-  },
-  center: {
-    justifyContent: 'center',
+  icon: {
+    height: slength,
+    width: slength,
+    marginHorizontal: 1,
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
 }
-
-export default TeamBrick;
+export default TeamSquare;
