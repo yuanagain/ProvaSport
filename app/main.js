@@ -6,6 +6,7 @@ import Profile from './profile';
 import Bracket from './bracket';
 import RoundRobin from './roundrobin';
 
+// Misc Parts, put here for testing purposes.
 import TeamBrick from './parts/teambrick';
 import MatchBrick from './parts/matchbrick';
 import PlayerBrick from './parts/playerbrick';
