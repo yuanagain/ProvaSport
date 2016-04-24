@@ -1,13 +1,9 @@
 The following link is really helpful to understand the project setup: http://www.pro-react.com/materials/appendixA/. Cred @ Lukas.
 
 Don’t forget:
-	cd web_code
 	npm install
 
 To start server:
-	node_modules/.bin/webpack-dev-server
-
-Alternatively (if you’ve configured package.json):
 	npm start
 
 If you encounter an error, first try npm install. If you still get the error:
@@ -16,8 +12,3 @@ If you encounter an error, first try npm install. If you still get the error:
 
 Alternatively:
 	killall -9 node
-
-If you get any npm problems, try these:
-	cd web_code
-	npm install
-	npm install react-infinite-grid
