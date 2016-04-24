@@ -27,6 +27,6 @@ var data = [
   {winner: 'Jessie Wang', loser: 'Joe Arnolds', result: 'beat', sport: 'tennis', date: 'April 10, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
 ];
 
-ReactDOM.render(<Menu items = {['HOME', 'PROFILE', 'MATCHES', 'TOURNAMENTS', 'ABOUT']}/>, document.getElementById('root'));
-//ReactDOM.render(<Newsfeed data={data}/>, document.getElementById('root'));
+//ReactDOM.render(<Menu items = {['HOME', 'PROFILE', 'MATCHES', 'TOURNAMENTS', 'ABOUT']}/>, document.getElementById('root'));
+ReactDOM.render(<Newsfeed data={data}/>, document.getElementById('root'));
 
