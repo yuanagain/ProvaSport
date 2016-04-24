@@ -1,5 +1,5 @@
 import React from 'react';
-import ReadDOM from 'react-dom'
+import ReactDOM from 'react-dom'
 import Menu from './menu';
 import Newsfeed from './newsfeed';
 import Profile from './profile';

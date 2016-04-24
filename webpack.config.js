@@ -7,8 +7,9 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: "./app/main.js",
   output: {
-    path: path.join(__dirname, 'app'),
-    filename: "bundle.js"
+    path: path.join(__dirname, 'public'),
+    filename: "bundle.js",
+    publicPath: '/public/'
   },
 
   module: {
@@ -31,10 +32,13 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: __dirname + "/app/main.html"
+      template: __dirname + "/index.html"
     }),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('app.css'),
+    new webpack.ProvidePlugin({
+            "React": "react",
+        }),
   ],
 
   devServer: {
