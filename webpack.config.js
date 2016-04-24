@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 const path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -23,7 +22,9 @@ module.exports = {
                                                                   ].map(require.resolve),
                                                                 }
  },
-      {test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader')},
+      {test: /\.css$/,
+        loader: "style-loader!css-loader",
+        include: path.join(__dirname, 'app', 'styles') },
     ]
   },
   postcss: [
@@ -35,7 +36,6 @@ module.exports = {
       template: __dirname + "/index.html"
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('app.css'),
     new webpack.ProvidePlugin({
             "React": "react",
         }),
