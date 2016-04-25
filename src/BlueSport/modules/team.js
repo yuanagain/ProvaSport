@@ -83,6 +83,7 @@ export function addMatch(teamid, matchid) {
     //list.push(1);
 
     teamdb.child(teamid).child('matches').set(list)
+    //add to players
   }).catch(function(err){
     console.log("Failed to add match to team "+teamid+ "   "+matchid + "\n" + err);
   });
@@ -186,6 +187,24 @@ function _CreateTeam(obj, callback) {
     });
 }
 
+export function addTeamPlayersToMatch(teamid, matchid) {
+  return new Promise(function(resolve, reject) {
+      teamdb.child(teamid).child('players').on("value", function(snapshot) {
+        var players = []
+        players.concat(snapshot.val())
+        if (players) {
+          players.forEach(function(playerid){
+            Player.addMatch(playerid, matchid)
+          })
+        }
+        resolve(true);
+      });
+   });
+}
+
+
+
+
 var default_team = {
     "name": "Loading",
     "players": [],
@@ -201,4 +220,5 @@ var bye = {
     "thumbnail": " "
 };
 
-module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam, getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer};
+module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
+   getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch};

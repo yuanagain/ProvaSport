@@ -91,11 +91,7 @@ function createMatch(obj) {
             obj.teams.forEach(function(teamid){
               Team.addMatch(teamid, key);
               //Get the team?
-              Team.getTeam(teamid).then(function(value){
-                value.players.forEach(function(playerid){
-                  Player.addMatch(playerid, key);
-                });
-              });
+              Team.addTeamPlayersToMatch(teamid, key);
             /* if(obj.tournamentid != -1 ){
               Player.addTournament(playerid, obj.tournamentid)
             }*/
