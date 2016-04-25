@@ -1,11 +1,8 @@
-// Source: http://jsfiddle.net/dannymarkov/vfcfndxj/1/?utm_source=website&utm_medium=embed&utm_campaign=vfcfndxj/show
-// Author: Dan Markov
-// Date accessed: Sunday, April 10
-
 var React = require('react');
 var ReactDOM = require('react-dom');
 
 import './styles/menu_styles.css'
+import {Link} from 'react-router';
 
 // Header
 var Menu = React.createClass({
@@ -34,34 +31,28 @@ var Menu = React.createClass({
   },
   render: function() {
     var self = this;
+    var activeLink = {backgroundColor: '#F5A623'}
     return (
       <div id="header_container" style={Object.assign({width: this.state.width}, wrapper)}>
         <div id="logo">
           <p style={logo}>PROVASPORT</p>
         </div>
         <div id = "menu" style={menu}>
-          <ul> {
-            this.props.items.map(function(m, index) {
-              var style = '';
-              if (self.state.focused == index) {
-                style = 'focused';
-              }
-              return <li className = {
-                style
-              }
-              onClick = {
-                self.clicked.bind(self, index)
-              } > {
-                m
-              } </li>;
-            })
-          }
+          <ul>
+            <Link to="/home" activeStyle={activeLink}><li>Home</li></Link>
+            <Link to="/profile" activeStyle={activeLink}><li>Profile</li></Link>
+            <Link to="/matches" activeStyle={activeLink}><li>Matches</li></Link>
+            <Link to="/tournaments" activeStyle={activeLink}><li>Tournaments</li></Link>
+            <Link to="/about" activeStyle={activeLink}><li>About</li></Link>
           </ul>
         </div>
+        {this.props.children}
       </div>
     );
   }
 });
+
+
 
 // Styling
 var wrapper = {
