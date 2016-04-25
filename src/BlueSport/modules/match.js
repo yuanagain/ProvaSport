@@ -87,7 +87,7 @@ function createMatch(obj) {
           console.log("Data CREATED successfully "+ newRef.key());
           var key = newRef.key();
           console.log(Team.addMatch)
-/*          if (obj.teams) {
+         if (obj.teams) {
             obj.teams.forEach(function(teamid){
               Team.addMatch(teamid, key);
               //Get the team?
@@ -96,13 +96,13 @@ function createMatch(obj) {
                  * value.players.forEach(function(playerid){
                  *   Player.addMatch(playerid, newRef.key())
                  * });
-                 *
+                 */
               });
             /* if(obj.tournamentid != -1 ){
               Player.addTournament(playerid, obj.tournamentid)
-            }*
+            }*/
             });
-          } */
+          }
           resolve(newRef.key());
         }
       });
@@ -129,13 +129,13 @@ function _CreateMatch(obj, callback) {
         obj.teams.forEach(function(teamid){
           Team.addMatch(teamid, value);
           //Get the team?
-          /*
-           * Team.getTeam(teamid).then(function(team){
-           *   team.players.forEach(function(playerid){
-           *     Player.addMatch(playerid, value)
-           *   });
-           * });
-           */
+
+           Team.getTeam(teamid).then(function(team){
+              team.players.forEach(function(playerid){
+                Player.addMatch(playerid, value)
+             });
+            });
+
 
           /* if(obj.tournamentid != -1 ){
             Player.addTournament(playerid, obj.tournamentid)
@@ -264,7 +264,7 @@ var default_match =
         },
         "status": {
           '0': 0,
-          '1': 1
+          '1': 0
         },
         "name": "Loading",
         "location": "LOADING"
@@ -277,7 +277,7 @@ var default_match =
           "tournamentid": -1,
           "winner": -1,
           "data": {},
-          "teams": ["BYE","BYE"],
+          "teams": ["TBD","TBD"],
           "payoutdata": {
             "xp": -1,
             "cash": -1

@@ -137,8 +137,10 @@ var createBracket = function(data) {
 
   var depth = Math.ceil(Math.log(teams.length) / Math.log(2))
   var target_length = Math.pow(2, depth)
-  for (var i = 0; i < target_length - teams.length; i++) {
+  //console.log("DEPTH  "+depth+"  TARGET:"+target_length)
+  for (var i = 0; i < target_length - teams.length + 2; i++) {
     //create the Bye teamid this should be fine
+    //console.log("BYE")
     teams.push("Bye")
   }
   var placements = new Array(teams.length)
@@ -148,6 +150,8 @@ var createBracket = function(data) {
   }
   //might have to change ot placements.length-2
   loop1:
+  //console.log("PLACEMTNS: "+placements.length)
+  //console.log("PLACEMTNS: "+placements)
     for (var i = 0; i < placements.length - 1; i += 2) {
       var team1 = placements[i];
       var team2 = placements[i+1];
@@ -158,10 +162,12 @@ var createBracket = function(data) {
       matchi.teams[1] = team2;
       matches.push(matchi);
     }
+    //console.log("matches.length: "+matches.length)
+    //console.log(matches)
     //placements.length = 2^N of matches but still have E 2^N-i for i > 0 to create
 
     //next depths are the TBD match
-    for (var i = depth - 1; i >= 0; i--) {
+    for (var i = depth - 2; i >= 0; i--) {
       var cap = Math.pow(2, i);
       for (var j = 0; j < cap; j++){
         //run 2^depth times
@@ -169,16 +175,12 @@ var createBracket = function(data) {
         matches.push(matchi)
       }
     }
+    //console.log(matches.length)
     Match.createFromList(matches).then(resp=>resolve(resp)).catch(function(err){console.log(err);})
   });
 }
 
 
-var updateBracket = function(data, result) {
-  // get index of match played
-
-  // update player for that match
-}
 
 var createTrace = function(depth) {
   var n = Math.pow(2, depth)
@@ -203,9 +205,7 @@ var createTrace = function(depth) {
 }
 
 
-var updateBracket = function(tournament) {
 
-}
 /* --------------TESTING SECTION ---------------------
 takes in data of the form :
   dictionary with team array
