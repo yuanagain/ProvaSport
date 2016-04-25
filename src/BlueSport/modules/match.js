@@ -4,8 +4,8 @@
  * Imports
  */
 import * as User from '../modules/userdata'
-import * as Player from '../modules/player'
-import * as Team from '../modules/team'
+import * as Player from './player'
+import * as Team from './team'
 import * as Tournament from '../modules/tournament'
 import * as Trophy from '../modules/trophy'
 
@@ -76,6 +76,7 @@ function setMatch(matchid, obj) {
     });
 }
 function createMatch(obj) {
+  //console.log("CALLED MATCH.CREATEMATCH!!!")
   return new Promise(function(resolve, reject) {
       var newRef = matchdb.push();
       newRef.set(obj, function(error) {
@@ -84,28 +85,30 @@ function createMatch(obj) {
           reject();
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
-
-          obj.teams.forEach(function(teamid){
-            Team.addMatch(teamid, newRef.key());
-            //Get the team?
-            Team.getTeam(teamid).then(function(value){
-              value.players.forEach(function(playerid){
-                Player.addMatch(playerid, newRef.key())
+          var key = newRef.key();
+          console.log(Team.addMatch)
+/*          if (obj.teams) {
+            obj.teams.forEach(function(teamid){
+              Team.addMatch(teamid, key);
+              //Get the team?
+              Team.getTeam(teamid).then(function(value){
+                /*
+                 * value.players.forEach(function(playerid){
+                 *   Player.addMatch(playerid, newRef.key())
+                 * });
+                 *
               });
-            });
-
             /* if(obj.tournamentid != -1 ){
               Player.addTournament(playerid, obj.tournamentid)
-            }*/
-          });
+            }*
+            });
+          } */
           resolve(newRef.key());
         }
       });
     });
 }
-function makeMatch(matchobj, team1, team2) {
-  createTeam(team1, team1)
-}
+
 
 function _CreateMatch(obj, callback) {
   var promise = new Promise(function(resolve, reject) {
@@ -122,30 +125,37 @@ function _CreateMatch(obj, callback) {
     })
     promise.then(function (value) {
       // add all matchid to players
-      obj.teams.forEach(function(teamid){
-        Team.addMatch(teamid, value);
-        //Get the team?
-        Team.getTeam(teamid).then(function(team){
-          team.players.forEach(function(playerid){
-            Player.addMatch(playerid, value)
-          });
+      if (obj.teams){
+        obj.teams.forEach(function(teamid){
+          Team.addMatch(teamid, value);
+          //Get the team?
+          /*
+           * Team.getTeam(teamid).then(function(team){
+           *   team.players.forEach(function(playerid){
+           *     Player.addMatch(playerid, value)
+           *   });
+           * });
+           */
+
+          /* if(obj.tournamentid != -1 ){
+            Player.addTournament(playerid, obj.tournamentid)
+          }*/
         });
+      }
 
-        /* if(obj.tournamentid != -1 ){
-          Player.addTournament(playerid, obj.tournamentid)
-        }*/
-      });
-
-      callback(value)
+      callback(value);
     }).catch(function(err) {
       console.log("Something went wrong in _CreateMatch"+err)
     });
 }
+
+//search through fields of data to see if key to update in matches
 function updateMatch(matchid, data) {
   matchdb.child(matchid).update({
     data
   })
 }
+
 
 function updateScores(matchid, data) {
   matchdb.child(matchid).update({
@@ -186,9 +196,19 @@ function changeStatus(matchid, code) {
     });
 }
 /* from a list go in and create all those objects and make them all */
-function createForList() {
+function _CreateFromList(matchobjlist, callback) {
+  var matchids = []
+  var i = 0;
 
+  matchobjlist.forEach(function(matchobj){
+    createMatch(matchobj).then(resp=>{
+      matchids.push(resp);
+      i+=1;
+      if(i == matchobjlist.length) callback(matchids);
+    }).catch(function(err){console.log(err)});
+  })
 }
+
 function populate(data, index) {
   this.array[index] = data
   // if this.array no longer contains uninitialized entries
@@ -219,7 +239,7 @@ var default_match =
         "tournamentid": -1,
         "winner": -1,
         "data": {},
-        "teams": [0,0],
+        "teams": [],
         "payoutdata": {
           "xp": -1,
           "cash": -1
@@ -228,9 +248,29 @@ var default_match =
           '0': 0,
           '1': 1
         },
-        "name": "matchesHaveNames?",
+        "name": "Loading",
         "location": "LOADING"
   };
+  var TBD =
+    {
+          "datetime": 0,
+          "sport": "LOADING",
+          "scores": [["...","..."]],
+          "tournamentid": -1,
+          "winner": -1,
+          "data": {},
+          "teams": ["BYE","BYE"],
+          "payoutdata": {
+            "xp": -1,
+            "cash": -1
+          },
+          "status": {
+            '0': 0,
+            '1': 0
+          },
+          "name": "TBD",
+          "location": "TBD"
+    };
 
 
 /* Simultanious update of match player test module to
@@ -241,20 +281,21 @@ function tieMatchTo(matchid, playerid, teamid) {
    Match.addTeam(teamid);
    Team.addMatch(matchid);
    Player.addMatch(matchid);
-
 }
 
 //tieMatchTo(35, 1, 1)
 /*CHANGED ***************HOW TO PARSE ARRAYS************** TODO*/
-ref.child("match").child(35).child("teams").on("value", function(snapshot){
-  var obj = snapshot.val()
-  var arr = Object.keys(obj).map(function(k) {
-     return obj[k]
-   });
-   console.log(obj)
-  console.log(arr)
-  ref.child("match").child(35).child("teams").set(arr);
-})
+/*
+ * ref.child("match").child(35).child("teams").on("value", function(snapshot){
+ *   var obj = snapshot.val()
+ *   var arr = Object.keys(obj).map(function(k) {
+ *      return obj[k]
+ *    });
+ *    console.log(obj)
+ *   console.log(arr)
+ *   ref.child("match").child(35).child("teams").set(arr);
+ * })
+ */
 
 function makeMatchA() {
   Team._CreateTeam(teamobj2).then(makematch(team1, team2));
@@ -272,5 +313,8 @@ function makeMatchA() {
   */
   //_CreateMatch(default_match, function(val) {console.log("new Match: " + val)})
   //updateScores(1, [[98,89],[0,1]]) TESTED SUCCESSFULLY
-module.exports = {_GetMatch, default_match, setMatch, createMatch, _SetMatch,
-                  _CreateMatch, updateScores, updateStatus};
+  var matchlist = [default_match, default_match, default_match]
+//createFromList(matchlist, function(array){console.log(array)})
+
+module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
+                  _CreateMatch, updateScores, updateStatus, _CreateFromList};

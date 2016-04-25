@@ -1,8 +1,9 @@
-/*
+/* TODO:
+* posibly need to export more things
  * Imports
  */
 import * as User from '../modules/userdata'
-import * as Player from '../modules/player'
+import * as Player from './player'
 import * as Tournament from '../modules/tournament'
 import * as Trophy from '../modules/trophy'
 import * as Match from '../modules/match'
@@ -10,7 +11,7 @@ import * as Match from '../modules/match'
 var teamdb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 teamdb = new Firebase("https://shining-torch-4767.firebaseio.com/team");
-/*possilby add stuff like isOnTeam etc.*/
+/*possibly add stuff like isOnTeam etc.*/
 
 function _GetTeam(teamid, callback) {
   /* var match = new Match(matchid); */
@@ -26,7 +27,7 @@ function _GetTeam(teamid, callback) {
       console.log("Failed");
     });
 }
-function getTeam(teamid) {
+export function getTeam(teamid) {
   /* var match = new Match(matchid); */
     return new Promise(function(resolve, reject) {
         teamdb.child(teamid).on("value", function(snapshot) {
@@ -48,7 +49,7 @@ function updateMatches(teamid, matchArray) {
   })
 }
 
-function addPlayer(teamid, playerid) {
+export function addPlayer(teamid, playerid) {
   var promise = new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
         var players = []
@@ -64,19 +65,26 @@ function addPlayer(teamid, playerid) {
   });
 }
 
-function addMatch(teamid, matchid) {
+export function addMatch(teamid, matchid) {
   var promise = new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('matches').on("value", function(snapshot) {
         var matches = []
         matches = snapshot.val();
+        if (matches)
+          matches.push(matchid);
+        else {
+          matches = [matchid];
+        }
         resolve(matches);
       });
    });
   promise.then(function(list){
-    list.push(matchid);
+    /*INPUT STOCK DATA TODO*/
+    //list.push(1);
+
     teamdb.child(teamid).child('matches').set(list)
-  }).catch(function(){
-    console.log("Failed to add match to team");
+  }).catch(function(err){
+    console.log("Failed to add match to team "+teamid+ "   "+matchid + "\n" + err);
   });
 }
 
@@ -109,8 +117,8 @@ function _AddMatch(teamid, matchid, callback) {
     list.push(matchid);
     teamdb.child(teamid).child('matches').set(list)
     callback(list)
-  }).catch(function(){
-    console.log("Failed to add match to team");
+  }).catch(function(err){
+    console.log("Failed to add match to team\n" + err);
   });
 }
 
@@ -143,9 +151,10 @@ function createTeam(obj) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
+          var key = newRef.key();
           console.log("Data CREATED successfully createT "+ newRef.key());
-          obj.players.forEach(function(playerid){
-            Player.addTeam(playerid, value)
+          [obj.players].forEach(function(playerid){
+            Player.addTeam(playerid, key)
           });
           resolve(newRef.key());
         }
@@ -167,7 +176,8 @@ function _CreateTeam(obj, callback) {
       });
     })
     promise.then(function (value) {
-      obj.players.forEach(function(playerid){
+      //console.log("\n\n"+Player.default_player)
+      [0,1].forEach(function(playerid){
         Player.addTeam(playerid, value)
       });
       callback(value)
@@ -191,5 +201,4 @@ var bye = {
     "thumbnail": " "
 };
 
-module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
-   getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer};
+module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam, getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer};

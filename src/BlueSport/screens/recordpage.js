@@ -217,8 +217,8 @@ var RecordPage = React.createClass({
       "matches": [],
       "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
     }
-    Team.createTeam(team1, this.harvestTeam1).then(resp=>this.state.teams[0] = resp)
-    Team.createTeam(team2, this.harvestTeam2).then(resp=>this.state.teams[1] = resp).then(this.submitMatch())
+     Team._CreateTeam(team1, this.harvestTeam1)/*.then(resp=>this.state.teams[0] = resp) */
+    //Team._CreateTeam(team2, this.harvestTeam2)//.then(resp=>this.state.teams[1] = resp).then(this.submitMatch())
   },
 
   harvestTeam1: function(team) {
@@ -229,13 +229,13 @@ var RecordPage = React.createClass({
       "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
     }
     //console.log("checkpoint 1")
-    this.props.teams[0] = team;
+    this.state.teams[0] = team;
     Team._CreateTeam(team2, this.harvestTeam2)
   },
 
   harvestTeam2: function(team) {
-    this.props.teams[1] = team;
-    //console.log("checkpoint 2")
+    this.state.teams[1] = team;
+    console.log(Team.addMatch)
     this.submitMatch()
   },
 
@@ -271,7 +271,7 @@ var RecordPage = React.createClass({
   },
 
   confirmSubmit: function(match) {
-    Player.addMatch(this.state.teams[0][0], match);
+    //Player.addMatch(this.state.teams[0][0], match);
     console.log(match)
     this.reset()
   },

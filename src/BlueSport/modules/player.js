@@ -72,7 +72,7 @@ function _CreatePlayer(callback) {
 }
 
 
-function addFriend(playerid, friend) {
+export function addFriend(playerid, friend) {
   var specificRef = playerdataRef.child(playerid).child('friends')
   var list = []
   specificRef.on('value', function(snap) { list = snap.val(); });
@@ -81,7 +81,7 @@ function addFriend(playerid, friend) {
   specificRef.set(list);
 }
 
-function addMatch(playerid, matchid) {
+export function addMatch(playerid, matchid) {
   var promise = new Promise(function(resolve, reject) {
       playerdataRef.child(playerid).child('matches').on("value", function(snapshot) {
         var matches = []
@@ -98,7 +98,7 @@ function addMatch(playerid, matchid) {
 }
 
 
-function addTeam(playerid, teamid) {
+export function addTeam(playerid, teamid) {
   var promise = new Promise(function(resolve, reject) {
       playerdataRef.child(playerid).child('teams').on("value", function(snapshot) {
         var teams = []
@@ -115,7 +115,7 @@ function addTeam(playerid, teamid) {
 }
 
 
-function addTournament(playerid, torunamentid) {
+export function addTournament(playerid, torunamentid) {
   var promise = new Promise(function(resolve, reject) {
       playerdataRef.child(playerid).child('tournaments').on("value", function(snapshot) {
         var tournaments = []
@@ -184,7 +184,7 @@ function _AddTournament(playerid, tournamentid, callback) {
   });
 }
 
-  var default_player = {
+export  var default_player = {
     "name" : {
       "first": "Loading",
       "last": "Loading",
@@ -209,5 +209,4 @@ function _AddTournament(playerid, tournamentid, callback) {
   };
   //_AddTeam(0,1,function(resp){console.log(resp)}) //TESTED SUCCESSFULLY(and _AddTournament, an)
 
-module.exports = {_GetPlayer, default_player, addMatch, addTeam, addFriend,
-  addTournament, _AddTeam, _AddMatch, _AddTournament};
+module.exports = {_GetPlayer, default_player, addMatch, addTeam, addFriend, addTournament, _AddTeam, _AddMatch, _AddTournament};

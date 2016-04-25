@@ -13,7 +13,7 @@ var tourndb = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
 tourndb = new Firebase("https://shining-torch-4767.firebaseio.com/tournament");
 /*player object within Player class*/
-
+//make update or remove team, etc.
 
 /* needs and object for th full data of a team fields
   */
@@ -31,7 +31,7 @@ function createTournament(obj) {
           });
           //bind team to tourn
           obj.teams.forEach(function(teamid) {
-            Team.addTournament(teamid, value);
+            Team.addTournament(teamid, newRef.key());
             Team.getTeam(teamid).then(function(team){
               team.players.forEach(function(playerid){
                 Player.addTournament(playerid, newRef.key())
@@ -100,14 +100,16 @@ function _GetTournament(tournamentid, callback) {
       "sport": "Loading",
       "matches": []
   };
-function makeTournament(matches, teams, location, type){
- var newTourn = $.extend( true, {}, default_tournament);
- newTourn.matches = matches;
- newTourn.teams = teams;
- newTourn.location = location;
- newTourn.type = type;
- return createTournament(newTourn);
-}
+/*
+ * function makeTournament(matches, teams, location, type){
+ *  var newTourn = $.extend( true, {}, default_tournament);
+ *  newTourn.matches = matches;
+ *  newTourn.teams = teams;
+ *  newTourn.location = location;
+ *  newTourn.type = type;
+ *  return createTournament(newTourn);
+ * }
+ */
 
 function addTeam(tournamentid, teamid) {
   var promise = new Promise(function(resolve, reject) {
@@ -174,5 +176,13 @@ function _AddMatches(tournamentid, matchid, callback) {
     console.log("Failed");
   });
 }
+
+
+/*Autonation of updating the tournament
+   Will be called when the previous match is completed by both teams */
+
+
+
+
 
 module.exports = {_GetTournament, default_tournament, addTeam, addMatches, _AddMatches, _AddTeam};
