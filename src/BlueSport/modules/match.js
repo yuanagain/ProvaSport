@@ -86,17 +86,15 @@ function createMatch(obj) {
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
           var key = newRef.key();
-          console.log(Team.addMatch)
+          //console.log(Team.addMatch)
          if (obj.teams) {
             obj.teams.forEach(function(teamid){
               Team.addMatch(teamid, key);
               //Get the team?
               Team.getTeam(teamid).then(function(value){
-                /*
-                 * value.players.forEach(function(playerid){
-                 *   Player.addMatch(playerid, newRef.key())
-                 * });
-                 */
+                value.players.forEach(function(playerid){
+                  Player.addMatch(playerid, key);
+                });
               });
             /* if(obj.tournamentid != -1 ){
               Player.addTournament(playerid, obj.tournamentid)

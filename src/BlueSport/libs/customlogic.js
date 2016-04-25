@@ -224,6 +224,6 @@ var dictTest = {
 //all teams need to be created before this point
 // if teams do not exist in data base then the method will crash
 //createRR(dictTest).then(resp=>console.log("RESPONSE:::::::::\n     "+resp));
-createBracket(dictTest).then(resp=>console.log(resp))
+//createBracket(dictTest).then(resp=>console.log(resp))
 
 module.exports = {RRMatrix, bracketMatrix, createTrace};
