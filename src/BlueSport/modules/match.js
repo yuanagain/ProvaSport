@@ -209,6 +209,24 @@ function _CreateFromList(matchobjlist, callback) {
   })
 }
 
+function createFromList(matchobjlist, callback) {
+  return new Promise(function (resolve) {
+    var matchids = []
+    var i = 0;
+
+    matchobjlist.forEach(function(matchobj){
+      createMatch(matchobj).then(resp=>{
+        matchids.push(resp);
+        i+=1;
+        if(i == matchobjlist.length) resolve(matchids);
+      }).catch(function(err){console.log(err)});
+    })
+  })
+}
+
+
+
+
 function populate(data, index) {
   this.array[index] = data
   // if this.array no longer contains uninitialized entries
@@ -317,4 +335,4 @@ function makeMatchA() {
 //createFromList(matchlist, function(array){console.log(array)})
 
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
-                  _CreateMatch, updateScores, updateStatus, _CreateFromList};
+                  _CreateMatch, updateScores, updateStatus, _CreateFromList, createFromList};

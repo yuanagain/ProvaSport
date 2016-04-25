@@ -105,28 +105,19 @@ var createRR = function(data) {
         if (i < j) {
           var team1 = data.teams[i];
           var team2 = data.teams[j];
-          var matchi = Match.default_match;
+          //make a copy of the JSON object
+          var matchi = JSON.parse(JSON.stringify(Match.default_match));
           //var matchi = data.matchinfo[j + teams.length*i] // get data match obj (just stock data but migh have a name and other attributes)
           //could possibly connect here too if connection not an issue
-          matchi.teams[0] = team1
-          matchi.teams[1] = team2
+          matchi.teams[0] = team1;
+          matchi.teams[1] = team2;
+          matches.push(matchi);
           //console.log(matchi) //correct object form testing
-          Match.createMatch(matchi).then(resp=>{matches.push(resp); if(matches.length === numMatches){resolve(matches)}}).catch(function(err){console.log(err);})
         }
       }
-    /*  if(i == teams.length - 2){
-        //returning TOO EARLY
-        console.log(matches)
-        return matches;
-      }*/
     }
-  // now we have create matches and have a complete matchidlist.
-  // return matches????
-  //returning early?
-  //return matches;
-  //matchidlist = Matches.createFromList(matches);
-
-
+    //console.log(matches);
+    Match.createFromList(matches).then(resp=>resolve(resp)).catch(function(err){console.log(err);})
   })
 }
 
@@ -155,23 +146,17 @@ var createBracket = function(data) {
   for (var i = 0; i < trace.length; i++) {
     placements[i] = teams[trace[i] - 1]
   }
-
-  var numMatches = Math.pow(2, depth + 1) - 1;
-  console.log(numMatches)
   //might have to change ot placements.length-2
   loop1:
     for (var i = 0; i < placements.length - 1; i += 2) {
       var team1 = placements[i];
       var team2 = placements[i+1];
-      var matchi = Match.default_match;
+      var matchi = JSON.parse(JSON.stringify(Match.default_match));
       //var matchi = data.matchinfo[j + teams.length*i] // get data match obj (just stock data but migh have a name and other attributes)
       //could possibly connect here too if connection not an issue
       matchi.teams[0] = team1;
       matchi.teams[1] = team2;
-      Match.createMatch(matchi).then(resp=>{matches.push(resp); if(matches.length === numMatches){resolve(matches)}}).catch(function(err){
-        console.log("customlogic.js: "+err);
-      }) //delete all data given a match array
-      //matches.push("placements[i], [i+1]")
+      matches.push(matchi);
     }
     //placements.length = 2^N of matches but still have E 2^N-i for i > 0 to create
 
@@ -180,18 +165,11 @@ var createBracket = function(data) {
       var cap = Math.pow(2, i);
       for (var j = 0; j < cap; j++){
         //run 2^depth times
-        var matchi = Match.TBD;
-        Match.createMatch(matchi).then(resp=>{matches.push(resp); if(matches.length === numMatches){resolve(matches)}}).catch(function(err){console.log(err);})
+        var matchi = JSON.parse(JSON.stringify(Match.TBD));
+        matches.push(matchi)
       }
     }
-  //some simple data validation
-/*  if (matches.length != Math.pow(2, teams.length)-1)
-  {
-    console.log("FAILURE WRONG NUMBER OF MATCHES")
-  }
-  else {
-    return matches
-  }*/
+    Match.createFromList(matches).then(resp=>resolve(resp)).catch(function(err){console.log(err);})
   });
 }
 
