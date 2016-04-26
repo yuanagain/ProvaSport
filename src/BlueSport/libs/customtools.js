@@ -113,14 +113,34 @@ var getInitials = function(player) {
 
 var getWinner = function(match) {
   var tally = 0
+
+  // handle Byes
+  if (match.teams[0] == 'BYE') {
+    return match.teams[1]
+  }
+
+  if (match.teams[1] == 'BYE') {
+    return match.teams[0]
+  }
+
+  if (match.teams[0] == 'TBD' || match.teams[1] == 'TBD') {
+    return 'TBD'
+  }
+
+  var status = codeToString(match.status)
+  if (status == "Recording needed") {
+    return "TBD"
+  }
+
   for (var i = 0; i < match.scores.length; i++) {
-    if (match.scores[0] > match.scores[1]) {
+    if (match.scores[i][0] > match.scores[i][1]) {
       tally += 1
     }
-    else if (match.scores[0] < match.scores[1]) {
+    else if (match.scores[i][0] < match.scores[i][1]) {
       tally -= 1
     }
   }
+
   if (tally > 0) {
     return match.teams[0]
   }

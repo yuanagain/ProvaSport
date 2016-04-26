@@ -230,15 +230,17 @@ var dictTest = {
 //createRR(dictTest).then(resp=>console.log("RESPONSE:::::::::\n     "+resp));
 //createBracket(dictTest).then(resp=>console.log(resp))
 
+
 //
-var updateMatches = function(matches) {
+var update_matches = function(matches) {
+
   // check through all the matches
   var depth = Math.log(matches.length + 1) / Math.log(2)
   var k = 0
   var two_sum = 0; // the number of matches played at previous depths
 
 
-  for (var i = 1; i <= depth; i++) {
+  for (var i = 1; i < depth; i++) {
     var cap = Math.pow(2, depth - i)
     var changed = false // track whether any changes have been made at this depth
 
@@ -251,7 +253,7 @@ var updateMatches = function(matches) {
         continue
       }
 
-      if (status == "Unplayed" || status == "Recording needed") {
+      if (status == "Unplayed") {
         continue
       }
       // entails that updates will continuet to be passed down
@@ -272,8 +274,14 @@ var updateMatches = function(matches) {
         winner_id = _ctools.getWinner(match)
       }
 
+/*
+ * =======
+ *       var winner_id = _ctools.getWinner(match)
+ * >>>>>>> 483866aab94c56ddb1e98745d040ce38741b6732
+ */
       // compute next match in sequence
       var target_index = two_sum + cap + parseInt(j / 2)
+      console.log((two_sum + j) + ', ' + target_index + ', j = ' + j)
       var target_match = matches[target_index]
       var place = j % 2
 
@@ -292,6 +300,4 @@ var updateMatches = function(matches) {
   return matches
 }
 
-/*-----------------TESTING section ---------------------------  */
-
-module.exports = {RRMatrix, bracketMatrix, createTrace, createBracket, createRR, updateMatches};
+module.exports = {RRMatrix, bracketMatrix, createTrace, createBracket, createRR, update_matches};
