@@ -6,6 +6,7 @@ import Newsfeed from './newsfeed';
 import Profile from './profile';
 import Bracket from './bracket';
 import RoundRobin from './roundrobin';
+import About from './about';
 
 // Misc Parts, put here for testing purposes.
 import TeamBrick from './parts/teambrick';
@@ -20,6 +21,7 @@ ReactDOM.render((
       <Route path="/home" component={Newsfeed}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/tournaments" component={Bracket}/>
+      <Route path="/about" component={About}/>
     </Route>
   </Router>
 ), document.getElementById('root'))
