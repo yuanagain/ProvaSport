@@ -38,7 +38,7 @@ var Menu = React.createClass({
           <p style={logo}>PROVASPORT</p>
         </div>
         <div id = "menu" style={menu}>
-          <ul>
+          <ul style={menuItems}>
             <Link to="/home" activeStyle={activeLink}><li>Home</li></Link>
             <Link to="/profile" activeStyle={activeLink}><li>Profile</li></Link>
             <Link to="/matches" activeStyle={activeLink}><li>Matches</li></Link>
@@ -87,6 +87,9 @@ var menu = {
   fontSize: 17.5,
   fontWeight: 'lighter',
 };
+var menuItems = {
+  display: 'inline-block',
+}
 var newsfeed = {
   backgroundColor: 'red',
 };

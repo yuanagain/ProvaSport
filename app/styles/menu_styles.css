@@ -19,17 +19,13 @@ body{
     padding:60px;
 }
 
-ul{
-    list-style:none;
-    display: inline-block;
-}
-
 ul li{
     display: inline-block;
     padding: 25px 20px;
     margin-top: -15px;
     cursor:pointer;
     color:white;
+    background-color: #4A90E2;
     transition:0.3s;
 }
 
