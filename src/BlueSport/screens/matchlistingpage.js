@@ -7,7 +7,14 @@ var MatchList = require('../bigparts/matchlist')
 var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
+import Store from 'react-native-store';
 
+
+//database name and constant for storing data
+const DB = {
+  'user': Store.model("user"),
+  'player': Store.model("player")
+}
 var {
   AppRegistry,
   StyleSheet,
@@ -19,6 +26,8 @@ var {
   RefreshControl,
 } = React;
 
+console.log("\n\nUSER: "+DB.user.get()[0])
+console.log("\n\nPlayer: " +DB.player.get()[0])
 
 var MatchListingPage = React.createClass({
   getInitialState: function() {
@@ -44,8 +53,8 @@ var MatchListingPage = React.createClass({
     return (
     <View style={styles.container}>
 
-    <Header title={this.props.title} 
-            navigator={this.props.navigator} 
+    <Header title={this.props.title}
+            navigator={this.props.navigator}
             mode={this.props.mode} />
 
       <MatchList

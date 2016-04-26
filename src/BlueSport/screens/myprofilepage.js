@@ -7,15 +7,22 @@ var windowSize = Dimensions.get('window');
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 import * as _ctools from '../libs/customtools.js'
+import Store from 'react-native-store';
 
+
+//database name and constant for storing data
+const DB = {
+  'user': Store.model("user"),
+  'player': Store.model("player")
+}
 var MyProfilePage = React.createClass({
 
   getInitialState: function() {
 
     return (
       {
-        username: '',
-        password: '',
+      user: DB.user.find()[0],
+      player: DB.player.find()[0]
       }
     );
   },

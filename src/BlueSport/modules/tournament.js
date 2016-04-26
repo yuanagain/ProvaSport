@@ -176,6 +176,16 @@ function _AddMatches(tournamentid, matchid, callback) {
     console.log("Failed");
   });
 }
+function makeTournament(obj){
+  createTournament(obj).then(function(newTournid){
+
+  })
+}
+
+function updateTourn(tournObject) {
+  //updates
+}
+
 
 
 /*Autonation of updating the tournament

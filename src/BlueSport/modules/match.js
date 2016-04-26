@@ -294,6 +294,33 @@ function tieMatchTo(matchid, playerid, teamid) {
    Team.addMatch(matchid);
    Player.addMatch(matchid);
 }
+/*Fetch a bunch of match objects and return the list of objects
+  We need the list of objects to be in order of matchidArr
+  this can be accomplished by:
+  1) either mapping list to matchobjs
+  2) or by for each with a completely new list
+  this is a first draft and needs to be tested */
+function _FetchList(matchidArr, callback) {
+  var result = [];
+  if (matchidArr) {
+    matchidArr.forEach(function(matchid){
+      getMatch(matchid).then(resp=>{result.push(resp); if(result.length == matchidArr.length)callback(result)});
+    })
+  }
+}
+/*Same as FetchList but with a promise for callbacks   */
+function fetchList(matchidArr) {
+  return new Promise(function(resolve){
+    var result = [];
+    if (matchidArr) {
+      matchidArr.forEach(function(matchid){
+        getMatch(matchid).then(resp=>{result.push(resp); if(result.length == matchidArr.length)resolve(result)});
+      })
+    }
+  })
+}
+
+
 
 //tieMatchTo(35, 1, 1)
 /*CHANGED ***************HOW TO PARSE ARRAYS************** TODO*/
@@ -327,6 +354,11 @@ function makeMatchA() {
   //updateScores(1, [[98,89],[0,1]]) TESTED SUCCESSFULLY
   var matchlist = [default_match, default_match, default_match]
 //createFromList(matchlist, function(array){console.log(array)})
+  var matchidList = [0, 1 ,"-KG3qgMADCAJWzx534q7", "-KG3qgMfsTtVFBsx4sBx"]
+//  fetchList(matchidList).then(resp=>console.log(resp))
+//_FetchList(matchidList, function(resp){console.log(resp)})
+
 
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
-                  _CreateMatch, updateScores, updateStatus, _CreateFromList, createFromList};
+                  _CreateMatch, updateScores, updateStatus, _CreateFromList,
+                  createFromList, fetchList, _FetchList};
