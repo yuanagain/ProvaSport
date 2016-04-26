@@ -231,7 +231,7 @@ var dictTest = {
 //createBracket(dictTest).then(resp=>console.log(resp))
 
 // 
-var updateMatches = function(matches) {
+var update_matches = function(matches) {
   // check through all the matches
   var depth = Math.log(matches.length + 1) / Math.log(2)
   var k = 0
@@ -251,29 +251,16 @@ var updateMatches = function(matches) {
         continue
       }
 
-      if (status == "Unplayed" || status == "Recording needed") {
+      if (status == "Unplayed") {
         continue
       }
       // entails that updates will continuet to be passed down
       changed = true
 
-      var winner_id = 'unassigned'
-
-      // automatically advance BYEs
-      if (match.teams[0] == 'BYE') {
-        winner_id == match.teams[1]
-      }
-
-      else if (match.teams[1] == 'BYE') {
-        winner_id == match.teams[0]
-      }
-
-      else {
-        winner_id = _ctools.getWinner(match) 
-      }
-
+      var winner_id = _ctools.getWinner(match) 
       // compute next match in sequence
       var target_index = two_sum + cap + parseInt(j / 2)
+      console.log(target_index)
       var target_match = matches[target_index]
       var place = j % 2
 
@@ -292,4 +279,4 @@ var updateMatches = function(matches) {
   return matches
 }
 
-module.exports = {RRMatrix, bracketMatrix, createTrace, createBracket, createRR, updateMatches};
+module.exports = {RRMatrix, bracketMatrix, createTrace, createBracket, createRR, update_matches};
