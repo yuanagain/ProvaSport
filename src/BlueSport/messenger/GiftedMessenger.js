@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Header = require('../parts/header')
 import Message from './Message';
 var GiftedSpinner = require('react-native-gifted-spinner');
 var {
@@ -58,6 +59,7 @@ var GiftedMessenger = React.createClass({
       onChangeText: (text) => {},
       autoScroll: false,
       scrollAnimated: true,
+      friendName: null,
     };
   },
 
@@ -518,6 +520,10 @@ var GiftedMessenger = React.createClass({
         style={this.styles.container}
         ref='container'
       >
+      <Header title={this.props.friendName}
+                mode={'nav'}
+                navigator={this.props.navigator} />
+
         {this.renderAnimatedView()}
         {this.renderTextInput()}
       </View>

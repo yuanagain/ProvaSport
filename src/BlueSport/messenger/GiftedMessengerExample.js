@@ -11,10 +11,12 @@ var {
   Text
 } = React;
 
+var Header = require('../parts/header')
 var GiftedMessenger = require('./GiftedMessenger');
 var Communications = require('react-native-communications');
 var messagedb = require('firebase');
 messagedb = new Firebase('https://provamessenger.firebaseio.com');
+
 
 var player = {
             "name" : "Sam",
@@ -149,9 +151,9 @@ var GiftedMessengerExample = React.createClass({
   },
   
   handleReceive: function() {
-    setTimeout(() => {
+   // setTimeout(() => {
       this.getMessages(this.props.frendid, this.harvest);
-    }, 1000);
+   // }, 1000);
   },
   
   onErrorButtonPress(message = {}, rowID = null) {
@@ -178,6 +180,9 @@ var GiftedMessengerExample = React.createClass({
           },
         }}
         
+        navigator={this.props.navigator}
+        friendName={"Khadim"}
+
         autoFocus={false}
         messages={this.state.messages}
         handleSend={this.handleSend}

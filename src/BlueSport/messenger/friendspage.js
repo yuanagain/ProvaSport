@@ -111,6 +111,7 @@ return (
       id: "GiftedMessengerExample",
       component: GiftedMessengerExample,
       passProps: {
+        navigator: this.props.navigator,
         player: this.props.player,
         friend: friendId,
       }
