@@ -232,7 +232,7 @@ var dictTest = {
 
 
 //
-var update_matches = function(matches) {
+var update_matches = function(matches, matchids, callback) {
 
   // check through all the matches
   var depth = Math.log(matches.length + 1) / Math.log(2)
@@ -297,7 +297,10 @@ var update_matches = function(matches) {
     }
     two_sum += cap
   }
-  return matches
+  //push then pull the matche object to the server
+  Match.setFromList(matchids, matches).then(resp=>callback(matches)).catch(function(err){
+    console.log("in customlogic.js 301: "+err)})
+  //return matches
 }
 
 module.exports = {RRMatrix, bracketMatrix, createTrace, createBracket, createRR, update_matches};

@@ -219,6 +219,18 @@ function createFromList(matchobjlist, callback) {
 }
 
 
+//in future just update the specific thing that is being changed
+//set from list
+function setFromList(matchidlist, matchobjlist, callback) {
+  return new Promise(function (resolve) {
+    var matchids = []
+    var i = 0;
+    matchobjlist.forEach(function(matchobj){
+      setMatch(matchidlist[i], matchobj).catch(function(err){console.log("IN SetFromList: 229:\t"+err)});
+        i+=1;
+    })
+  })
+}
 
 
 function populate(data, index) {
@@ -361,4 +373,4 @@ function makeMatchA() {
 
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
                   _CreateMatch, updateScores, updateStatus, _CreateFromList,
-                  createFromList, fetchList, _FetchList};
+                  createFromList, fetchList, _FetchList, setFromList};
