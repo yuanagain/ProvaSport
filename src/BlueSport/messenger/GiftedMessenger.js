@@ -3,6 +3,8 @@
 var React = require('react-native');
 import Message from './Message';
 var GiftedSpinner = require('react-native-gifted-spinner');
+var Header = require('../parts/header')
+var _cvals = require('../styles/customvals')
 var {
   Text,
   View,
@@ -119,7 +121,7 @@ var GiftedMessenger = React.createClass({
       dataSource: ds.cloneWithRows([]),
       text: '',
       disabled: true,
-      height: new Animated.Value(this.listViewMaxHeight),
+      height: new Animated.Value(this.listViewMaxHeight - 0 * _cvals.dscale),
       isLoadingEarlierMessages: false,
       allLoaded: false,
       appearAnim: new Animated.Value(0),
@@ -565,33 +567,33 @@ var GiftedMessenger = React.createClass({
         flex: 1,
       },
       textInputContainer: {
-        height: 44,
+        height: 44 * _cvals.dscale,
         borderTopWidth: 1 / PixelRatio.get(),
         borderColor: '#b2b2b2',
         flexDirection: 'row',
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: 10 * _cvals.dscale,
+        paddingRight: 10 * _cvals.dscale,
       },
       textInput: {
         alignSelf: 'center',
-        height: 30,
-        width: 100,
+        height: 30 * _cvals.dscale,
+        width: 100 * _cvals.dscale,
         backgroundColor: '#FFF',
         flex: 1,
         padding: 0,
         margin: 0,
-        fontSize: 15,
+        fontSize: 15 * _cvals.dscale,
       },
       sendButton: {
-        marginTop: 11,
-        marginLeft: 10,
+        marginTop: 11 * _cvals.dscale,
+        marginLeft: 10 * _cvals.dscale,
       },
       date: {
         color: '#aaaaaa',
-        fontSize: 12,
+        fontSize: 12 * _cvals.dscale,
         textAlign: 'center',
         fontWeight: 'bold',
-        marginBottom: 8,
+        marginBottom: 8 * _cvals.dscale,
       },
       link: {
         color: '#007aff',
@@ -604,12 +606,12 @@ var GiftedMessenger = React.createClass({
         color: '#fff',
       },
       loadEarlierMessages: {
-        height: 44,
+        height: 44 * _cvals.dscale,
         justifyContent: 'center',
         alignItems: 'center',
       },
       loadEarlierMessagesButton: {
-        fontSize: 14,
+        fontSize: 14 * _cvals.dscale,
       },
     };
 

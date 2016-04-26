@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Header = require('../parts/header')
 
 var {
   LinkingIOS,
@@ -46,19 +47,35 @@ var GiftedMessengerExample = React.createClass({
     return ({
     messages: [],
     messagesLoaded: false,
+    _isMounted: false,
+    _didUnmount: false,
+    _interval_id: false,
     });
   },
 
+  componentWillUnmount: function() {
+    // this.setState({_isMounted: false})
+    // this.setState({_didUnmount: true})
+    clearInterval(this.state._interval_id)
+  },
+
   componentDidMount: function () {
+    this.setState({_isMounted: true})
     this.getMessages(this.props.friendid, this.harvest);
     this.setState({messagesLoaded: true});
     this.animate(); //TODO: figure out how to query for send and receive
   },
 
   animate: function() {
-    setInterval(() => {
-      this.handleReceive();
+    var interval_id = setInterval(() => {
+      if (this.state._isMounted) {
+        this.handleReceive();
+      }
+      // if (this.state._didUnmount) {
+      //   clearInterval(interval_id)
+      // }
     }, 500);
+    this.setState({_interval_id: interval_id})
   },
   
   // harvest
@@ -167,37 +184,42 @@ var GiftedMessengerExample = React.createClass({
   
   render() {
     return (
-      <GiftedMessenger
-        ref={(c) => this._GiftedMessenger = c}
-    
-        styles={{
-          bubbleRight: {
-            marginLeft: 70,
-            backgroundColor: '#007aff', // sender bubble color; can be changed to _cstyles
-            // (also see backgroundColor in Navigation.js for header bar color)
-          },
-        }}
-        
-        autoFocus={false}
-        messages={this.state.messages}
-        handleSend={this.handleSend}
-        onErrorButtonPress={this.onErrorButtonPress}
-        maxHeight={Dimensions.get('window').height - navBarHeight - statusBarHeight}
-        loadEarlierMessagesButton={false} // disable load earlier messages
-        onLoadEarlierMessages={this.onLoadEarlierMessages}
+      <View style={{flex: 1}}>
+        <Header title={this.props.friendName}
+              mode={'nav'}
+              navigator={this.props.navigator} />
+        <GiftedMessenger
+          ref={(c) => this._GiftedMessenger = c}
+          navigator={this.props.navigator}
+          styles={{
+            bubbleRight: {
+              marginLeft: 70,
+              backgroundColor: '#007aff', // sender bubble color; can be changed to _cstyles
+              // (also see backgroundColor in Navigation.js for header bar color)
+            },
+          }}
+          
+          autoFocus={false}
+          messages={this.state.messages}
+          handleSend={this.handleSend}
+          onErrorButtonPress={this.onErrorButtonPress}
+          maxHeight={Dimensions.get('window').height - navBarHeight - statusBarHeight}
+          loadEarlierMessagesButton={false} // disable load earlier messages
+          onLoadEarlierMessages={this.onLoadEarlierMessages}
 
-        senderName={this.props.player.name}
-        senderImage={null}
-        onImagePress={this.onImagePress}
-        displayNames={true}
-        
-        parseText={false} // disable handlePhonePress and handleUrlPress
-        handlePhonePress={this.handlePhonePress}
-        handleUrlPress={this.handleUrlPress}
-        handleEmailPress={this.handleEmailPress}
-        
-        inverted={true}
-      />
+          senderName={this.props.player.name}
+          senderImage={null}
+          onImagePress={this.onImagePress}
+          displayNames={true}
+          
+          parseText={false} // disable handlePhonePress and handleUrlPress
+          handlePhonePress={this.handlePhonePress}
+          handleUrlPress={this.handleUrlPress}
+          handleEmailPress={this.handleEmailPress}
+          
+          inverted={true}
+        />
+      </View>
 
     );
   },
