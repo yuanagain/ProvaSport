@@ -16,7 +16,13 @@ var LoadingPage = require('../screens/loadingpage')
 import * as _ctools from '../libs/customtools'
 import * as Match from '../modules/match'
 import * as Team from '../modules/team'
+import Store from 'react-native-store';
 
+//database name and constant for storing data
+const DB = {
+  'user': Store.model("user"),
+  'player': Store.model("player")
+}
 var {
   AppRegistry,
   StyleSheet,
@@ -28,7 +34,12 @@ var {
   Platform,
   RefreshControl,
 } = React;
-
+//this is the user object
+//DB.user.find().then(resp=>console.log(resp[resp.length-1]))
+//this is the player
+//DB.player.find().then(resp=>console.log(resp))
+console.log("ROWS  "+DB.user.totalrows);// this does not work
+console.log("ID  "+DB.user.findById(10)); //thisworks
 var MatchPage = React.createClass({
   getInitialState: function() {
     return (
@@ -37,7 +48,9 @@ var MatchPage = React.createClass({
         teams: [Team.default_team, Team.default_team],
         loaded: false,
         team1: Team.default_team,
-        team2: Team.default_team
+        team2: Team.default_team,
+        playerid: 0,
+        status: 1
       }
     );
   },
@@ -61,8 +74,27 @@ var MatchPage = React.createClass({
     } = this.props;
 
     var buttons = <View></View>
+    /*
+     *   //console.log("MATCHSTAT  "+ this.state.match.status[this.props.userteamid])
+     * if (Match.inMatch(matchid, playerid)){
+     *
+     * }
+     * we will change this to be
+PSEUDOCODE
+if (inMatch){
+  teamid = Team.whichteam
+  Match.getStatus
 
-      //console.log("MATCHSTAT  "+ this.state.match.status[this.props.userteamid])
+}
+else {
+   if (team0.isOpen || Teams1.isOpen){ display accept or deny buttons}
+   else{just show the damn match}
+}
+ setState to force re-render
+
+
+
+     */
     if (this.state.match.status['0'] == 3) {
       //console.log("MATCH  "+ this.state.match.status['0'])
       // if this is an unconfirmed match
@@ -155,7 +187,7 @@ var MatchPage = React.createClass({
     Match._GetMatch(this.props.matchid, this.fetchMatch)
     setTimeout(() => {
       this.setState({isRefreshing: false})
-    }, _cvals.timeout); 
+    }, _cvals.timeout);
   },
 
   getTeamid1: function() {

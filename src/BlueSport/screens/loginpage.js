@@ -21,7 +21,7 @@ const DB = {
 }
 //clear out the DB
 // will complete on app creation beating the sign-in
-DB.user.remove();
+DB.user.remove()
 DB.player.remove()
 
 var {

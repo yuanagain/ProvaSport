@@ -230,7 +230,7 @@ var dictTest = {
 //createRR(dictTest).then(resp=>console.log("RESPONSE:::::::::\n     "+resp));
 //createBracket(dictTest).then(resp=>console.log(resp))
 
-// 
+//
 var updateMatches = function(matches) {
   // check through all the matches
   var depth = Math.log(matches.length + 1) / Math.log(2)
@@ -269,7 +269,7 @@ var updateMatches = function(matches) {
       }
 
       else {
-        winner_id = _ctools.getWinner(match) 
+        winner_id = _ctools.getWinner(match)
       }
 
       // compute next match in sequence
@@ -291,5 +291,7 @@ var updateMatches = function(matches) {
   }
   return matches
 }
+
+/*-----------------TESTING section ---------------------------  */
 
 module.exports = {RRMatrix, bracketMatrix, createTrace, createBracket, createRR, updateMatches};
