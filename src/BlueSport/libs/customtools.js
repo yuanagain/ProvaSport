@@ -123,6 +123,15 @@ var getWinner = function(match) {
     return match.teams[0]
   }
 
+  if (match.teams[0] == 'TBD' || match.teams[1] == 'TBD') {
+    return 'TBD'
+  }
+
+  var status = codeToString(match.status)
+  if (status == "Recording needed") {
+    return "TBD"
+  }
+
   for (var i = 0; i < match.scores.length; i++) {
     if (match.scores[i][0] > match.scores[i][1]) {
       tally += 1

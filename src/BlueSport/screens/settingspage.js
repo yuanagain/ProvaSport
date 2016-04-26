@@ -147,7 +147,7 @@ var SettingsPage = React.createClass({
       },
 
     ]
-    //console.log(_clogic.update_matches(matches))
+    console.log(_clogic.update_matches(matches))
   },
 
 });

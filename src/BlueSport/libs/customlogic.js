@@ -238,7 +238,7 @@ var update_matches = function(matches) {
   var two_sum = 0; // the number of matches played at previous depths
 
 
-  for (var i = 1; i <= depth; i++) {
+  for (var i = 1; i < depth; i++) {
     var cap = Math.pow(2, depth - i)
     var changed = false // track whether any changes have been made at this depth
 
@@ -260,7 +260,7 @@ var update_matches = function(matches) {
       var winner_id = _ctools.getWinner(match) 
       // compute next match in sequence
       var target_index = two_sum + cap + parseInt(j / 2)
-      console.log(target_index)
+      console.log((two_sum + j) + ', ' + target_index + ', j = ' + j)
       var target_match = matches[target_index]
       var place = j % 2
 
