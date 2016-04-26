@@ -22,6 +22,8 @@ var moment = require('moment');
 
 var Button = require('react-native-button');
 
+var headerHeight = 50 * _cvals.dscale
+
 var GiftedMessenger = React.createClass({
 
   firstDisplay: true,
@@ -109,7 +111,7 @@ var GiftedMessenger = React.createClass({
       }
     }
 
-    this.listViewMaxHeight = this.props.maxHeight - textInputHeight;
+    this.listViewMaxHeight = this.props.maxHeight - textInputHeight - headerHeight;
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => {
       if (typeof r1.status !== 'undefined') {
