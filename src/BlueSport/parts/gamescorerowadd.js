@@ -64,6 +64,8 @@ var GameScoreRowAdd = React.createClass({
             style={[_cstyles.standard_text, _cstyles.centeredText, styles.input]}
             onChangeText={(val2) => this.setState({val2})}
             value={this.state.val2}
+            ref='username' 
+            onFocus={this.inputFocused.bind(this, 'username')}
           />
         </View>
 
@@ -76,6 +78,19 @@ var GameScoreRowAdd = React.createClass({
       </View>
     );
   },
+
+  inputFocused (refName) {
+    // TODO Test this
+    setTimeout(() => {
+      let scrollResponder = this.refs.scrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        React.findNodeHandle(this.refs[refName]),
+        110, //additionalOffset
+        true
+      );
+    }, 50);
+  } 
+
   onIconPress: function() {
     if (_ctools.isValidScore(this.state.val1)
         && _ctools.isValidScore(this.state.val2)) {

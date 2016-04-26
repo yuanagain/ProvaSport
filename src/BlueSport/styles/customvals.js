@@ -29,6 +29,7 @@ const _cvals = {
   thumbslength: ((slength) * 3 / 5 - 12 * dscale),
   stdmargin: 8 * dscale,
   timeout: 1000,
+  vscale: vscale,
 }
 
 module.exports = _cvals;
