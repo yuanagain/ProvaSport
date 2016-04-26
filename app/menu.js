@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-import './styles/menu_styles.css'
+import './styles/menu.css'
 import {Link} from 'react-router';
 
 // Header

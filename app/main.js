@@ -7,12 +7,7 @@ import Profile from './profile';
 import Bracket from './bracket';
 import RoundRobin from './roundrobin';
 import About from './about';
-
-// Misc Parts, put here for testing purposes.
-import TeamBrick from './parts/teambrick';
-import MatchBrick from './parts/matchbrick';
-import PlayerBrick from './parts/playerbrick';
-import TeamSquare from './parts/teamsquare';
+import Matches from './matches';
 
 ReactDOM.render((
   <Router history={hashHistory}>
@@ -20,6 +15,7 @@ ReactDOM.render((
       <IndexRoute component={Newsfeed}/>
       <Route path="/home" component={Newsfeed}/>
       <Route path="/profile" component={Profile}/>
+      <Route path="/matches" component={Matches}/>
       <Route path="/tournaments" component={Bracket}/>
       <Route path="/about" component={About}/>
     </Route>
