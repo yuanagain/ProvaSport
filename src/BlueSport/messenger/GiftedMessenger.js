@@ -516,13 +516,14 @@ var GiftedMessenger = React.createClass({
 
   render() {
     return (
-      <View
-        style={this.styles.container}
-        ref='container'
-      >
-        {this.renderAnimatedView()}
-        {this.renderTextInput()}
-      </View>
+        <View
+          style={this.styles.container}
+          ref='container'
+          >
+
+          {this.renderAnimatedView()}
+          {this.renderTextInput()}
+        </View>
     )
   },
 

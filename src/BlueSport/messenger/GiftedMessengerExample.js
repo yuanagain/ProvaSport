@@ -186,8 +186,8 @@ var GiftedMessengerExample = React.createClass({
     return (
       <View style={{flex: 1}}>
         <Header title={this.props.friendName}
-              mode={'nav'}
-              navigator={this.props.navigator} />
+          mode={'nav'}
+          navigator={this.props.navigator} />
         <GiftedMessenger
           ref={(c) => this._GiftedMessenger = c}
           navigator={this.props.navigator}
@@ -198,7 +198,7 @@ var GiftedMessengerExample = React.createClass({
               // (also see backgroundColor in Navigation.js for header bar color)
             },
           }}
-          
+          friendName={this.props.friendName}
           autoFocus={false}
           messages={this.state.messages}
           handleSend={this.handleSend}
