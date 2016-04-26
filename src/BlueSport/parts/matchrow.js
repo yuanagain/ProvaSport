@@ -45,50 +45,53 @@ var MatchRow = React.createClass({
       navigator,
       ...props
     } = this.props;
-    return (
-      <View>
-        <TouchableOpacity onPress={this.onPress}
-                          style={styles.container}>
-          <View style={styles.player_row}>
-            <Image source={{uri: this.state.teams[0].thumbnail}}
-                   style={styles.pic} />
+    if (this.state.loaded) {
+      return (
+        <View>
+          <TouchableOpacity onPress={this.onPress}
+                            style={styles.container}>
+            <View style={styles.player_row}>
+              <Image source={{uri: this.state.teams[0].thumbnail}}
+                     style={styles.pic} />
 
-            <View style={styles.name}>
-              <Text style={_cstyles.standard_text}>
-                {this.state.teams[0]['name']}
+              <View style={styles.name}>
+                <Text style={_cstyles.standard_text}>
+                  {this.state.teams[0]['name']}
+                </Text>
+              </View>
+              <View style={styles.scores}>
+                {this.state.match['scores'].map(createScoreRowTop)}
+              </View>
+            </View>
+
+            <View style={styles.player_row}>
+              <Image source={{uri: this.state.teams[1].thumbnail}}
+                     style={styles.pic} />
+
+              <View style={styles.name}>
+                <Text style={_cstyles.standard_text}>
+                  {this.state.teams[1]['name']}
+                </Text>
+              </View>
+              <View style={styles.scores}>
+                {this.state.match['scores'].map(createScoreRowBottom)}
+              </View>
+            </View>
+
+            <View style={styles.details}>
+              <Text style={_cstyles.light_text}>
+                {_ctools.toDate(new Date(this.state.match.datetime))}
+              </Text>
+              <Text style={_cstyles.light_text}>
+                {" at " + this.state.match.location}
               </Text>
             </View>
-            <View style={styles.scores}>
-              {this.state.match['scores'].map(createScoreRowTop)}
-            </View>
-          </View>
-
-          <View style={styles.player_row}>
-            <Image source={{uri: this.state.teams[1].thumbnail}}
-                   style={styles.pic} />
-
-            <View style={styles.name}>
-              <Text style={_cstyles.standard_text}>
-                {this.state.teams[1]['name']}
-              </Text>
-            </View>
-            <View style={styles.scores}>
-              {this.state.match['scores'].map(createScoreRowBottom)}
-            </View>
-          </View>
-
-          <View style={styles.details}>
-            <Text style={_cstyles.light_text}>
-              {_ctools.toDate(new Date(this.state.match.datetime))}
-            </Text>
-            <Text style={_cstyles.light_text}>
-              {" at " + this.state.match.location}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View style={_cstyles.divider_line}></View>
-      </View>
-    )
+          </TouchableOpacity>
+          <View style={_cstyles.divider_line}></View>
+        </View>
+      )
+    }
+    return (<View></View>)
   },
 
   fetchMatch: function(data) {
