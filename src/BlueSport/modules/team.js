@@ -201,8 +201,29 @@ export function addTeamPlayersToMatch(teamid, matchid) {
       });
    });
 }
+/*returns which team the player is on*/
+function teamOneorTwo(team0id, team1id, playerid) {
+  return new Promise(function(resolve){
+    getTeam(team0id).then(resp=>{
+      if(inArray(playerid, resp.players))
+        resolve(0);
+      else
+        resolve(1);
+    });
+  })
+}
+//posibly move to ctools
+function inArray(value, array) {
+  return array.indexOf(value) > -1;
+}
 
-
+var TBD = {
+    "name": "TBD",
+    "players": [],
+    "matches": [],
+    "teamid": 0,
+    "thumbnail": ""
+};
 
 
 var default_team = {
@@ -213,12 +234,15 @@ var default_team = {
 };
 
 var bye = {
-    "name": "BYE ",
+    "name": "BYE",
     "players": [],
     "matches": [],
     "teamid": 0,
-    "thumbnail": " "
+    "thumbnail": ""
 };
-
+/* used for setting the TBD and BYE teams in case fields change
+ * _SetTeam(bye, 'BYE', function(resp){console.log("SET BYE")})
+ * _SetTeam(TBD, 'TBD', function(resp){console.log("SET TBD")})
+ */
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
    getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch};

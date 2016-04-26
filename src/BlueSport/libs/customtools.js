@@ -158,6 +158,7 @@ var getScoreString = function(match) {
   }
   return scoreString.slice(0, -2)
 }
+/*Unplayed means the user needs   */
 var codeToString= function(code){
   switch (code) {
     case 0:

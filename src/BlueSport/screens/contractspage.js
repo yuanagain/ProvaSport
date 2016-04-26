@@ -156,10 +156,10 @@ var ContractsPage = React.createClass({
 
   create: function() {
     if (this.state.event_type[0] == 'Round Robin') {
-      this.toRR()
+      _customlogic.createRR()
     }
     if (this.state.event_type[0] == 'Elimination') {
-      this.toBracket()
+      _customlogic.createBracket()
     }
   },
 
@@ -197,7 +197,12 @@ var ContractsPage = React.createClass({
       }
     })
   },
-
+/*
+DeleteGame:
+function -
+input -
+output -
+*/
   deleteGame: function(index) {
 
     // reorder states
@@ -214,9 +219,16 @@ var ContractsPage = React.createClass({
       }
     }
   },
+  /*
+  AddGame:
+  what do we need?
 
+  function -
+  input -
+  output -
+  */
   addGame: function(scores) {
-    
+
   },
 
   onSelect: function(name) {
@@ -247,7 +259,7 @@ var ContractsPage = React.createClass({
   },
 
   updateGames: function() {
-
+    //update match
   },
 
   //// TODO POPULATE W/ REAL DATA

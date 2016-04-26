@@ -91,6 +91,8 @@ var createTournament = function(data) {
   data.teams will have teams that are playing
   no need for BYE team unless odd number of teams
 
+
+  need to make so data has match object filled with Tournamentid
   */
 var createRR = function(data) {
   return new Promise(function(resolve){
@@ -224,6 +226,6 @@ var dictTest = {
 //all teams need to be created before this point
 // if teams do not exist in data base then the method will crash
 //createRR(dictTest).then(resp=>console.log("RESPONSE:::::::::\n     "+resp));
-createBracket(dictTest).then(resp=>console.log(resp))
+//createBracket(dictTest).then(resp=>console.log(resp))
 
-module.exports = {RRMatrix, bracketMatrix, createTrace};
+module.exports = {RRMatrix, bracketMatrix, createTrace, createBracket, createRR};
