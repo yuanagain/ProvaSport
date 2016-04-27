@@ -156,6 +156,12 @@ var ProfilePage = React.createClass({
         <View style={_cstyles.section_divider_line}></View>
 
         <SimpleRow
+          title={'Friends'}
+          value={this.state.player.friends.length}
+          onPress={this.toFriendsListing} />
+        <View style={_cstyles.section_divider_line}></View>
+
+        <SimpleRow
           title={'Tournaments'}
           value={this.state.player.tournaments.length}
           onPress={this.toTournamentListing} />
@@ -209,7 +215,12 @@ var ProfilePage = React.createClass({
 
   toggleFriend: function() {
     // TODO change status of friend, update local data store
-
+    if (this.state.my_player.friends.indexOf(this.props.playerid) == -1) {
+      Player.addFriend(this.state.my_player.playerid, this.props.playerid)
+    }
+    else {
+      Player.removeFriend(this.state.my_player.playerid, this.props.playerid)
+    }
   },
 
 
@@ -229,6 +240,18 @@ var ProfilePage = React.createClass({
     })
   },
 
+  toFriendsListing() {
+    var FriendsListingPage = require('../screens/friendslistingpage')
+    this.props.navigator.push({
+      id: "FriendsListing",
+      component: FriendsListingPage,
+      passProps: {
+        navigator: this.props.navigator,
+        friends: this.state.player.friends
+      }
+    })
+  },
+
   toTournamentListing() {
     var TournamentListingPage = require('../screens/tournamentlistingpage')
     this.props.navigator.push({
@@ -244,7 +267,7 @@ var ProfilePage = React.createClass({
   toMatchListing() {
     var MatchListingPage = require('../screens/matchlistingpage')
     this.props.navigator.push({
-      id: "TeamListing",
+      id: "MatchListing",
       component: MatchListingPage,
       passProps: {
         navigator: this.props.navigator,
