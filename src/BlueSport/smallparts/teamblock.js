@@ -1,4 +1,9 @@
 'use strict';
+
+/*
+Used in rendering a row representing a team
+*/
+
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
@@ -31,7 +36,6 @@ var TeamBlock = React.createClass({
   getDefaultProps() {
     return (
       {
-        /* HOw do we change this based on past screen data?   */
         teamid: 0,
       }
     )
@@ -46,12 +50,17 @@ var TeamBlock = React.createClass({
     } = this.props;
 
 
+    if (this.state.loaded) {
+      return (
+        <TouchableOpacity onPress={this.onPress}>
+          <SimpleRow title={this.state.team.name}
+                     value={this.props.value} />
+        </TouchableOpacity>
+      );
+    }
     return (
-      <TouchableOpacity onPress={this.onPress}>
-        <SimpleRow title={this.state.team.name}
-                   value={this.props.value} />
-      </TouchableOpacity>
-    );
+      <View></View>
+    )
   },
 
   onPress: function() {

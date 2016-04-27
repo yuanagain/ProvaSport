@@ -123,6 +123,15 @@ var getWinner = function(match) {
     return match.teams[0]
   }
 
+  if (match.teams[0] == 'TBD' || match.teams[1] == 'TBD') {
+    return 'TBD'
+  }
+
+  var status = codeToString(match.status)
+  if (status == "Recording needed") {
+    return "TBD"
+  }
+
   for (var i = 0; i < match.scores.length; i++) {
     if (match.scores[i][0] > match.scores[i][1]) {
       tally += 1
@@ -170,7 +179,7 @@ var getScoreString = function(match) {
   return scoreString.slice(0, -2)
 }
 /*Unplayed means the user needs   */
-var codeToString= function(code){
+var codeToString = function(code){
   switch (code) {
     case 0:
       return "Unplayed"
@@ -191,8 +200,30 @@ var codeToString= function(code){
       return "Unplayed"
   }
 }
+
+// searches list of dictionaries for index of first instance of key, val
+var findField = function(l, key, val) {
+  for (var i = 0; i < l.length; i++) {
+    if (l[i].key == val) {
+      return i
+    }
+  }
+  return -1
+}
+
+// searches list of dictionaries for index of first instance of id == val
+var findId = function(l, val) {
+  for (var i = 0; i < l.length; i++) {
+    if (l[i].id == val) {
+      return i
+    }
+  }
+  return -1
+}
+
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
                   selectionNeedles, toDate, shortString,
                   cumulativeEarnings, getInitials, getWinner,
-                  getTally, getScoreString, codeToString};
+                  getTally, getScoreString, codeToString,
+                  findField, findId};

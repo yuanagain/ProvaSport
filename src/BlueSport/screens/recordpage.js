@@ -90,93 +90,93 @@ var RecordPage = React.createClass({
     //console.log(this.props.match);
     return (
     <View style={styles.container}>
-      <View style={{height: 400 *_cvals.dscale}} >
+      <View style={{height: 565 * _cvals.vscale}}>
         <Header title={"RECORD"}
-                mode={this.props.mode}
-                navigator={this.props.navigator} />
+                  mode={this.props.mode}
+                  navigator={this.props.navigator} />
+          <ScrollView>
+          <View style={_cstyles.body_container}>
+            <TextField
+              value={this.state.name}
+              label="Match Name"
+              placeholder="Optional"
+              keyboardType='default'
+              onChangeText={(name) => this.setName(name)}
+            />
 
-        <View style={_cstyles.body_container}>
-          <TextField
-            value={this.state.name}
-            label="Match Name"
-            placeholder="Optional"
-            keyboardType='default'
-            onChangeText={(name) => this.setName(name)}
-          />
+            <TextField
+              value={this.state.location}
+              label="Location"
+              placeholder="Optional"
+              keyboardType='default'
+              onChangeText={(location) => this.setLocation(location)}
+            />
 
-          <TextField
-            value={this.state.location}
-            label="Location"
-            placeholder="Optional"
-            keyboardType='default'
-            onChangeText={(location) => this.setLocation(location)}
-          />
+            <PopoverSelector
+              title={'Contract'}
+              items={['Default']}
+              navigator={this.props.navigator}
+              selection={this.state.contract}
+              mode={'single'}
+              harvest={this.setContract}
+            />
+            <View style={_cstyles.section_divider_line}>
+            </View>
 
-          <PopoverSelector
-            title={'Contract'}
-            items={['Default']}
-            navigator={this.props.navigator}
-            selection={this.state.contract}
-            mode={'single'}
-            harvest={this.setContract}
-          />
-          <View style={_cstyles.section_divider_line}>
-          </View>
+            <PopoverSelector
+              title={'Sport'}
+              items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+              navigator={this.props.navigator}
+              selection={this.state.sport}
+              harvest={this.setSport}
+              mode={'single'}
+            />
+            <View style={_cstyles.section_divider_line}>
+            </View>
 
-          <PopoverSelector
-            title={'Sport'}
-            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-            navigator={this.props.navigator}
-            selection={this.state.sport}
-            harvest={this.setSport}
-            mode={'single'}
-          />
-          <View style={_cstyles.section_divider_line}>
-          </View>
+            <PopoverSelector
+              title={'Team 1'}
+              magic={'player'}
+              items={[0, 1]}
+              navigator={this.props.navigator}
+              selection={this.state.teams[0]}
+              harvest={this.setTeams}
+              harvestArgs={0}
+            />
+            <View style={_cstyles.section_divider_line}>
+            </View>
 
-          <PopoverSelector
-            title={'Team 1'}
-            magic={'player'}
-            items={[0, 1]}
-            navigator={this.props.navigator}
-            selection={this.state.teams[0]}
-            harvest={this.setTeams}
-            harvestArgs={0}
-          />
-          <View style={_cstyles.section_divider_line}>
-          </View>
+            <PopoverSelector
+              title={'Team 2'}
+              magic={'player'}
+              items={[0, 1]}
+              navigator={this.props.navigator}
+              selection={this.state.teams[1]}
+              harvest={this.setTeams}
+              harvestArgs={1}
+            />
+            <View style={_cstyles.section_divider_line}>
+            </View>
 
-          <PopoverSelector
-            title={'Team 2'}
-            magic={'player'}
-            items={[0, 1]}
-            navigator={this.props.navigator}
-            selection={this.state.teams[1]}
-            harvest={this.setTeams}
-            harvestArgs={1}
-          />
-          <View style={_cstyles.section_divider_line}>
-          </View>
+            <SimpleRow
+              title={'Scores '}
+              value={''}/>
 
-          <SimpleRow
-            title={'Scores '}
-            value={''}/>
 
-          <ScrollView style={{height: 75 * _cvals.dscale}}>
             <DynamicList
               items={this.props.match.scores}
               magic={'scores'}
               harvest={this.setScores}
               />
+          </View>
           </ScrollView>
-        </View>
       </View>
-        <View style={_cstyles.buttons_container}>
-          <WideButton
-            text="Record Activity"
-            onPress={()=>this.submit()}
-            />
-        </View>
+      <View style={_cstyles.buttons_container}>
+        <WideButton
+          text="Record Activity"
+          onPress={()=>this.submit()}
+          />
+      </View>
 
     </View>
     );

@@ -63,10 +63,9 @@ var TeamListingPage = React.createClass({
     );
   },
 
-
   renderRow: function(data) {
     return (
-      <View style={styles.container}>
+      <View style={styles.row_container}>
         <TeamBlock 
            teamid={data}
            value={""}
@@ -81,6 +80,13 @@ var TeamListingPage = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
+    width: windowSize.width,
+    height: windowSize.height - 120 * _cvals.dscale,
+    flexDirection: 'column',
+    // TODO BOUND HEIGHT HERE
+    flex: 1
+  },
+  row_container: {
     width: windowSize.width,
     flexDirection: 'column',
     // TODO BOUND HEIGHT HERE
