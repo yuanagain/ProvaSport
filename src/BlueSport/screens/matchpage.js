@@ -121,7 +121,7 @@ else {
 
     return (
       <View style={styles.container}>
-        <View>
+        <View style={{height: 565 * _cvals.vscale}}>
           <Header title={"MATCH"}
                 mode={'nav'}
                 navigator={this.props.navigator} />

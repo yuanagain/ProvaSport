@@ -6,6 +6,8 @@ var windowSize = Dimensions.get('window');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
+var Header = require('../parts/header')
+import * as _ctools from '../libs/customtools'
 
 var {
   AppRegistry,
@@ -66,17 +68,14 @@ render() {
 	
 return (
   <View style={styles.container}>
-	<View style={_cstyles.header_container}>
-        <Text style={_cstyles.title_text}>
-          {"CHAT"}
-        </Text>
-  </View>
-  <ListView
+    <Header title={"Messages"}
+            mode={'nav'}
+            navigator={this.props.navigator} />
+    <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         style={styles.listView}
       />
-
   </View>
       );
   },
@@ -107,12 +106,21 @@ return (
 
   onPress: function(friendId) {
     var GiftedMessengerExample = require('./GiftedMessengerExample');
+
+    var index = _ctools.findId(this.props.data, friendId)
+    var friendName = "Conversation"
+    if (index != -1) {
+      friendName = this.props.data[index].name
+    }
+
     this.props.navigator.push({
       id: "GiftedMessengerExample",
       component: GiftedMessengerExample,
       passProps: {
         player: this.props.player,
         friend: friendId,
+        friendName: friendName,
+        navigator: this.props.navigator,
       }
     });
   },

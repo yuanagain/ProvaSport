@@ -21,6 +21,7 @@ const DB = {
   'user': Store.model("user"),
   'player': Store.model("player")
 }
+
 //DB.player.get().then(resp => console.log(resp.playerid))
 var {
   AppRegistry,
@@ -38,12 +39,12 @@ var {
 
 var ProfilePage = React.createClass({
   getInitialState: function() {
-
     return (
       {
         player: Player.default_player,
         loaded: false,
         isRefreshing: false,
+        my_player: false,
       }
     );
   },
@@ -52,7 +53,8 @@ var ProfilePage = React.createClass({
       {
         playerid: 0,
         teamid: 0,
-        mode: 'nav'
+        mode: 'nav',
+        
       }
     )
   },
@@ -62,6 +64,27 @@ var ProfilePage = React.createClass({
       loginFunction,
       ...props
     } = this.props;
+
+    // add friend component
+    var add_friend = <View></View>
+
+    // console.log(this.state.my_player)
+    if (this.state.me) {
+      if (this.state.my_player.playerid != this.props.playerid) {
+        var friend_status_text = "Add Friend"
+
+        // if they're a friend 
+        if (this.state.my_player.friends.indexOf(this.props.playerid) != -1) {
+          friend_status_text = "Remove Friend"
+        }
+
+        add_friend =  [<SimpleRow  onPress={() => this.toggleFriend()}
+                                    title={'Follow'}
+                                    value={friend_status_text}/>,
+                      <View style={_cstyles.section_divider_line}></View>]
+      }
+    }
+
     return (
     <View style={styles.container}>
       <View>
@@ -89,6 +112,8 @@ var ProfilePage = React.createClass({
             value={this.state.player.name.full}/>
 
           <View style={_cstyles.section_divider_line}></View>
+
+          {add_friend}
 
           <SimpleRow
             title={'Nationality'}
@@ -128,6 +153,12 @@ var ProfilePage = React.createClass({
           title={'Teams'}
           value={this.state.player.teams.length}
           onPress={this.toTeamListing} />
+        <View style={_cstyles.section_divider_line}></View>
+
+        <SimpleRow
+          title={'Friends'}
+          value={this.state.player.friends.length}
+          onPress={this.toFriendsListing} />
         <View style={_cstyles.section_divider_line}></View>
 
         <SimpleRow
@@ -179,7 +210,20 @@ var ProfilePage = React.createClass({
   componentDidMount: function () {
     // this.state.match = this.props.match
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    DB.player.findById(0).then(resp => this.setState({my_player: resp}))
   },
+
+  toggleFriend: function() {
+    // TODO change status of friend, update local data store
+    if (this.state.my_player.friends.indexOf(this.props.playerid) == -1) {
+      Player.addFriend(this.state.my_player.playerid, this.props.playerid)
+    }
+    else {
+      Player.removeFriend(this.state.my_player.playerid, this.props.playerid)
+    }
+  },
+
+
   componentWillReceiveProps: function(nextProps) {
     Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
   },
@@ -192,6 +236,18 @@ var ProfilePage = React.createClass({
       passProps: {
         navigator: this.props.navigator,
         teams: this.state.player.teams
+      }
+    })
+  },
+
+  toFriendsListing() {
+    var FriendsListingPage = require('../screens/friendslistingpage')
+    this.props.navigator.push({
+      id: "FriendsListing",
+      component: FriendsListingPage,
+      passProps: {
+        navigator: this.props.navigator,
+        friends: this.state.player.friends
       }
     })
   },
@@ -211,7 +267,7 @@ var ProfilePage = React.createClass({
   toMatchListing() {
     var MatchListingPage = require('../screens/matchlistingpage')
     this.props.navigator.push({
-      id: "TeamListing",
+      id: "MatchListing",
       component: MatchListingPage,
       passProps: {
         navigator: this.props.navigator,

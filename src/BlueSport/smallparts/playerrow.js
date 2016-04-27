@@ -49,7 +49,8 @@ var PlayerRow = React.createClass({
     } = this.props;
 
     return (
-      <View style={styles.playerbrick} >
+      <TouchableOpacity style={styles.playerbrick} 
+                        onPress={()=>this.onPress()} >
         <View style={[styles.center, styles.left]} >
           <Image style={styles.im}
                  source={{uri: this.state.player.prof_pic}}/>
@@ -59,8 +60,20 @@ var PlayerRow = React.createClass({
             <Text style={[_cstyles.header_text]}>{this.state.player.name.full} </Text>
           </View>
         </View>
-      </ View>
+      </ TouchableOpacity>
     );
+  },
+
+  onPress: function() {
+    var ProfilePage = require('../screens/profilepage')
+    this.props.navigator.push({
+      id: "ProfilePage" + String(_ctools.randomKey()),
+      component: ProfilePage,
+      passProps: {
+        navigator: this.props.navigator,
+        playerid: this.props.playerid
+      }
+    })
   },
 
   fetchPlayer: function(data) {
