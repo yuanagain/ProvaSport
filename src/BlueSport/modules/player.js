@@ -70,15 +70,50 @@ function _CreatePlayer(callback) {
       console.log("Failed");
     });
 }
+function createPlayer(obj) {
+  /* var match = new Match(matchid); */
+    var promise = new Promise(function(resolve, reject) {
+      var newRef = playerdataRef.push();
+      newRef.set(obj, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          reject();
+        } else {
+          console.log("Data CREATED successfully "+ newRef.key());
+          var key = newRef.key();
+          //console.log(Team.addMatch)
+          resolve(newRef.key());
+        }
+      });
+    });
+}
 
 
 export function addFriend(playerid, friend) {
   var specificRef = playerdataRef.child(playerid).child('friends')
   var list = []
-  specificRef.on('value', function(snap) { list = snap.val(); });
-  list.push(friend);
-  console.log(list);
-  specificRef.set(list);
+  specificRef.on('value', function(snap) { list = snap.val();
+    list.push(friend);
+    console.log(list);
+    specificRef.set(list);
+  });
+}
+
+export function removeFriend(playerid, friend) {
+  var specificRef = playerdataRef.child(playerid).child('friends')
+  var list = []
+  specificRef.on('value', function(snap) { list = snap.val();
+    deleteEle(friend, list);
+    console.log(list);
+    specificRef.set(list);
+  });
+}
+
+function deleteEle(value, array) {
+  var index = array.indexOf(value);
+  if(index > -1){
+    array.splice(index, 1);
+  }
 }
 
 export function addMatch(playerid, matchid) {
@@ -209,4 +244,5 @@ export  var default_player = {
   };
   //_AddTeam(0,1,function(resp){console.log(resp)}) //TESTED SUCCESSFULLY(and _AddTournament, an)
 
-module.exports = {_GetPlayer, default_player, addMatch, addTeam, addFriend, addTournament, _AddTeam, _AddMatch, _AddTournament};
+module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
+                  addTeam, addFriend, addTournament, _AddTeam, _AddMatch, _AddTournament};

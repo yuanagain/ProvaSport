@@ -302,5 +302,8 @@ var update_matches = function(matches, matchids, callback) {
     console.log("in customlogic.js 301: "+err)})
   //return matches
 }
-
+//var matchlist = [Match.default_match, Match.default_match, Match.default_match, Match.default_match]
+//createFromList(matchlist, function(array){console.log(array)})
+//var matchidList = ["-KG9drQiXJf-rPjzm6pO", "-KG9eNImruNKE5N6LNcm", "-KG9ircVFfcyt6QX_ySH", "-KG9kHl5HCdl0dePPkZc"]
+//update_matches(matchlist, matchidList)
 module.exports = {RRMatrix, bracketMatrix, createTrace, createBracket, createRR, update_matches};

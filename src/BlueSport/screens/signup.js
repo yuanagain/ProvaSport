@@ -12,6 +12,7 @@ var AddImageIcon = require('../assets/add.png')
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var TextField = require('../smallparts/textfield')
 
+import * as Player from '../modules/player'
 import * as User from '../modules/userdata'
 import Store from 'react-native-store';
 
@@ -45,7 +46,9 @@ var SignUpPage = React.createClass({
   getInitialState() {
     return {
       user: User.default_user,
-      name: '',
+      name: "",
+      first: "",
+      last: "",
       gender: null,
       birthDate: new Date(),
       age: '',
@@ -164,7 +167,7 @@ var SignUpPage = React.createClass({
               placeholder="First Name"
               secureTextEntry={false}
               keyboardType='default'
-              onChangeText={(name) => this.setState({name})}
+              onChangeText={(first) => this.setState({first})}
             />
 
             <TextField
@@ -172,7 +175,7 @@ var SignUpPage = React.createClass({
               placeholder="Last Name"
               secureTextEntry={false}
               keyboardType='default'
-              onChangeText={(name) => this.setState({name})}
+              onChangeText={(last) => this.setState({last})}
             />
 
             <TextField
@@ -180,7 +183,7 @@ var SignUpPage = React.createClass({
               placeholder="Age"
               secureTextEntry={false}
               keyboardType='numeric'
-              onChangeText={(name) => this.setState({name})}
+              onChangeText={(age) => this.setState({age})}
             />
 
             <View style={_cstyles.divider_line}/>
@@ -235,9 +238,6 @@ var SignUpPage = React.createClass({
     return (this.state.username.length >= 6)
   },
 
-  validName() {
-    return (this.state.name.length >= 1)
-  },
 
   onSubmit() {
     /*
@@ -278,15 +278,17 @@ var SignUpPage = React.createClass({
         ]
       )
     }
-    else if (!this.validName()) {
-      Alert.alert(
-        'Invalid Name',
-        'Name field must not be left blank',
-        [
-          {text: 'OK'},
-        ]
-      )
-    }
+    /*
+     * else if (!this.validName()) {
+     *   Alert.alert(
+     *     'Invalid Name',
+     *     'Name field must not be left blank',
+     *     [
+     *       {text: 'OK'},
+     *     ]
+     *   )
+     * }
+     */
     /*
      * else if (this.state.gender == null) {
      *   Alert.alert(
@@ -321,24 +323,36 @@ var SignUpPage = React.createClass({
       var callback = this.props.navToHomeFunc;
       var email = this.state.email;
       var pass = this.state.password;
+      var player = Player.default_player;
       var setUser = this.state.user;
-      User.createUser(email, pass).then(function(value) {
-        var uid = value;
-        User.setUser(uid, setUser);
-      }).catch(function(){console.log("COULD NOT CREATE USER")})
+      //load in the data above
+      player.name.first = this.state.first;
+      player.name.last = this.state.last;
+      player.name.full = this.state.first + " " + this.state.last;
+
+      player.sports = this.state.sports;
+      setUser.sports = this.state.sports;
+      setUser.email = email;
+      setUser.birthday = this.state.age;
+      setUser.nationality = String(this.state.country);
+//call the next functions
+      var callback = this.storeUser;
+      //uid=>callback(uid, setUser, player)
+      User.createUser(email, pass).then(uid=>callback(uid, setUser, player)).catch(function(err){console.log("COULD NOT CREATE USER "+err)})
     }
   },
-  storeUser: function (user) {
-    var callback = this.storePlayer;
-    var playerid = user.playerid;
-    DB.user.add(user).then(function(){
-      Player._CreatePlayer(callback)
+  storeUser: function (uid, user, player) {
+    Player.createPlayer(player).then(function(id){
+      //given the id add to the user and create data in FB
+      console.log("\n\nOK\n\n")
+      user.playerid = id;
+      User.setUser(uid, user);
     })
+    var callback = this.props.navToHomeFunc;
+    var playerid = user.playerid;
+    DB.user.add(user).then(()=>{DB.player.add(player)}).then(callback)
     //create player
   },
-  storeplayer: function (player) {
-    DB.player.add(player).then(this.props.navToHomeFunc);
-  }
 });
 
 // Layout for labels and text fields

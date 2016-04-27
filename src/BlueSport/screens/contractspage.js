@@ -46,6 +46,7 @@ var ContractsPage = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => this.rowChanged(r1, r2)})
     return (
       {
+        tournament: Tournament.default_tournament,
         selectedSport: ["Tennis"],
         selection: [],
         event_type: [],
@@ -220,6 +221,34 @@ output -
     }
   },
   /*
+   * createRR: function(obj) {
+   *   Tournament.createTournament(obj).then(resp=>createRR2(resp, obj, defaults))
+   * },
+   * createRR2: function(id, obj, defaults) {
+   *     var data = {
+   *       teams: resp.teams,
+   *       defaultM: defaults
+   *     }
+   *     _customlogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toRR())
+   * },
+   * createBracket: function(obj, defaults) {
+   *   Tournament.createTournament(obj).then(resp=>createBracket2(resp, obj, defaults))
+   * },
+   * createBracket2: function(id, obj, defaults) {
+   *     var data = {
+   *       teams: resp.teams,
+   *       defaultM: defaults
+   *     }
+   *     _customlogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket())
+   * },
+   */
+   createRR: function () {
+     
+   },
+   createBracket: function () {
+
+   },
+  /*
   AddGame:
   what do we need?
 
@@ -263,20 +292,22 @@ output -
   },
 
   //// TODO POPULATE W/ REAL DATA
-  toRR() {
+  toRR(tid) {
     this.props.navigator.push({
       id: "RoundRobinPage3",
       component: RoundRobinPage,
       passProps: {
+        torunamentid: tid,
         navigator: this.props.navigator
       }
     })
   },
-  toBracket() {
+  toBracket(tid) {
     this.props.navigator.push({
       id: "BracketPage3",
       component: BracketPage,
       passProps: {
+        tournamentid: tid,
         navigator: this.props.navigator
       }
     })

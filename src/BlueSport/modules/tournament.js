@@ -91,6 +91,30 @@ function _GetTournament(tournamentid, callback) {
       console.log("Failed");
     });
 }
+function getTournament(tournamentid) {
+  /* var match = new Match(matchid); */
+  return new Promise(function(resolve, reject) {
+      tourndb.child(tournamentid).on("value", function(snapshot) {
+        var tournament = snapshot.val();
+        resolve(tournament);
+      });
+   });
+}
+
+function setTournament(tournamentid, obj) {
+  /* var match = new Match(matchid); */
+  return new Promise(function(resolve, reject) {
+      tourndb.child(tournamentid).set(obj, function(error) {
+        if (error) {
+          console.log("Tourn could not be saved." + error);
+          reject();
+        } else {
+          console.log("Tourn saved successfully.");
+          resolve(obj);
+        }
+      });
+   });
+}
   var default_tournament =
   {
       "type": "Loading",
@@ -195,4 +219,4 @@ function updateTourn(tournObject) {
 
 
 
-module.exports = {_GetTournament, default_tournament, addTeam, addMatches, _AddMatches, _AddTeam};
+module.exports = {_GetTournament, getTournament, setTournament, default_tournament, addTeam, addMatches, _AddMatches, _AddTeam};

@@ -221,29 +221,25 @@ function createFromList(matchobjlist, callback) {
 
 //in future just update the specific thing that is being changed
 //set from list
-function setFromList(matchidlist, matchobjlist, callback) {
+function _SetFromList(matchidlist, matchobjlist, callback) {
+  var matchids = []
+  var i = 0;
+  matchobjlist.forEach(function(matchobj){
+    setMatch(matchidlist[i], matchobj).then(resp=>{if(i == matchidlist.length)callback(matchobjlist)}).catch(function(err){console.log("IN SetFromList: 229:\t"+err)});
+      i+=1;
+  })
+}
+
+function setFromList(matchidlist, matchobjlist) {
   return new Promise(function (resolve) {
     var matchids = []
     var i = 0;
     matchobjlist.forEach(function(matchobj){
-      setMatch(matchidlist[i], matchobj).catch(function(err){console.log("IN SetFromList: 229:\t"+err)});
+      setMatch(matchidlist[i], matchobj).then(resp=>{if(i == matchidlist.length)resolve(matchobjlist)}).catch(function(err){console.log("IN SetFromList: 229:\t"+err)});
         i+=1;
     })
   })
 }
-
-
-function populate(data, index) {
-  this.array[index] = data
-  // if this.array no longer contains uninitialized entries
-  if (this.array.indexOf(-1) == -1) {
-    this.finalize() //submits the torunament and then go into all players and teams and add their
-  }
-  //use index to modify a specific Location
-  //query last returning query
-  //all other elements are not -1
-}
-
 
 /*  IDEA:
    "status": {
@@ -331,8 +327,62 @@ function fetchList(matchidArr) {
     }
   })
 }
+// will return teamid either 0 or 1 if in match and -1 if not in match
+function isInMatch(matchid, playerid, callback) {
+  getMatch(matchid).then(function(resp){
+    teamid1 = resp.teams[0];
+    teamid2 = resp.teams[1];
+    Team.onTeams(teamid1, teamid2, playerid).then(resp=>{if(resp){
+      Team.teamOneorTwo(teamid1, playerid).then(response=>callback(response));
+    } else {
+      callback(-1);
+    }})
+  })
+}
+
+function _TeamInMatch(matchid, teams, callback) {
+  getMatch(matchid).then(function(resp){
+    //check if match teams are in player's teams
+    if(teams.indexOf(resp.teams[0]) > -1){
+      callback(0)
+    }
+    else if (teams.indexOf(resp.teams[1]) > -1) {
+      callback(1)
+    }
+    else {
+      callback(-1)
+    }
+  })
+}
 
 
+function teamInMatch(matchid, teams) {
+  new Promise(function(resolve){
+    getMatch(matchid).then(function(resp){
+      //check if match teams are in player's teams
+      if(teams.indexOf(resp.teams[0]) > -1){
+        resolve(0)
+      }
+      else if (teams.indexOf(resp.teams[1]) > -1) {
+        resolve(1)
+      }
+      else {
+        resolve(-1)
+      }
+    })
+  })
+}
+
+
+function myStatus(matchid, playerobj) {
+  return new Promise(function (resolve) {
+    getMatch(matchid).then(function(oMatch) {
+      teamInMatch(matchid, playerobj.teams, function(index){
+        resolve(oMatch.status[index])
+      })
+    })
+  })
+}
 
 //tieMatchTo(35, 1, 1)
 /*CHANGED ***************HOW TO PARSE ARRAYS************** TODO*/
@@ -348,9 +398,6 @@ function fetchList(matchidArr) {
  * })
  */
 
-function makeMatchA() {
-  Team._CreateTeam(teamobj2).then(makematch(team1, team2));
-}
 //console.log(createMatch(default_match));
 /*
  * setMatch(35, default_match, function(){
@@ -364,13 +411,15 @@ function makeMatchA() {
   */
   //_CreateMatch(default_match, function(val) {console.log("new Match: " + val)})
   //updateScores(1, [[98,89],[0,1]]) TESTED SUCCESSFULLY
-  var matchlist = [default_match, default_match, default_match]
+  var matchlist = [default_match, default_match, default_match, default_match]
 //createFromList(matchlist, function(array){console.log(array)})
-  var matchidList = [0, 1 ,"-KG3qgMADCAJWzx534q7", "-KG3qgMfsTtVFBsx4sBx"]
-//  fetchList(matchidList).then(resp=>console.log(resp))
-//_FetchList(matchidList, function(resp){console.log(resp)})
-
+  var matchidList = ["-KG9drQiXJf-rPjzm6pO", "-KG9eNImruNKE5N6LNcm", "-KG9ircVFfcyt6QX_ySH", "-KG9kHl5HCdl0dePPkZc"]
+//  fetchList(matchidList).then(resp=>console.log(resp)) SUCCESS
+//_FetchList(matchidList, function(resp){console.log(resp)}) SUCCESS
+//setFromList(matchidList, matchlist, function(resp){console.log("SET Correctly")}) SUCCESS
+//isInMatch(1, 0, function(resp){console.log("INMATCH: "+resp)})
 
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
                   _CreateMatch, updateScores, updateStatus, _CreateFromList,
-                  createFromList, fetchList, _FetchList, setFromList};
+                  createFromList, fetchList, _FetchList, setFromList, _SetFromList,
+                  isInMatch, myStatus};

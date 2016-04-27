@@ -202,7 +202,7 @@ export function addTeamPlayersToMatch(teamid, matchid) {
    });
 }
 /*returns which team the player is on*/
-function teamOneorTwo(team0id, team1id, playerid) {
+export function teamOneorTwo(team0id, playerid) {
   return new Promise(function(resolve){
     getTeam(team0id).then(resp=>{
       if(inArray(playerid, resp.players))
@@ -210,6 +210,21 @@ function teamOneorTwo(team0id, team1id, playerid) {
       else
         resolve(1);
     });
+  })
+}
+//returns true if on team and false if not on either team
+export function onTeams(teamid1, teamid2, playerid) {
+  return new Promise(function(resolve){
+    getTeam(teamid1).then(function(value){
+      getTeam(teamid2).then(function(resp) {
+        if (inArray(playerid, value.players) || inArray(playerid, resp.players)){
+          resolve(true);
+        }
+        else{
+          resolve(false);
+        }
+      })
+    })
   })
 }
 //posibly move to ctools
@@ -245,4 +260,4 @@ var bye = {
  * _SetTeam(TBD, 'TBD', function(resp){console.log("SET TBD")})
  */
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
-   getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch};
+   getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch, teamOneorTwo, onTeams};

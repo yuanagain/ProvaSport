@@ -16,6 +16,7 @@ var LoadingPage = require('../screens/loadingpage')
 import * as _ctools from '../libs/customtools'
 import * as Match from '../modules/match'
 import * as Team from '../modules/team'
+import * as Player from '../modules/player'
 import Store from 'react-native-store';
 
 //database name and constant for storing data
@@ -50,7 +51,7 @@ var MatchPage = React.createClass({
         team1: Team.default_team,
         team2: Team.default_team,
         playerid: 0,
-        status: 1
+        myStatus: 1,
       }
     );
   },
@@ -95,7 +96,7 @@ else {
 
 
      */
-    if (this.state.match.status['0'] == 3) {
+    if (this.state.myStatus == 3) {
       //console.log("MATCH  "+ this.state.match.status['0'])
       // if this is an unconfirmed match
       buttons = <WideButtonPair textRight={"Confirm"}
@@ -104,7 +105,7 @@ else {
                                 onPressLeft={()=>this.toRecordPage()} />
     }
 
-    if (this.state.match.status['0'] == 0) {
+    if (this.state.myStatus == 0) {
       // if this match can be edited by the player
       buttons = <WideButtonPair textRight={"Accept"}
                                 textLeft={"Decline"}
@@ -112,10 +113,10 @@ else {
                                 onPressLeft={()=>console.log("Left")} />
     }
 
-    if (this.state.match.status['0'] == 2) {
+    if (this.state.myStatus == 2) {
       // if this match can be edited by the player
       buttons = <WideButton text={"Record"}
-                            onPress={()=> this.toRecordPage()} />
+                            onPress={()=> {this.changeStatus(3);this.toRecordPage();}} />
     }
 
     return (
@@ -218,7 +219,9 @@ else {
   componentDidMount: function () {
     // this.state.match = this.props.match
     Match._GetMatch(this.props.matchid, this.fetchMatch)
-
+    var matchid = this.props.matchid;
+    var player0 = {teams:[1]}
+    Match.myStatus(matchid, player0).then(resp=>this.setState({myStatus: resp}))
   },
 
   toRecordPage: function() {
@@ -236,11 +239,15 @@ else {
     })
   },
   changeStatus: function(code) {
-    this.state.match.status['0'] = code;
-    Match._SetMatch(this.props.matchid, this.state.match, this.changeA)
+    this.setState({myStatus: code})
+    Match.teamInMatch(this.props.matchid).then(this.changeB)
   },
   changeA: function(resp){
     this.setState({match: resp});
+  },
+  changeB: function(resp) {
+    this.state.match.status[resp] = code;
+    Match._SetMatch(this.props.matchid, this.state.match, this.changeA)
   }
 
   /*
