@@ -1,8 +1,11 @@
+/* adapted from Farid Safi's React Native Gifted Messenger */
+
 'use strict';
 
 var React = require('react-native');
 import Message from './Message';
 var GiftedSpinner = require('react-native-gifted-spinner');
+var Header = require('../parts/header');
 var {
   Text,
   View,
@@ -17,10 +20,9 @@ var {
 } = React;
 
 var moment = require('moment');
-
 var Button = require('react-native-button');
 
-var GiftedMessenger = React.createClass({
+var MessagePage = React.createClass({
 
   firstDisplay: true,
   listHeight: 0,
@@ -56,7 +58,7 @@ var GiftedMessenger = React.createClass({
       submitOnReturn: false,
       forceRenderImage: false,
       onChangeText: (text) => {},
-      autoScroll: false,
+      autoScroll: true,
       scrollAnimated: true,
     };
   },
@@ -79,8 +81,6 @@ var GiftedMessenger = React.createClass({
     initialMessages: React.PropTypes.array,
     messages: React.PropTypes.array,
     handleSend: React.PropTypes.func,
-    onCustomSend: React.PropTypes.func,
-    renderCustomText: React.PropTypes.func,
     maxHeight: React.PropTypes.number,
     senderName: React.PropTypes.string,
     senderImage: React.PropTypes.object,
@@ -181,6 +181,7 @@ var GiftedMessenger = React.createClass({
     return null;
   },
 
+  // display each message
   renderRow(rowData = {}, sectionID = null, rowID = null) {
 
     var diffMessage = null;
@@ -204,7 +205,6 @@ var GiftedMessenger = React.createClass({
           forceRenderImage={this.props.forceRenderImage}
           onImagePress={this.props.onImagePress}
           onMessageLongPress={this.props.onMessageLongPress}
-          renderCustomText={this.props.renderCustomText}
 
           styles={this.styles}
         />
@@ -212,6 +212,7 @@ var GiftedMessenger = React.createClass({
     )
   },
 
+  // text input
   onChangeText(text) {
     this.setState({
       text: text
@@ -232,11 +233,14 @@ var GiftedMessenger = React.createClass({
   componentDidMount() {
     this.scrollResponder = this.refs.listView.getScrollResponder();
 
+    // on refresh, load messages
     if (this.props.messages.length > 0) {
       this.appendMessages(this.props.messages);
-    } else if (this.props.initialMessages.length > 0) {
+    } 
+    else if (this.props.initialMessages.length > 0) {
       this.appendMessages(this.props.initialMessages);
-    } else {
+    } 
+    else {
       // Set allLoaded, unless props.loadMessagesLater is set
       if (!this.props.loadMessagesLater) {
         this.setState({
@@ -244,7 +248,6 @@ var GiftedMessenger = React.createClass({
         });
       }
     }
-
   },
 
   componentWillReceiveProps(nextProps) {
@@ -313,6 +316,7 @@ var GiftedMessenger = React.createClass({
     }
   },
 
+  // s
   onSend() {
     var message = {
       text: this.state.text.trim(),
@@ -321,13 +325,12 @@ var GiftedMessenger = React.createClass({
       position: 'right',
       date: new Date(),
     };
-    if (this.props.onCustomSend) {
-      this.props.onCustomSend(message);
-    } else {
-      var rowID = this.appendMessage(message, true);
-      this.props.handleSend(message, rowID);
-      this.onChangeText('');
-    }
+    // display message on the screen
+    var rowID = this.appendMessage(message, true);
+    // push to firebase
+    this.props.handleSend(message, rowID);
+    // reset text box
+    this.onChangeText('');
   },
 
   postLoadEarlierMessages(messages = [], allLoaded = false) {
@@ -518,6 +521,12 @@ var GiftedMessenger = React.createClass({
         style={this.styles.container}
         ref='container'
       >
+      <View>
+          <Header title={"MESSAGES"}
+                mode={"nav"}
+                navigator={this.props.navigator} />
+        </View>
+        
         {this.renderAnimatedView()}
         {this.renderTextInput()}
       </View>
@@ -558,11 +567,11 @@ var GiftedMessenger = React.createClass({
   componentWillMount() {
     this.styles = {
       container: {
+        flexDirection: 'column',
         flex: 1,
-        backgroundColor: '#FFF',
-      },
-      listView: {
-        flex: 1,
+        justifyContent: 'space-between',
+        backgroundColor: 'transparent',
+        opacity: 1.00,
       },
       textInputContainer: {
         height: 44,
@@ -617,4 +626,4 @@ var GiftedMessenger = React.createClass({
   },
 });
 
-module.exports = GiftedMessenger;
+module.exports = MessagePage;

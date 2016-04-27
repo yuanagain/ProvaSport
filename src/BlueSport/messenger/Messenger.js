@@ -11,7 +11,7 @@ var {
   Text
 } = React;
 
-var GiftedMessenger = require('./GiftedMessenger');
+var  MessagePage = require('./MessagePage.js');
 var Communications = require('react-native-communications');
 var messagedb = require('firebase');
 messagedb = new Firebase('https://provamessenger.firebaseio.com');
@@ -32,27 +32,29 @@ var player = {
             "tournaments": []
           };
 
-var GiftedMessengerExample = React.createClass({
+var Messenger = React.createClass({
 
   getDefaultProps() {
     return {
-      player: player,
       friendid: 0,
     };
   },
 
   getInitialState: function() {
-    
-    return ({
-    messages: [],
-    messagesLoaded: false,
-    });
+    return (
+      {
+        messages: [],
+        messagesLoaded: false,
+      }
+    );
   },
 
   componentDidMount: function () {
+    // get friend
+    //get messages
     this.getMessages(this.props.friendid, this.harvest);
     this.setState({messagesLoaded: true});
-    this.animate(); //TODO: figure out how to query for send and receive
+    this.animate();
   },
 
   animate: function() {
@@ -92,9 +94,9 @@ var GiftedMessengerExample = React.createClass({
      			"position" : position,
      		};
    		  messagelist.push(messagedata);
-  	   	});
-        resolve(messagelist);
-    	});      
+  	   });
+      resolve(messagelist);
+    });      
   });
 
   promise.then(function(result) {
@@ -110,25 +112,25 @@ var GiftedMessengerExample = React.createClass({
     var newmessage = messagedb.child(0).push();
     var promise = new Promise(function(resolve, reject) {
       newmessage.set(
-    {
-      userid: player.userid,
-      text: message.text,
-      date: Date.now(),
-    }, function(error) {
-    	if (error) {
-    		reject(false);
-    	}
-    	else {
-    		resolve(true);
-    	}
-    }); 
-  });
+        {
+        userid: player.userid,
+        text: message.text,
+        date: Date.now(),
+        }, function(error) {
+    	     if (error) {
+    		    reject(false);
+    	     }
+    	     else {
+    		    resolve(true);
+    	     }
+      }); 
+    });
     promise.then(function(value) {
       if (value === true) {
-        this._GiftedMessenger.setMessageStatus('Sent', rowID);
+        this.MessagePage.setMessageStatus('Sent', rowID);
       }
       else {
-        this._GiftedMessenger.setMessageStatus('ErrorButton', rowID); 
+        this._MessagePage.setMessageStatus('ErrorButton', rowID); 
       }
     }).catch(function(error) {
         console.log(error);
@@ -167,8 +169,8 @@ var GiftedMessengerExample = React.createClass({
   
   render() {
     return (
-      <GiftedMessenger
-        ref={(c) => this._GiftedMessenger = c}
+      <MessagePage
+        ref={(c) => this._MessagePage = c}
     
         styles={{
           bubbleRight: {
@@ -197,6 +199,7 @@ var GiftedMessengerExample = React.createClass({
         handleEmailPress={this.handleEmailPress}
         
         inverted={true}
+        navigator={this.props.navigator}
       />
 
     );
@@ -246,4 +249,4 @@ var navBarHeight = (Platform.OS === 'android' ? 56 : 64);
 var statusBarHeight = (Platform.OS === 'android' ? 25 : 0);
 
 
-module.exports = GiftedMessengerExample;
+module.exports = Messenger;
