@@ -46,12 +46,17 @@ var NewsFeedPage = React.createClass({
       <MatchList
         navigator={this.props.navigator}
         matches={[0, 1]}
+        onRefresh={this.onRefresh}
       />
 
       <View style={styles.divider_line}>
       </View>
     </View>
     );
+  },
+
+  onRefresh: function() {
+    console.log("REFRESHING")
   },
 
   goBack: function() {

@@ -38,6 +38,7 @@ var MatchList = React.createClass({
 
     var {
       matches,
+      onRefresh,
       ...props
     } = this.props;
 
@@ -63,22 +64,14 @@ var MatchList = React.createClass({
   },
   
 
-  getMatches: function() {
-    if (this.props.getMatches) {
-      return this.props.getMatches()
-    }
-    else {
-      return this.props.matches
-    }
-  },
-
   onRefresh: function() {
     this.setState({isRefreshing: true})
-    this.setState({matches: this.getMatches() })
+    if (this.props.onRefresh) {
+      this.props.onRefresh()
+    }
     setTimeout(() => {
       this.setState({isRefreshing: false})
     }, _cvals.timeout);
-    
   },
 
   goBack: function() {
