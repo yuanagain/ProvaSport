@@ -55,7 +55,7 @@ var PayoutSection= React.createClass({
 
         <View style={styles.values}>
           <Text style={[_cstyles.standard_text,
-                       {color: _cvals.sklightgreen, fontWeight: 'bold',
+                       {color: _cvals.sklightgreen, fontWeight: 'normal',
                         paddingVertical: _cvals.stdmargin / 2}]}>
             {this.state.plus + '$'
               + String(this.props.earnings['cash'])}

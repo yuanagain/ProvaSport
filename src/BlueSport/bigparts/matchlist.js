@@ -24,12 +24,12 @@ var MatchList = React.createClass({
   getInitialState: function() {
     return {
       isRefreshing: false,
+      matches: []
     };
   },
   getDefaultProps: function() {
     return (
       {
-        matches: [],
       }
     )
   },
@@ -43,7 +43,7 @@ var MatchList = React.createClass({
     } = this.props;
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var dataSource = ds.cloneWithRows(this.props.matches)
+    var dataSource = ds.cloneWithRows(this.state.matches)
     
     return (
       <ListView
@@ -65,6 +65,8 @@ var MatchList = React.createClass({
   
 
   onRefresh: function() {
+    // TODO refresh cached player object, pull list of matches
+
     this.setState({isRefreshing: true})
     if (this.props.onRefresh) {
       this.props.onRefresh()
@@ -85,6 +87,10 @@ var MatchList = React.createClass({
         navigator={this.props.navigator} />
     )
   },
+
+  componentDidMount() {
+    this.setState({matches: [0, 1, 0, 1]})
+  }
 });
 
 
