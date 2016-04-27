@@ -1,11 +1,15 @@
 'use strict';
 
+import * as Player from '../modules/player'
+
+
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
+var Header = require('../parts/header')
 
 var {
   AppRegistry,
@@ -28,33 +32,37 @@ var MY_FRIENDS = [
   {'id': 3, 'name': "Khadim", 'sports': "football",
   'profpic': "http://facebook.github.io/react/img/logo_og.png"}];
 
-  var player = {
-            "name" : "Sam",
-            "userid" : 2,
-            "prof_pic": "",
-            "elo": 0.0,
-            "earnings": {
-              "cash": 1000,
-              "xp": 200,
-            },
-            "sports": "Basketball",
-            "friends": [0],
-            "teams": [],
-            "matches": [],
-            "tournaments": []
-          };
+var player = {
+          "name" : "Sam",
+          "userid" : 2,
+          "prof_pic": "",
+          "elo": 0.0,
+          "earnings": {
+            "cash": 1000,
+            "xp": 200,
+          },
+          "sports": "Basketball",
+          "friends": [0],
+          "teams": [],
+          "matches": [],
+          "tournaments": []
+        };
 
 var FriendsPage = React.createClass({
   getInitialState: function() {
+    //Player._GetPlayer(this.props.playerid, this.getFriends);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       dataSource: ds.cloneWithRows(this.props.data),
+      //player: Player.default_player,
+      data: [],
+      friendsLoaded: false,
     };
   },
   getDefaultProps: function() {
     return ({
-      data: MY_FRIENDS,
-      player: player
+      data: [],
+      playerid: 0
     })
   },
 render() {
@@ -66,10 +74,10 @@ render() {
 	
 return (
   <View style={styles.container}>
-	<View style={_cstyles.header_container}>
-        <Text style={_cstyles.title_text}>
-          {"CHAT"}
-        </Text>
+	<View>
+        <Header title={"MESSAGES"}
+                mode={"nav"}
+                navigator={this.props.navigator} />
   </View>
   <ListView
         dataSource={this.state.dataSource}
@@ -82,20 +90,29 @@ return (
   },
 
 
-  renderRow(rowData) {
+  renderRow(dataSource) {
+    // get friend id, profpic, name, and sports
+    var name = null;
+    var sports = null;
+    var picture = null;
+    var userid = dataSource;
+    Player._GetPlayer(dataSource, this.updatePlayer);
+    console.log(name);
+
     return (
       <View style={styles.friendContainer}>
-        <TouchableOpacity onPress = {()=>this.onPress(rowData.id)} style = {styles.container}>
+        <TouchableOpacity onPress = {()=>this.onPress(userid)} style = {styles.container}>
           <View style={styles.profpicContainer}>
             <Image
-              source={{uri: rowData.profpic}}
+              //source={{uri: picture}}
+              source={{uri: "http://facebook.github.io/react/img/logo_og.png"}}
               style={styles.profpic}
             />
         	</View> 
           <View>
           	<View style={styles.details}>
-  	            <Text style={_cstyles.standard_text}>{rowData.name}</Text>
-  	            <Text style={_cstyles.detail_text}>{rowData.sports}</Text>
+  	            <Text style={_cstyles.standard_text}>{name}</Text>
+  	            <Text style={_cstyles.detail_text}>{sports}</Text>
               </View>
               <View style={_cstyles.section_divider_line} ></View> 
           </View>
@@ -106,20 +123,40 @@ return (
 
 
   onPress: function(friendId) {
-    var GiftedMessengerExample = require('./GiftedMessengerExample');
+    var Messenger = require('./Messenger');
     this.props.navigator.push({
-      id: "GiftedMessengerExample",
-      component: GiftedMessengerExample,
+      id: "Messenger",
+      component: Messenger,
       passProps: {
         player: this.props.player,
         friend: friendId,
       }
     });
   },
+
+  componentDidMount: function () {
+    // get friend list
+    Player._GetPlayer(this.props.playerid, this.getFriends);
+  },
+
+  // adds friend userids to data
+  getFriends: function (player) {
+    this.setState({data: player.friends});
+    //this.setState({friendsLoaded: true});
+  },
+
+  updatePlayer: function (player) {
+    name = "Aamir";
+    picture = player.imageURL;
+    
+    sports = player.sports;
+    console.log("PICTURE" + player.imageURL);
+  }
+
 });
 
-  var styles = StyleSheet.create({
-  	container: {
+var styles = StyleSheet.create({
+	container: {
     flexDirection: 'column',
     flex: 1,
     alignItems: 'flex-start',
@@ -142,10 +179,8 @@ return (
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: _cvals.dscale * 4,
-
-},
+  },
   profpicContainer: {
-  	//float: 'left',
     justifyContent: 'center',
     alignItems: 'center',
     width: windowSize.width / 5,
@@ -163,6 +198,6 @@ return (
   	marginTop: -1*(windowSize.width /8),
   	marginLeft: windowSize.width / 5,
   }
-  })
+})
 
-  module.exports = FriendsPage;
+module.exports = FriendsPage;
