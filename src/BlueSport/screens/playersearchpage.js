@@ -121,7 +121,7 @@ var PlayerSearchPage = React.createClass({
     setTimeout(() => {
       this.setState({players: players})
       this.setState({searching: false})
-    }, 100);
+    }, 500);
 
   },
 
@@ -163,7 +163,9 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: 0 
+    marginTop: 0,
+    width: windowSize.width,
+    backgroundColor: _cvals.skbluelight
   },
   container: {
     flex: 1,

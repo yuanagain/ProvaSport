@@ -41,7 +41,7 @@ var ProfilePage = React.createClass({
         player: Player.default_player,
         loaded: false,
         isRefreshing: false,
-        my_player: false,
+        my_player: false, 
         playerid: this.props.playerid
       }
     );
@@ -67,22 +67,22 @@ var ProfilePage = React.createClass({
     // add friend component
     var add_friend = <View></View>
 
-    // console.log(this.state.my_player)
+    console.log(this.state.my_player)
     if (this.state.my_player) {
-      if (this.state.my_player.playerid != this.props.playerid) {
-        var friend_status_text = "Add Friend"
+      if (this.state.my_player.userid != this.props.playerid) {
+        var friend_status_text = "Follow"
 
         // if they're a friend
         if (this.state.my_player.friends.indexOf(this.props.playerid) != -1) {
-          friend_status_text = "Remove Friend"
+          friend_status_text = "Unfollow"
         }
 
         add_friend =  [<SimpleRow  onPress={() => this.toggleFriend()}
                                     title={'Follow'}
                                     value={friend_status_text} 
                                     key={1}/>,
-                      <View style={_cstyles.section_divider_line}
-                            key={2}]></View>
+                       <View style={_cstyles.section_divider_line}
+                             key={2}></View>]
       }
     }
 
