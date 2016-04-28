@@ -93,8 +93,11 @@ else {
 }
  setState to force re-render
 
-
-
+DECLINE:
+remove matches from player.matches
+removes player from match (and possibly tournament)
+sets match to BYE
+update if needed
      */
      console.log("STATUS:  "+this.state.myStatus)
     if (this.state.myStatus == 3) {
@@ -195,12 +198,12 @@ else {
   },
 
   getTeamid1: function() {
-    console.log("LOADTEAMS")
+    //console.log("LOADTEAMS")
     return this.state.match.teams[0]
   },
 
   getTeamid2: function() {
-    console.log("LOADTEAMS")
+    //console.log("LOADTEAMS")
     return this.state.match.teams[1]
   },
 
@@ -225,12 +228,12 @@ else {
   },
   teamOn:function(){
 
-    if (this.state.team1.players.indexOf(1) > -1){
+    if (this.state.team1.players.indexOf(this.state.playerid) > -1){
       var code = this.state.match.status[0];
       this.setState({myStatus: code,
         myTeam: 0})
     }
-    else if (this.state.team2.players.indexOf(1) > -1){
+    else if (this.state.team2.players.indexOf(this.state.playerid) > -1){
       var code = this.state.match.status[1];
       this.setState({myStatus: code,
       myTeam: 1})
