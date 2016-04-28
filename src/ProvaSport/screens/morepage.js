@@ -80,6 +80,11 @@ var MorePage = React.createClass({
       </View>
 
       <View style={_cstyles.buttons_container}>
+        <WideButton
+
+          text={"Logout"}
+          onPress={()=>this.props.logout()}
+          />
       </View>
     </View>
     );

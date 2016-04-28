@@ -147,7 +147,7 @@ class ProvaSport extends Component {
             >
             <Navigator
               ref='moreRef'
-              initialRoute={{name: 'MorePage', component: MorePage}}
+              initialRoute={{name: 'MorePage', component: MorePage, passProps: {logout: this.logout} }}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );
@@ -158,6 +158,10 @@ class ProvaSport extends Component {
         </TabNavigator>
       )
     }
+  }
+
+  logout() {
+    console.log("LOGGING OUT")
   }
 
   onTabPress(tab, navRef) {
