@@ -321,7 +321,7 @@ var SignUpPage = React.createClass({
       player.name.first = this.state.first;
       player.name.last = this.state.last;
       player.name.full = this.state.first + " " + this.state.last;
-
+      player.nationality = String(this.state.country);
       player.sports = this.state.sports;
       setUser.sports = this.state.sports;
       setUser.email = email;
@@ -329,25 +329,30 @@ var SignUpPage = React.createClass({
       setUser.nationality = String(this.state.country);
 //call the next functions
       var callback = this.storeUser;
+      console.log(setUser)
       //uid=>callback(uid, setUser, player)
-      User.createUser(email, pass).then(uid=>{player.userid = uid}).then(uid=>callback(uid, setUser, player)).catch(function(err){console.log("COULD NOT CREATE USER "+err)})
+      User.createUser(email, pass).then(uid=>callback(uid, setUser, player)).catch(function(err){console.log("COULD NOT CREATE USER "+err)})
     }
   },
   storeUser: function (uid, user, player) {
     console.log("\n"+uid+"  "+user+"  "+player)
+    player.userid = uid;
     var callback = this.props.navToHomeFunc;
+    var call1 = this._setInitialUser;
     Player.createPlayer(player).then(function(id){
       //given the id add to the user and create data in FB
-      console.log("\n\nOK\n\n"+id)
+      console.log("\n\nOK\n\n"+user.playerid)
       user.playerid = id;
-      this._setInitialUser(user)
+      console.log(user)
       User.setUser(uid, user);
+      call1(user)
     })
     this._setInitialPlayer(player)
     callback()
     //create player
   },
   _setInitialUser: function(obj) {
+    console.log("CACHE user")
 /*
  *     AsyncStorage.setItem(store_key, JSON.stringify(UID123_object), () => {
  *      AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {

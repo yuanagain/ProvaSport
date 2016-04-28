@@ -60,7 +60,7 @@ var LoginPage = React.createClass({
     <View style={styles.container}>
 
       <View style={styles.logo_container}>
-        <Image style={styles.logo} 
+        <Image style={styles.logo}
                source={require('../assets/logo_white_orange.png')} />
       </View>
 
@@ -70,7 +70,7 @@ var LoginPage = React.createClass({
         </Text>
       </View>
 
-     
+
 
       <View style={styles.inputs_container}>
 
@@ -198,8 +198,8 @@ var LoginPage = React.createClass({
     }
   },
   grabUser: function(authdata) {
-    //var uid = authdata.uid;
-    var uid = 'dd726cb4-cdd3-4d66-a06f-cb9e5a5a8794';
+    var uid = authdata.uid;
+    //var uid = 'dd726cb4-cdd3-4d66-a06f-cb9e5a5a8794';
     /*TODO change back to uid*/
     User._GetUser(uid, this.handleUser);
 

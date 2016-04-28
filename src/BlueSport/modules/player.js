@@ -273,6 +273,7 @@ export  var default_player = {
     "userid" : -1,
     "prof_pic": "Loading",
     "elo": 0.0,
+    "nationality": "",
     "earnings": [ {"sport" :
     {
       "cash": 0,
