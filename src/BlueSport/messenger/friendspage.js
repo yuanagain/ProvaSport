@@ -53,15 +53,16 @@ var FriendsPage = React.createClass({
     //Player._GetPlayer(this.props.playerid, this.getFriends);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
+      player: Player.default_player,
+      friend: Player.default_player,
       dataSource: ds.cloneWithRows(this.props.data),
-      //player: Player.default_player,
       data: [],
       friendsLoaded: false,
     };
   },
   getDefaultProps: function() {
     return ({
-      data: [],
+      data: [1],
       playerid: 0
     })
   },
@@ -92,12 +93,14 @@ return (
 
   renderRow(dataSource) {
     // get friend id, profpic, name, and sports
-    var name = null;
-    var sports = null;
-    var picture = null;
+    console.log("RENDERING");
+    //var name = null;
+    //var sports = null;
+    //var picture = null;
     var userid = dataSource;
-    Player._GetPlayer(dataSource, this.updatePlayer);
-    console.log(name);
+    Player._GetPlayer(dataSource, this.updateFriend);
+    //console.log(name);
+    console.log(this.state.friend.name);
 
     return (
       <View style={styles.friendContainer}>
@@ -111,8 +114,8 @@ return (
         	</View> 
           <View>
           	<View style={styles.details}>
-  	            <Text style={_cstyles.standard_text}>{name}</Text>
-  	            <Text style={_cstyles.detail_text}>{sports}</Text>
+  	            <Text style={_cstyles.standard_text}>{this.state.friend.name.full}</Text>
+  	            <Text style={_cstyles.detail_text}>{this.state.friend.sports}</Text>
               </View>
               <View style={_cstyles.section_divider_line} ></View> 
           </View>
@@ -141,16 +144,14 @@ return (
 
   // adds friend userids to data
   getFriends: function (player) {
-    this.setState({data: player.friends});
-    //this.setState({friendsLoaded: true});
+    this.state.data = player.friends;
+    //this.setState({data: player.friends});
   },
 
-  updatePlayer: function (player) {
-    name = "Aamir";
-    picture = player.imageURL;
-    
-    sports = player.sports;
-    console.log("PICTURE" + player.imageURL);
+  // set the state to the current friend
+  updateFriend: function (player) {
+    this.setState({friend: player});
+    this.setState({friendsLoaded: true});
   }
 
 });
