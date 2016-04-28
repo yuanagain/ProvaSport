@@ -4,7 +4,7 @@ var ReactDOM = require('react-dom');
 var About = React.createClass({
   render: function() {
     return (
-      <div>
+      <div style={content}>
         <div style={header}>
           <p style={title}>This is ProvaSport:</p>
           <p style={subtitle}>a free tournament manager for iOS, Android, and web.</p>
@@ -57,7 +57,7 @@ var About = React.createClass({
 
 // Styling: first section
 var header = {
-  height: 265,
+  height: 240,
   marginLeft: -60,
   color: '#F5A623',
   fontFamily: 'avenir',
@@ -67,17 +67,24 @@ var title = {
   fontWeight: 400,
   paddingLeft: 50,
   paddingTop: 40,
+  margin: 0,
 };
 var subtitle = {
   fontSize: 30,
   fontWeight: 300,
   paddingLeft: 120,
+  margin: 0,
 };
+
+var content = {
+    marginLeft: 50,
+}
 
 // Styling: second section
 var overview = {
   width: window.innerWidth,
-  height: 800,
+  height: 675,
+  margin: 0,
   marginLeft: -60,
   backgroundColor: 'white',
   color: '#404040',
@@ -87,17 +94,19 @@ var overview = {
 var subtitle_orange = {
   fontSize: 30,
   fontWeight: 300,
+  margin: 0,
   paddingLeft: 120,
   color: '#F5A623',
 };
 
 // Styling: third section
 var details = {
-  height: 675,
+  height: 750,
   marginLeft: -60,
-  backGRoundColor: 'white',
+  backGroundColor: 'white',
   color: '#404040',
   fontFamily: 'avenir',
+  margin: 0,
 };
 var column_left = {
   float: 'left',
@@ -107,7 +116,7 @@ var column_left = {
 var title_mini = {
   fontWeight: 400,
   fontSize: 40,
-  paddingTop: 50,
+  paddingTop: 0,
 };
 var description = {
   fontWeight: 300,
@@ -118,7 +127,8 @@ var icon_container = {
   width: 80,
   height: 80,
   paddingLeft: 150,
-  paddingTop: 115,
+  paddingTop: 50,
+  paddingBottom: 75,
 };
 var icon = {
   width: 80,

@@ -61,8 +61,8 @@ var wrapper = {
   margin: 'auto',
   padding: 10,
   flex: 1,
-  marginLeft: -60,
-  marginTop: -60,
+  marginLeft: -70,
+  marginTop: -70,
 };
 var logo = {
   height: 50,
@@ -78,6 +78,7 @@ var logo = {
   paddingRight: 8,
   fontSize: 40,
   fontWeight: 200,
+  margin: 0,
 };
 var menu = {
   height: 50,
@@ -86,9 +87,11 @@ var menu = {
   paddingTop: 5,
   fontSize: 17.5,
   fontWeight: 'lighter',
+  margin: 0,
 };
 var menuItems = {
   display: 'inline-block',
+  margin: 0,
 }
 var newsfeed = {
   backgroundColor: 'red',

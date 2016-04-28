@@ -106,8 +106,8 @@ var ForkColumn = React.createClass({
 })
 
 var t3 = {
-  teams: [1, 0, 1, 0],
-  matches: [1, 0, 1, 0],
+  teams: [1, 0, 1, 0, 1, 0, 1, 0],
+  matches: [1, 0, 1, 0, 1, 0, 1, 0],
 }
 
 var bracketMatrix = function(tournament) {
