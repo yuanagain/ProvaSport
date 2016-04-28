@@ -79,8 +79,10 @@ var ProfilePage = React.createClass({
 
         add_friend =  [<SimpleRow  onPress={() => this.toggleFriend()}
                                     title={'Follow'}
-                                    value={friend_status_text}/>,
-                      <View style={_cstyles.section_divider_line}></View>]
+                                    value={friend_status_text} 
+                                    key={1}/>,
+                      <View style={_cstyles.section_divider_line}
+                            key={2}]></View>
       }
     }
 
@@ -197,12 +199,12 @@ var ProfilePage = React.createClass({
     this.state.team = data
     this.setState({loaded : true})
   },
-  getPlayerId: function(){
+  getPlayerId: function() {
     console.log("\n\n\n\nUSING THE ASYNC STORAGE")
     var value = AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
-      //console.log(obj.playerid)
+      console.log(obj.playerid)
       this.setState({player: obj})
     });
   },
@@ -216,11 +218,11 @@ var ProfilePage = React.createClass({
 
   componentDidMount: function () {
     // this.state.match = this.props.match
+
     if (this.props.playerid == -1){
       this.getPlayerId();
     }
     else {
-      console.log("TRying to get player with id "+this.props.playerid)
       Player._GetPlayer(this.props.playerid, this.fetchPlayer)
     }
     //DB.player.findById(0).then(resp => this.setState({my_player: resp}))
@@ -238,14 +240,7 @@ var ProfilePage = React.createClass({
 
 
   componentWillReceiveProps: function(nextProps) {
-    console.log("TRying to get player with id "+nextProps.playerid)
-    if (this.props.playerid == -1){
-      this.getPlayerId();
-    }
-    else {
-      console.log("TRying to get player with id "+this.props.playerid)
-      Player._GetPlayer(this.props.playerid, this.fetchPlayer)
-    }
+    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
   },
 
   toTeamListing() {

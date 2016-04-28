@@ -52,6 +52,15 @@ var PlayerSearchPage = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var dataSource = ds.cloneWithRows(this.state.players)
 
+    var searching = <View></View>
+    if (this.state.searching) {
+      searching = <View style={styles.searching}>
+                    <Text style={_cstyles.standard_text}>
+                      {"Searching..."}
+                    </Text>
+                  </View>
+    }
+
     return (
     <View style={styles.container}>
       <View>
@@ -69,12 +78,14 @@ var PlayerSearchPage = React.createClass({
             autoCorrect={false}
             maxLength={100}
             keyboardType={'default'}
-            onChangeText={(query) => this.setState({query})}
+            onChangeText={(query) => this.updateQuery(query)}
             onEndEditing={()=>this.search()}
             onSubmitEditing={()=>this.search()}
           />
           <View style={_cstyles.blue_divider_line}>
           </View>
+
+          {searching}
 
           <ListView style={styles.list_container}
                     renderRow={this.renderRow}
@@ -86,9 +97,14 @@ var PlayerSearchPage = React.createClass({
     );
   },
 
+  updateQuery: function(query) {
+    this.setState({query})
+    this.search()
+  },
+
   search: function() {
     // don't initiate two searches
-    if (this.state.searching == false) {
+    if (this.state.searching == true) {
       return
     }
     // don't search empty input
@@ -96,12 +112,17 @@ var PlayerSearchPage = React.createClass({
       return
     }
     this.setState({searching: true})
-    Player.searchPlayers(query, this.update)
+    Player.searchPlayers(this.state.query, this.update)
+    
   },
 
   update: function(players) {
-    this.setState({players: players})
-    this.setState({searching: false})
+
+    setTimeout(() => {
+      this.setState({players: players})
+      this.setState({searching: false})
+    }, 100);
+
   },
 
   renderRow: function(playerid) {
@@ -137,6 +158,13 @@ var PlayerSearchPage = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  searching: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 0 
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
