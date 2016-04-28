@@ -120,7 +120,7 @@ var createRR = function(data) {
         }
       }
     }
-    //console.log(matches);
+    console.log(matches);
     Match.createFromList(matches).then(resp=>resolve(resp)).catch(function(err){console.log(err);})
   })
 }

@@ -26,18 +26,20 @@ function createTournament(obj) {
           reject();
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
-          obj.matches.forEach(function(matchid) {
-            Match.addTournament(matchid, newRef.key());
-          });
-          //bind team to tourn
-          obj.teams.forEach(function(teamid) {
-            Team.addTournament(teamid, newRef.key());
-            Team.getTeam(teamid).then(function(team){
-              team.players.forEach(function(playerid){
-                Player.addTournament(playerid, newRef.key())
-              });
-            });
-          });
+          /*
+           * obj.matches.forEach(function(matchid) {
+           *   Match.addTournament(matchid, newRef.key());
+           * });
+           * //bind team to tourn
+           * obj.teams.forEach(function(teamid) {
+           *   Team.addTournament(teamid, newRef.key());
+           *   Team.getTeam(teamid).then(function(team){
+           *     team.players.forEach(function(playerid){
+           *       Player.addTournament(playerid, newRef.key())
+           *     });
+           *   });
+           * });
+           */
           resolve(newRef.key());
         }
       });
@@ -220,4 +222,5 @@ function updateTourn(tournObject) {
 
 
 
-module.exports = {_GetTournament, getTournament, setTournament, default_tournament, addTeam, addMatches, _AddMatches, _AddTeam};
+module.exports = {_GetTournament, getTournament, setTournament, default_tournament,
+   addTeam, addMatches, _AddMatches, _AddTeam, createTournament, _CreateTournament};

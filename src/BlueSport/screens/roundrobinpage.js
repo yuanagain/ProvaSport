@@ -8,7 +8,8 @@ let _cstyles = require('../styles/customstyles')
 import * as _clogic from '../libs/customlogic.js'
 var RoundRobin = require('../bigparts/roundrobin')
 var Header = require('../parts/header')
-var Tournament = require('../modules/tournament')
+
+import * as Tournament from '../modules/tournament'
 
 var {
   AppRegistry,
@@ -36,7 +37,7 @@ var RoundRobinPage = React.createClass({
   getInitialState: function() {
 
     return {
-      tournament: tournament.default_tournament,
+      tournament: Tournament.default_tournament,
     }
   },
 
@@ -77,7 +78,6 @@ var RoundRobinPage = React.createClass({
   componentWillReceiveProps: function(nextProps) {
     Tournament._GetTournament(nextProps.tournamentid, this.fetchTournament)
   },
-
 
 });
 

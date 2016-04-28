@@ -154,9 +154,11 @@ function createTeam(obj) {
         } else {
           var key = newRef.key();
           console.log("Data CREATED successfully createT "+ newRef.key());
-          [obj.players].forEach(function(playerid){
-            Player.addTeam(playerid, key)
-          });
+          /*
+           * [obj.players].forEach(function(playerid){
+           *   Player.addTeam(playerid, key)
+           * });
+           */
           resolve(newRef.key());
         }
       });
@@ -186,7 +188,20 @@ function _CreateTeam(obj, callback) {
       console.log("Something went wrong in _CreateTeam"+ error)
     });
 }
+function createFromList(teamobjlist, callback) {
+  return new Promise(function (resolve) {
+    var teamids = []
+    var i = 0;
 
+    teamobjlist.forEach(function(teamobj){
+      createTeam(teamobj).then(resp=>{
+        teamids.push(resp);
+        i+=1;
+        if(i == teamobjlist.length) resolve(teamids);
+      }).catch(function(err){console.log(err)});
+    })
+  })
+}
 export function addTeamPlayersToMatch(teamid, matchid) {
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
@@ -260,4 +275,5 @@ var bye = {
  * _SetTeam(TBD, 'TBD', function(resp){console.log("SET TBD")})
  */
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
-   getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch, teamOneorTwo, onTeams};
+   getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch,
+   teamOneorTwo, onTeams, createFromList};

@@ -22,6 +22,8 @@ var Header = require('../parts/header')
 var TeamListingPage = require('../screens/teamlistingpage')
 var TextField = require('../smallparts/textfield')
 
+import * as Match from '../modules/match'
+import * as Team from '../modules/team'
 import * as Tournament from '../modules/tournament'
 import * as _ctools from '../libs/customtools.js'
 import * as _clogic from '../libs/customlogic.js'
@@ -150,19 +152,36 @@ var ContractsPage = React.createClass({
 
         <WideButton
           text="Create Tournament"
-          onPress={()=>this.create()}
+          onPress={()=>this.start()}
         />
       </View>
     </View>
     );
   },
+  start: function(){
+    var teamss = []
+    var numTeams = this.state.teams.length;
+    this.state.teams.forEach(function(team_i){
+      var team = JSON.parse(JSON.stringify(Team.default_team));
+      team.players = team_i;
+      teamss.push(team)
+    });
+    Team.createFromList(teamss).then(teamids=>this.create(teamids)).catch(function(err){console.log(err)})
+  },
+  create: function(teamids) {
+    var tournament = JSON.parse(JSON.stringify(Tournament.default_tournament));
+    //build the tournament object
+    tournament.teams = teamids;
+    tournament.sport = this.state.selectedSport[0];
+    tournament.name = this.state.name;
+    tournament.location = this.state.location;
 
-  create: function() {
     if (this.state.event_type[0] == 'Round Robin') {
-      _clogic.createRR()
+      console.log("CREATE RR!")
+      this.createRR(tournament)
     }
     if (this.state.event_type[0] == 'Elimination') {
-      _clogic.createBracket()
+      this.createBracket(tournament)
     }
   },
 
@@ -223,24 +242,28 @@ output -
     }
   },
   createRR: function(obj) {
-    Tournament.createTournament(obj).then(resp=>createRR2(resp, obj, defaults))
+    var defaults = Match.default_match;
+    Tournament.createTournament(obj).then(resp=>this.createRR2(resp, obj, defaults))
   },
   createRR2: function(id, obj, defaults) {
+    console.log("CreateRR2:  "+id+ "   ")
       var data = {
         teams: obj.teams,
         defaultM: defaults
       }
-      _customlogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toRR(id))
+      console.log(obj.teams)
+      _clogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(()=>this.toRR(id)).catch(function(err){console.log(err)})
   },
   createBracket: function(obj, defaults) {
-    Tournament.createTournament(obj).then(resp=>createBracket2(resp, obj, defaults))
+    var defaults = Match.default_match;
+    Tournament.createTournament(obj).then(resp=>this.createBracket2(resp, obj, defaults))
   },
   createBracket2: function(id, obj, defaults) {
       var data = {
-        teams: resp.teams,
+        teams: obj.teams,
         defaultM: defaults
       }
-      _customlogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket(id))
+      _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
   },
 
   /*
