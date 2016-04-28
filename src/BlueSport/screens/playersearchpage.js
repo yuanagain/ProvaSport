@@ -96,10 +96,11 @@ var PlayerSearchPage = React.createClass({
       return
     }
     this.setState({searching: true})
-    console.log("searching")
+    Player.searchPlayers(query, this.update)
   },
 
-  update: function() {
+  update: function(players) {
+    this.setState({players: players})
     this.setState({searching: false})
   },
 
@@ -113,12 +114,6 @@ var PlayerSearchPage = React.createClass({
         <View style={_cstyles.section_divider_line}></View>
       </View>
     )
-  },
-
-  fetchPlayer: function(data) {
-    this.state.player = data
-    this.setState({loaded : true})
-    // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   onRefresh: function() {
