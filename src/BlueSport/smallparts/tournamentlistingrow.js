@@ -9,7 +9,7 @@ var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
 import * as _ctools from '../libs/customtools.js'
-import * as Team from '../modules/team'
+import * as Tournament from '../modules/tournament'
 
 var {
   AppRegistry,
@@ -23,12 +23,12 @@ var {
 } = React;
 
 
-var TeamListingRow = React.createClass({
+var TournamentListingRow = React.createClass({
 
   getInitialState: function() {
     return (
       {
-        team: Team.default_team,
+        tournament: Tournament.default_tournament,
         loaded: false,
       }
     );
@@ -36,14 +36,14 @@ var TeamListingRow = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        teamid: -1,
+        tournamentid: 0,
         dead: false,
       }
     )
   },
   render: function() {
     var {
-      teamid,
+      tournamentid,
       navigator,
       ...props
     } = this.props;
@@ -51,15 +51,10 @@ var TeamListingRow = React.createClass({
     if (this.props.dead) {
       return (
         <View style={styles.playerbrick} >
-          <View style={[styles.center, styles.left]} >
-            <Image style={styles.im}
-                   source={{uri: this.state.team.thumbnail}}/>
-          </View>
-          <View style={styles.right}>
+
             <View >
-              <Text style={[_cstyles.header_text]}>{this.state.team.name} </Text>
+              <Text style={[_cstyles.header_text]}>{this.state.tournament.name} </Text>
             </View>
-          </View>
         </ View>
         )
     }
@@ -67,13 +62,10 @@ var TeamListingRow = React.createClass({
     return (
       <TouchableOpacity style={styles.playerbrick} 
                         onPress={()=>this.onPress()} >
-        <View style={[styles.center, styles.left]} >
-          <Image style={styles.im}
-                 source={{uri: this.state.team.thumbnail}}/>
-        </View>
+
         <View style={styles.right}>
           <View >
-            <Text style={[_cstyles.header_text]}>{this.state.team.name} </Text>
+            <Text style={[_cstyles.header_text]}>{this.state.tournament.name} </Text>
           </View>
         </View>
       </ TouchableOpacity>
@@ -81,30 +73,46 @@ var TeamListingRow = React.createClass({
   },
 
   onPress: function() {
-    var TeamPage = require('../screens/teampage')
-    this.props.navigator.push({
-      id: "TeamPage" + String(_ctools.randomKey()),
-      component: TeamPage,
-      passProps: {
-        navigator: this.props.navigator,
-        tournamentid: this.props.tournamentid
-      }
-    })
+    if (this.state.tournament.type == 'Elimination') {
+      var BracketPage = require('../screens/bracketpage')
+      this.props.navigator.push({
+        id: "BracketPage" + String(_ctools.randomKey()),
+        component: BracketPage,
+        passProps: {
+          navigator: this.props.navigator,
+          tournamentid: this.props.tournamentid,
+        }
+      })
+    }
+    else if (this.state.tournament.type == 'Round Robin') {
+      var RoundRobinPage = require('../screens/roundrobinpage')
+      this.props.navigator.push({
+        id: "RoundRobinPage" + String(_ctools.randomKey()),
+        component: RoundRobinPage,
+        passProps: {
+          navigator: this.props.navigator,
+          tournamentid: this.props.tournamentid,
+        }
+      })
+    }
+    else {
+      return
+    }
   },
 
-  fetchTeam: function(data) {
-    this.state.team = data
+  fetchTournament: function(data) {
+    this.state.tournament = data
     this.setState({loaded : true})
     // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Team._GetTeam(this.props.teamid, this.fetchTeam)
+    Tournament._GetTournament(this.props.tournamentid, this.fetchTournament)
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Team._GetTeam(nextProps.teamid, this.fetchTeam)
+    Tournament._GetTournament(nextProps.tournamentid, this.fetchTournament)
   },
 });
 
@@ -151,4 +159,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = TeamListingRow;
+module.exports = TournamentListingRow;
