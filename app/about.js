@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var _cvals = require('./constants/customvals')
+
 var About = React.createClass({
   render: function() {
     return (
@@ -59,8 +61,8 @@ var About = React.createClass({
 var header = {
   height: 240,
   marginLeft: -60,
-  color: '#F5A623',
-  fontFamily: 'avenir',
+  color: _cvals.skorange,
+  fontFamily: _cvals.mainfont
 };
 var title = {
   fontSize: 80,
@@ -77,7 +79,7 @@ var subtitle = {
 };
 
 var content = {
-    marginLeft: 50,
+  marginLeft: 50,
 }
 
 // Styling: second section
@@ -87,16 +89,16 @@ var overview = {
   margin: 0,
   marginLeft: -60,
   backgroundColor: 'white',
-  color: '#404040',
-  fontFamily: 'avenir',
-  backgroundColor: '#E6E6E6',
+  color: _cvals.skgray,
+  fontFamily: _cvals.mainfont,
+  backgroundColor: _cvals.skbackground,
 };
 var subtitle_orange = {
   fontSize: 30,
   fontWeight: 300,
   margin: 0,
   paddingLeft: 120,
-  color: '#F5A623',
+  color: _cvals.skorange,
 };
 
 // Styling: third section
@@ -104,8 +106,8 @@ var details = {
   height: 750,
   marginLeft: -60,
   backGroundColor: 'white',
-  color: '#404040',
-  fontFamily: 'avenir',
+  color: _cvals.skgray,
+  fontFamily: _cvals.mainfont,
   margin: 0,
 };
 var column_left = {
@@ -140,9 +142,9 @@ var footer = {
   width: window.innerWidth,
   height: 300,
   marginLeft: -60,
-  backgroundColor: '#E6E6E6',
-  color: '#F5A623',
-  fontFamily: 'avenir',
+  backgroundColor: _cvals.skbackground,
+  color: _cvals.skorange,
+  fontFamily: _cvals.mainfont,
 };
 var get_started = {
   width: 165,
@@ -150,7 +152,7 @@ var get_started = {
   fontSize: 30,
   cursor: 'pointer',
   color: 'white',
-  backgroundColor: '#4A90E2',
+  backgroundColor: _cvals.skblue,
   marginLeft: 475,
   marginTop: 20,
   paddingTop: 20,

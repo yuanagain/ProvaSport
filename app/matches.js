@@ -1,7 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import './styles/menu.css';
 
+import './styles/menu.css';
+import _cvals from './constants/customvals';
 
 var Matches = React.createClass({
   getDefaultProps: function() {
@@ -324,7 +325,7 @@ var info_column_filler = {
   width: 200,
 };
 var data_column_left = {
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   fontWeight: 500,
   fontSize: 25,
   padding: 0,
@@ -343,10 +344,10 @@ var data_column_right = {
 };
 var entry = {
   width: width,
-  backgroundColor: '#E6E6E6',
+  backgroundColor: _cvals.backgroundColor,
   padding: 30,
   margin: 30,
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   color: '#262626',
   fontSize: 20,
   display: 'block',
@@ -381,7 +382,7 @@ var cover_pic = {
   padding:0,
 };
 var section_label = {
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   fontWeight: 200,
   paddingTop: 28,
   paddingLeft: 28,
@@ -390,7 +391,7 @@ var section_label = {
 };
 var title_div = {
   width: 700,
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   fontWeight: 400,
   fontSize: 45,
   paddingTop: 18,
@@ -398,7 +399,7 @@ var title_div = {
 };
 var team_label_1 = {
   display: 'block',
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   fontWeight: 500,
   fontSize: 25,
   color: '#262626',
@@ -406,7 +407,7 @@ var team_label_1 = {
 var team_label_2 = {
   display: 'block',
   paddingTop: 15,
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   fontWeight: 500,
   fontSize: 25,
   color: '#262626',
@@ -420,14 +421,14 @@ var score = {
 var left_data = {
   width: entry/2.5,
   float: 'left',
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   fontWeight: 400,
   fontSize: 25,
   color: '#262626',
 };
 var right_data = {
   width: entry/2.5,
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   fontWeight: 200,
   fontSize: 25,
   color: '#262626',
@@ -436,7 +437,7 @@ var sidebar = {
   width: 250,
   float: 'left',
   flex: 10,
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   fontSize: 18,
   color: '#262626',
 };

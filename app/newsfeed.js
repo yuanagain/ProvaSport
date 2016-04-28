@@ -5,6 +5,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var _cvals = require('./constants/customvals');
+
 var dummyData = [
   {winner: 'James Smith', loser: 'Jen Johnson', result: 'beat', sport: 'tennis', date: 'April 20, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
   {winner: 'Johnny Jones', loser: 'Jackie Anderson', result: 'lost to', sport: 'squash',  date: 'April 18, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
@@ -90,11 +92,11 @@ var EntryMap = React.createClass({
 var width = window.innerWidth / 2.5;
 var entry = {
   width: width,
-  backgroundColor: '#E6E6E6',
+  backgroundColor: _cvals.skbackground,
   padding: 30,
   margin: 30,
   marginTop: 10,
-  fontFamily: 'avenir',
+  fontFamily: _cvals.mainfont,
   color: '#262626',
   fontSize: 20,
   display: 'block',

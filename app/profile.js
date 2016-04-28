@@ -1,6 +1,8 @@
 import React from 'react';
 import Newsfeed from './newsfeed'
 
+import _cvals from './constants/customvals'
+
 var data = [
   {winner: 'James Smith', loser: 'Jen Johnson', result: 'beat', sport: 'tennis', date: 'April 20, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
   {winner: 'Johnny Jones', loser: 'Jackie Anderson', result: 'lost to', sport: 'squash',  date: 'April 18, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
@@ -92,11 +94,8 @@ var InfoRow = React.createClass({
   }
 });
 
-
-var mainfont = 'avenir';
-var blockBackground = '#E6E6E6';
-var leftMargin = 35;
 var titleFontSize = 24;
+var leftMargin = 35;
 
 var header = {
   width: window.innerWidth,
@@ -121,7 +120,7 @@ var image = {
 };
 
 var name = {
-  fontFamily: mainfont,
+  fontFamily: _cvals.mainfont,
   color: 'white',
   fontSize: 36,
   paddingLeft: 175,
@@ -141,7 +140,7 @@ var infoBlock = {
 
 var info = {
   width: 350,
-  backgroundColor: blockBackground,
+  backgroundColor: _cvals.skbackground,
   float: 'left',
   paddingBottom: 15,
 }
@@ -153,14 +152,14 @@ var statBlock = {
 
 var stats = {
   width: 350,
-  backgroundColor: blockBackground,
+  backgroundColor: _cvals.skbackground,
   float: 'right',
   paddingBottom: 15,
 }
 
 var blockTitle = {
   fontColor: 'white',
-  fontFamily: mainfont,
+  fontFamily: _cvals.mainfont,
   fontSize: titleFontSize,
   paddingBottom: 10,
 }
@@ -177,7 +176,7 @@ var rowTitle = {
 }
 
 var rowTitleText = {
-  fontFamily: mainfont,
+  fontFamily: _cvals.mainfont,
   fontSize: 18,
   paddingLeft: 20,
   fontWeight: 700
@@ -190,7 +189,7 @@ var rowContents = {
 
 var rowContentsText = {
   fontSize: 18,
-  fontFamily: mainfont,
+  fontFamily: _cvals.mainfont,
 }
 
 var newsfeedContainer = {
@@ -199,7 +198,7 @@ var newsfeedContainer = {
 }
 
 var newsfeedTitle = {
-  fontFamily: mainfont,
+  fontFamily: _cvals.mainfont,
   fontSize: titleFontSize,
   paddingLeft: leftMargin,
   paddingTop: 25,

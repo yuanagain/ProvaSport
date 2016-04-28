@@ -3,16 +3,18 @@ import React from 'react';
 import TeamBrick from './parts/teambrick';
 import MatchBrick from './parts/matchbrick';
 
+import _cvals from './constants/customvals';
+
 var getForkMargin = function(level) {
   var mult = 0;
   for (var i = 0; i < level; i++) {
     mult += Math.pow(2, i - 1)
   }
-  return mult * (brickheight + 1)
+  return mult * (_cvals.brickheight + 1)
 }
 
 var getForkHeight = function(level) {
-  return Math.pow(2, level) * (brickheight + 1) + 1
+  return Math.pow(2, level) * (_cvals.brickheight + 1) + 1
 }
 
 var Fork = React.createClass({
@@ -163,9 +165,9 @@ var Bracket = React.createClass({
       matches,
     } = this.props;
 
-    var tslength = slength + 2
-    var height = Math.pow(2, this.props.matches.length - 1) * (brickheight + 1)
-    var width = bricklength * (this.state.matches.length) + 20
+    var tslength = _cvals.slength + 2
+    var height = Math.pow(2, this.props.matches.length - 1) * (_cvals.brickheight + 1)
+    var width = _cvals.bricklength * (this.state.matches.length) + 20
 
     var columns = [];
     for (var i = 0; i < this.props.matches.length - 1; i++) {
@@ -236,13 +238,6 @@ var Final = React.createClass({
   }
 });
 
-
-// TODO: Make universal
-var mainfont = 'avenir';
-var slength = 75;
-var bricklength = slength * 2.5 - 2;
-var brickheight = ((slength) * 3 / 5 - 4);
-
 var fork_styles = {
   fork_wrapper: {
     display: 'flex',
@@ -282,7 +277,7 @@ var fork_styles = {
   },
   hline: {
     display: 'flex',
-    width: bricklength,
+    width: _cvals.bricklength,
     flex: 1,
     backgroundColor: 'black',
     height: 1,
@@ -308,7 +303,7 @@ var styles = {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    margin: 1,
+    margin: 5,
   },
   fork_wrapper: {
     display: 'flex',
@@ -347,7 +342,7 @@ var styles = {
     flex: 1,
   },
   hline: {
-    width: bricklength,
+    width: _cvals.bricklength,
     flex: 1,
     backgroundColor: 'black',
     height: 1,

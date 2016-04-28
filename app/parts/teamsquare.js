@@ -1,54 +1,9 @@
 import React from 'react';
 import TeamBrick from './teambrick'
 
-var default_player = {
-    "name" : {
-      "first": "Loading",
-      "last": "Loading",
-      "full": "Loading",
-    },
-    "userid" : -1,
-    "prof_pic": "Loading",
-    "elo": 0.0,
-    "earnings": [ {"sport" :
-    {
-      "cash": 0,
-      "xp": 0,
-      "trophies": [-1]
-    }} ],
-    "home": "LOADING",
-    "sports": "LOADING",
-    "imageURL": "Loading",
-    "friends": [],
-    "teams": [],
-    "matches": [],
-    "tournaments": []
-  };
-var default_match = {
-        "datetime": 0,
-        "sport": "LOADING",
-        "scores": [["0","1"],["0","1"],["0","1"],["0","1"]],
-        "tournamentid": -1,
-        "winner": 1,
-        "data": {},
-        "teams": [0,0],
-        "payoutdata": {
-          "xp": -1,
-          "cash": -1
-        },
-        "status": {
-          '0': 0,
-          '1': 1
-        },
-        "name": "matchesHaveNames?",
-        "location": "LOADING"
-  };
-var default_team = {
-    "name": "Fale Yales",
-    "players": [default_player],
-    "matches": [default_match],
-    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
-};
+import _cstyles from '../constants/customstyles'
+import _cvals from '../constants/customvals'
+import defaults from '../constants/defaults'
 
 
 var TeamSquare = React.createClass({
@@ -68,7 +23,7 @@ var TeamSquare = React.createClass({
   getInitialState: function() {
     return (
       {
-        team: default_team,
+        team: defaults.default_team,
         //loaded: false,
         // Changed to true for testing
         loaded: true,
@@ -96,7 +51,7 @@ var TeamSquare = React.createClass({
         <div style={[styles.icon, ]}>
           <img style={styles.im}
                  src='http://facebook.github.io/react/img/logo_og.png'/>
-          <p style={styles.detail_text}>
+          <p style={_cstyles.detail_text}>
             {this.state.team.name}
           </p>
         </div>
@@ -119,37 +74,27 @@ var TeamSquare = React.createClass({
   },
 });
 
-// TODO: Make universal
-var mainfont = 'avenir';
-var slength = 100;
-var bricklength = slength * 2.5 - 2;
-var brickheight = ((slength) * 3 / 5 - 4);
-var thumbslength = ((slength) * 3 / 5 - 12);
 
 var styles = {
-  detail_text: {
-    color: 'black',
-    fontSize: 24,
-    fontFamily: mainfont,
-    fontWeight: 500,
-  },
   teamsquare: {
-    height: slength,
+    display: 'flex',
+    height: _cvals.slength,
     //width: slength,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
   },
   im: {
-    height: thumbslength,
-    width: thumbslength,
-    borderRadius: thumbslength / 2,
+    height: _cvals.thumbslength,
+    width: _cvals.thumbslength,
+    borderRadius: _cvals.thumbslength / 2,
     marginRight: 4,
     float: 'left',
   },
   icon: {
-    height: slength,
-    width: slength,
+    display: 'flex',
+    height: _cvals.slength,
+    width: _cvals.slength,
     marginHorizontal: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',

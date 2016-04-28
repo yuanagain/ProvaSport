@@ -1,54 +1,8 @@
 import React from 'react';
 import TeamBrick from './teambrick'
 
-var default_player = {
-    "name" : {
-      "first": "Loading",
-      "last": "Loading",
-      "full": "Loading",
-    },
-    "userid" : -1,
-    "prof_pic": "Loading",
-    "elo": 0.0,
-    "earnings": [ {"sport" :
-    {
-      "cash": 0,
-      "xp": 0,
-      "trophies": [-1]
-    }} ],
-    "home": "LOADING",
-    "sports": "LOADING",
-    "imageURL": "Loading",
-    "friends": [],
-    "teams": [],
-    "matches": [],
-    "tournaments": []
-  };
-var default_match = {
-        "datetime": 0,
-        "sport": "LOADING",
-        "scores": [["0","1"],["0","1"],["0","1"],["0","1"]],
-        "tournamentid": -1,
-        "winner": 1,
-        "data": {},
-        "teams": [0,0],
-        "payoutdata": {
-          "xp": -1,
-          "cash": -1
-        },
-        "status": {
-          '0': 0,
-          '1': 1
-        },
-        "name": "matchesHaveNames?",
-        "location": "LOADING"
-  };
-var default_team = {
-    "name": "Fale Yales",
-    "players": [default_player],
-    "matches": [default_match],
-    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
-};
+import _cstyles from '../constants/customstyles'
+import defaults from '../constants/defaults'
 
 
 var MatchBrick = React.createClass({
@@ -68,7 +22,7 @@ var MatchBrick = React.createClass({
   getInitialState: function() {
     return (
       {
-        match: default_match,
+        match: defaults.default_match,
         loaded: false,
       }
     );
@@ -90,7 +44,7 @@ var MatchBrick = React.createClass({
           <TeamBrick teamid={this.state.match.winner}
                      disabled={true} />
           <div style={styles.scores}>
-            <p style={styles.detail_text}>
+            <p style={_cstyles.detail_text}>
               {this.getScoreString(this.state.match)}
             </p>
           </div>
@@ -121,15 +75,7 @@ var MatchBrick = React.createClass({
   },
 });
 
-// TODO: Make universal
-var mainfont = 'avenir';
 var styles = {
-  detail_text: {
-    color: 'black',
-    fontSize: 18,
-    fontFamily: mainfont,
-    paddingTop: 0,
-  },
   scores: {
     height: 20,
     marginBottom: -20,

@@ -6,6 +6,7 @@ import ScoreSquare from './parts/scoresquare';
 import TeamSquare from './parts/teamsquare';
 import PlayerBrick from './parts/playerbrick';
 
+import _cvals from './constants/customvals';
 
 var RRMatchSquare = React.createClass({
   getInitialState: function() {
@@ -22,46 +23,42 @@ var RRMatchSquare = React.createClass({
     } = this.props;
 
     if (this.state.type == 'match') {
-      var ScoreSquare = require('./parts/scoresquare')
       return (
-        <div style={[styles.match, styles.border]}>
-          <ScoreSquare matchid={this.state.item}/>
-        </div>
+          <div style={[styles.match, styles.border]}>
+            <ScoreSquare matchid={this.state.item}/>
+          </div>
         )
     }
     if (this.state.type == 'icon') {
-      var TeamSquare = require('./parts/teamsquare')
       return (
-        <div style={[styles.icon, ]}>
-          <TeamSquare teamid={this.state.item} />
-        </div>
+          <div style={styles.icon}>
+            <TeamSquare teamid={this.state.item} />
+          </div>
         )
     }
-    if (this.state.type == "empty") {
+    if (this.state.type == 'empty') {
       return (
-        <div style={[styles.match, styles.border]}>
-          <div style={[styles.icon, ]}>
-            <p style={[_cstyles.standard_text]}>
-              {""}
-            </p>
+          <div style={[styles.match, styles.border]}>
+            <div style={[styles.icon, ]}>
+              <p style={styles.standard_text}>
+                {""}
+              </p>
+            </div>
           </div>
-        </div>
         )
     }
     if (this.state.type == 'player') {
-      var PlayerBrick = require('./parts/playerbrick')
       return (
-        <div style={[styles.player, styles.border]}>
-          <PlayerBrick playerid={this.state.item}/>
-        </div>
+          <div style={[styles.player, styles.border]}>
+            <PlayerBrick playerid={this.state.item}/>
+          </div>
         )
     }
     if (this.state.type == 'team') {
-      var TeamBrick = require('./parts/teambrick')
       return (
-        <div style={[styles.player, styles.border]}>
-        <TeamBrick teamid={this.state.item}/>
-        </div>
+          <div style={[styles.player, styles.border]}>
+            <TeamBrick teamid={this.state.item}/>
+          </div>
         )
     }
     return (
@@ -90,12 +87,16 @@ var RRMatchRow = React.createClass({
 var RoundRobin = React.createClass({
 
   getInitialState: function() {
-    return (
-    {
-      mode: 'normal',
-      matches: RRMatrix(rr1),
-      scrollstyle: styles.scroll,
+    var rr1 = {
+      teams: [1, 0, 1, 0, 1],
+      matches: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
     }
+    return (
+      {
+        mode: 'normal',
+        matches: RRMatrix(rr1),
+        scrollstyle: styles.scroll,
+      }
     );
   },
 
@@ -105,14 +106,14 @@ var RoundRobin = React.createClass({
       style,
     } = this.props;
 
-    var tslength = slength + 2
+    var tslength = _cvals.slength + 2
     var height = this.state.matches.length * tslength
     var width = height + tslength * 1.5
 
     var renderRow = (matchrow) => <RRMatchRow matchrow={matchrow}
                                               key={randomKey()} />;
     return (
-      <div>
+      <div style={styles.content}>
         <div style={[styles.scroll,
                     this.props.style]}>
           {this.state.matches.map(renderRow)}
@@ -124,11 +125,6 @@ var RoundRobin = React.createClass({
 
 var randomKey = function() {
   return Math.random(1, 2^32 - 1)
-}
-
-var rr1 = {
-  teams: [1, 0, 1, 0, 1],
-  matches: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
 }
 
 var RRMatrix = function(tournament) {
@@ -168,16 +164,14 @@ var RRMatrix = function(tournament) {
   return matrix
 }
 
-// TODO: Make universal
-var mainfont = 'avenir';
-var slength = 75;
-var bricklength = slength * 2.5 - 2;
-var brickheight = ((slength) * 3 / 5 - 4);
-
-
 var styles = {
-
+  standard_text: {
+    color: 'black',
+    fontSize: 20,
+    fontFamily: _cvals.mainfont,
+  },
   container: {
+    display: 'flex',
     flexDirection: 'column',
     flex: 1,
     justifyContent: 'flex-end',
@@ -185,24 +179,32 @@ var styles = {
     opacity: 1.00,
     margin: 1,
   },
+  content: {
+    float: 'left',
+    marginTop: 75,
+    marginLeft: 20,
+  },
   match: {
-    height: slength,
-    width: slength,
+    display: 'flex',
+    height: _cvals.slength,
+    width: _cvals.slength,
     marginHorizontal: 1,
     alignSelf: 'flex-end',
     justifyContent: 'center',
     alignItems: 'center',
   },
   icon: {
-    height: slength,
-    width: slength,
+    display: 'flex',
+    height: _cvals.slength,
+    width: _cvals.slength,
     marginHorizontal: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
   player: {
-    height: slength,
-    width: 2.5 * slength,
+    display: 'flex',
+    height: _cvals.slength,
+    width: 2.5 * _cvals.slength,
     marginHorizontal: 1,
     justifyContent: 'center',
   },
@@ -211,6 +213,7 @@ var styles = {
     borderColor: 'black',
   },
   matchrow: {
+    display: 'flex',
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'flex-end',

@@ -1,28 +1,8 @@
 import React from 'react';
 
-var default_player = {
-    "name" : {
-      "first": "Lukas",
-      "last": "Brower",
-      "full": "Lukas Brower",
-    },
-    "userid" : -1,
-    "prof_pic": "Loading",
-    "elo": 0.0,
-    "earnings": [ {"sport" :
-    {
-      "cash": 0,
-      "xp": 0,
-      "trophies": [-1]
-    }} ],
-    "home": "LOADING",
-    "sports": "LOADING",
-    "imageURL": "Loading",
-    "friends": [],
-    "teams": [],
-    "matches": [],
-    "tournaments": []
-  };
+import _cstyles from '../constants/customstyles'
+import _cvals from '../constants/customvals'
+import defaults from '../constants/defaults'
 
 var PlayerBrick = React.createClass({
 
@@ -42,7 +22,7 @@ var PlayerBrick = React.createClass({
   getInitialState: function() {
     return (
       {
-        player: default_player,
+        player: defaults.default_player,
         loaded: true,
       }
     );
@@ -71,10 +51,10 @@ var PlayerBrick = React.createClass({
         </div>
         <div style={styles.right}>
           <div >
-            <p style={[styles.detail_text]}>{this.state.player.name.first}</p>
+            <p style={[_cstyles.detail_text]}>{this.state.player.name.first}</p>
           </div>
           <div style={styles.compress}>
-            <p style={[styles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</p>
+            <p style={[_cstyles.detail_text, {fontWeight: 'bold'}]}>{this.state.player.name.last}</p>
           </div>
         </div>
       </div>
@@ -97,30 +77,18 @@ var PlayerBrick = React.createClass({
   },
 });
 
-var mainfont = 'avenir';
-var slength = 75;
-var bricklength = slength * 2.5 - 2;
-var brickheight = ((slength) * 3 / 5 - 4);
-var thumbslength = ((slength) * 3 / 5 - 12);
-
 var styles = {
-  detail_text: {
-    color: 'black',
-    fontSize: 24,
-    fontFamily: mainfont,
-    fontWeight: 500,
-  },
   playerbrick: {
-    height: brickheight,
+    height: _cvals.brickheight,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
     paddingLeft: 4,
   },
   im: {
-    height: thumbslength,
-    width: thumbslength,
-    borderRadius: thumbslength / 2,
+    height: _cvals.thumbslength,
+    width: _cvals.thumbslength,
+    borderRadius: _cvals.thumbslength / 2,
     marginRight: 4,
     float: 'left',
   },
@@ -129,7 +97,6 @@ var styles = {
     justifyContent: 'space-between',
   },
   right: {
-
   },
   border: {
     borderWidth: 1,

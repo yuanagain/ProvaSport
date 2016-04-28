@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 import './styles/menu.css'
+import _cvals from './constants/customvals'
 import {Link} from 'react-router';
 
 // Header
@@ -57,7 +58,7 @@ var Menu = React.createClass({
 // Styling
 var wrapper = {
   height: 50,
-  backgroundColor: '#4A90E2',
+  backgroundColor: _cvals.skblue,
   margin: 'auto',
   padding: 10,
   flex: 1,
@@ -66,7 +67,7 @@ var wrapper = {
 };
 var logo = {
   height: 50,
-  backgroundColor: '#4A90E2',
+  backgroundColor: _cvals.skblue,
   float: 'left',
   flex: 2,
   color: '#FFFFFF',
@@ -82,7 +83,7 @@ var logo = {
 };
 var menu = {
   height: 50,
-  backgroundColor: '#4A90E2',
+  backgroundColor: _cvals.skblue,
   flex: 10,
   paddingTop: 5,
   fontSize: 17.5,

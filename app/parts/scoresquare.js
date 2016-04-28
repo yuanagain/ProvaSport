@@ -1,54 +1,9 @@
 import React from 'react';
 import TeamBrick from './teambrick'
 
-var default_player = {
-    "name" : {
-      "first": "Loading",
-      "last": "Loading",
-      "full": "Loading",
-    },
-    "userid" : -1,
-    "prof_pic": "Loading",
-    "elo": 0.0,
-    "earnings": [ {"sport" :
-    {
-      "cash": 0,
-      "xp": 0,
-      "trophies": [-1]
-    }} ],
-    "home": "LOADING",
-    "sports": "LOADING",
-    "imageURL": "Loading",
-    "friends": [],
-    "teams": [],
-    "matches": [],
-    "tournaments": []
-  };
-var default_match = {
-        "datetime": 0,
-        "sport": "LOADING",
-        "scores": [["0","1"],["0","1"],["0","1"],["0","1"]],
-        "tournamentid": -1,
-        "winner": 1,
-        "data": {},
-        "teams": [0,0],
-        "payoutdata": {
-          "xp": -1,
-          "cash": -1
-        },
-        "status": {
-          '0': 0,
-          '1': 1
-        },
-        "name": "matchesHaveNames?",
-        "location": "LOADING"
-  };
-var default_team = {
-    "name": "Fale Yales",
-    "players": [default_player],
-    "matches": [default_match],
-    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
-};
+import _cstyles from '../constants/customstyles'
+import _cvals from '../constants/customvals'
+import defaults from '../constants/defaults'
 
 
 var ScoreSquare = React.createClass({
@@ -68,8 +23,8 @@ var ScoreSquare = React.createClass({
   getInitialState: function() {
     return (
       {
-        match: default_match,
-        loaded: false,
+        match: defaults.default_match,
+        loaded: true,
       }
     );
   },
@@ -89,12 +44,12 @@ var ScoreSquare = React.createClass({
       return (<div></div>)
     }
 
-    var tally = _ctools.getTally(this.state.match)
+    var tally = this.getTally(this.state.match)
     console.log(tally)
     return (
       <div style={styles.playersquare}>
         <div style={[styles.icon, ]}>
-          <div style={[_cstyles.standard_text]}>
+          <div style={[styles.standard_text]}>
             {tally[0] + ' - ' + tally[1]}
           </div>
         </div>
@@ -102,21 +57,21 @@ var ScoreSquare = React.createClass({
     );
   },
 
-    getTally: function(match) {
-      var tally = [0, 0, 0]
-      for (var i = 0; i < match.scores.length; i++) {
-        if (match.scores[i][0] > match.scores[i][1]) {
-          tally[0] += 1
-        }
-        if (match.scores[i][0] < match.scores[i][1]) {
-          tally[1] += 1
-        }
-        else {
-          tally[2] += 1
-        }
+  getTally: function(match) {
+    var tally = [0, 0, 0]
+    for (var i = 0; i < match.scores.length; i++) {
+      if (match.scores[i][0] > match.scores[i][1]) {
+        tally[0] += 1
       }
-      return tally
-    },
+      if (match.scores[i][0] < match.scores[i][1]) {
+        tally[1] += 1
+      }
+      else {
+        tally[2] += 1
+      }
+    }
+    return tally
+  },
 
   fetchMatch: function(data) {
     this.setState({loaded : true})
@@ -133,24 +88,20 @@ var ScoreSquare = React.createClass({
   },
 });
 
-// TODO: Make universal
-var mainfont = 'avenir';
-var slength = 75;
-var bricklength = slength * 2.5 - 2;
-var brickheight = ((slength) * 3 / 5 - 4);
-var thumbslength = ((slength) * 3 / 5 - 12);
 
 var styles = {
   playersquare: {
-    height: slength,
-    width: slength,
+    display: 'flex',
+    height: _cvals.slength,
+    width: _cvals.slength,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
   },
   icon: {
-    height: slength,
-    width: slength,
+    display: 'flex',
+    height: _cvals.slength,
+    width: _cvals.slength,
     marginHorizontal: 1,
     justifyContent: 'center',
     alignItems: 'center',
