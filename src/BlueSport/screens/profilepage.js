@@ -13,17 +13,14 @@ var SimpleRow = require('../smallparts/simplerow')
 var MatchList = require('../bigparts/matchlist')
 
 import * as Player from '../modules/player'
-import Store from 'react-native-store';
 
 
 //database name and constant for storing data
-const DB = {
-  'user': Store.model("user"),
-  'player': Store.model("player")
-}
+
 
 //DB.player.get().then(resp => console.log(resp.playerid))
 var {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   View,
@@ -54,7 +51,7 @@ var ProfilePage = React.createClass({
         playerid: 0,
         teamid: 0,
         mode: 'nav',
-        
+
       }
     )
   },
@@ -73,7 +70,7 @@ var ProfilePage = React.createClass({
       if (this.state.my_player.playerid != this.props.playerid) {
         var friend_status_text = "Add Friend"
 
-        // if they're a friend 
+        // if they're a friend
         if (this.state.my_player.friends.indexOf(this.props.playerid) != -1) {
           friend_status_text = "Remove Friend"
         }
@@ -93,7 +90,7 @@ var ProfilePage = React.createClass({
                 navigator={this.props.navigator} />
       </View>
       <ScrollView styles={[styles.scroll, {height: windowSize.width}]}
-                  contentContainerStyle={styles.content} 
+                  contentContainerStyle={styles.content}
                   refreshControl={
                     <RefreshControl
                       refreshing={this.state.isRefreshing}
@@ -204,7 +201,7 @@ var ProfilePage = React.createClass({
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
     setTimeout(() => {
       this.setState({isRefreshing: false})
-    }, _cvals.timeout); 
+    }, _cvals.timeout);
   },
 
   componentDidMount: function () {

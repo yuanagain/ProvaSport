@@ -26,8 +26,7 @@ var {
   RefreshControl,
 } = React;
 
-console.log("\n\nUSER: "+DB.user.get()[0])
-console.log("\n\nPlayer: " +DB.player.get()[0])
+
 
 var MatchListingPage = React.createClass({
   getInitialState: function() {

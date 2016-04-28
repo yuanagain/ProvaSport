@@ -172,6 +172,7 @@ var ContractsPage = React.createClass({
     var tournament = JSON.parse(JSON.stringify(Tournament.default_tournament));
     //build the tournament object
     tournament.teams = teamids;
+    tournament.type = this.state.event_type[0];
     tournament.sport = this.state.selectedSport[0];
     tournament.name = this.state.name;
     tournament.location = this.state.location;

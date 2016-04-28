@@ -25,6 +25,7 @@ const DB = {
   'player': Store.model("player")
 }
 var {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   View,
@@ -35,10 +36,7 @@ var {
   Platform,
   RefreshControl,
 } = React;
-//this is the user object
-//DB.user.find().then(resp=>console.log(resp[resp.length-1]))
-//this is the player
-//DB.player.find().then(resp=>console.log(resp))
+
 
 var MatchPage = React.createClass({
   getInitialState: function() {
@@ -243,12 +241,8 @@ update if needed
     }
   },
   componentDidMount: function () {
-
+    this.loadPlayer();
     // this.state.match = this.props.match
-    var matchid = this.props.matchid;
-    Match._GetMatch(matchid, this.fetchMatch)
-    var player0 = {teams:[0]}
-    Match.myStatus(matchid, player0).then(resp=>console.log("RESPONSE: "+resp))
   },
 
   toRecordPage: function() {
@@ -272,7 +266,31 @@ update if needed
       this.state.match.status[this.state.myTeam] = code;
       Match.setMatch(this.props.matchid, this.state.match).then(resp=>this.setState({match: resp}))
     }
+  },
+  loadPlayer: function(){
+      var matchid = this.props.matchid;
+    try {
+      var value = AsyncStorage.getItem('user', (error, response)=>{
+        var obj = JSON.parse(response)
+        // this is player id of person logged in. WORKS!!
+        console.log(obj.playerid)
+        this.setState({playerid: obj.playerid})
+
+
+        Match._GetMatch(matchid, this.fetchMatch)
+        /*
+         * AsyncStorage.getItem('player', (err, resp)=>{
+         *   console.log("player")
+         *   console.log(resp)
+         *   Match.myStatus(matchid, resp).then(resp=>console.log("RESPONSE: "+resp))
+         * })
+         */
+      });
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
   }
+
 });
 
 var styles = StyleSheet.create({

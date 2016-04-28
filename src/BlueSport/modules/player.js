@@ -32,8 +32,8 @@ function _GetPlayer(playerid, callback) {
      });
     promise.then(function(value){
       callback(value);
-    }).catch(function(){
-      console.log("Failed");
+    }).catch(function(err ){
+      console.log("Failed in _getPlayer "+ err);
     });
 }
 
