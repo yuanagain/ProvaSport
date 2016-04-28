@@ -15,16 +15,13 @@ import Store from 'react-native-store';
 
 
 //database name and constant for storing data
-const DB = {
-  'user': Store.model("user"),
-  'player': Store.model("player")
-}
 //clear out the DB
 // will complete on app creation beating the sign-in
-DB.user.remove()
-DB.player.remove()
+//DB.user.destroy()
+//DB.player.destroy()
 
 var {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   View,
@@ -137,27 +134,81 @@ var LoginPage = React.createClass({
        * };
        */
        var uid = 0;
-       DB.user.find().then(resp => console.log(resp))
-       DB.player.find().then(resp => console.log(resp))
+
+       //DB.user.add(User.default_user, 0).then(resp => console.log(resp))
+       //DB.player.add(Player.default_player, 0).then(resp => console.log(resp))
+       /*
+       *  DB.user.find().then(resp => console.log(resp))
+       *  DB.player.find().then(resp => console.log(resp))
+        */
        User._Login(email, pass, this.grabUser);
         // watch this it might jump the gun
   },
+  _setInitialUser: function(obj) {
+/*
+ *     AsyncStorage.setItem(store_key, JSON.stringify(UID123_object), () => {
+ *      AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
+ *        AsyncStorage.getItem('UID123', (err, result) => {
+ *          console.log(result);
+ *          // => {'name':'Chris','age':31,'traits':{'shoe_size':10,'hair':'brown','eyes':'blue'}}
+ *        });
+ *      });
+ *    });
+ */
+    try {
+      //THIS WORKS!!!
+      AsyncStorage.setItem('user', JSON.stringify(obj), () => {
+        AsyncStorage.getItem('user', (err, result)=>{
+          //console.log("PLAYER");
+          console.log(JSON.parse(result));
+        });
+      });
+    } catch (error) {
+      this._appendMessage('AsyncStorage error: ' + error.message);
+    }
+  },
+  _setInitialPlayer: function(obj) {
+/*
+ *     AsyncStorage.setItem(store_key, JSON.stringify(UID123_object), () => {
+ *      AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
+ *        AsyncStorage.getItem('UID123', (err, result) => {
+ *          console.log(result);
+ *          // => {'name':'Chris','age':31,'traits':{'shoe_size':10,'hair':'brown','eyes':'blue'}}
+ *        });
+ *      });
+ *    });
+ */
+    try {
+      //THIS WORKS!!!
+      AsyncStorage.setItem('player', JSON.stringify(obj), () => {
+        AsyncStorage.getItem('player', (err, result)=>{
+          //console.log("User");
+          console.log(JSON.parse(result));
+        });
+      });
+    } catch (error) {
+      this._appendMessage('AsyncStorage error: ' + error.message);
+    }
+  },
   grabUser: function(authdata) {
-    var uid = authdata.uid;
+    //var uid = authdata.uid;
+    var uid = 'dd726cb4-cdd3-4d66-a06f-cb9e5a5a8794';
     /*TODO change back to uid*/
-    User._GetUser(35, this.handleUser);
+    User._GetUser(uid, this.handleUser);
 
   },
   handleUser: function(user){
     //this might throw an exception when inccorrect email
     var callback = this.handlePlayer;
     var playerid = user.playerid;
-    DB.user.add(user).then(function(){
-      Player._GetPlayer(playerid, callback)
-    });
+    this._setInitialUser(user);
+    Player._GetPlayer(playerid, callback)
   },
   handlePlayer: function(player){
-    DB.user.add(player).then(this.props.navToHomeFunc);
+    //console.log("handleplayer")
+    this._setInitialPlayer(player)
+    var callback = this.props.navToHomeFunc;
+    callback()
   }
 });
 

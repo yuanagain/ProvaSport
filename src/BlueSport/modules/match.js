@@ -445,6 +445,17 @@ function myStatus(matchid, playerobj) {
 //myStatus(0, 0).then(resp=>console.log(resp))
 //var matchidTest = 1;
 //_GetMatch(matchidTest, function(resp){console.log(resp)})
+/* 
+ * import Store from 'react-native-store';
+ * const DB = {
+ *   'user': Store.model("user"),
+ *   'player': Store.model("player")
+ * }
+ */
+//DB.player.find().then(resp=>console.log(resp))
+ //DB.player.add(Player.default_player, 0)//.then(()=>DB.player.find().then(resp=>console.log(resp)))
+
+
 
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
                   _CreateMatch, updateScores, updateStatus, _CreateFromList,
