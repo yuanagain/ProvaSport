@@ -202,7 +202,7 @@ var ProfilePage = React.createClass({
     var value = AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
-      console.log(obj.playerid)
+      //console.log(obj.playerid)
       this.setState({player: obj})
     });
   },
@@ -220,6 +220,7 @@ var ProfilePage = React.createClass({
       this.getPlayerId();
     }
     else {
+      console.log("TRying to get player with id "+this.props.playerid)
       Player._GetPlayer(this.props.playerid, this.fetchPlayer)
     }
     //DB.player.findById(0).then(resp => this.setState({my_player: resp}))
@@ -237,7 +238,14 @@ var ProfilePage = React.createClass({
 
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    console.log("TRying to get player with id "+nextProps.playerid)
+    if (this.props.playerid == -1){
+      this.getPlayerId();
+    }
+    else {
+      console.log("TRying to get player with id "+this.props.playerid)
+      Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    }
   },
 
   toTeamListing() {
