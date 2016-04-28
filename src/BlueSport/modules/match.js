@@ -418,6 +418,7 @@ function myStatus(matchid, playerobj) {
 //_FetchList(matchidList, function(resp){console.log(resp)}) SUCCESS
 //setFromList(matchidList, matchlist, function(resp){console.log("SET Correctly")}) SUCCESS
 //isInMatch(1, 0, function(resp){console.log("INMATCH: "+resp)})
+myStatus(0, 0).then(resp=>console.log(resp))
 
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
                   _CreateMatch, updateScores, updateStatus, _CreateFromList,

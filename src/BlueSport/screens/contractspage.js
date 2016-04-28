@@ -22,6 +22,7 @@ var Header = require('../parts/header')
 var TeamListingPage = require('../screens/teamlistingpage')
 var TextField = require('../smallparts/textfield')
 
+import * as Tournament from '../modules/tournament'
 import * as _ctools from '../libs/customtools.js'
 
 var {
@@ -242,12 +243,7 @@ output -
    *     _customlogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket())
    * },
    */
-   createRR: function () {
-     
-   },
-   createBracket: function () {
 
-   },
   /*
   AddGame:
   what do we need?

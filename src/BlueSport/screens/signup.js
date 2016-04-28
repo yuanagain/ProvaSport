@@ -83,7 +83,8 @@ var SignUpPage = React.createClass({
         const source = {uri: response.uri.replace('file://', ''), isStatic: true};
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
-
+        //upload image
+        Upload(source)
         this.setState({
           profImage: source
         });
@@ -342,6 +343,7 @@ var SignUpPage = React.createClass({
     }
   },
   storeUser: function (uid, user, player) {
+    console.log("\n\nOK\n\n")
     Player.createPlayer(player).then(function(id){
       //given the id add to the user and create data in FB
       console.log("\n\nOK\n\n")
@@ -350,7 +352,12 @@ var SignUpPage = React.createClass({
     })
     var callback = this.props.navToHomeFunc;
     var playerid = user.playerid;
-    DB.user.add(user).then(()=>{DB.player.add(player)}).then(callback)
+    DB.user.updateById(user, 0).catch(function(err){
+      DB.user.add(user, 0);
+    })
+    DB.player.updateById(player, 0).catch(function(err){
+      DB.player.add(player, 0);
+    })
     //create player
   },
 });

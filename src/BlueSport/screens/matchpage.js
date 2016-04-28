@@ -39,8 +39,7 @@ var {
 //DB.user.find().then(resp=>console.log(resp[resp.length-1]))
 //this is the player
 //DB.player.find().then(resp=>console.log(resp))
-console.log("ROWS  "+DB.user.totalrows);// this does not work
-console.log("ID  "+DB.user.findById(10)); //thisworks
+
 var MatchPage = React.createClass({
   getInitialState: function() {
     return (
@@ -96,6 +95,7 @@ else {
 
 
      */
+    Match.myStatus(matchid, player0).then(resp=>this.setState({myStatus: resp}))
     if (this.state.myStatus == 3) {
       //console.log("MATCH  "+ this.state.match.status['0'])
       // if this is an unconfirmed match
@@ -220,7 +220,7 @@ else {
     // this.state.match = this.props.match
     Match._GetMatch(this.props.matchid, this.fetchMatch)
     var matchid = this.props.matchid;
-    var player0 = {teams:[1]}
+    var player0 = {teams:[0]}
     Match.myStatus(matchid, player0).then(resp=>this.setState({myStatus: resp}))
   },
 

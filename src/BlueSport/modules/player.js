@@ -87,7 +87,18 @@ function createPlayer(obj) {
       });
     });
 }
-
+//this should work
+//returns an array of playerids
+function searchPlayers(query, callback) {
+  return new Promise(function(resolve){
+    var possibleFriends = []
+    playerdataRef.orderByChild("name/full").on("value", function(snapshot) {
+      if (query.isSubstring(snapshot.val())){
+        possibleFriends.push()
+      }
+    })
+  })
+}
 
 export function addFriend(playerid, friend) {
   var specificRef = playerdataRef.child(playerid).child('friends')
