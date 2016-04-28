@@ -54,7 +54,6 @@ var ProfilePage = React.createClass({
         playerid: -1,
         teamid: 0,
         mode: 'nav',
-
       }
     )
   },
@@ -253,7 +252,7 @@ var ProfilePage = React.createClass({
       Player.addFriend(this.state.my_player.playerid, this.props.playerid)
     }
     else {
-      Player.removeFriend(this.state.my_player.playerid, this.props.playerid)
+      Player.removeFriend(this.state.my_user.playerid, this.props.playerid)
     }
   },
 
