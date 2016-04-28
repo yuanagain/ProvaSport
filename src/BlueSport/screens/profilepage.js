@@ -68,9 +68,10 @@ var ProfilePage = React.createClass({
     // add friend component
     var add_friend = <View></View>
 
-    console.log(this.state.my_player)
     if (this.state.my_player) {
-      if (this.state.my_player.userid != this.props.playerid) {
+
+      if (this.state.my_user.playerid != this.props.playerid
+            && this.props.playerid != -1 ) {
         var friend_status_text = "Follow"
 
         // if they're a friend
