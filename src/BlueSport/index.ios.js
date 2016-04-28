@@ -24,7 +24,7 @@ var ProfilePage = require('./screens/profilepage')
 var RecordPage = require('./screens/recordpage')
 var NewsFeedPage = require('./screens/newsfeedpage')
 var ContractsScreen = require('./screens/contractspage')
-var SettingsPage = require('./screens/settingspage')
+var MorePage = require('./screens/morepage')
 var SignUpPage = require('./screens/signup')
 
 var _cvals = require('./styles/customvals.js')
@@ -138,17 +138,16 @@ class BlueSport extends Component {
           </TabNavigator.Item>
 
           <TabNavigator.Item
-            //title="Settings"
-            selected={this.state.selectedTab === 'settings'}
+            selected={this.state.selectedTab === 'more'}
             renderIcon={() => <Image style={styles.icon}
               source={listsIcon}
             />}
             renderSelectedIcon={() => <Image source={listsIcon} style={styles.selectedIcon}/>}
-            onPress={() => {this.onTabPress('settings', this.refs.settingsRef)}}
+            onPress={() => {this.onTabPress('more', this.refs.moreRef)}}
             >
             <Navigator
-              ref='settingsRef'
-              initialRoute={{name: 'SettingsScreen', component: SettingsPage}}
+              ref='moreRef'
+              initialRoute={{name: 'MorePage', component: MorePage}}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );

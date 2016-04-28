@@ -64,7 +64,7 @@ var SignUpPage = React.createClass({
 
   showImagePicker: function() {
     var options = {
-      title: 'Select Avatar',
+      title: 'Select Profile Picture',
       cancelButtonTitle: 'Cancel',
       takePhotoButtonTitle: 'Take Photo...',
       chooseFromLibraryButtonTitle: 'Choose from Library...',

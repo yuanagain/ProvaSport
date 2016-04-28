@@ -27,8 +27,6 @@ var RRMatchSquare = React.createClass({
   getInitialState: function() {
     return (
       {
-        type: this.props.data['type'],
-        item: this.props.data['item'],
       }
     );
   },
@@ -38,25 +36,25 @@ var RRMatchSquare = React.createClass({
       navigator,
       ...props
     } = this.props;
-    if (this.state.type == 'match') {
+    if (this.props.data['type'] == 'match') {
       var ScoreSquare = require('../smallparts/scoresquare')
       return (
         <View style={[styles.match, styles.border]}>
-          <ScoreSquare matchid={this.state.item}
+          <ScoreSquare matchid={this.props.data['item']}
                        navigator={this.props.navigator} />
         </View>
       )
     }
-    if (this.state.type == 'icon') {
+    if (this.props.data['type'] == 'icon') {
       var TeamSquare = require('../parts/teamsquare')
       return (
         <TouchableOpacity style={[styles.icon, ]}>
-          <TeamSquare teamid={this.state.item}
+          <TeamSquare teamid={this.props.data['item']}
                         navigator={this.props.navigator} />
         </TouchableOpacity>
       )
     }
-    if (this.state.type == "empty") {
+    if (this.props.data['type'] == "empty") {
       return (
       <TouchableOpacity style={[styles.match, styles.border]}
                         onPress={() => this.onPress()}>
@@ -68,20 +66,20 @@ var RRMatchSquare = React.createClass({
       </TouchableOpacity>
       )
     }
-    if (this.state.type == 'player') {
+    if (this.props.data['type'] == 'player') {
       var PlayerBrick = require('../parts/playerbrick')
       return (
         <TouchableOpacity style={[styles.player, styles.border]}>
-          <PlayerBrick playerid={this.state.item}
+          <PlayerBrick playerid={this.props.data['item']}
                        navigator={this.props.navigator} />
         </TouchableOpacity>
       )
     }
-    if (this.state.type == 'team') {
+    if (this.props.data['type'] == 'team') {
       var TeamBrick = require('../parts/teambrick')
       return (
         <TouchableOpacity style={[styles.player, styles.border]}>
-          <TeamBrick teamid={this.state.item}
+          <TeamBrick teamid={this.props.data['item']}
                        navigator={this.props.navigator} />
         </TouchableOpacity>
       )
@@ -118,7 +116,6 @@ var RoundRobin = React.createClass({
     return (
       {
         mode: 'normal',
-        matches: this.props.matches,
         scrollstyle: styles.scroll,
       }
     );
@@ -132,7 +129,7 @@ var RoundRobin = React.createClass({
     } = this.props;
 
     var tslength = slength + 2 * _cvals.dscale
-    var height = this.state.matches.length * tslength
+    var height = this.props.matches.length * tslength
     var width = height + tslength * 1.5
 
     var renderRow = (matchrow) => <RRMatchRow navigator={this.props.navigator}
@@ -147,7 +144,7 @@ var RoundRobin = React.createClass({
                         contentContainerStyle={[styles.container,
                                                 {width: width, height: height}]}
                         >
-                {this.state.matches.map(renderRow)}
+                {this.props.matches.map(renderRow)}
             </ScrollView>
           </View>
         );
@@ -162,7 +159,7 @@ var RoundRobin = React.createClass({
                           contentContainerStyle={[styles.container,
                                                   {width: width, height: height}]}
                           horizontal={true}>
-                  {this.state.matches.map(renderRow)}
+                  {this.props.matches.map(renderRow)}
               </ScrollView>
             </ScrollView>
           </View>

@@ -24,6 +24,7 @@ var TextField = require('../smallparts/textfield')
 
 import * as Tournament from '../modules/tournament'
 import * as _ctools from '../libs/customtools.js'
+import * as _clogic from '../libs/customlogic.js'
 
 var {
   AppRegistry,
@@ -158,10 +159,10 @@ var ContractsPage = React.createClass({
 
   create: function() {
     if (this.state.event_type[0] == 'Round Robin') {
-      _customlogic.createRR()
+      _clogic.createRR()
     }
     if (this.state.event_type[0] == 'Elimination') {
-      _customlogic.createBracket()
+      _clogic.createBracket()
     }
   },
 
