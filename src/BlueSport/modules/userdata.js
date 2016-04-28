@@ -410,7 +410,7 @@ var default_user = {
   "sports": []
 };
 //createUser("dummy@dummy.com", "test123").then(function(value){console.log(value)})
-/* 
+/*
  * setUser('dd726cb4-cdd3-4d66-a06f-cb9e5a5a8794', {
  *   "name": "Password",
  *   "email": "password@gmail.com",

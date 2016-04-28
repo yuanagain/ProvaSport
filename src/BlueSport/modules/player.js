@@ -72,7 +72,7 @@ function _CreatePlayer(callback) {
 }
 function createPlayer(obj) {
   /* var match = new Match(matchid); */
-    var promise = new Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       var newRef = playerdataRef.push();
       newRef.set(obj, function(error) {
         if (error) {
@@ -95,19 +95,21 @@ function searchPlayers(query, callback) {
     playerdataRef.orderByChild("name/full").on("value", function(snapshot) {
       var i = 0;
       var target = Object.keys(snapshot.val()).length;
-      console.log(target)
+      //console.log(target)
       snapshot.forEach(function(childSnap){
-        console.log(childSnap.val().name.full.search(query))
+        var string = childSnap.val().name.full.toLowerCase();
+        var q = query.toLowerCase();
+        //console.log(string.search(q))
         var value = childSnap.val();
         i += 1;
-        if (childSnap.val().name.full.search(query) > -1) {
+        if (string.search(q) > -1) {
           possibleFriends.push(childSnap.key())
           if (possibleFriends.length == 100){
             callback(possibleFriends)
           }
         }
         if (i == target-1){
-          console.log("DONE")
+          //console.log("DONE")
           callback(possibleFriends)
         }
       })
@@ -126,20 +128,37 @@ export function addFriend(playerid, friend) {
 }
 
 export function removeFriend(playerid, friend) {
+  console.log(playerid)
   var specificRef = playerdataRef.child(playerid).child('friends')
   var list = []
-  specificRef.on('value', function(snap) { list = snap.val();
-    deleteEle(friend, list);
-    console.log(list);
-    specificRef.set(list);
-  });
+  console.log("\n\nFRIENDID: "+friend)
+  return new Promise(function(resolve){
+    specificRef.on('value', function(snap) {
+      console.log(snap.val())
+      resolve(snap.val());
+    });
+  }).then(function(resp){
+    resp = deleteEle(friend, resp);
+    console.log(resp);
+    if (resp.length != 0){
+      specificRef.set(resp);
+    }
+    else {
+      resp = ["NO Friends :("];
+      specificRef.set(resp);
+    }
+  })
 }
 
 function deleteEle(value, array) {
+  console.log("DELETING")
+  console.log(array)
+  console.log(value)
   var index = array.indexOf(value);
   if(index > -1){
     array.splice(index, 1);
   }
+  return array;
 }
 
 export function addMatch(playerid, matchid) {
@@ -254,6 +273,7 @@ export  var default_player = {
     "userid" : -1,
     "prof_pic": "Loading",
     "elo": 0.0,
+    "nationality": "",
     "earnings": [ {"sport" :
     {
       "cash": 0,
@@ -269,8 +289,8 @@ export  var default_player = {
     "tournaments": []
   };
   //_AddTeam(0,1,function(resp){console.log(resp)}) //TESTED SUCCESSFULLY(and _AddTournament, an)
-  var query = "First"
+  var query = "DJ"
 //searchPlayers(query,function(resp){console.log("RESPONSE:"+resp)})
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
-                  addTeam, addFriend, addTournament, _AddTeam, _AddMatch, _AddTournament,
+                  addTeam, addFriend, addTournament, _AddTeam, _AddMatch, removeFriend, _AddTournament,
                    searchPlayers};
