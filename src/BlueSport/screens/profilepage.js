@@ -41,7 +41,8 @@ var ProfilePage = React.createClass({
         player: Player.default_player,
         loaded: false,
         isRefreshing: false,
-        my_player: false, 
+        my_player: false,
+        my_user: false,
         playerid: this.props.playerid
       }
     );
@@ -79,7 +80,7 @@ var ProfilePage = React.createClass({
 
         add_friend =  [<SimpleRow  onPress={() => this.toggleFriend()}
                                     title={'Follow'}
-                                    value={friend_status_text} 
+                                    value={friend_status_text}
                                     key={1}/>,
                        <View style={_cstyles.section_divider_line}
                              key={2}></View>]
@@ -199,8 +200,10 @@ var ProfilePage = React.createClass({
     this.state.team = data
     this.setState({loaded : true})
   },
-  getPlayerId: function() {
-    console.log("\n\n\n\nUSING THE ASYNC STORAGE")
+
+  getPlayerId: function(){
+    //console.log("\n\n\n\nUSING THE ASYNC STORAGE")
+
     var value = AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
@@ -209,11 +212,17 @@ var ProfilePage = React.createClass({
     });
   },
   getMe: function(){
-    var value = AsyncStorage.getItem('player', (error, response)=>{
+    AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
       //console.log(obj.playerid)
       this.setState({my_player: obj})
+    });
+    AsyncStorage.getItem('user', (error, response)=>{
+      var obj = JSON.parse(response)
+      // this is player id of person logged in. WORKS!!
+      //console.log(obj.playerid)
+      this.setState({my_user: obj})
     });
   },
   onRefresh: function() {
