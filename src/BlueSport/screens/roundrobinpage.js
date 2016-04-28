@@ -61,7 +61,7 @@ var RoundRobinPage = React.createClass({
       <Header title={this.state.tournament.name}
               mode={'nav'}
               navigator={this.props.navigator} />
-      <RoundRobin matches={_clogic.RRMatrix(this.state.tournament.matches)}
+      <RoundRobin matches={_clogic.RRMatrix(this.state.tournament)}
                   navigator={this.props.navigator} />
     </View>
     );
@@ -70,6 +70,7 @@ var RoundRobinPage = React.createClass({
   fetchTournament: function(data) {
     this.state.tournament = data
     this.setState({loaded : true})
+    console.log(this.state.tournament)
   },
 
   componentDidMount: function () {

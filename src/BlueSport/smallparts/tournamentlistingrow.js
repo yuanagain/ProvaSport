@@ -73,6 +73,10 @@ var TournamentListingRow = React.createClass({
   },
 
   onPress: function() {
+    if (this.state.loaded == false) {
+      return
+    }
+
     if (this.state.tournament.type == 'Elimination') {
       var BracketPage = require('../screens/bracketpage')
       this.props.navigator.push({

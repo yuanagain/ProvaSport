@@ -28,15 +28,17 @@ var {
 var MatchBrick = React.createClass({
 
   onPress: function() {
-    var MatchPage = require('../screens/matchpage')
-    this.props.navigator.push({
-      id: "MatchPage" + String(_ctools.randomKey()),
-      component: MatchPage,
-      passProps: {
-        navigator: this.props.navigator,
-        playerid: this.props.matchid
-      }
-    })
+    if (this.state.loaded) {
+      var MatchPage = require('../screens/matchpage')
+      this.props.navigator.push({
+        id: "MatchPage" + String(_ctools.randomKey()),
+        component: MatchPage,
+        passProps: {
+          navigator: this.props.navigator,
+          playerid: this.props.matchid
+        }
+      })
+    }
   },
 
   getInitialState: function() {

@@ -26,6 +26,9 @@ var {
 var TeamBrick = React.createClass({
 
   toTeamPage: function() {
+    if (this.state.loaded == false) {
+      return
+    }
     if (this.props.disabled) {
       return
     }
@@ -41,6 +44,9 @@ var TeamBrick = React.createClass({
   },
 
   toPlayerPage: function() {
+    if (this.state.loaded == false) {
+      return
+    }
     var ProfilePage = require('../screens/profilepage')
     this.props.navigator.push({
       id: "ProfilePage" + String(_ctools.randomKey()),
@@ -76,7 +82,8 @@ var TeamBrick = React.createClass({
       ...props
     } = this.props;
 
-    if (this.props.disabled || this.state.team.name == 'BYE ') {
+    if (this.props.disabled || this.state.team.name == 'BYE ' ||
+        this.state.team.teamid == 'BYE') {
       return (
         <View style={styles.teambrick}>
           <View style={[styles.center, styles.left]} >

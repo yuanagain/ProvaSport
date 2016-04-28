@@ -36,25 +36,28 @@ var RRMatchSquare = React.createClass({
       navigator,
       ...props
     } = this.props;
-    if (this.props.data['type'] == 'match') {
+
+    // console.log('======')
+    // console.log(this.props.data)
+    if (this.props.data.type == 'match') {
       var ScoreSquare = require('../smallparts/scoresquare')
       return (
         <View style={[styles.match, styles.border]}>
-          <ScoreSquare matchid={this.props.data['item']}
+          <ScoreSquare matchid={this.props.data.item}
                        navigator={this.props.navigator} />
         </View>
       )
     }
-    if (this.props.data['type'] == 'icon') {
+    if (this.props.data.type == 'icon') {
       var TeamSquare = require('../parts/teamsquare')
       return (
         <TouchableOpacity style={[styles.icon, ]}>
-          <TeamSquare teamid={this.props.data['item']}
-                        navigator={this.props.navigator} />
+          <TeamSquare teamid={this.props.data.item}
+                      navigator={this.props.navigator} />
         </TouchableOpacity>
       )
     }
-    if (this.props.data['type'] == "empty") {
+    if (this.props.data.type == "empty") {
       return (
       <TouchableOpacity style={[styles.match, styles.border]}
                         onPress={() => this.onPress()}>
@@ -66,20 +69,20 @@ var RRMatchSquare = React.createClass({
       </TouchableOpacity>
       )
     }
-    if (this.props.data['type'] == 'player') {
+    if (this.props.data.type == 'player') {
       var PlayerBrick = require('../parts/playerbrick')
       return (
         <TouchableOpacity style={[styles.player, styles.border]}>
-          <PlayerBrick playerid={this.props.data['item']}
+          <PlayerBrick playerid={this.props.data.item}
                        navigator={this.props.navigator} />
         </TouchableOpacity>
       )
     }
-    if (this.props.data['type'] == 'team') {
+    if (this.props.data.type == 'team') {
       var TeamBrick = require('../parts/teambrick')
       return (
         <TouchableOpacity style={[styles.player, styles.border]}>
-          <TeamBrick teamid={this.props.data['item']}
+          <TeamBrick teamid={this.props.data.item}
                        navigator={this.props.navigator} />
         </TouchableOpacity>
       )

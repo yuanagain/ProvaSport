@@ -29,13 +29,16 @@ var {
 var ScoreSquare = React.createClass({
 
   onPress: function() {
+    if (this.state.loaded == false) {
+      return
+    }
     var MatchPage = require('../screens/matchpage')
     this.props.navigator.push({
       id: "MatchPage" + String(this.props.matchid),
       component: MatchPage,
       passProps: {
         navigator: this.props.navigator,
-        playerid: this.props.matchid
+        matchid: this.props.matchid
       }
     })
   },
@@ -67,7 +70,7 @@ var ScoreSquare = React.createClass({
     }
 
     var tally = _ctools.getTally(this.state.match)
-    console.log(tally)
+
     return (
       <TouchableOpacity style={styles.playersquare}
                         onPress={() => this.onPress()}>
