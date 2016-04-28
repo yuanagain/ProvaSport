@@ -72,7 +72,7 @@ function _CreatePlayer(callback) {
 }
 function createPlayer(obj) {
   /* var match = new Match(matchid); */
-    var promise = new Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       var newRef = playerdataRef.push();
       newRef.set(obj, function(error) {
         if (error) {
@@ -132,20 +132,20 @@ export function removeFriend(playerid, friend) {
   var specificRef = playerdataRef.child(playerid).child('friends')
   var list = []
   console.log("\n\nFRIENDID: "+friend)
-  var p = new Promise(function(resolve){
+  return new Promise(function(resolve){
     specificRef.on('value', function(snap) {
       console.log(snap.val())
       resolve(snap.val());
     });
-  })
-  p.then(function(resp){
+  }).then(function(resp){
     resp = deleteEle(friend, resp);
     console.log(resp);
     if (resp.length != 0){
       specificRef.set(resp);
     }
     else {
-      specificRef.set(["NO Friends :("])
+      resp = ["NO Friends :("];
+      specificRef.set(resp);
     }
   })
 }

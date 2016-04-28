@@ -14,19 +14,10 @@ var TextField = require('../smallparts/textfield')
 
 import * as Player from '../modules/player'
 import * as User from '../modules/userdata'
-import Store from 'react-native-store';
 
-
-//database name and constant for storing data
-const DB = {
-  'user': Store.model("user"),
-  'player': Store.model("player")
-}
-//clear out the DB
-DB.user.remove();
-DB.player.remove()
 
 var {
+  AsyncStorage,
   StyleSheet,
   ScrollView,
   View,
@@ -324,8 +315,8 @@ var SignUpPage = React.createClass({
       var callback = this.props.navToHomeFunc;
       var email = this.state.email;
       var pass = this.state.password;
-      var player = Player.default_player;
-      var setUser = this.state.user;
+      var player = JSON.parse(JSON.stringify(Player.default_player));
+      var setUser = JSON.parse(JSON.stringify(this.state.user));
       //load in the data above
       player.name.first = this.state.first;
       player.name.last = this.state.last;
@@ -339,26 +330,68 @@ var SignUpPage = React.createClass({
 //call the next functions
       var callback = this.storeUser;
       //uid=>callback(uid, setUser, player)
-      User.createUser(email, pass).then(uid=>callback(uid, setUser, player)).catch(function(err){console.log("COULD NOT CREATE USER "+err)})
+      User.createUser(email, pass).then(uid=>{player.userid = uid}).then(uid=>callback(uid, setUser, player)).catch(function(err){console.log("COULD NOT CREATE USER "+err)})
     }
   },
   storeUser: function (uid, user, player) {
-    console.log("\n\nOK\n\n")
+    console.log("\n"+uid+"  "+user+"  "+player)
+    var callback = this.props.navToHomeFunc;
     Player.createPlayer(player).then(function(id){
       //given the id add to the user and create data in FB
-      console.log("\n\nOK\n\n")
+      console.log("\n\nOK\n\n"+id)
       user.playerid = id;
+      this._setInitialUser(user)
       User.setUser(uid, user);
     })
-    var callback = this.props.navToHomeFunc;
-    var playerid = user.playerid;
-    DB.user.updateById(user, 0).catch(function(err){
-      DB.user.add(user, 0);
-    })
-    DB.player.updateById(player, 0).catch(function(err){
-      DB.player.add(player, 0);
-    })
+    this._setInitialPlayer(player)
+    callback()
     //create player
+  },
+  _setInitialUser: function(obj) {
+/*
+ *     AsyncStorage.setItem(store_key, JSON.stringify(UID123_object), () => {
+ *      AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
+ *        AsyncStorage.getItem('UID123', (err, result) => {
+ *          console.log(result);
+ *          // => {'name':'Chris','age':31,'traits':{'shoe_size':10,'hair':'brown','eyes':'blue'}}
+ *        });
+ *      });
+ *    });
+ */
+    try {
+      //THIS WORKS!!!
+      AsyncStorage.setItem('user', JSON.stringify(obj), () => {
+        AsyncStorage.getItem('user', (err, result)=>{
+          console.log("USER");
+          console.log(JSON.parse(result));
+        });
+      });
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  },
+  _setInitialPlayer: function(obj) {
+/*
+ *     AsyncStorage.setItem(store_key, JSON.stringify(UID123_object), () => {
+ *      AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
+ *        AsyncStorage.getItem('UID123', (err, result) => {
+ *          console.log(result);
+ *          // => {'name':'Chris','age':31,'traits':{'shoe_size':10,'hair':'brown','eyes':'blue'}}
+ *        });
+ *      });
+ *    });
+ */
+    try {
+      //THIS WORKS!!!
+      AsyncStorage.setItem('player', JSON.stringify(obj), () => {
+        AsyncStorage.getItem('player', (err, result)=>{
+          console.log("Player");
+          console.log(JSON.parse(result));
+        });
+      });
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
   },
 });
 

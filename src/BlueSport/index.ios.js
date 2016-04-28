@@ -34,7 +34,7 @@ class BlueSport extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'more'
+      selectedTab: 'login'
     };
   }
 

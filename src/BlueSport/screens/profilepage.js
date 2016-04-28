@@ -252,10 +252,18 @@ var ProfilePage = React.createClass({
       Player.addFriend(this.state.my_player.playerid, this.props.playerid)
     }
     else {
-      Player.removeFriend(this.state.my_user.playerid, this.props.playerid)
+      Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
+        this.state.my_player.friends = resp;
+        console.log("REP:"+resp)
+        this.setMyPlayer(this.state.my_player);
+      })
     }
   },
-
+  setMyPlayer: function(obj){
+    AsyncStorage.setItem('player', JSON.stringify(obj), (error, response)=>{
+      console.log(obj)
+    });
+  },
 
   componentWillReceiveProps: function(nextProps) {
     Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
