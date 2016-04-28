@@ -53,7 +53,7 @@ var MorePage = React.createClass({
     return (
     <View style={styles.container}>
       <View>
-        <Header title={"More"}
+        <Header title={"MORE"}
                 navigator={this.props.navigator} />
         <View style={_cstyles.body_container}>
 
@@ -68,8 +68,14 @@ var MorePage = React.createClass({
         <View style={_cstyles.section_divider_line}></View>
 
         <SimpleRow
+          title={'Search Players'}
+          value={'Search'}
+          onPress={this.toPlayerSearch} />
+        <View style={_cstyles.section_divider_line}></View>
+
+        <SimpleRow
           title={'Settings'}
-          value={'Edit'}
+          value={'Change'}
           onPress={this.toSettings} />
         <View style={_cstyles.section_divider_line}></View>
 
@@ -86,6 +92,17 @@ var MorePage = React.createClass({
     this.props.navigator.push({
       id: "SettingsPage",
       component: SettingsPage,
+      passProps: {
+        navigator: this.props.navigator,
+      }
+    })
+  },
+
+  toPlayerSearch: function() {
+    var PlayerSearchPage = require('../screens/playersearchpage')
+    this.props.navigator.push({
+      id: "PlayerSearchPage",
+      component: PlayerSearchPage,
       passProps: {
         navigator: this.props.navigator,
       }
