@@ -4,7 +4,6 @@
 This page implements a UI for a search for player
 */
 
-
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
@@ -59,6 +58,7 @@ var PlayerSearchPage = React.createClass({
         <Header title={"SEARCH"}
                 mode={'nav'}
                 navigator={this.props.navigator} />
+
         <View style={_cstyles.buttons_container}>
           <TextInput
             value={this.props.value}
@@ -67,30 +67,36 @@ var PlayerSearchPage = React.createClass({
             underlineColorAndroid='rgba(0,0,0,0)' 
             secureTextEntry={false}
             autoCorrect={false}
-            maxLength={35}
+            maxLength={100}
             keyboardType={'default'}
             onChangeText={(query) => this.setState({query})}
+            onEndEditing={()=>this.search()}
+            onSubmitEditing={()=>this.search()}
           />
-          <WideButton
-            text="Search"
-            onPress={()=>this.search()}
-          />
-        </View>
-        
-        <ListView style={styles.list_container}
-                  renderRow={this.renderRow}
-                  dataSource={dataSource}>
-        </ListView>
-      </View>
+          <View style={_cstyles.blue_divider_line}>
+          </View>
 
-      <View style={_cstyles.buttons_container}>
+          <ListView style={styles.list_container}
+                    renderRow={this.renderRow}
+                    dataSource={dataSource}>
+          </ListView>
+        </View>
       </View>
     </View>
     );
   },
 
   search: function() {
+    // don't initiate two searches
+    if (this.state.searching == false) {
+      return
+    }
+    // don't search empty input
+    if (this.state.query.length == 0) {
+      return
+    }
     this.setState({searching: true})
+    console.log("searching")
   },
 
   update: function() {
@@ -140,13 +146,14 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
+
   },
   list_container: {
     width: windowSize.width,
     flexDirection: 'column',
+
     // TODO BOUND HEIGHT HERE
     flex: 1,
-    // height: windowSize.height - 120 * _cvals.dscale
   },
   input: {
     height: 50 * _cvals.dscale,

@@ -57,8 +57,6 @@ var MorePage = React.createClass({
                 navigator={this.props.navigator} />
         <View style={_cstyles.body_container}>
 
-          <View style={_cstyles.section_divider_line}></View>
-
         </View>
 
         <SimpleRow

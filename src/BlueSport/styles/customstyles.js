@@ -100,6 +100,14 @@ var CustomStylesDefault = StyleSheet.create({
     width: 2 * windowSize.width,
     marginLeft: -100 * _cvals.dscale,
   },
+  blue_divider_line: {
+    backgroundColor: _cvals.skblue,
+    height: 1,
+    opacity: 0.5,
+    marginVertical: 0.5 ,
+    width: 2 * windowSize.width,
+    marginLeft: -100 * _cvals.dscale,
+  },
   indented_container: {
     marginLeft: 40 * _cvals.dscale,
     flexDirection: 'row',
