@@ -42,13 +42,15 @@ var ProfilePage = React.createClass({
         loaded: false,
         isRefreshing: false,
         my_player: false,
+        playerid: this.props.playerid
       }
     );
   },
   getDefaultProps: function() {
+
     return (
       {
-        playerid: 0,
+        playerid: -1,
         teamid: 0,
         mode: 'nav',
 
@@ -195,7 +197,15 @@ var ProfilePage = React.createClass({
     this.state.team = data
     this.setState({loaded : true})
   },
-
+  getPlayerId: function(){
+    console.log("\n\n\n\nUSING THE ASYNC STORAGE")
+    var value = AsyncStorage.getItem('player', (error, response)=>{
+      var obj = JSON.parse(response)
+      // this is player id of person logged in. WORKS!!
+      console.log(obj.playerid)
+      this.setState({player: obj})
+    });
+  },
   onRefresh: function() {
     this.setState({isRefreshing: true})
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
@@ -206,7 +216,12 @@ var ProfilePage = React.createClass({
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    if (this.props.playerid == -1){
+      this.getPlayerId();
+    }
+    else {
+      Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    }
     //DB.player.findById(0).then(resp => this.setState({my_player: resp}))
   },
 

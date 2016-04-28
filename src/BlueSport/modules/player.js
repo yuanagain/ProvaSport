@@ -272,4 +272,4 @@ export  var default_player = {
   var query = "First"
 //searchPlayers(query,function(resp){console.log("RESPONSE:"+resp)})
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
-                  addTeam, addFriend, addTournament, _AddTeam, _AddMatch, _AddTournament};
+                  addTeam, addFriend, addTournament, _AddTeam, _AddMatch, _AddTournament, searchPlayers};
