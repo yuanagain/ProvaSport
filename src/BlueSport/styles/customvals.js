@@ -30,6 +30,7 @@ const _cvals = {
   stdmargin: 8 * dscale,
   timeout: 1000,
   vscale: vscale,
+  statusBarHeight: 60 * vscale,
 }
 
 module.exports = _cvals;

@@ -88,6 +88,11 @@ var ProfilePage = React.createClass({
       }
     }
 
+    if (this.state.player == null) {
+      // this.state.player = Player.default_player
+      Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    }
+
     return (
     <View style={styles.container}>
       <View>
@@ -192,6 +197,18 @@ var ProfilePage = React.createClass({
     </View>
     );
   },
+
+  componentWillUnmount: function() {
+    this.setState({loaded : false})
+  },
+
+  shouldComponentUpdate: function(nextProps, nextState) {
+    if (nextState.player == null) {
+      return false
+    }
+    return true
+  },
+
   fetchPlayer: function(data) {
     this.state.player = data
     this.setState({loaded : true})

@@ -11,10 +11,12 @@ var {
   Text
 } = React;
 
+var _cvals = require('../styles/customvals')
 var  MessagePage = require('./MessagePage.js');
 var Communications = require('react-native-communications');
 var messagedb = require('firebase');
 messagedb = new Firebase('https://provamessenger.firebaseio.com');
+
 
 var player = {
             "name" : "Sam",
@@ -45,6 +47,9 @@ var Messenger = React.createClass({
       {
         messages: [],
         messagesLoaded: false,
+        _isMounted: false,
+        _didUnmount: false,
+        _interval_id: false,
       }
     );
   },
@@ -52,15 +57,27 @@ var Messenger = React.createClass({
   componentDidMount: function () {
     // get friend
     //get messages
+    this.setState({_isMounted: true})
     this.getMessages(this.props.friendid, this.harvest);
     this.setState({messagesLoaded: true});
     this.animate();
   },
 
+  componentWillUnmount: function() {
+    // this.setState({_isMounted: false})
+    // this.setState({_didUnmount: true})
+    clearInterval(this.state._interval_id)
+  },
+
   animate: function() {
-    setInterval(() => {
+    var interval_id = setInterval(() => {
+    if (this.state._isMounted) {
       this.handleReceive();
-    }, 500);
+    }      // if (this.state._didUnmount) {
+     //   clearInterval(interval_id)
+     // }
+    }, 500); 
+    this.setState({_interval_id: interval_id})
   },
   
   // harvest
@@ -184,7 +201,7 @@ var Messenger = React.createClass({
         messages={this.state.messages}
         handleSend={this.handleSend}
         onErrorButtonPress={this.onErrorButtonPress}
-        maxHeight={Dimensions.get('window').height - navBarHeight - statusBarHeight}
+        maxHeight={Dimensions.get('window').height - _cvals.headerHeight - _cvals.statusBarHeight}
         loadEarlierMessagesButton={false} // disable load earlier messages
         onLoadEarlierMessages={this.onLoadEarlierMessages}
 

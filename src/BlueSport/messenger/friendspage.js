@@ -91,50 +91,11 @@ return (
   },
 
 
-  renderRow(dataSource) {
-    // get friend id, profpic, name, and sports
-    console.log("RENDERING");
-    //var name = null;
-    //var sports = null;
-    //var picture = null;
-    var userid = dataSource;
-    Player._GetPlayer(dataSource, this.updateFriend);
-    //console.log(name);
-    console.log(this.state.friend.name);
-
+  renderRow(data) {
     return (
-      <View style={styles.friendContainer}>
-        <TouchableOpacity onPress = {()=>this.onPress(userid)} style = {styles.container}>
-          <View style={styles.profpicContainer}>
-            <Image
-              //source={{uri: picture}}
-              source={{uri: "http://facebook.github.io/react/img/logo_og.png"}}
-              style={styles.profpic}
-            />
-        	</View> 
-          <View>
-          	<View style={styles.details}>
-  	            <Text style={_cstyles.standard_text}>{this.state.friend.name.full}</Text>
-  	            <Text style={_cstyles.detail_text}>{this.state.friend.sports}</Text>
-              </View>
-              <View style={_cstyles.section_divider_line} ></View> 
-          </View>
-        </TouchableOpacity>
-      </View>
+      <ChatRow playerid={data} 
+               navigator={this.props.navigator} />
     );
-  },
-
-
-  onPress: function(friendId) {
-    var Messenger = require('./Messenger');
-    this.props.navigator.push({
-      id: "Messenger",
-      component: Messenger,
-      passProps: {
-        player: this.props.player,
-        friend: friendId,
-      }
-    });
   },
 
   componentDidMount: function () {
@@ -155,6 +116,79 @@ return (
   }
 
 });
+
+
+var ChatRow = React.createClass({
+  getInitialState: function() {
+    //Player._GetPlayer(this.props.playerid, this.getFriends);
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    return {
+      player: Player.default_player,
+    };
+  },
+  getDefaultProps: function() {
+    return ({
+      playerid: 0
+    })
+  },
+render() {
+  var {
+      data,
+      navigator,
+      ...props
+    } = this.props;
+  
+return (
+  <View style={styles.friendContainer}>
+    <TouchableOpacity onPress = {()=>this.onPress()} style = {styles.container}>
+      <View style={styles.profpicContainer}>
+        <Image
+          //source={{uri: picture}}
+          source={this.state.player.prof_pic}
+          style={styles.profpic}
+        />
+      </View> 
+      <View>
+        <View style={styles.details}>
+            <Text style={_cstyles.standard_text}>{this.state.player.name.first}</Text>
+            <Text style={_cstyles.detail_text}>{this.state.player.name.last}</Text>
+          </View>
+          <View style={_cstyles.section_divider_line} ></View> 
+      </View>
+    </TouchableOpacity>
+  </View>
+      );
+  },
+
+  onPress: function() {
+    var Messenger = require('./Messenger');
+    this.props.navigator.push({
+      id: "Messenger",
+      component: Messenger,
+      passProps: {
+        player: this.state.player,
+        friend: this.props.playerid
+
+      }
+    });
+  },
+
+  fetchPlayer: function(data) {
+    this.setState({loaded : true})
+    this.setState({player : data})
+    
+  },
+
+  componentDidMount: function () {
+    // this.state.match = this.props.match
+    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+  },
+});
+
 
 var styles = StyleSheet.create({
 	container: {
