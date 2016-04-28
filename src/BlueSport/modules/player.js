@@ -97,7 +97,7 @@ function searchPlayers(query, callback) {
       var target = Object.keys(snapshot.val()).length;
       console.log(target)
       snapshot.forEach(function(childSnap){
-        console.log(childSnap.val().name.full.search(query))
+        console.log(childSnap.val().name.full.toLowerCase().search(query.toLowerCase()))
         var value = childSnap.val();
         i += 1;
         if (childSnap.val().name.full.search(query) > -1) {
@@ -269,8 +269,8 @@ export  var default_player = {
     "tournaments": []
   };
   //_AddTeam(0,1,function(resp){console.log(resp)}) //TESTED SUCCESSFULLY(and _AddTournament, an)
-  var query = "First"
-//searchPlayers(query,function(resp){console.log("RESPONSE:"+resp)})
+  var query = "DJ"
+searchPlayers(query,function(resp){console.log("RESPONSE:"+resp)})
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, _AddTournament,
                    searchPlayers};

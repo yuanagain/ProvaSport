@@ -39,7 +39,7 @@ var PlayerSearchPage = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        
+
       }
     )
   },
@@ -73,7 +73,7 @@ var PlayerSearchPage = React.createClass({
             value={this.props.value}
             style={[styles.input, _cstyles.standard_text]}
             placeholder={"Player name, email, etc."}
-            underlineColorAndroid='rgba(0,0,0,0)' 
+            underlineColorAndroid='rgba(0,0,0,0)'
             secureTextEntry={false}
             autoCorrect={false}
             maxLength={100}
@@ -113,7 +113,7 @@ var PlayerSearchPage = React.createClass({
     }
     this.setState({searching: true})
     Player.searchPlayers(this.state.query, this.update)
-    
+
   },
 
   update: function(players) {
@@ -142,7 +142,7 @@ var PlayerSearchPage = React.createClass({
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
     setTimeout(() => {
       this.setState({isRefreshing: false})
-    }, _cvals.timeout); 
+    }, _cvals.timeout);
   },
 
   componentDidMount: function () {
@@ -163,7 +163,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: 0 
+    marginTop: 0
   },
   container: {
     flex: 1,
