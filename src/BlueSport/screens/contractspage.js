@@ -221,28 +221,26 @@ output -
       }
     }
   },
-  /*
-   * createRR: function(obj) {
-   *   Tournament.createTournament(obj).then(resp=>createRR2(resp, obj, defaults))
-   * },
-   * createRR2: function(id, obj, defaults) {
-   *     var data = {
-   *       teams: resp.teams,
-   *       defaultM: defaults
-   *     }
-   *     _customlogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toRR())
-   * },
-   * createBracket: function(obj, defaults) {
-   *   Tournament.createTournament(obj).then(resp=>createBracket2(resp, obj, defaults))
-   * },
-   * createBracket2: function(id, obj, defaults) {
-   *     var data = {
-   *       teams: resp.teams,
-   *       defaultM: defaults
-   *     }
-   *     _customlogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket())
-   * },
-   */
+  createRR: function(obj) {
+    Tournament.createTournament(obj).then(resp=>createRR2(resp, obj, defaults))
+  },
+  createRR2: function(id, obj, defaults) {
+      var data = {
+        teams: obj.teams,
+        defaultM: defaults
+      }
+      _customlogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toRR(id))
+  },
+  createBracket: function(obj, defaults) {
+    Tournament.createTournament(obj).then(resp=>createBracket2(resp, obj, defaults))
+  },
+  createBracket2: function(id, obj, defaults) {
+      var data = {
+        teams: resp.teams,
+        defaultM: defaults
+      }
+      _customlogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket(id))
+  },
 
   /*
   AddGame:
@@ -293,7 +291,7 @@ output -
       id: "RoundRobinPage3",
       component: RoundRobinPage,
       passProps: {
-        torunamentid: tid,
+        tournamentid: tid,
         navigator: this.props.navigator
       }
     })

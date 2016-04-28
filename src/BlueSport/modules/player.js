@@ -93,9 +93,16 @@ function searchPlayers(query, callback) {
   return new Promise(function(resolve){
     var possibleFriends = []
     playerdataRef.orderByChild("name/full").on("value", function(snapshot) {
-      if (query.isSubstring(snapshot.val())){
-        possibleFriends.push()
-      }
+      snapshot.forEach(function(childSnap){
+        var value = childSnap.val();
+        //if (query.search(childSnap.val().name.full)) {
+          console.log(childSnap.val())
+          possibleFriends.push(childSnap.val())
+          if (possibleFriends.length == 100){
+            resolve(possibleFriends)
+          }
+      })
+      resolve(possibleFriends)
     })
   })
 }

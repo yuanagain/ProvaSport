@@ -410,16 +410,18 @@ var default_user = {
   "sports": []
 };
 //createUser("dummy@dummy.com", "test123").then(function(value){console.log(value)})
-setUser('dd726cb4-cdd3-4d66-a06f-cb9e5a5a8794', {
-  "name": "Password",
-  "email": "password@gmail.com",
-  "playerid": 0,
-  "prof_pic": "https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwiuhcmO4a3MAhWJez4KHcT5DHMQjRwIBw&url=http%3A%2F%2Fwww.jennstrends.com%2Fthese-profile-photos-make-you-look-bad%2F&psig=AFQjCNHQM1sWI8pOR7pVQA1I9mlYjkBb5A&ust=1461810096997589",
-  "nationality": "USA",
-  "gender": "M",
-  "birthday": 1888889999,
-  "sports": ["Basketball"]
-}).then(resp=>console.log("ADDED USER"))
+/* 
+ * setUser('dd726cb4-cdd3-4d66-a06f-cb9e5a5a8794', {
+ *   "name": "Password",
+ *   "email": "password@gmail.com",
+ *   "playerid": 0,
+ *   "prof_pic": "https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwiuhcmO4a3MAhWJez4KHcT5DHMQjRwIBw&url=http%3A%2F%2Fwww.jennstrends.com%2Fthese-profile-photos-make-you-look-bad%2F&psig=AFQjCNHQM1sWI8pOR7pVQA1I9mlYjkBb5A&ust=1461810096997589",
+ *   "nationality": "USA",
+ *   "gender": "M",
+ *   "birthday": 1888889999,
+ *   "sports": ["Basketball"]
+ * }).then(resp=>console.log("ADDED USER"))
+ */
 
 //GetUser(35)
 /*

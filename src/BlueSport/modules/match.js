@@ -20,6 +20,7 @@ ref = new Firebase("https://shining-torch-4767.firebaseio.com/");
 /*player object within Player class*/
 function _GetMatch(matchid, callback) {
   /* var match = new Match(matchid); */
+  console.log("MATCHID:" + matchid)
     var promise = new Promise(function(resolve, reject) {
         matchdb.child(matchid).on("value", function(snapshot) {
           var match = snapshot.val();
@@ -28,8 +29,8 @@ function _GetMatch(matchid, callback) {
      });
     promise.then(function(value){
       callback(value);
-    }).catch(function(){
-      console.log("Failed");
+    }).catch(function(err){
+      console.log("Failed in _Getmatch "+err);
     });
 }
 function getMatch(matchid) {
@@ -58,7 +59,7 @@ function _SetMatch(matchid, obj, callback) {
   promise.then(function(value){
     callback(value);
   }).catch(function() {
-    console.log("Failed");
+    console.log("SetMatch Failed");
   });
 }
 
@@ -359,8 +360,12 @@ function _TeamInMatch(matchid, teams, callback) {
 function teamInMatch(matchid, teams) {
   new Promise(function(resolve){
     getMatch(matchid).then(function(resp){
+      //console.log("TEAMS:   "+teams)
+      if (teams == undefined){
+        resolve(-1)
+      }
       //check if match teams are in player's teams
-      if(teams.indexOf(resp.teams[0]) > -1){
+      else if(teams.indexOf(resp.teams[0]) > -1){
         resolve(0)
       }
       else if (teams.indexOf(resp.teams[1]) > -1) {

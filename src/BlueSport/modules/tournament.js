@@ -121,6 +121,7 @@ function setTournament(tournamentid, obj) {
       "teams": [], //alphabetical list of teams or sorted by priority
       "location": "Loading", /*tuple of  Latitude and Longitude*/
       "dates": [],
+      "name": "",
       "sport": "Loading",
       "matches": []
   };

@@ -67,9 +67,8 @@ var RoundRobinPage = React.createClass({
 
 
 });
-componentDidMount(){
-  Tournament.getTournament(this.props.tournamentid).then(resp=>this.setState({tournament: resp}))
-}
+
+
 var styles = StyleSheet.create({
   container: {
     flexDirection: 'column',

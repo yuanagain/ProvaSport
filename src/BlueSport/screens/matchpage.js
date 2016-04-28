@@ -95,7 +95,7 @@ else {
 
 
      */
-    Match.myStatus(matchid, player0).then(resp=>this.setState({myStatus: resp}))
+     console.log("STATUS:  "+this.state.myStatus)
     if (this.state.myStatus == 3) {
       //console.log("MATCH  "+ this.state.match.status['0'])
       // if this is an unconfirmed match
@@ -200,19 +200,19 @@ else {
   },
 
   loadTeams: function() {
-    Team.getTeam(this.state.match.teams[0]).then(resp=>this.setState({team1: resp})).catch(function(){
-      console.log("");
+    Team.getTeam(this.state.match.teams[0]).then(resp=>this.setState({team1: resp})).catch(function(err){
+      console.log(err);
     });
-    Team.getTeam(this.state.match.teams[1]).then(resp=>this.setState({team2: resp})).catch(function(){
-      console.log("");
+    Team.getTeam(this.state.match.teams[1]).then(resp=>this.setState({team2: resp})).catch(function(err){
+      console.log(err);
     });
   },
 
   fetchMatch: function(data) {
     this.state.match = data
     this.setState({match: data})
-    console.log(data)
     this.setState({loaded : true})
+    Match.myStatus(matchid, {teams:[0]}).then(resp=>this.setState({myStatus: resp}))
     this.loadTeams()
   },
 
