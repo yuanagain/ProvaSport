@@ -16,7 +16,8 @@ ReactDOM.render((
       <Route path="/home" component={Newsfeed}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/matches" component={Matches}/>
-      <Route path="/tournaments" component={RoundRobin}/>
+      <Route path="/tournamentsBrack" component={Bracket}/>
+      <Route path="/tournamentsRR" component={RoundRobin}/>
       <Route path="/about" component={About}/>
     </Route>
   </Router>

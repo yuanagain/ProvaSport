@@ -43,7 +43,8 @@ var Menu = React.createClass({
             <Link to="/home" activeStyle={activeLink}><li>Home</li></Link>
             <Link to="/profile" activeStyle={activeLink}><li>Profile</li></Link>
             <Link to="/matches" activeStyle={activeLink}><li>Matches</li></Link>
-            <Link to="/tournaments" activeStyle={activeLink}><li>Tournaments</li></Link>
+            <Link to="/tournamentsBrack" activeStyle={activeLink}><li>Bracket</li></Link>
+            <Link to="/tournamentsRR" activeStyle={activeLink}><li>Round Robin</li></Link>
             <Link to="/about" activeStyle={activeLink}><li>About</li></Link>
           </ul>
         </div>
