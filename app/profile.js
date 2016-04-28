@@ -147,7 +147,8 @@ var info = {
 }
 
 var statBlock = {
-  float: 'right',
+  display: 'inline-block',
+  paddingLeft: 75,
 }
 
 var stats = {
@@ -194,7 +195,7 @@ var rowContentsText = {
 
 var newsfeedContainer = {
   paddingLeft: 5,
-  marginTop: 350,
+  marginTop: 20,
 }
 
 var newsfeedTitle = {
