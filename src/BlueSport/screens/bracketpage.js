@@ -31,11 +31,11 @@ var t3 = {
   matches: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
 }
 
-var RoundRobinPage = React.createClass({
+var BracketPage = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        tournament: Tournament.default_tournament,
+        
         tournamentid: 0,
         loaded: false
       }
@@ -44,7 +44,7 @@ var RoundRobinPage = React.createClass({
 
   getInitialState: function() {
     return {
-      matches: t3
+      tournament: Tournament.default_tournament,
     };
   },
 
@@ -58,13 +58,13 @@ var RoundRobinPage = React.createClass({
     return (
     <View style={styles.container}>
 
-      <Header title={"BRACKET"}
+      <Header title={this.state.tournament.name}
               mode={'nav'}
               navigator={this.props.navigator} />
 
       <View style={styles.bracket_container}>
 
-      <Bracket matches={_clogic.bracketMatrix(t3)} //this.state.tournament
+      <Bracket matches={_clogic.bracketMatrix(this.state.tournament)} //this.state.tournament
                navigator={this.props.navigator} />
 
       </View>
@@ -84,7 +84,6 @@ var RoundRobinPage = React.createClass({
     Tournament._GetTournament(nextProps.tournamentid, this.fetchTournament)
   },
 
-
 });
 
 var styles = StyleSheet.create({
@@ -102,4 +101,4 @@ var styles = StyleSheet.create({
   }
 })
 
-module.exports = RoundRobinPage;
+module.exports = BracketPage;

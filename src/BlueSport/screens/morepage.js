@@ -93,10 +93,10 @@ var MorePage = React.createClass({
   },
 
   toMessenger: function() {
-    var FriendsPage = require('../messenger/friendspage')
+    var MessagePage = require('../messenger/MessagePage')
     this.props.navigator.push({
       id: "MessengerPage",
-      component: FriendsPage,
+      component: MessagePage,
       passProps: {
         navigator: this.props.navigator,
         userid: 0

@@ -193,7 +193,6 @@ var Bracket = React.createClass({
     return (
       {
         mode: 'normal',
-        matches: this.props.matches,
         scrollstyle: styles.scroll,
       }
     );
@@ -214,7 +213,7 @@ var Bracket = React.createClass({
 
     var tslength = _const.slength + 2 * _cvals.dscale
     var height = Math.pow(2, this.props.matches.length - 1) * (_cvals.brickheight + 1)
-    var width = _cvals.bricklength * (this.state.matches.length) + 20
+    var width = _cvals.bricklength * (this.props.matches.length) + 20
 
     var columns = [];
     for (var i = 0; i < this.props.matches.length - 1; i++) {
