@@ -15,7 +15,7 @@ const DB = {
   'user': Store.model("user"),
   'player': Store.model("player")
 }
-var MyProfilePage = React.createClass({
+var MyPlayerPage = React.createClass({
 
   getInitialState: function() {
 
@@ -147,4 +147,4 @@ var styles = StyleSheet.create({
 })
 
 
-module.exports = MyProfilePage;
+module.exports = MyPlayerPage;

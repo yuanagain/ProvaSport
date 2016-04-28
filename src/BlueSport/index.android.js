@@ -20,7 +20,7 @@ var listsIcon = require('./assets/lists.png')
 
 // Screens and View Navigation Routes
 var LoginPage = require('./screens/loginpage')
-var ProfilePage = require('./screens/profilepage')
+var PlayerPage = require('./screens/playerpage')
 var RecordPage = require('./screens/recordpage')
 var NewsFeedPage = require('./screens/newsfeedpage')
 var ContractsScreen = require('./screens/contractspage')
@@ -134,7 +134,7 @@ class BlueSport extends Component {
             >
             <Navigator
               ref='profRef'
-              initialRoute={{name: 'ProfilePage', component: ProfilePage}}
+              initialRoute={{name: 'PlayerPage', component: PlayerPage}}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );

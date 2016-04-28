@@ -20,10 +20,10 @@ var listsIcon = require('./assets/lists.png')
 
 // Screens and View Navigation Routes
 var LoginPage = require('./screens/loginpage')
-var ProfilePage = require('./screens/profilepage')
+var PlayerPage = require('./screens/playerpage')
 var RecordPage = require('./screens/recordpage')
 var NewsFeedPage = require('./screens/newsfeedpage')
-var ContractsScreen = require('./screens/contractspage')
+var CreationPage = require('./screens/creationpage')
 var MorePage = require('./screens/morepage')
 var SignUpPage = require('./screens/signup')
 
@@ -79,16 +79,16 @@ class BlueSport extends Component {
           </TabNavigator.Item>
           <TabNavigator.Item
             //title="Contracts"
-            selected={this.state.selectedTab === 'contracts'}
+            selected={this.state.selectedTab === 'create'}
             renderIcon={() => <Image style={styles.icon}
               source={scheduleIcon}
             />}
             renderSelectedIcon={() => <Image source={scheduleIcon} style={styles.selectedIcon}/>}
-            onPress={() => {this.onTabPress('contracts', this.refs.contractsRef)}}
+            onPress={() => {this.onTabPress('create', this.refs.createRef)}}
             >
             <Navigator
-              ref='contractsRef'
-              initialRoute={{name: 'ContractsScreen', component: ContractsScreen}}
+              ref='createRef'
+              initialRoute={{name: 'CreationPage', component: CreationPage}}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                   return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
@@ -128,7 +128,7 @@ class BlueSport extends Component {
             >
             <Navigator
               ref='profRef'
-              initialRoute={{name: 'ProfilePage', component: ProfilePage, passProps: {mode: 'root'} }}
+              initialRoute={{name: 'PlayerPage', component: PlayerPage, passProps: {mode: 'root'} }}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );

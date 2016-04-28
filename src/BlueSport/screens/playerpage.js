@@ -34,7 +34,7 @@ var {
   Modal,
 } = React;
 
-var ProfilePage = React.createClass({
+var PlayerPage = React.createClass({
   getInitialState: function() {
     return (
       {
@@ -360,4 +360,4 @@ var styles = StyleSheet.create({
 })
 
 
-module.exports = ProfilePage;
+module.exports = PlayerPage;

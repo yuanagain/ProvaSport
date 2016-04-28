@@ -30,10 +30,10 @@ var TeamSquare = React.createClass({
     if (this.state.loaded == false) {
       return
     }
-    // var ProfilePage = require('../screens/profilepage')
+    // var PlayerPage = require('../screens/playerpage')
     // this.props.navigator.push({
-    //   id: "ProfilePage" + String(_ctools.randomKey()),
-    //   component: ProfilePage,
+    //   id: "PlayerPage" + String(_ctools.randomKey()),
+    //   component: PlayerPage,
     //   passProps: {
     //     navigator: this.props.navigator,
     //     playerid: this.props.playerid
