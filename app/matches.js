@@ -297,7 +297,8 @@ var column_left = {
   width: width / 1.5,
   height: 1250,
   float: 'left',
-  marginLeft: -60,
+  marginLeft: -100,
+  marginTop: -20,
   color: '#262626',
 };
 var column_right = {
@@ -327,6 +328,8 @@ var data_column_left = {
   fontWeight: 500,
   fontSize: 25,
   padding: 0,
+  margin:0,
+  marginBottom: 3,
   color: '#262626',
 };
 var data_column_right = {
@@ -334,6 +337,8 @@ var data_column_right = {
   fontWeight: 200,
   fontSize: 25,
   padding: 0,
+  margin: 0,
+  marginBottom: 3,
   color: '#262626',
 };
 var entry = {
