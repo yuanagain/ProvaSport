@@ -207,7 +207,7 @@ var ProfilePage = React.createClass({
   componentDidMount: function () {
     // this.state.match = this.props.match
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
-    DB.player.findById(0).then(resp => this.setState({my_player: resp}))
+    //DB.player.findById(0).then(resp => this.setState({my_player: resp}))
   },
 
   toggleFriend: function() {

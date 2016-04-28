@@ -89,26 +89,26 @@ function createPlayer(obj) {
 }
 //this should work
 //returns an array of playerids
-function searchPlayers(query) {
+function searchPlayers(query, callback) {
   return new Promise(function(resolve){
     var possibleFriends = []
     playerdataRef.orderByChild("name/full").on("value", function(snapshot) {
       var i = 0;
-      console.log(snapshot.val().length)
+      var target = Object.keys(snapshot.val()).length;
+      console.log(target)
       snapshot.forEach(function(childSnap){
         console.log(childSnap.val().name.full.search(query))
         var value = childSnap.val();
         i += 1;
         if (childSnap.val().name.full.search(query) > -1) {
-
-          possibleFriends.push(childSnap.val())
+          possibleFriends.push(childSnap.key())
           if (possibleFriends.length == 100){
-            resolve(possibleFriends)
+            callback(possibleFriends)
           }
-          else if (i == snapshot.length -1 ){
-            console.log("DONE")
-            resolve(possibleFriends)
-          }
+        }
+        if (i == target-1){
+          console.log("DONE")
+          callback(possibleFriends)
         }
       })
     })
@@ -270,6 +270,6 @@ export  var default_player = {
   };
   //_AddTeam(0,1,function(resp){console.log(resp)}) //TESTED SUCCESSFULLY(and _AddTournament, an)
   var query = "First"
-searchPlayers(query).then(resp=>console.log("RESPONSE:"+resp))
+//searchPlayers(query,function(resp){console.log("RESPONSE:"+resp)})
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, _AddTournament};
