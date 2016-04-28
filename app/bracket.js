@@ -106,8 +106,8 @@ var ForkColumn = React.createClass({
 })
 
 var t3 = {
-  teams: [1, 0, 1, 0, 1, 0, 1, 0],
-  matches: [1, 0, 1, 0, 1, 0, 1, 0],
+  teams: [1, 0, 1, 0],
+  matches: [1, 0, 1, 0],
 }
 
 var bracketMatrix = function(tournament) {
@@ -245,6 +245,7 @@ var brickheight = ((slength) * 3 / 5 - 4);
 
 var fork_styles = {
   fork_wrapper: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -252,12 +253,14 @@ var fork_styles = {
     flex: 1,
   },
   fork: {
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     flex: 1,
   },
   vline_wrapper: {
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
@@ -266,16 +269,19 @@ var fork_styles = {
     flex: 1,
   },
   column: {
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
   center: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
   },
   hline: {
+    display: 'flex',
     width: bricklength,
     flex: 1,
     backgroundColor: 'black',
@@ -283,6 +289,7 @@ var fork_styles = {
     zIndex: 1,
   },
   vline: {
+    display: 'flex',
     //marginVertical: 1
     flex: 1,
     backgroundColor: 'black',
@@ -296,6 +303,7 @@ var styles = {
     justifyContent: 'center'
   },
   container: {
+    display: 'flex',
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'flex-start',
@@ -303,6 +311,7 @@ var styles = {
     margin: 1,
   },
   fork_wrapper: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -310,12 +319,14 @@ var styles = {
     flex: 1,
   },
   fork: {
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     flex: 1,
   },
   vline_wrapper: {
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
@@ -324,11 +335,13 @@ var styles = {
     flex: 1,
   },
   column: {
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
   center: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
