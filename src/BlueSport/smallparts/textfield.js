@@ -22,17 +22,17 @@ var TextField = React.createClass({
       <View>
         <View style={styles.input_row}>
           <Text style={_cstyles.section_header_text}>{this.props.label}</Text>
-            <TextInput
-              value={this.props.value}
-              style={[styles.input, _cstyles.standard_text]}
-              placeholder={this.props.placeholder}
-              underlineColorAndroid='rgba(0,0,0,0)' 
-              secureTextEntry={this.props.secureTextEntry}
-              autoCorrect={false}
-              maxLength={35}
-              keyboardType={this.props.keyboardType}
-              onChangeText={this.props.onChangeText}
-            />
+          <TextInput
+            value={this.props.value}
+            style={[styles.input, _cstyles.standard_text]}
+            placeholder={this.props.placeholder}
+            underlineColorAndroid='rgba(0,0,0,0)' 
+            secureTextEntry={this.props.secureTextEntry}
+            autoCorrect={false}
+            maxLength={35}
+            keyboardType={this.props.keyboardType}
+            onChangeText={this.props.onChangeText}
+          />
         </View>
         <View style={_cstyles.divider_line}/>
       </View>

@@ -9,6 +9,8 @@ import * as _clogic from '../libs/customlogic.js'
 var RoundRobin = require('../bigparts/roundrobin')
 var Header = require('../parts/header')
 
+import * as Tournament from '../modules/tournament'
+
 var {
   AppRegistry,
   StyleSheet,
@@ -35,14 +37,14 @@ var RoundRobinPage = React.createClass({
   getInitialState: function() {
 
     return {
-      tournament: ""
-    };
+      tournament: Tournament.default_tournament,
+    }
   },
 
   getDefaultProps: function() {
     return (
       {
-        matches: _clogic.RRMatrix(rr1)
+        tournamentid: 0,
       }
     )
   },
@@ -56,17 +58,29 @@ var RoundRobinPage = React.createClass({
     return (
     <View style={styles.container}>
 
-      <Header title={"ROUND ROBIN"}
+      <Header title={this.state.tournament.name}
               mode={'nav'}
               navigator={this.props.navigator} />
-      <RoundRobin matches={this.props.matches}
+      <RoundRobin matches={_clogic.RRMatrix(this.state.tournament.matches)}
                   navigator={this.props.navigator} />
     </View>
     );
   },
 
+  fetchTournament: function(data) {
+    this.state.tournament = data
+    this.setState({loaded : true})
+  },
+
+  componentDidMount: function () {
+    Tournament._GetTournament(this.props.tournamentid, this.fetchTournament)
+  },
+  componentWillReceiveProps: function(nextProps) {
+    Tournament._GetTournament(nextProps.tournamentid, this.fetchTournament)
+  },
 
 });
+
 
 var styles = StyleSheet.create({
   container: {

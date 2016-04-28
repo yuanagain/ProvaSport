@@ -8,7 +8,7 @@ var _cstyles = require('../styles/customstyles')
 var Header = require('../parts/header')
 
 var SimpleRow = require('../smallparts/simplerow')
-var TournamentBlock = require('../parts/tournamentblock')
+var TournamentListingRow = require('../smallparts/tournamentlistingrow')
 
 var {
   AppRegistry,
@@ -65,7 +65,7 @@ var TournamentListingPage = React.createClass({
   renderRow: function(data) {
     return (
       <View style={styles.container}>
-        <TournamentBlock 
+        <TournamentListingRow
            tournamentid={data}
            value={""}
            navigator={this.props.navigator}/>

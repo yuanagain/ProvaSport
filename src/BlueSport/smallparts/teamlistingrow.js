@@ -3,14 +3,13 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
- ;
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
 import * as _ctools from '../libs/customtools.js'
-import * as Player from '../modules/player'
+import * as Team from '../modules/team'
 
 var {
   AppRegistry,
@@ -24,12 +23,12 @@ var {
 } = React;
 
 
-var PlayerRow = React.createClass({
+var TeamListingRow = React.createClass({
 
   getInitialState: function() {
     return (
       {
-        player: Player.default_player,
+        team: Team.default_team,
         loaded: false,
       }
     );
@@ -37,14 +36,14 @@ var PlayerRow = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        playerid: -1,
+        teamid: -1,
         dead: false,
       }
     )
   },
   render: function() {
     var {
-      playerid,
+      teamid,
       navigator,
       ...props
     } = this.props;
@@ -54,11 +53,11 @@ var PlayerRow = React.createClass({
         <View style={styles.playerbrick} >
           <View style={[styles.center, styles.left]} >
             <Image style={styles.im}
-                   source={{uri: this.state.player.prof_pic}}/>
+                   source={{uri: this.state.team.thumbnail}}/>
           </View>
           <View style={styles.right}>
             <View >
-              <Text style={[_cstyles.header_text]}>{this.state.player.name.full} </Text>
+              <Text style={[_cstyles.header_text]}>{this.state.team.name} </Text>
             </View>
           </View>
         </ View>
@@ -70,11 +69,11 @@ var PlayerRow = React.createClass({
                         onPress={()=>this.onPress()} >
         <View style={[styles.center, styles.left]} >
           <Image style={styles.im}
-                 source={{uri: this.state.player.prof_pic}}/>
+                 source={{uri: this.state.team.thumbnail}}/>
         </View>
         <View style={styles.right}>
           <View >
-            <Text style={[_cstyles.header_text]}>{this.state.player.name.full} </Text>
+            <Text style={[_cstyles.header_text]}>{this.state.team.name} </Text>
           </View>
         </View>
       </ TouchableOpacity>
@@ -82,30 +81,30 @@ var PlayerRow = React.createClass({
   },
 
   onPress: function() {
-    var ProfilePage = require('../screens/profilepage')
+    var TeamPage = require('../screens/teampage')
     this.props.navigator.push({
-      id: "ProfilePage" + String(_ctools.randomKey()),
-      component: ProfilePage,
+      id: "TeamPage" + String(_ctools.randomKey()),
+      component: TeamPage,
       passProps: {
         navigator: this.props.navigator,
-        playerid: this.props.playerid
+        tournamentid: this.props.tournamentid
       }
     })
   },
 
-  fetchPlayer: function(data) {
-    this.state.player = data
+  fetchTeam: function(data) {
+    this.state.team = data
     this.setState({loaded : true})
     // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    Team._GetTeam(this.props.teamid, this.fetchTeam)
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    Team._GetTeam(nextProps.teamid, this.fetchTeam)
   },
 });
 
@@ -152,4 +151,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = PlayerRow;
+module.exports = TeamListingRow;

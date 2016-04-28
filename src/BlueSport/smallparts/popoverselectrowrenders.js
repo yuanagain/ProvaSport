@@ -34,7 +34,8 @@ var defaultRenderRow = function(rowText) {
 var playerRenderRow = function(playerid) {
   return (
       <View>
-        <PlayerRow playerid={playerid} />
+        <PlayerRow playerid={playerid} 
+                   dead={'true'}/>
       </View>
   )
 }

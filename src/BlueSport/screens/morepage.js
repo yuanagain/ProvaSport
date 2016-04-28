@@ -30,7 +30,7 @@ var {
   Modal,
 } = React;
 
-var SettingsPage = React.createClass({
+var MorePage = React.createClass({
 
   getInitialState: function() {
     
@@ -53,86 +53,74 @@ var SettingsPage = React.createClass({
     return (
     <View style={styles.container}>
       <View>
-        <Header title={"SETTINGS"}
-                mode={'nav'}
+        <Header title={"MORE"}
                 navigator={this.props.navigator} />
         <View style={_cstyles.body_container}>
-          <PopoverSelector
-            title={'Sports'}
-            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
-            navigator={this.props.navigator}
-            selection={this.state.sport}
-            harvest={this.setSport}
-          />
-          <View style={_cstyles.section_divider_line}></View>
 
         </View>
 
+        <SimpleRow
+          title={'Messages'}
+          value={'View'}
+          onPress={this.toMessenger} />
+        <View style={_cstyles.section_divider_line}></View>
 
+        <SimpleRow
+          title={'Search Players'}
+          value={'Search'}
+          onPress={this.toPlayerSearch} />
+        <View style={_cstyles.section_divider_line}></View>
+
+        <SimpleRow
+          title={'Settings'}
+          value={'Change'}
+          onPress={this.toSettings} />
+        <View style={_cstyles.section_divider_line}></View>
 
       </View>
 
       <View style={_cstyles.buttons_container}>
-        <WideButton
-          text="Save Changes"
-          onPress={this.loginFunction}
-          />
       </View>
     </View>
     );
   },
 
-  setSport: function(selection) {
-    this.setState({sport: selection})
+  toSettings: function() {
+    var SettingsPage = require('../screens/settingspage')
+    this.props.navigator.push({
+      id: "SettingsPage",
+      component: SettingsPage,
+      passProps: {
+        navigator: this.props.navigator,
+      }
+    })
   },
 
-  componentDidMount: function() {
-    console.log(_clogic.createTrace(4))
-    var matches = [
-      {
-        status: 4,
-        teams: [0, 1],
-        scores: [[1, 2]],
-      },
+  toPlayerSearch: function() {
+    var PlayerSearchPage = require('../screens/playersearchpage')
+    this.props.navigator.push({
+      id: "PlayerSearchPage",
+      component: PlayerSearchPage,
+      passProps: {
+        navigator: this.props.navigator,
+      }
+    })
+  },
 
-      {
-        status: 2,
-        teams: [2, 'BYE'],
-        scores: [[2, 1]],
-      },
+  toMessenger: function() {
+    var MessagePage = require('../messenger/MessagePage')
+    this.props.navigator.push({
+      id: "MessengerPage",
+      component: MessagePage,
+      passProps: {
+        navigator: this.props.navigator,
+        userid: 0
+      }
+    })
+  },
 
-      {
-        status: 4,
-        teams: [4, 5],
-        scores: [[1, 2]],
-      },
-
-      {
-        status: 2,
-        teams: ['BYE', 7],
-        scores: [],
-      },
-
-      {
-        status: 0,
-        teams: ['TBD', 'TBD'],
-        scores: [],
-      },
-
-      {
-        status: 0,
-        teams: ['TBD', 'TBD'],
-        scores: [],
-      },
-
-      {
-        status: 0,
-        teams: ['TBD', 'TBD'],
-        scores: [],
-      },
-
-    ]
-    console.log(_clogic.update_matches(matches))
+  setSport: function(selection) {
+    this.setState({sport: selection})
   },
 
 });
@@ -149,4 +137,4 @@ var styles = StyleSheet.create({
   },
 })
 
-module.exports = SettingsPage;
+module.exports = MorePage;

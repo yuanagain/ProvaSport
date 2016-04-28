@@ -26,18 +26,20 @@ function createTournament(obj) {
           reject();
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
-          obj.matches.forEach(function(matchid) {
-            Match.addTournament(matchid, newRef.key());
-          });
-          //bind team to tourn
-          obj.teams.forEach(function(teamid) {
-            Team.addTournament(teamid, newRef.key());
-            Team.getTeam(teamid).then(function(team){
-              team.players.forEach(function(playerid){
-                Player.addTournament(playerid, newRef.key())
-              });
-            });
-          });
+          /*
+           * obj.matches.forEach(function(matchid) {
+           *   Match.addTournament(matchid, newRef.key());
+           * });
+           * //bind team to tourn
+           * obj.teams.forEach(function(teamid) {
+           *   Team.addTournament(teamid, newRef.key());
+           *   Team.getTeam(teamid).then(function(team){
+           *     team.players.forEach(function(playerid){
+           *       Player.addTournament(playerid, newRef.key())
+           *     });
+           *   });
+           * });
+           */
           resolve(newRef.key());
         }
       });
@@ -91,12 +93,37 @@ function _GetTournament(tournamentid, callback) {
       console.log("Failed");
     });
 }
+function getTournament(tournamentid) {
+  /* var match = new Match(matchid); */
+  return new Promise(function(resolve, reject) {
+      tourndb.child(tournamentid).on("value", function(snapshot) {
+        var tournament = snapshot.val();
+        resolve(tournament);
+      });
+   });
+}
+
+function setTournament(tournamentid, obj) {
+  /* var match = new Match(matchid); */
+  return new Promise(function(resolve, reject) {
+      tourndb.child(tournamentid).set(obj, function(error) {
+        if (error) {
+          console.log("Tourn could not be saved." + error);
+          reject();
+        } else {
+          console.log("Tourn saved successfully.");
+          resolve(obj);
+        }
+      });
+   });
+}
   var default_tournament =
   {
       "type": "Loading",
       "teams": [], //alphabetical list of teams or sorted by priority
       "location": "Loading", /*tuple of  Latitude and Longitude*/
       "dates": [],
+      "name": "",
       "sport": "Loading",
       "matches": []
   };
@@ -195,4 +222,5 @@ function updateTourn(tournObject) {
 
 
 
-module.exports = {_GetTournament, default_tournament, addTeam, addMatches, _AddMatches, _AddTeam};
+module.exports = {_GetTournament, getTournament, setTournament, default_tournament,
+   addTeam, addMatches, _AddMatches, _AddTeam, createTournament, _CreateTournament};

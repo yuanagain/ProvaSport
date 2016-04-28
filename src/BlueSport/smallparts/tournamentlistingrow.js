@@ -3,14 +3,13 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
- ;
 
 var _cvals = require('../styles/customvals')
 var _cstyles  = require('../styles/customstyles')
 var _const = require('../libs/constants')
 
 import * as _ctools from '../libs/customtools.js'
-import * as Player from '../modules/player'
+import * as Tournament from '../modules/tournament'
 
 var {
   AppRegistry,
@@ -24,12 +23,12 @@ var {
 } = React;
 
 
-var PlayerRow = React.createClass({
+var TournamentListingRow = React.createClass({
 
   getInitialState: function() {
     return (
       {
-        player: Player.default_player,
+        tournament: Tournament.default_tournament,
         loaded: false,
       }
     );
@@ -37,14 +36,14 @@ var PlayerRow = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        playerid: -1,
+        tournamentid: 0,
         dead: false,
       }
     )
   },
   render: function() {
     var {
-      playerid,
+      tournamentid,
       navigator,
       ...props
     } = this.props;
@@ -52,15 +51,10 @@ var PlayerRow = React.createClass({
     if (this.props.dead) {
       return (
         <View style={styles.playerbrick} >
-          <View style={[styles.center, styles.left]} >
-            <Image style={styles.im}
-                   source={{uri: this.state.player.prof_pic}}/>
-          </View>
-          <View style={styles.right}>
+
             <View >
-              <Text style={[_cstyles.header_text]}>{this.state.player.name.full} </Text>
+              <Text style={[_cstyles.header_text]}>{this.state.tournament.name} </Text>
             </View>
-          </View>
         </ View>
         )
     }
@@ -68,13 +62,10 @@ var PlayerRow = React.createClass({
     return (
       <TouchableOpacity style={styles.playerbrick} 
                         onPress={()=>this.onPress()} >
-        <View style={[styles.center, styles.left]} >
-          <Image style={styles.im}
-                 source={{uri: this.state.player.prof_pic}}/>
-        </View>
+
         <View style={styles.right}>
           <View >
-            <Text style={[_cstyles.header_text]}>{this.state.player.name.full} </Text>
+            <Text style={[_cstyles.header_text]}>{this.state.tournament.name} </Text>
           </View>
         </View>
       </ TouchableOpacity>
@@ -82,30 +73,46 @@ var PlayerRow = React.createClass({
   },
 
   onPress: function() {
-    var ProfilePage = require('../screens/profilepage')
-    this.props.navigator.push({
-      id: "ProfilePage" + String(_ctools.randomKey()),
-      component: ProfilePage,
-      passProps: {
-        navigator: this.props.navigator,
-        playerid: this.props.playerid
-      }
-    })
+    if (this.state.tournament.type == 'Elimination') {
+      var BracketPage = require('../screens/bracketpage')
+      this.props.navigator.push({
+        id: "BracketPage" + String(_ctools.randomKey()),
+        component: BracketPage,
+        passProps: {
+          navigator: this.props.navigator,
+          tournamentid: this.props.tournamentid,
+        }
+      })
+    }
+    else if (this.state.tournament.type == 'Round Robin') {
+      var RoundRobinPage = require('../screens/roundrobinpage')
+      this.props.navigator.push({
+        id: "RoundRobinPage" + String(_ctools.randomKey()),
+        component: RoundRobinPage,
+        passProps: {
+          navigator: this.props.navigator,
+          tournamentid: this.props.tournamentid,
+        }
+      })
+    }
+    else {
+      return
+    }
   },
 
-  fetchPlayer: function(data) {
-    this.state.player = data
+  fetchTournament: function(data) {
+    this.state.tournament = data
     this.setState({loaded : true})
     // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    Tournament._GetTournament(this.props.tournamentid, this.fetchTournament)
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    Tournament._GetTournament(nextProps.tournamentid, this.fetchTournament)
   },
 });
 
@@ -152,4 +159,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = PlayerRow;
+module.exports = TournamentListingRow;

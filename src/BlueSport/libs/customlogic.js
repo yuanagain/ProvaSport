@@ -120,7 +120,7 @@ var createRR = function(data) {
         }
       }
     }
-    //console.log(matches);
+    console.log(matches);
     Match.createFromList(matches).then(resp=>resolve(resp)).catch(function(err){console.log(err);})
   })
 }
@@ -230,8 +230,10 @@ var dictTest = {
 //createRR(dictTest).then(resp=>console.log("RESPONSE:::::::::\n     "+resp));
 //createBracket(dictTest).then(resp=>console.log(resp))
 
-// 
-var update_matches = function(matches) {
+
+//
+var update_matches = function(matches, matchids, callback) {
+
   // check through all the matches
   var depth = Math.log(matches.length + 1) / Math.log(2)
   var k = 0
@@ -257,7 +259,26 @@ var update_matches = function(matches) {
       // entails that updates will continuet to be passed down
       changed = true
 
-      var winner_id = _ctools.getWinner(match) 
+      var winner_id = 'unassigned'
+
+      // automatically advance BYEs
+      if (match.teams[0] == 'BYE') {
+        winner_id == match.teams[1]
+      }
+
+      else if (match.teams[1] == 'BYE') {
+        winner_id == match.teams[0]
+      }
+
+      else {
+        winner_id = _ctools.getWinner(match)
+      }
+
+/*
+ * =======
+ *       var winner_id = _ctools.getWinner(match)
+ * >>>>>>> 483866aab94c56ddb1e98745d040ce38741b6732
+ */
       // compute next match in sequence
       var target_index = two_sum + cap + parseInt(j / 2)
       console.log((two_sum + j) + ', ' + target_index + ', j = ' + j)
@@ -276,7 +297,13 @@ var update_matches = function(matches) {
     }
     two_sum += cap
   }
-  return matches
+  //push then pull the matche object to the server
+  Match.setFromList(matchids, matches).then(resp=>callback(matches)).catch(function(err){
+    console.log("in customlogic.js 301: "+err)})
+  //return matches
 }
-
+//var matchlist = [Match.default_match, Match.default_match, Match.default_match, Match.default_match]
+//createFromList(matchlist, function(array){console.log(array)})
+//var matchidList = ["-KG9drQiXJf-rPjzm6pO", "-KG9eNImruNKE5N6LNcm", "-KG9ircVFfcyt6QX_ySH", "-KG9kHl5HCdl0dePPkZc"]
+//update_matches(matchlist, matchidList)
 module.exports = {RRMatrix, bracketMatrix, createTrace, createBracket, createRR, update_matches};

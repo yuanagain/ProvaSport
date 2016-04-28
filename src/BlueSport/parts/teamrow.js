@@ -32,15 +32,15 @@ var TeamRow = React.createClass({
     return (
       {
         //team players
-        
+
       }
     )
   },
 
   createPlayerBricks: function(playerid, i) {
     // TODO Somehow navigator is not being passed.
-    console.log("=====")
-    console.log(playerid)
+    //console.log("=====")
+    //console.log(playerid)
     return (
       <PlayerBrick key={i} playerid={playerid}
           navigator={this.props.navigator} />
@@ -54,7 +54,7 @@ var TeamRow = React.createClass({
       navigator,
       ...props
     } = this.props;
-    console.log(this.state.team)
+    //console.log(this.state.team)
 
     return (
       <TouchableOpacity onPress={this.onPress}

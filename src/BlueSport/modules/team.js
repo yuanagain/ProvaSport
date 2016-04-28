@@ -23,8 +23,8 @@ function _GetTeam(teamid, callback) {
      });
     promise.then(function(value){
       callback(value);
-    }).catch(function(){
-      console.log("Failed");
+    }).catch(function(err){
+      console.log("Failed  "+ err);
     });
 }
 export function getTeam(teamid) {
@@ -154,9 +154,11 @@ function createTeam(obj) {
         } else {
           var key = newRef.key();
           console.log("Data CREATED successfully createT "+ newRef.key());
-          [obj.players].forEach(function(playerid){
-            Player.addTeam(playerid, key)
-          });
+          /*
+           * [obj.players].forEach(function(playerid){
+           *   Player.addTeam(playerid, key)
+           * });
+           */
           resolve(newRef.key());
         }
       });
@@ -186,7 +188,20 @@ function _CreateTeam(obj, callback) {
       console.log("Something went wrong in _CreateTeam"+ error)
     });
 }
+function createFromList(teamobjlist, callback) {
+  return new Promise(function (resolve) {
+    var teamids = []
+    var i = 0;
 
+    teamobjlist.forEach(function(teamobj){
+      createTeam(teamobj).then(resp=>{
+        teamids.push(resp);
+        i+=1;
+        if(i == teamobjlist.length) resolve(teamids);
+      }).catch(function(err){console.log(err)});
+    })
+  })
+}
 export function addTeamPlayersToMatch(teamid, matchid) {
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
@@ -202,7 +217,7 @@ export function addTeamPlayersToMatch(teamid, matchid) {
    });
 }
 /*returns which team the player is on*/
-function teamOneorTwo(team0id, team1id, playerid) {
+export function teamOneorTwo(team0id, playerid) {
   return new Promise(function(resolve){
     getTeam(team0id).then(resp=>{
       if(inArray(playerid, resp.players))
@@ -210,6 +225,21 @@ function teamOneorTwo(team0id, team1id, playerid) {
       else
         resolve(1);
     });
+  })
+}
+//returns true if on team and false if not on either team
+export function onTeams(teamid1, teamid2, playerid) {
+  return new Promise(function(resolve){
+    getTeam(teamid1).then(function(value){
+      getTeam(teamid2).then(function(resp) {
+        if (inArray(playerid, value.players) || inArray(playerid, resp.players)){
+          resolve(true);
+        }
+        else{
+          resolve(false);
+        }
+      })
+    })
   })
 }
 //posibly move to ctools
@@ -245,4 +275,5 @@ var bye = {
  * _SetTeam(TBD, 'TBD', function(resp){console.log("SET TBD")})
  */
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
-   getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch};
+   getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch,
+   teamOneorTwo, onTeams, createFromList};
