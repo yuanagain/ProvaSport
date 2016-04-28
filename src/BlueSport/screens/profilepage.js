@@ -42,6 +42,7 @@ var ProfilePage = React.createClass({
         loaded: false,
         isRefreshing: false,
         my_player: false,
+        my_user: false,
         playerid: this.props.playerid
       }
     );
@@ -198,7 +199,7 @@ var ProfilePage = React.createClass({
     this.setState({loaded : true})
   },
   getPlayerId: function(){
-    console.log("\n\n\n\nUSING THE ASYNC STORAGE")
+    //console.log("\n\n\n\nUSING THE ASYNC STORAGE")
     var value = AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
@@ -207,11 +208,17 @@ var ProfilePage = React.createClass({
     });
   },
   getMe: function(){
-    var value = AsyncStorage.getItem('player', (error, response)=>{
+    AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
       //console.log(obj.playerid)
       this.setState({my_player: obj})
+    });
+    AsyncStorage.getItem('user', (error, response)=>{
+      var obj = JSON.parse(response)
+      // this is player id of person logged in. WORKS!!
+      //console.log(obj.playerid)
+      this.setState({my_user: obj})
     });
   },
   onRefresh: function() {
