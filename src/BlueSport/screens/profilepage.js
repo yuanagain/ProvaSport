@@ -206,6 +206,14 @@ var ProfilePage = React.createClass({
       this.setState({player: obj})
     });
   },
+  getMe: function(){
+    var value = AsyncStorage.getItem('player', (error, response)=>{
+      var obj = JSON.parse(response)
+      // this is player id of person logged in. WORKS!!
+      //console.log(obj.playerid)
+      this.setState({my_player: obj})
+    });
+  },
   onRefresh: function() {
     this.setState({isRefreshing: true})
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
@@ -216,6 +224,7 @@ var ProfilePage = React.createClass({
 
   componentDidMount: function () {
     // this.state.match = this.props.match
+    this.getMe();
     if (this.props.playerid == -1){
       this.getPlayerId();
     }
