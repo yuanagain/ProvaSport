@@ -20,7 +20,7 @@ ref = new Firebase("https://shining-torch-4767.firebaseio.com/");
 /*player object within Player class*/
 function _GetMatch(matchid, callback) {
   /* var match = new Match(matchid); */
-  console.log("MATCHID:" + matchid)
+  //console.log("MATCHID: " + String(matchid))
     var promise = new Promise(function(resolve, reject) {
         matchdb.child(matchid).on("value", function(snapshot) {
           var match = snapshot.val();
@@ -30,17 +30,17 @@ function _GetMatch(matchid, callback) {
     promise.then(function(value){
       callback(value);
     }).catch(function(err){
-      console.log("Failed in _Getmatch "+err);
+      console.log("Failed in _Getmatch "+err + " Matchid: "+matchid);
     });
 }
 function getMatch(matchid) {
   /* var match = new Match(matchid); */
-    return new Promise(function(resolve, reject) {
-        matchdb.child(matchid).on("value", function(snapshot) {
-          var match = snapshot.val();
-          resolve(match);
-        });
-     });
+  return new Promise(function(resolve, reject) {
+      matchdb.child(matchid).on("value", function(snapshot) {
+        var match = snapshot.val();
+        resolve(match);
+      });
+   });
 }
 
 
@@ -58,8 +58,8 @@ function _SetMatch(matchid, obj, callback) {
     });
   promise.then(function(value){
     callback(value);
-  }).catch(function() {
-    console.log("SetMatch Failed");
+  }).catch(function(err) {
+    console.log("SetMatch Failed"+err);
   });
 }
 
@@ -168,10 +168,17 @@ function selectScores(matchid, index, num = 1){
 /*Update the status of the match
   0- 4 for code numbers
   */
-function updateStatus(matchid, code) {
-  matchdb.child(matchid).update({
-    "status": code
-  })
+function updateStatus(matchid, team, code) {
+  if (team == 0) {
+    matchdb.child(matchid).child(staus).child(code).update({
+      0: code
+    })
+  }
+  else if (team == 1) {
+    matchdb.child(matchid).child(staus).child(code).update({
+      1: code
+    })
+  }
 }
 
 function changeStatus(matchid, code) {
@@ -380,11 +387,23 @@ function teamInMatch(matchid, teams) {
 
 
 function myStatus(matchid, playerobj) {
+  console.log("myStatus matchid:  "+matchid + "playerteams: "+ playerobj.teams);
   return new Promise(function (resolve) {
     getMatch(matchid).then(function(oMatch) {
-      teamInMatch(matchid, playerobj.teams, function(index){
-        resolve(oMatch.status[index])
-      })
+      if (playerobj.teams != undefined && playerobj.teams.constructor == Array){
+        console.log("Running TeamInMatch")
+        teamInMatch(matchid, playerobj.teams, function(index){
+          if(index != -1) {
+            resolve(oMatch.status[index])
+          }
+          else {
+            resolve(1);
+          }
+        })
+    }
+    else {
+      resolve(1);
+    }
     })
   })
 }
@@ -423,7 +442,9 @@ function myStatus(matchid, playerobj) {
 //_FetchList(matchidList, function(resp){console.log(resp)}) SUCCESS
 //setFromList(matchidList, matchlist, function(resp){console.log("SET Correctly")}) SUCCESS
 //isInMatch(1, 0, function(resp){console.log("INMATCH: "+resp)})
-myStatus(0, 0).then(resp=>console.log(resp))
+//myStatus(0, 0).then(resp=>console.log(resp))
+//var matchidTest = 1;
+//_GetMatch(matchidTest, function(resp){console.log(resp)})
 
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
                   _CreateMatch, updateScores, updateStatus, _CreateFromList,

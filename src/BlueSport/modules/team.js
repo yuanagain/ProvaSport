@@ -23,8 +23,8 @@ function _GetTeam(teamid, callback) {
      });
     promise.then(function(value){
       callback(value);
-    }).catch(function(){
-      console.log("Failed");
+    }).catch(function(err){
+      console.log("Failed  "+ err);
     });
 }
 export function getTeam(teamid) {

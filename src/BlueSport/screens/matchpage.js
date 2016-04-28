@@ -51,6 +51,7 @@ var MatchPage = React.createClass({
         team2: Team.default_team,
         playerid: 0,
         myStatus: 1,
+        myTeam: -1
       }
     );
   },
@@ -59,7 +60,7 @@ var MatchPage = React.createClass({
     return (
       {
         userteamid: 1,
-        matchid: 0,
+        matchid: -1,
       }
     )
   },
@@ -110,7 +111,7 @@ else {
       buttons = <WideButtonPair textRight={"Accept"}
                                 textLeft={"Decline"}
                                 onPressRight={()=>this.changeStatus(2)}
-                                onPressLeft={()=>console.log("Left")} />
+                                onPressLeft={()=>this.changeStatus(-1)} />
     }
 
     if (this.state.myStatus == 2) {
@@ -140,7 +141,7 @@ else {
               <SimpleRow title={"Date "} value={_ctools.toDate(new Date(this.state.match.datetime))} />
               <View style={_cstyles.section_divider_line} ></View>
 
-              <SimpleRow title={"Status "} value={_ctools.codeToString(this.state.match.status[0])} />
+              <SimpleRow title={"Status "} value={_ctools.codeToString(this.state.match.status[this.state.myTeam])} />
               <View style={_cstyles.section_divider_line} ></View>
 
               <SimpleRow title={"Location "} value={this.state.match.location} />
@@ -185,43 +186,66 @@ else {
 
   onRefresh: function() {
     this.setState({isRefreshing: true})
-    Match._GetMatch(this.props.matchid, this.fetchMatch)
+    console.log("Refresh");
+    //Match._GetMatch(this.props.matchid, this.fetchMatch)
+    //Match.myStatus(this.props.matchid).then(resp=>{this.setState({myStatus: resp}); console.log("RESP"+resp)})
     setTimeout(() => {
       this.setState({isRefreshing: false})
     }, _cvals.timeout);
   },
 
   getTeamid1: function() {
+    console.log("LOADTEAMS")
     return this.state.match.teams[0]
   },
 
   getTeamid2: function() {
+    console.log("LOADTEAMS")
     return this.state.match.teams[1]
   },
 
   loadTeams: function() {
-    Team.getTeam(this.state.match.teams[0]).then(resp=>this.setState({team1: resp})).catch(function(err){
+    console.log(this.state.match.teams)
+    Team.getTeam(this.state.match.teams[0]).then(resp=>this.setState({team1: resp})).then(this.load2).catch(function(err){
       console.log(err);
     });
-    Team.getTeam(this.state.match.teams[1]).then(resp=>this.setState({team2: resp})).catch(function(err){
+
+  },
+  load2: function() {
+    Team.getTeam(this.state.match.teams[1]).then(resp=>this.setState({team2: resp,
+          loaded: true})).then(this.teamOn).catch(function(err){
       console.log(err);
     });
   },
 
   fetchMatch: function(data) {
-    this.state.match = data
-    this.setState({match: data})
-    this.setState({loaded : true})
-    Match.myStatus(matchid, {teams:[0]}).then(resp=>this.setState({myStatus: resp}))
+    this.setState({match: data,
+                  loaded: true});
     this.loadTeams()
   },
+  teamOn:function(){
 
+    if (this.state.team1.players.indexOf(1) > -1){
+      var code = this.state.match.status[0];
+      this.setState({myStatus: code,
+        myTeam: 0})
+    }
+    else if (this.state.team2.players.indexOf(1) > -1){
+      var code = this.state.match.status[1];
+      this.setState({myStatus: code,
+      myTeam: 1})
+    }
+    else {
+      console.log("you are not on this team")
+    }
+  },
   componentDidMount: function () {
+
     // this.state.match = this.props.match
-    Match._GetMatch(this.props.matchid, this.fetchMatch)
     var matchid = this.props.matchid;
+    Match._GetMatch(matchid, this.fetchMatch)
     var player0 = {teams:[0]}
-    Match.myStatus(matchid, player0).then(resp=>this.setState({myStatus: resp}))
+    Match.myStatus(matchid, player0).then(resp=>console.log("RESPONSE: "+resp))
   },
 
   toRecordPage: function() {
@@ -239,22 +263,13 @@ else {
     })
   },
   changeStatus: function(code) {
+    console.log("CHANGING STATUS")
     this.setState({myStatus: code})
-    Match.teamInMatch(this.props.matchid).then(this.changeB)
-  },
-  changeA: function(resp){
-    this.setState({match: resp});
-  },
-  changeB: function(resp) {
-    this.state.match.status[resp] = code;
-    Match._SetMatch(this.props.matchid, this.state.match, this.changeA)
+    if (code != -1) {
+      this.state.match.status[this.state.myTeam] = code;
+      Match.setMatch(this.props.matchid, this.state.match).then(resp=>this.setState({match: resp}))
+    }
   }
-
-  /*
-   * setStatus: function(status) {
-   *   Match.setStatus(status)
-   * }
-   */
 });
 
 var styles = StyleSheet.create({

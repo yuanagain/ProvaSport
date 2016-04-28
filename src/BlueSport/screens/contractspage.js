@@ -271,7 +271,7 @@ output -
 
   confirmSelection(selected) {
     this.selected_1 = selected
-    this.goBack()
+    this.goBack();
   },
 
   renderRow(rowData) {
