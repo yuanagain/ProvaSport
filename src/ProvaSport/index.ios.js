@@ -29,12 +29,12 @@ var SignUpPage = require('./screens/signuppage')
 
 var _cvals = require('./styles/customvals.js')
 
-class BlueSport extends Component {
+class ProvaSport extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'more'
+      selectedTab: 'login'
     };
   }
 
@@ -196,4 +196,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('BlueSport', () => BlueSport);
+AppRegistry.registerComponent('ProvaSport', () => ProvaSport);

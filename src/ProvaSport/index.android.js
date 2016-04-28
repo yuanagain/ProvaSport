@@ -23,22 +23,28 @@ var LoginPage = require('./screens/loginpage')
 var PlayerPage = require('./screens/playerpage')
 var RecordPage = require('./screens/recordpage')
 var NewsFeedPage = require('./screens/newsfeedpage')
-var CreationPage = require('./screens/creationpage')
-var MorePage = require('./screens/morepage')
-var SignUpPage = require('./screens/signuppage')
+var ContractsScreen = require('./screens/contractspage')
+var SettingsPage = require('./screens/settingspage')
+var SignUpPage = require('./screens/signup')
 
 var _cvals = require('./styles/customvals.js')
 
-class BlueSport extends Component {
+class ProvaSport extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'more'
+      selectedTab: 'login'
     };
   }
 
   render() {
+
+    // Known issue on Android, doesn't cause any problems
+    console.ignoredYellowBox = [
+      'Warning: Native component for \'RCTModalHostView\' does not exist'
+    ];
+
     if (this.state.selectedTab == 'login') {
       return (
         <Navigator
@@ -79,16 +85,16 @@ class BlueSport extends Component {
           </TabNavigator.Item>
           <TabNavigator.Item
             //title="Contracts"
-            selected={this.state.selectedTab === 'create'}
+            selected={this.state.selectedTab === 'contracts'}
             renderIcon={() => <Image style={styles.icon}
               source={scheduleIcon}
             />}
             renderSelectedIcon={() => <Image source={scheduleIcon} style={styles.selectedIcon}/>}
-            onPress={() => {this.onTabPress('create', this.refs.createRef)}}
+            onPress={() => {this.onTabPress('contracts', this.refs.contractsRef)}}
             >
             <Navigator
-              ref='createRef'
-              initialRoute={{name: 'CreationPage', component: CreationPage}}
+              ref='contractsRef'
+              initialRoute={{name: 'ContractsScreen', component: ContractsScreen}}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                   return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
@@ -108,7 +114,7 @@ class BlueSport extends Component {
             >
             <Navigator
               ref='recordRef'
-              initialRoute={{name: 'RecordPage', component: RecordPage,  }}
+              initialRoute={{name: 'RecordPage', component: RecordPage}}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );
@@ -128,7 +134,7 @@ class BlueSport extends Component {
             >
             <Navigator
               ref='profRef'
-              initialRoute={{name: 'PlayerPage', component: PlayerPage, passProps: {mode: 'root'} }}
+              initialRoute={{name: 'PlayerPage', component: PlayerPage}}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );
@@ -138,16 +144,17 @@ class BlueSport extends Component {
           </TabNavigator.Item>
 
           <TabNavigator.Item
-            selected={this.state.selectedTab === 'more'}
+            //title="Settings"
+            selected={this.state.selectedTab === 'settings'}
             renderIcon={() => <Image style={styles.icon}
               source={listsIcon}
             />}
             renderSelectedIcon={() => <Image source={listsIcon} style={styles.selectedIcon}/>}
-            onPress={() => {this.onTabPress('more', this.refs.moreRef)}}
+            onPress={() => {this.onTabPress('settings', this.refs.settingsRef)}}
             >
             <Navigator
-              ref='moreRef'
-              initialRoute={{name: 'MorePage', component: MorePage}}
+              ref='settingsRef'
+              initialRoute={{name: 'SettingsScreen', component: SettingsPage}}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );
@@ -196,4 +203,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('BlueSport', () => BlueSport);
+AppRegistry.registerComponent('ProvaSport', () => ProvaSport);

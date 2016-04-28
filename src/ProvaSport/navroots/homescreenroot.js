@@ -5,7 +5,7 @@ var windowSize = Dimensions.get('window');
 var Button = require('react-native-button');
 var Navigator = require('Navigator');
 
-var PlayerPage = require('../screens/playerpage')
+var NewsFeedPage = require('../screens/newsfeedpage')
 
 var {
   AppRegistry,
@@ -17,29 +17,28 @@ var {
   TouchableOpacity,
 } = React;
 
-var profileRoot = React.createClass({
+var HomeScreenRoot = React.createClass({
 
-  render: function() {
-    return (
-      <Navigator
-        style={styles.wrapper}
-          initialRoute={{name: 'PlayerPage', component: PlayerPage, passProps: {isModal: false}}}
+render: function() {
+      return (
+        <Navigator
+          style={styles.wrapper}
+          initialRoute={{name: 'NewsFeedPage', component: NewsFeedPage}}
 
           renderScene={(route, navigator) =>    {
             if (route.component) {
-              return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
-            }
+                          return React.createElement(route.component, {...route.passProps, navigator, route } );
+                      }
         }}
-        configureScene={(route) => {
-          if (route.sceneConfig) {
-            return route.sceneConfig;
-          }
-          return Navigator.SceneConfigs.FloatFromRight;
+          configureScene={(route) => {
+              if (route.sceneConfig) {
+                return route.sceneConfig;
+              }
+              return Navigator.SceneConfigs.FloatFromRight;
           }}
-      />
-    )
-  }
-
+         />
+      )
+    }
 });
 
   var NavigationBarRouteMapper = {
@@ -60,7 +59,7 @@ var profileRoot = React.createClass({
       return (
         <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
           <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-            Profile
+            Home
           </Text>
         </TouchableOpacity>
       );
@@ -91,4 +90,4 @@ var styles = StyleSheet.create({
   }
 })
 
-module.exports = profileRoot;
+module.exports = HomeScreenRoot;
