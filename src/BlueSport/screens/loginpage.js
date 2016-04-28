@@ -59,11 +59,18 @@ var LoginPage = React.createClass({
     return (
     <View style={styles.container}>
 
+      <View style={styles.logo_container}>
+        <Image style={styles.logo} 
+               source={require('../assets/logo_white_orange.png')} />
+      </View>
+
       <View style={styles.header_container}>
         <Text style={styles.title_text}>
           {"ProvaSport"}
         </Text>
       </View>
+
+     
 
       <View style={styles.inputs_container}>
 
@@ -214,6 +221,17 @@ var LoginPage = React.createClass({
 
 
 var styles = StyleSheet.create({
+  logo: {
+    width: 200 * _cvals.dscale,
+    height: 200 * _cvals.dscale
+  },
+  logo_container: {
+    width: windowSize.width,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
   title_text: {
     color: 'white',
     fontSize: 50 * _cvals.dscale,
