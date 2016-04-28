@@ -8,7 +8,7 @@ var _cstyles = require('../styles/customstyles')
 var Header = require('../parts/header')
 var TeamRow = require('../parts/teamrow')
 var SimpleRow = require('../smallparts/simplerow')
-var TeamBlock = require('../smallparts/teamblock')
+var TeamListingRow = require('../smallparts/teamlistingrow')
 
 var LoadingPage = require('../screens/loadingpage')
 
@@ -66,7 +66,7 @@ var TeamListingPage = React.createClass({
   renderRow: function(data) {
     return (
       <View style={styles.row_container}>
-        <TeamBlock 
+        <TeamListingRow
            teamid={data}
            value={""}
            navigator={this.props.navigator}/>
