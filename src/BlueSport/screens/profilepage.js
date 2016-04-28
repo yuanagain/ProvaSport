@@ -69,7 +69,7 @@ var ProfilePage = React.createClass({
     var add_friend = <View></View>
 
     // console.log(this.state.my_player)
-    if (this.state.me) {
+    if (this.state.my_player) {
       if (this.state.my_player.playerid != this.props.playerid) {
         var friend_status_text = "Add Friend"
 

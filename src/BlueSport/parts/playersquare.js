@@ -27,6 +27,9 @@ var {
 var PlayerSquare = React.createClass({
 
   onPress: function() {
+    if (this.state.loaded == false) {
+      return
+    }
     // var ProfilePage = require('../screens/profilepage')
     // this.props.navigator.push({
     //   id: "ProfilePage" + String(_ctools.randomKey()),

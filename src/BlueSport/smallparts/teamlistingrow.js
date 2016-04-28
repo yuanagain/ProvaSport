@@ -81,6 +81,9 @@ var TeamListingRow = React.createClass({
   },
 
   onPress: function() {
+    if (this.state.loaded == false) {
+      return
+    }
     var TeamPage = require('../screens/teampage')
     this.props.navigator.push({
       id: "TeamPage" + String(_ctools.randomKey()),

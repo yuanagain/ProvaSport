@@ -64,16 +64,20 @@ var TeamBlock = React.createClass({
   },
 
   onPress: function() {
-      var TeamPage = require('../screens/teampage')
-      this.props.navigator.push({
-        id: "TeamPage" + String(_ctools.randomKey()),
-        component: TeamPage,
-        passProps: {
-          teamid: this.props.teamid,
-          navigator: this.props.navigator
-        }
-      })
-    },
+    if (this.state.loaded == false) {
+      return
+    }
+
+    var TeamPage = require('../screens/teampage')
+    this.props.navigator.push({
+      id: "TeamPage" + String(_ctools.randomKey()),
+      component: TeamPage,
+      passProps: {
+        teamid: this.props.teamid,
+        navigator: this.props.navigator
+      }
+    })
+  },
 
 
   fetchTeam: function(data) {

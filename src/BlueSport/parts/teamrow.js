@@ -25,6 +25,7 @@ var TeamRow = React.createClass({
   getInitialState: function() {
     return ({
       team: Team.default_team,
+      loaded: false,
     })
   },
 

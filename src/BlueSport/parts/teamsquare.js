@@ -27,6 +27,9 @@ var {
 var TeamSquare = React.createClass({
 
   onPress: function() {
+    if (this.state.loaded == false) {
+      return
+    }
     // var ProfilePage = require('../screens/profilepage')
     // this.props.navigator.push({
     //   id: "ProfilePage" + String(_ctools.randomKey()),
@@ -82,7 +85,6 @@ var TeamSquare = React.createClass({
   fetchTeam: function(data) {
     this.setState({loaded : true})
     this.setState({team : data})
-    
   },
 
   componentDidMount: function () {
