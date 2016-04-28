@@ -38,6 +38,7 @@ var PlayerRow = React.createClass({
     return (
       {
         playerid: -1,
+        dead: false,
       }
     )
   },
@@ -47,6 +48,22 @@ var PlayerRow = React.createClass({
       navigator,
       ...props
     } = this.props;
+
+    if (this.props.dead) {
+      return (
+        <View style={styles.playerbrick} >
+          <View style={[styles.center, styles.left]} >
+            <Image style={styles.im}
+                   source={{uri: this.state.player.prof_pic}}/>
+          </View>
+          <View style={styles.right}>
+            <View >
+              <Text style={[_cstyles.header_text]}>{this.state.player.name.full} </Text>
+            </View>
+          </View>
+        </ View>
+        )
+    }
 
     return (
       <TouchableOpacity style={styles.playerbrick} 
