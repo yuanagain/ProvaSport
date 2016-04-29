@@ -34,7 +34,7 @@ class ProvaSport extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'login'
+      selectedTab: 'home'
     };
   }
 

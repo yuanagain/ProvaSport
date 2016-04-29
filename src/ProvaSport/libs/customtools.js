@@ -67,7 +67,9 @@ var selectionNeedles = function(haystack, needles) {
   var indices = []
   for (var i = 0; i < needles.length; i++) {
     var index = indexOf(haystack, needles[i])
-    indices.push(index)
+    if (index >= 0) {
+      indices.push(index)
+    }
   }
   return indices
 }

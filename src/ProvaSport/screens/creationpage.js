@@ -69,9 +69,17 @@ var ContractsPage = React.createClass({
 
     var settings = _settings.getSettings()
 
+    var teamCts = settings.teamCts_elim
+
+    if (this.state.event_type.length > 0) {
+      if (this.state.event_type[0] == 'Round Robin') {
+        teamCts = settings.teamCts_rr
+      }
+    }
 
     var teamselectors = []
-    for (var i = 0; i < this.state.num_teams; i++) {
+
+    for (var i = 0; i < this.state.teams.length; i++) {
       teamselectors.push(
         <View key={i}>
           <PopoverSelector
@@ -135,7 +143,7 @@ var ContractsPage = React.createClass({
 
           <PopoverSelector
             title={'Team Count'}
-            items={settings.teamCts}
+            items={teamCts}
             navigator={this.props.navigator}
             selection={this.state.num_teams}
             harvest={this.setNumTeams}
@@ -196,10 +204,28 @@ var ContractsPage = React.createClass({
 
   setEventType: function(event_type) {
     this.setState({event_type: event_type})
+
+    if (this.state.event_type[0] == 'Round Robin') {
+      var settings = _settings.getSettings()
+      var maxTeams = Math.max.apply(Math, settings.teamCts_rr)
+
+      if (this.state.num_teams[0] > maxTeams) {
+        this.setNumTeams([maxTeams])
+      }
+    }
   },
 
   setNumTeams: function(num) {
+    // fill with empty teams
+    for (var i = this.state.num_teams; i < num; i++) {
+      this.state.teams.push([])
+    }
+
     this.setState({num_teams: num})
+
+    // trim off extra teams
+    this.setState({teams: this.state.teams.slice(0, num[0])})
+
   },
 
   setSport: function(selection) {
