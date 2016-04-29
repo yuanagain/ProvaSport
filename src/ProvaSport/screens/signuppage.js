@@ -48,8 +48,8 @@ var SignUpPage = React.createClass({
       password: '',
       passwordConf: '',
       profImage: AddImageIcon,
-      country: null,
-      sports: null,
+      country: [],
+      sports: [],
     }
   },
 
@@ -186,6 +186,7 @@ var SignUpPage = React.createClass({
                 items={['USA', 'Canada', 'Great Britain']}
                 maxSelect={1}
                 navigator={this.props.navigator}
+                selection={this.state.country}
                 harvest={(country) => this.setState({country})}
               />
             </View>
@@ -198,6 +199,7 @@ var SignUpPage = React.createClass({
                 items={['Tennis', 'Basketball', 'Soccer', 'Squash',
                         'Badminton', 'Football', 'Baseball', ]}
                 navigator={this.props.navigator}
+                selection={this.state.sports}
                 harvest={(sports) => this.setState({sports})}
               />
             </View>
