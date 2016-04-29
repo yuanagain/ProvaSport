@@ -354,6 +354,9 @@ function GetUser(uid){
   return new Promise(function(resolve, reject) {
       ref.child('user').child(uid).on("value", function(snapshot) {
         var user = snapshot.val();
+        if(!user.hasOwnProperty('sports')){
+          user.sports = [];
+        }
         console.log(user);
         resolve(user);
       });
@@ -364,6 +367,9 @@ function _GetUser(uid, callback){
   var promise = new Promise(function(resolve, reject) {
       ref.child('user').child(uid).on("value", function(snapshot) {
         var user = snapshot.val();
+        if(!user.hasOwnProperty('sports')){
+          user.sports = [];
+        }
         resolve(user);
       });
    });

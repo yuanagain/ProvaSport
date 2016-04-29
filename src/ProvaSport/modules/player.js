@@ -28,6 +28,8 @@ function _GetPlayer(playerid, callback) {
         }
         playerdataRef.child(playerid).on("value", function(snapshot) {
           var player = snapshot.val();
+          if (player==null){
+          console.log(playerid)}
           if(!player.hasOwnProperty('teams')){
             player.teams = [];
           }

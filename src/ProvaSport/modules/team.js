@@ -18,6 +18,12 @@ function _GetTeam(teamid, callback) {
     var promise = new Promise(function(resolve, reject) {
         teamdb.child(teamid).on("value", function(snapshot) {
           var team = snapshot.val();
+          if(!team.hasOwnProperty('players')){
+            team.players = [];
+          }
+          if(!team.hasOwnProperty('matches')){
+            team.matches = [];
+          }
           resolve(team);
         });
      });
@@ -32,6 +38,12 @@ export function getTeam(teamid) {
     return new Promise(function(resolve, reject) {
         teamdb.child(teamid).on("value", function(snapshot) {
           var team = snapshot.val();
+          if(!team.hasOwnProperty('players')){
+            team.players = [];
+          }
+          if(!team.hasOwnProperty('matches')){
+            team.matches = [];
+          }
           resolve(team);
         });
      });

@@ -84,6 +84,15 @@ function _GetTournament(tournamentid, callback) {
     var promise = new Promise(function(resolve, reject) {
         tourndb.child(tournamentid).on("value", function(snapshot) {
           var tournament = snapshot.val();
+          if(!tournament.hasOwnProperty('teams')){
+            tournament.teams = [];
+          }
+          if(!tournament.hasOwnProperty('dates')){
+            tournament.dates = [];
+          }
+          if(!tournament.hasOwnProperty('matches')){
+            tournament.matches = [];
+          }
           resolve(tournament);
         });
      });
@@ -98,6 +107,15 @@ function getTournament(tournamentid) {
   return new Promise(function(resolve, reject) {
       tourndb.child(tournamentid).on("value", function(snapshot) {
         var tournament = snapshot.val();
+        if(!tournament.hasOwnProperty('teams')){
+          tournament.teams = [];
+        }
+        if(!tournament.hasOwnProperty('dates')){
+          tournament.dates = [];
+        }
+        if(!tournament.hasOwnProperty('matches')){
+          tournament.matches = [];
+        }
         resolve(tournament);
       });
    });
