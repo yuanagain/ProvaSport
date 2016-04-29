@@ -326,13 +326,33 @@ var SignUpPage = React.createClass({
       player.name.full = this.state.first + " " + this.state.last;
       player.nationality = String(this.state.country);
       player.sports = this.state.sports;
+      player.home = " ";
       setUser.sports = this.state.sports;
       setUser.email = email;
       setUser.birthday = this.state.age;
       setUser.nationality = String(this.state.country);
+      var earnings = []
+      var i = 0;
+      var len = this.state.sports.length;
+      this.state.sports.forEach(function(sport){
+        var obj = {};
+        obj[sport] = {
+          cash: 0,
+          xp: 0,
+          trophies: 0
+        };
+        i++;
+        if(i == len){
+          player.earnings = obj;
+        }
+      })
+//POSSIBLE RACE CONDITION
+
+
+
 //call the next functions
       var callback = this.storeUser;
-      console.log(setUser)
+      console.log(player)
       //uid=>callback(uid, setUser, player)
       User.createUser(email, pass).then(uid=>callback(uid, setUser, player)).catch(function(err){console.log("COULD NOT CREATE USER "+err)})
     }

@@ -1,5 +1,6 @@
 'use strict';
 import React, {
+  AsyncStorage,
   AppRegistry,
   Component,
   StyleSheet,
@@ -161,6 +162,9 @@ class ProvaSport extends Component {
   }
 
   logout() {
+    AsyncStorage.removeItem('player')
+    AsyncStorage.removeItem('user')
+
     this.setState({
         selectedTab: 'login'
     });

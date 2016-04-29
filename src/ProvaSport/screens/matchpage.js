@@ -17,13 +17,8 @@ import * as _ctools from '../libs/customtools'
 import * as Match from '../modules/match'
 import * as Team from '../modules/team'
 import * as Player from '../modules/player'
-import Store from 'react-native-store';
 
-//database name and constant for storing data
-const DB = {
-  'user': Store.model("user"),
-  'player': Store.model("player")
-}
+
 var {
   AsyncStorage,
   AppRegistry,

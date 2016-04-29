@@ -125,7 +125,8 @@ function setTournament(tournamentid, obj) {
       "dates": [],
       "name": "",
       "sport": "Loading",
-      "matches": []
+      "matches": [],
+      "creator": "pid"
   };
 /*
  * function makeTournament(matches, teams, location, type){

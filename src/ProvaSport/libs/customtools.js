@@ -222,10 +222,15 @@ var findId = function(l, val) {
   }
   return -1
 }
+var unique = function (list) {
+  return list.filter(function(elem, pos, arr) {
+    return arr.indexOf(elem) == pos;
+  });
+}
 
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
                   selectionNeedles, toDate, shortString,
                   cumulativeEarnings, getInitials, getWinner,
                   getTally, getScoreString, codeToString,
-                  findField, findId};
+                  findField, findId, unique};
