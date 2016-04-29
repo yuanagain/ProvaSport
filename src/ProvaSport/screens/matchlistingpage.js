@@ -7,14 +7,7 @@ var MatchList = require('../bigparts/matchlist')
 var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
-import Store from 'react-native-store';
 
-
-//database name and constant for storing data
-const DB = {
-  'user': Store.model("user"),
-  'player': Store.model("player")
-}
 var {
   AppRegistry,
   StyleSheet,
@@ -48,7 +41,6 @@ var MatchListingPage = React.createClass({
       navigator,
       ...props
     } = this.props;
-
     return (
     <View style={styles.container}>
 

@@ -12,8 +12,10 @@ import * as Trophy from '../modules/trophy'
 import * as Match from '../modules/match'
 
 
-import Store from 'react-native-store';
-const DB = {
-  "user": User.default_user,
-  "player": Player.default_player
+export function unique(list) {
+    var result = [];
+    $.each(list, function(i, e) {
+        if ($.inArray(e, result) == -1) result.push(e);
+    });
+    return result;
 }
