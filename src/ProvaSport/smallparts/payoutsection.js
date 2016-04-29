@@ -44,6 +44,9 @@ var PayoutSection= React.createClass({
       ...props
     } = this.props;
 
+    var cash = String(this.props.earnings['cash'])
+    var xp = String(this.props.earnings['xp']) 
+
     return (
       <View style={[styles.container, ,]}>
         <View style={styles.title}>
@@ -58,7 +61,7 @@ var PayoutSection= React.createClass({
                        {color: _cvals.sklightgreen, fontWeight: 'normal',
                         paddingVertical: _cvals.stdmargin / 2}]}>
             {this.state.plus + '$'
-              + String(this.props.earnings['cash'])}
+              + cash}
           </Text>
         </View>
 
@@ -68,7 +71,7 @@ var PayoutSection= React.createClass({
                        {color: _cvals.skblue, fontWeight: 'normal',
                         paddingVertical: _cvals.stdmargin / 2}]}>
             {'\t' + this.state.plus +
-              +String(this.props.earnings['xp']) + ' XP'}
+              + xp + ' XP'}
           </Text>
 
         </View>

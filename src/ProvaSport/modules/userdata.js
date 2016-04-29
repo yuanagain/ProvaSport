@@ -409,6 +409,7 @@ var default_user = {
   "birthday": 0,
   "sports": []
 };
+
 //createUser("dummy@dummy.com", "test123").then(function(value){console.log(value)})
 /*
  * setUser('dd726cb4-cdd3-4d66-a06f-cb9e5a5a8794', {
@@ -433,4 +434,5 @@ var default_user = {
  * DB.user.destroy();
  */
 
-module.exports = {_GetUser, GetUser, default_user, createUser, login, _Login, logout, setUser};
+module.exports = {_GetUser, GetUser, default_user, createUser, login, _Login, logout, setUser,
+                  };

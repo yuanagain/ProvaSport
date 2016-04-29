@@ -40,6 +40,11 @@ var SimpleRow= React.createClass({
       ...props
     } = this.props;
 
+    var value = this.props.value
+    if (value.length > 16) {
+      value = value.slice(0, 16) + '...'
+    }
+
     return (
       <View style={[styles.container,]}>
         <View style={styles.title}>
@@ -54,7 +59,7 @@ var SimpleRow= React.createClass({
             onPress={this.props.onPress}>
           <Text style={[_cstyles.header_text,
                         {color: _cvals.skblue, fontWeight: 'normal'}]}>
-            {this.props.value  + ' '}
+            {value  + ' '}
           </Text>
         </TouchableOpacity>
       </View>

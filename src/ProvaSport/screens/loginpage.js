@@ -55,6 +55,7 @@ var LoginPage = React.createClass({
       'Warning: Native component for',
       'Possible',
     ];
+
     /*  FOR CHECKING IF ANYTHING STORED AFTER LOGOUT
      * AsyncStorage.getItem('user', (err, result)=>{
      *   //console.log("PLAYER");

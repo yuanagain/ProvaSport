@@ -14,6 +14,7 @@ var TextField = require('../smallparts/textfield')
 
 import * as Player from '../modules/player'
 import * as User from '../modules/userdata'
+import * as _settings from '../modules/settings'
 
 
 var {
@@ -107,6 +108,7 @@ var SignUpPage = React.createClass({
       navToHomeFunc,
       ...props
     } = this.props;
+    var settings = _settings.getSettings()
 
     // Known issue with DatePickerIOS results in warnings. This suppresses the
     // yellow warning boxes. React Native team is currently working on this.
@@ -183,7 +185,7 @@ var SignUpPage = React.createClass({
             <View style={[styles.input_row, styles.selector]}>
               <PopoverSelector
                 title={'Country'}
-                items={['USA', 'Canada', 'Great Britain']}
+                items={settings.countries}
                 maxSelect={1}
                 navigator={this.props.navigator}
                 selection={this.state.country}
@@ -196,8 +198,7 @@ var SignUpPage = React.createClass({
             <View style={[styles.input_row, styles.selector]}>
               <PopoverSelector
                 title={'Sports'}
-                items={['Tennis', 'Basketball', 'Soccer', 'Squash',
-                        'Badminton', 'Football', 'Baseball', ]}
+                items={settings.sports}
                 navigator={this.props.navigator}
                 selection={this.state.sports}
                 harvest={(sports) => this.setState({sports})}

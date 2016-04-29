@@ -27,6 +27,7 @@ import * as Team from '../modules/team'
 import * as Tournament from '../modules/tournament'
 import * as _ctools from '../libs/customtools.js'
 import * as _clogic from '../libs/customlogic.js'
+import * as _settings from '../modules/settings'
 
 var {
   AppRegistry,
@@ -65,6 +66,8 @@ var ContractsPage = React.createClass({
       loginFunction,
       ...props
     } = this.props;
+
+    var settings = _settings.getSettings()
 
 
     var teamselectors = []
@@ -109,7 +112,7 @@ var ContractsPage = React.createClass({
 
           <PopoverSelector
             title={'Event Type'}
-            items={['Single Match', 'Elimination', 'Round Robin']}
+            items={settings.eventTypes}
             navigator={this.props.navigator}
             selection={this.state.event_type}
             harvest={this.setEventType}
@@ -120,7 +123,7 @@ var ContractsPage = React.createClass({
 
           <PopoverSelector
             title={'Sport '}
-            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            items={settings.sports}
             navigator={this.props.navigator}
             selection={this.state.selectedSport}
             harvest={this.setSport}
@@ -132,7 +135,7 @@ var ContractsPage = React.createClass({
 
           <PopoverSelector
             title={'Team Count'}
-            items={[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}
+            items={settings.teamCts}
             navigator={this.props.navigator}
             selection={this.state.num_teams}
             harvest={this.setNumTeams}
