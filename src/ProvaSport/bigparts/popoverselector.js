@@ -106,9 +106,11 @@ var PopoverSelector = React.createClass({
         </TouchableOpacity>
       );
     }
+
     else {
       var selectionText = "Select"
-
+      // console.log(this.state.selection)
+      // console.log(this.props.items)
       if (this.state.selection.length > 0) {
         selectionText = this.props.items[this.state.selection[0]]
       }
@@ -131,6 +133,7 @@ var PopoverSelector = React.createClass({
       if (selectionText.length > 23) {
         selectionText = selectionText.substr(0, 20) + '...'
       }
+
       selectionText += ' '
 
       return (
@@ -151,8 +154,7 @@ var PopoverSelector = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    this.setState({selection: _ctools.selectionNeedles(this.props.items, nextProps.selection)})
-
+    this.setState({selection: _ctools.selectionNeedles(nextProps.items, nextProps.selection)})
   },
 
   enterSelector: function() {

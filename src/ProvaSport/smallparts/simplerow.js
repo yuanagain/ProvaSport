@@ -40,7 +40,7 @@ var SimpleRow= React.createClass({
       ...props
     } = this.props;
 
-    var value = this.props.value
+    var value = String(this.props.value)
     if (value.length > 16) {
       value = value.slice(0, 16) + '...'
     }
