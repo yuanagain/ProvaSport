@@ -28,7 +28,8 @@ var SimpleRow= React.createClass({
     return (
       {
         title: 'Title',
-        value: 'Value'
+        value: 'Value',
+        mode: 'normal',
       }
     )
   },
@@ -37,10 +38,22 @@ var SimpleRow= React.createClass({
       title,
       value,
       onPress,
+      mode,
       ...props
     } = this.props;
 
     var value = String(this.props.value)
+    
+    if (this.props.mode != 'normal') {
+      console.log(this.props.mode)
+      console.log('________')
+      value = ""
+      for (var i = 0; i < this.props.value.length; i++) {
+        value += this.props.value[i] 
+        value += ', '
+      }
+    }
+
     if (value.length > 16) {
       value = value.slice(0, 16) + '...'
     }
@@ -59,7 +72,7 @@ var SimpleRow= React.createClass({
             onPress={this.props.onPress}>
           <Text style={[_cstyles.header_text,
                         {color: _cvals.skblue, fontWeight: 'normal'}]}>
-            {value  + ' '}
+            {value + ' '}
           </Text>
         </TouchableOpacity>
       </View>

@@ -8,7 +8,10 @@ var Header = require('../parts/header')
 var _cvals = require('../styles/customvals')
 let _cstyles = require('../styles/customstyles')
 
+import * as Player from '../modules/player'
+
 var {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   View,
@@ -24,6 +27,7 @@ var NewsFeedPage = React.createClass({
   getInitialState: function() {
     return {
       isRefreshing: false,
+      fmatches: []
     };
   },
   getDefaultProps: function() {
@@ -45,7 +49,7 @@ var NewsFeedPage = React.createClass({
 
       <MatchList
         navigator={this.props.navigator}
-        matches={[0, 1]}
+        matches={this.state.fmatches}
         onRefresh={this.onRefresh}
       />
 
@@ -53,6 +57,20 @@ var NewsFeedPage = React.createClass({
       </View>
     </View>
     );
+  },
+
+  componentDidMount: function () {
+      
+    AsyncStorage.getItem('user', (err, result)=>{
+       //console.log("PLAYER");
+      //this is our matches
+      console.log("USING ASYNC MATCHES")
+      result = JSON.parse(result);
+      Player.getFriendsMatches(result.playerid).then(resp=>this.setState({fmatches:resp}));
+    });
+      
+
+    // this.state.match = this.props.match
   },
 
   onRefresh: function() {

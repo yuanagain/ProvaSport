@@ -141,6 +141,7 @@ var ProfilePage = React.createClass({
 
           <SimpleRow
             title={'Sports'}
+            mode={'array'}
             value={this.state.player.sports}/>
 
           <View style={_cstyles.section_divider_line}></View>

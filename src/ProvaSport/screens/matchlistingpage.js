@@ -54,7 +54,7 @@ var MatchListingPage = React.createClass({
 
       <MatchList
         navigator={this.props.navigator}
-        matches={this.state.fmatches}
+        matches={this.props.matches}
       />
 
       <View style={styles.divider_line}>
