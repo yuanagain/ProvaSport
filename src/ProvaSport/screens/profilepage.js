@@ -14,11 +14,6 @@ var MatchList = require('../bigparts/matchlist')
 
 import * as Player from '../modules/player'
 
-
-//database name and constant for storing data
-
-
-//DB.player.get().then(resp => console.log(resp.playerid))
 var {
   AsyncStorage,
   AppRegistry,

@@ -23,13 +23,17 @@ playerdataRef = new Firebase("https://shining-torch-4767.firebaseio.com/player")
 function _GetPlayer(playerid, callback) {
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
-        if (playerid == -1){
+        if (playerid == -1)
+        {
+          //future return yourself
           resolve(default_player);
         }
+        else {
         playerdataRef.child(playerid).on("value", function(snapshot) {
           var player = snapshot.val();
           if (player==null){
-          console.log(playerid)}
+            console.log("\n\n*******************NULL********************\n"+playerid)
+          }
           if(!player.hasOwnProperty('teams')){
             player.teams = [];
           }
@@ -44,6 +48,7 @@ function _GetPlayer(playerid, callback) {
           }
           resolve(player);
         });
+      }
      });
     promise.then(function(value){
       callback(value);
@@ -364,4 +369,4 @@ export  var default_player = {
 //getFriendsMatches(0).then(resp=>console.log("RESPONSE: "+resp));
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, removeFriend, _AddTournament,
-                   searchPlayers, getFriends};
+                   searchPlayers, getFriends, getFriendsMatches};

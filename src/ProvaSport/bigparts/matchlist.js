@@ -43,8 +43,8 @@ var MatchList = React.createClass({
     } = this.props;
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var dataSource = ds.cloneWithRows(this.state.matches)
-    
+    var dataSource = ds.cloneWithRows(this.props.matches)
+
     return (
       <ListView
         refreshControl={
@@ -62,7 +62,7 @@ var MatchList = React.createClass({
       />
     );
   },
-  
+
 
   onRefresh: function() {
     // TODO refresh cached player object, pull list of matches
@@ -89,7 +89,7 @@ var MatchList = React.createClass({
   },
 
   componentDidMount() {
-    this.setState({matches: [0, 1, 0, 1]})
+
   }
 });
 
@@ -118,7 +118,7 @@ var MatchList_Player = React.createClass({
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var dataSource = ds.cloneWithRows(this.state.entity.matches)
-    
+
     return (
       <ListView
         dataSource={dataSource}
