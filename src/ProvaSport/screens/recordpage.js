@@ -19,6 +19,7 @@ var TextField = require('../smallparts/textfield')
 
 import * as Match from '../modules/match'
 import * as Team from '../modules/team'
+import * as _settings from '../modules/settings'
 
 var {
   AppRegistry,
@@ -88,6 +89,9 @@ var RecordPage = React.createClass({
       ...props
     } = this.props;
     //console.log(this.props.match);
+
+    var settings = _settings.getSettings()
+
     return (
     <View style={styles.container}>
       <View style={{height: 565 * _cvals.vscale}}>
@@ -125,7 +129,7 @@ var RecordPage = React.createClass({
 
             <PopoverSelector
               title={'Sport'}
-              items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+              items={settings.sports}
               navigator={this.props.navigator}
               selection={this.state.sport}
               harvest={this.setSport}

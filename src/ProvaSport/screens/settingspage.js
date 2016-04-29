@@ -21,6 +21,7 @@ var TextField = require('../smallparts/textfield')
 
 import * as Player from '../modules/player'
 import * as User from '../modules/userdata'
+import * as _settings from '../modules/settings'
 
 var Bracket = require('../bigparts/bracket')
 
@@ -58,8 +59,8 @@ var SettingsPage = React.createClass({
         password: '',
         passwordConf: '',
         profImage: AddImageIcon,
-        country: null,
-        sports: null,
+        country: [],
+        sports: [],
       }
     );
   },
@@ -100,7 +101,10 @@ var SettingsPage = React.createClass({
       navigator,
       ...props
     } = this.props;
+
+    var settings = _settings.getSettings()
     return (
+    
     <View style={styles.container}>
       <View>
         <Header title={"SETTINGS"}
@@ -114,9 +118,9 @@ var SettingsPage = React.createClass({
           </View>
           <PopoverSelector
             title={'Sports'}
-            items={['Tennis', 'Badminton', 'Squash', 'Basketball', 'Soccer']}
+            items={settings.sports}
             navigator={this.props.navigator}
-            selection={this.state.sport}
+            selection={this.state.sports}
             harvest={this.setSport}
           />
           <View style={_cstyles.section_divider_line}></View>
@@ -141,8 +145,9 @@ var SettingsPage = React.createClass({
           <View style={[styles.input_row, styles.selector]}>
             <PopoverSelector
               title={'Country'}
-              items={['USA', 'Canada', 'Great Britain']}
+              items={settings.countries}
               maxSelect={1}
+              selection={this.state.country}
               navigator={this.props.navigator}
               harvest={(country) => this.setState({country})}
             />
@@ -164,7 +169,7 @@ var SettingsPage = React.createClass({
   },
 
   setSport: function(selection) {
-    this.setState({sport: selection})
+    this.setState({sports: selection})
   },
 
   componentDidMount: function() {

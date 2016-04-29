@@ -55,7 +55,7 @@ var LoginPage = React.createClass({
       'Warning: Native component for',
       'Possible',
     ];
-
+    
     return (
     <View style={styles.container}>
 
