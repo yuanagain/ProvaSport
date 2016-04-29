@@ -13,7 +13,6 @@ import * as Match from '../modules/match'
  * WARNING: methods wait on database download before returning.
  * TODO: download actual Images instead of URLs
         (accomplished by turning pic into bitstream)
-
  */
 
 /* provide module to access/update player data here */
@@ -25,8 +24,23 @@ playerdataRef = new Firebase("https://shining-torch-4767.firebaseio.com/player")
 function _GetPlayer(playerid, callback) {
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
+        if (playerid == -1){
+          resolve(default_player);
+        }
         playerdataRef.child(playerid).on("value", function(snapshot) {
           var player = snapshot.val();
+          if(!player.hasOwnProperty('teams')){
+            player.teams = [];
+          }
+          if(!player.hasOwnProperty('matches')){
+            player.matches = [];
+          }
+          if(!player.hasOwnProperty('tournaments')){
+            player.tournaments = [];
+          }
+          if(!player.hasOwnProperty('friends')){
+            player.friends = [];
+          }
           resolve(player);
         });
      });
@@ -43,6 +57,18 @@ function GetPlayer(playerid) {
     return new Promise(function(resolve, reject) {
         playerdataRef.child(playerid).on("value", function(snapshot) {
           var player = snapshot.val();
+          if(!player.hasOwnProperty('teams')){
+            player.teams = [];
+          }
+          if(!player.hasOwnProperty('matches')){
+            player.matches = [];
+          }
+          if(!player.hasOwnProperty('tournaments')){
+            player.tournaments = [];
+          }
+          if(!player.hasOwnProperty('friends')){
+            player.friends = [];
+          }
           resolve(player);
         });
      });
@@ -280,9 +306,9 @@ export  var default_player = {
       "xp": 0,
       "trophies": [-1]
     }} ],
-    "home": "LOADING",
+    "home": " ",
     "sports": "LOADING",
-    "imageURL": "Loading",
+    "imageURL": "http://www.jennstrends.com/wp-content/uploads/2013/10/bad-profile-pic-2.jpeg",
     "friends": [],
     "teams": [],
     "matches": [],
@@ -290,7 +316,9 @@ export  var default_player = {
   };
   //_AddTeam(0,1,function(resp){console.log(resp)}) //TESTED SUCCESSFULLY(and _AddTournament, an)
   var query = "DJ"
+  var id = '-KGKjt9HJnSKgdIDNr9W';
 //searchPlayers(query,function(resp){console.log("RESPONSE:"+resp)})
+//GetPlayer(id).then(resp=>console.log(resp))
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, removeFriend, _AddTournament,
                    searchPlayers};
