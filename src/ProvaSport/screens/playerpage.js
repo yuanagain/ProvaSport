@@ -14,11 +14,6 @@ var MatchList = require('../bigparts/matchlist')
 
 import * as Player from '../modules/player'
 
-
-//database name and constant for storing data
-
-
-//DB.player.get().then(resp => console.log(resp.playerid))
 var {
   AsyncStorage,
   AppRegistry,
@@ -64,6 +59,7 @@ var PlayerPage = React.createClass({
       ...props
     } = this.props;
 
+
     // add friend component
     var add_friend = <View></View>
 
@@ -87,9 +83,15 @@ var PlayerPage = React.createClass({
       }
     }
 
-    if (this.state.player == null) {
+    if (this.state.my_player == null) {
       // this.state.player = Player.default_player
-      Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+      if (nextProps.playerid !== -1) {
+        Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+      }
+      else {
+        this.getPlayerId()
+      }
+
     }
 
     return (
@@ -289,7 +291,12 @@ var PlayerPage = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    if (nextProps.playerid === -1){
+      this.getPlayerId()
+    }
+    else {
+      Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    }
   },
 
   toTeamListing() {
