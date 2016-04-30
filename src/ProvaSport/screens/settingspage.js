@@ -26,6 +26,7 @@ import * as _settings from '../modules/settings'
 var Bracket = require('../bigparts/bracket')
 
 var {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   View,
@@ -44,11 +45,12 @@ var {
 var SettingsPage = React.createClass({
 
   getInitialState: function() {
-    
+
     return (
       {
         user: User.default_user,
         name: "",
+        old: "",
         first: "",
         last: "",
         gender: null,
@@ -87,7 +89,7 @@ var SettingsPage = React.createClass({
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
         //upload image
-        Upload(source)
+        //Upload(source).then(resp=>)
         this.setState({
           profImage: source
         });
@@ -104,7 +106,7 @@ var SettingsPage = React.createClass({
 
     var settings = _settings.getSettings()
     return (
-    
+
     <View style={styles.container}>
       <View>
         <Header title={"SETTINGS"}
@@ -116,6 +118,7 @@ var SettingsPage = React.createClass({
               <Image source={this.state.profImage} style={styles.avatar}/>
             </TouchableOpacity>
           </View>
+
           <PopoverSelector
             title={'Sports'}
             items={settings.sports}
@@ -141,8 +144,6 @@ var SettingsPage = React.createClass({
             title={'Password'}
             value={"Change"}
             onPress={this.toChangePassword} />
-
-          
 
           <View style={_cstyles.divider_line}/>
         </ScrollView>
@@ -239,7 +240,15 @@ var SettingsPage = React.createClass({
   validUsername() {
     return (this.state.username.length >= 6)
   },
+  newPassword(email, old, password, passwordConf) {
+    if (this.validPasswordConf()){
+     User.changePassword(old, password, email);
+   }
+   else {
+     alert('error');
+   }
 
+  },
 });
 
 
