@@ -156,6 +156,7 @@ var ProfilePage = React.createClass({
           title={'Teams'}
           value={this.state.player.teams.length}
           onPress={this.toTeamListing} />
+          
         <View style={_cstyles.section_divider_line}></View>
 
         <SimpleRow

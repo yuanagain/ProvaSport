@@ -125,36 +125,15 @@ var SettingsPage = React.createClass({
             selection={this.state.sports}
             harvest={this.setSport}
           />
-          <View style={_cstyles.section_divider_line}></View>
-          <TextField
-            label="Old Password "
-            placeholder="old password"
-            secureTextEntry={true}
-            keyboardType='default'
-            onChangeText={(old) => this.setState({old})}
-          />
-                      <TextField
-              label="Password "
-              placeholder="password"
-              secureTextEntry={true}
-              keyboardType='default'
-              onChangeText={(password) => this.setState({password})}
-            />
 
-          <TextField
-            label="Confirm Password "
-            placeholder="password"
-            secureTextEntry={true}
-            keyboardType='default'
-            onChangeText={(passwordConf) => this.setState({passwordConf})}
-          />
-          <TextField
-            label="Email "
-            placeholder="user@email.com"
-            secureTextEntry={false}
-            keyboardType='default'
-            onChangeText={(email) => this.setState({email})}
-          />
+          <View style={_cstyles.section_divider_line}></View>
+
+          <SimpleRow
+            title={'Password'}
+            value={"Change"}
+            onPress={this.toChangePassword} />
+
+          <View style={_cstyles.section_divider_line}></View>
 
           <View style={[styles.input_row, styles.selector]}>
             <PopoverSelector
@@ -184,6 +163,17 @@ var SettingsPage = React.createClass({
 
   setSport: function(selection) {
     this.setState({sports: selection})
+  },
+
+  toChangePassword() {
+    var ChangePasswordPage = require('../screens/changepasswordpage')
+    this.props.navigator.push({
+      id: "ChangePasswordPage",
+      component: ChangePasswordPage,
+      passProps: {
+        navigator: this.props.navigator,
+      }
+    })
   },
 
   componentDidMount: function() {
