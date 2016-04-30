@@ -1,0 +1,18 @@
+{
+	"match": {
+		"0": {
+			"datetime": 1770090,
+			"sport": "basketball",
+			"scores": [[0,5,7],[1,8,9],[2,3,4]],
+			"tournamentid": 99,
+			"winner": 1,
+			"data": {},
+			"teams": [10],
+			"payoutdata": {
+				"xp": 100,
+				"cash": 100
+			},
+			"location": 0
+		}
+	}
+}
