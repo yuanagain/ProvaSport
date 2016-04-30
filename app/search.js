@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-
+var PlayerRow = require('./parts/playerrow');
 // Bootstrap components
 var Form = require('react-bootstrap/lib/Form');
 var FormControl = require('react-bootstrap/lib/FormControl');
@@ -13,7 +13,7 @@ import _cvals from './constants/customvals'
 var SearchBox = React.createClass({
   getInitialState: function() {
     return {
-
+      query: "",
     };
   },
 
@@ -25,11 +25,11 @@ var SearchBox = React.createClass({
             <FormControl
                     type="text"
                     style={styles.input}
-                    value={this.state.value}
+                    value={this.state.query}
                     placeholder="Player, Team Name"
-                    onChange={this.handleChange}
+                    onChange={this.search}
             />
-            <Button type="submit" style={styles.submitButton}>
+            <Button type="submit" style={styles.submitButton} onClick={this.search}>
               Search
             </Button>
           </Form>
@@ -50,6 +50,7 @@ var SearchResults = React.createClass({
       return (
         <div style={styles.body}>
           <p style={styles.title}> Results </p>
+          <PlayerRow/>
         </div>
       );
     }

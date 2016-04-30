@@ -8,7 +8,7 @@ var default_player = {
       "full": "Loading",
   },
   "userid" : -1,
-  "prof_pic": "Loading",
+  "prof_pic": "http://facebook.github.io/react/img/logo_og.png",
   "elo": 0.0,
   "earnings": [ {"sport" :
   {
@@ -53,7 +53,7 @@ const defaults = {
           "full": "Loading",
         },
         "userid" : -1,
-        "prof_pic": "Loading",
+        "prof_pic": "http://facebook.github.io/react/img/logo_og.png",
         "elo": 0.0,
         "earnings": [ {"sport" :
         {
