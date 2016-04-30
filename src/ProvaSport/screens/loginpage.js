@@ -170,13 +170,15 @@ var LoginPage = React.createClass({
     }
   },
   _setInitialPlayer: function(obj) {
-    var configObject = {
-      
-    };
-    AsyncStorage.setItem('config',  configObject, (err, result)=>{
-      //write the configuration file
-      console.log(JSON.parse(result));
-    });
+    /* 
+     * var configObject = {
+     *
+     * };
+     * AsyncStorage.setItem('config',  configObject, (err, result)=>{
+     *   //write the configuration file
+     *   console.log(JSON.parse(result));
+     * });
+     */
     try {
       //THIS WORKS!!!
       AsyncStorage.setItem('player', JSON.stringify(obj), () => {

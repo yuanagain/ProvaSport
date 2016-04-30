@@ -32,13 +32,12 @@ var {
 var PasswordChangePage = React.createClass({
 
   getInitialState: function() {
-    
+
     return (
       {
         new_password: "",
         old_password: "",
         passwordConf: "",
-
       }
     );
   },
@@ -53,7 +52,7 @@ var PasswordChangePage = React.createClass({
 
     var settings = _settings.getSettings()
     return (
-    
+
     <View style={styles.container}>
       <View>
         <Header title={"Change Password"}
@@ -68,8 +67,8 @@ var PasswordChangePage = React.createClass({
               keyboardType='default'
               onChangeText={(old_password) => this.setState({old_password})}
             />
-         
-          
+
+
           <TextField
               label="New Password "
               placeholder="new password"
@@ -86,7 +85,7 @@ var PasswordChangePage = React.createClass({
             onChangeText={(passwordConf) => this.setState({passwordConf})}
           />
 
-          
+
         </ScrollView>
 
       </View>
@@ -102,7 +101,7 @@ var PasswordChangePage = React.createClass({
   },
 
   componentDidMount: function() {
-    
+
   },
 
   validEmail() {

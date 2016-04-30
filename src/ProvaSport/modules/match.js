@@ -478,4 +478,4 @@ function getAllMatches() {
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
                   _CreateMatch, updateScores, updateStatus, _CreateFromList,
                   createFromList, fetchList, _FetchList, setFromList, _SetFromList,
-                  isInMatch, myStatus};
+                  isInMatch, myStatus, getAllMatches};
