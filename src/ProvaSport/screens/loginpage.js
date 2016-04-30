@@ -56,16 +56,8 @@ var LoginPage = React.createClass({
       'Possible',
     ];
 
-    /*  FOR CHECKING IF ANYTHING STORED AFTER LOGOUT
-     * AsyncStorage.getItem('user', (err, result)=>{
-     *   //console.log("PLAYER");
-     *   console.log(JSON.parse(result));
-     * });
-     * AsyncStorage.getItem('player', (err, result)=>{
-     *   //console.log("PLAYER");
-     *   console.log(JSON.parse(result));
-     * });
-     */
+
+
 
     return (
     <View style={styles.container}>
@@ -163,16 +155,7 @@ var LoginPage = React.createClass({
         // watch this it might jump the gun
   },
   _setInitialUser: function(obj) {
-/*
- *     AsyncStorage.setItem(store_key, JSON.stringify(UID123_object), () => {
- *      AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
- *        AsyncStorage.getItem('UID123', (err, result) => {
- *          console.log(result);
- *          // => {'name':'Chris','age':31,'traits':{'shoe_size':10,'hair':'brown','eyes':'blue'}}
- *        });
- *      });
- *    });
- */
+
     try {
       //THIS WORKS!!!
       AsyncStorage.setItem('user', JSON.stringify(obj), () => {
@@ -181,21 +164,19 @@ var LoginPage = React.createClass({
           console.log(JSON.parse(result));
         });
       });
+
     } catch (error) {
       this._appendMessage('AsyncStorage error: ' + error.message);
     }
   },
   _setInitialPlayer: function(obj) {
-/*
- *     AsyncStorage.setItem(store_key, JSON.stringify(UID123_object), () => {
- *      AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
- *        AsyncStorage.getItem('UID123', (err, result) => {
- *          console.log(result);
- *          // => {'name':'Chris','age':31,'traits':{'shoe_size':10,'hair':'brown','eyes':'blue'}}
- *        });
- *      });
- *    });
- */
+    var configObject = {
+      
+    };
+    AsyncStorage.setItem('config',  configObject, (err, result)=>{
+      //write the configuration file
+      console.log(JSON.parse(result));
+    });
     try {
       //THIS WORKS!!!
       AsyncStorage.setItem('player', JSON.stringify(obj), () => {

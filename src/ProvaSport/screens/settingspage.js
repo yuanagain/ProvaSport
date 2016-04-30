@@ -26,6 +26,7 @@ import * as _settings from '../modules/settings'
 var Bracket = require('../bigparts/bracket')
 
 var {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   View,
@@ -44,11 +45,12 @@ var {
 var SettingsPage = React.createClass({
 
   getInitialState: function() {
-    
+
     return (
       {
         user: User.default_user,
         name: "",
+        old: "",
         first: "",
         last: "",
         gender: null,
@@ -87,7 +89,7 @@ var SettingsPage = React.createClass({
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
         //upload image
-        Upload(source)
+        //Upload(source).then(resp=>)
         this.setState({
           profImage: source
         });
@@ -104,7 +106,7 @@ var SettingsPage = React.createClass({
 
     var settings = _settings.getSettings()
     return (
-    
+
     <View style={styles.container}>
       <View>
         <Header title={"SETTINGS"}
@@ -124,6 +126,13 @@ var SettingsPage = React.createClass({
             harvest={this.setSport}
           />
           <View style={_cstyles.section_divider_line}></View>
+          <TextField
+            label="Old Password "
+            placeholder="old password"
+            secureTextEntry={true}
+            keyboardType='default'
+            onChangeText={(old) => this.setState({old})}
+          />
                       <TextField
               label="Password "
               placeholder="password"
@@ -139,8 +148,13 @@ var SettingsPage = React.createClass({
             keyboardType='default'
             onChangeText={(passwordConf) => this.setState({passwordConf})}
           />
-
-          
+          <TextField
+            label="Email "
+            placeholder="user@email.com"
+            secureTextEntry={false}
+            keyboardType='default'
+            onChangeText={(email) => this.setState({email})}
+          />
 
           <View style={[styles.input_row, styles.selector]}>
             <PopoverSelector
@@ -237,7 +251,15 @@ var SettingsPage = React.createClass({
   validUsername() {
     return (this.state.username.length >= 6)
   },
+  newPassword(email, old, password, passwordConf) {
+    if (this.validPasswordConf()){
+     User.changePassword(old, password, email);
+   }
+   else {
+     alert('error');
+   }
 
+  },
 });
 
 

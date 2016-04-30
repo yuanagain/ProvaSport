@@ -408,6 +408,24 @@ function myStatus(matchid, playerobj) {
   })
 }
 
+function getAllMatches() {
+  var matches = []
+  return new Promise(function(resolve, reject) {
+      ref.child('match').on("value", function(snapshot) {
+        var val = snapshot.val();
+        var len = Object.keys(val).length;
+        var i = 0;
+        snapshot.forEach(function(match){
+          i++;
+          matches.push(match.val())
+          if(i == len){
+            resolve(matches)
+          }
+        })
+      });
+   });
+}
+//getAllMatches().then(resp=>console.log(resp))
 //tieMatchTo(35, 1, 1)
 /*CHANGED ***************HOW TO PARSE ARRAYS************** TODO*/
 /*
@@ -445,7 +463,7 @@ function myStatus(matchid, playerobj) {
 //myStatus(0, 0).then(resp=>console.log(resp))
 //var matchidTest = 1;
 //_GetMatch(matchidTest, function(resp){console.log(resp)})
-/* 
+/*
  * import Store from 'react-native-store';
  * const DB = {
  *   'user': Store.model("user"),

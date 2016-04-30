@@ -315,6 +315,25 @@ var SignUpPage = React.createClass({
      */
     else {
       /* Valid Login? now authenticate?*/
+      const obj = {
+        uploadUrl: 'https://yourawesomewebsite.com/upload',
+        method: 'POST',
+        headers: {
+          'Authorization': this.props.authToken
+        },
+        files: [{
+          filename: 'file',
+          filepath: response.uri,
+          filetype: 'image/jpeg'
+        }]
+      };
+
+      FileUpload.upload(obj, (err, result) => {
+        console.log('uploaded avatar to url: ' + result.data);
+      });
+
+
+
       var callback = this.props.navToHomeFunc;
       var email = this.state.email;
       var pass = this.state.password;
