@@ -334,8 +334,9 @@ var SignUpPage = React.createClass({
       var earnings = []
       var i = 0;
       var len = this.state.sports.length;
+
+      var obj = {};
       this.state.sports.forEach(function(sport){
-        var obj = {};
         obj[sport] = {
           cash: 0,
           xp: 0,

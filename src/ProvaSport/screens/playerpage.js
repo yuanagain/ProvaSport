@@ -277,8 +277,10 @@ var PlayerPage = React.createClass({
     else {
       console.log("REMOVE Friend");
       var player = this.state.my_player;
+      console.log("calling remove friend"+this.state.my_user.playerid+"  "+this.props.playerid)
       Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
         player.friends = resp;
+        console.log("changing in cache")
         setPlayer(player);
         this.setState({my_player: player})
       })
