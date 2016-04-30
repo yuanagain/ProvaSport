@@ -204,7 +204,9 @@ var PlayerPage = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
-    if (nextState.player == null) {
+    if (nextState.player == null 
+        || nextState.my_player == null 
+        || nextState.my_user == null) {
       return false
     }
     return true
@@ -230,6 +232,7 @@ var PlayerPage = React.createClass({
       this.setState({player: obj})
     });
   },
+
   getMe: function(){
     AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
@@ -244,6 +247,7 @@ var PlayerPage = React.createClass({
       this.setState({my_user: obj})
     });
   },
+
   onRefresh: function() {
     this.setState({isRefreshing: true})
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
@@ -268,6 +272,7 @@ var PlayerPage = React.createClass({
   toggleFriend: function() {
     // TODO change status of friend, update local data store
     var setPlayer = this.setMyPlayer;
+
     if (this.state.my_player.friends.indexOf(this.props.playerid) == -1) {
       Player.addFriend(this.state.my_user.playerid, this.props.playerid)
       this.state.my_player.friends.push(this.props.playerid)

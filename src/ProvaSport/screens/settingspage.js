@@ -126,23 +126,23 @@ var SettingsPage = React.createClass({
 
           <View style={_cstyles.section_divider_line}></View>
           
+          <PopoverSelector
+            title={'Country'}
+            items={settings.countries}
+            maxSelect={1}
+            selection={this.state.country}
+            navigator={this.props.navigator}
+            harvest={(country) => this.setState({country})}
+          />
+
+          <View style={_cstyles.section_divider_line}></View>
+
           <SimpleRow
             title={'Password'}
             value={"Change"}
             onPress={this.toChangePassword} />
 
-          <View style={_cstyles.section_divider_line}></View>
-
-          <View style={[styles.input_row, styles.selector]}>
-            <PopoverSelector
-              title={'Country'}
-              items={settings.countries}
-              maxSelect={1}
-              selection={this.state.country}
-              navigator={this.props.navigator}
-              harvest={(country) => this.setState({country})}
-            />
-          </View>
+          
 
           <View style={_cstyles.divider_line}/>
         </ScrollView>
