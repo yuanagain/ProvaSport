@@ -60,6 +60,12 @@ function _GetPlayer(playerid, callback) {
 /*possilby add stuff like isOnTeam etc.*/
 function GetPlayer(playerid) {
   /* var match = new Match(matchid); */
+  if (playerid == -1)
+  {
+    //future return yourself
+    resolve(default_player);
+  }
+  else {
     return new Promise(function(resolve, reject) {
         playerdataRef.child(playerid).on("value", function(snapshot) {
           var player = snapshot.val();
@@ -78,6 +84,7 @@ function GetPlayer(playerid) {
           resolve(player);
         });
      });
+   }
 }
 /*
  * function enterTournment(player, playerid, tournamentid) {
@@ -108,10 +115,10 @@ function createPlayer(obj) {
       var newRef = playerdataRef.push();
       newRef.set(obj, function(error) {
         if (error) {
-          console.log("Data could not be saved." + error);
+          //console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data CREATED successfully "+ newRef.key());
+          //console.log("Data CREATED successfully "+ newRef.key());
           var key = newRef.key();
           //console.log(Team.addMatch)
           resolve(newRef.key());
@@ -150,28 +157,43 @@ function searchPlayers(query, callback) {
 }
 
 export function addFriend(playerid, friend) {
-  var specificRef = playerdataRef.child(playerid).child('friends')
   var list = []
-  specificRef.on('value', function(snap) { list = snap.val();
+  //console.log("adding friend:")
+  //console.log("playerid"+playerid);
+  if (playerid === undefined || playerid === -1){
+    console.log("ERROR")
+    return;
+  }
+  //console.log(friend);
+  return new Promise(function(resolve){
+  playerdataRef.child(playerid).child('friends').on('value', function(snap) {
+    var val = snap.val()
+    //console.log(val)
+    if(val)
+    {
+      list = list.concat(val);
+    }
     list.push(friend);
+    console.log("PLAYER ADDED FRIENDS:"+playerid)
     console.log(list);
-    specificRef.set(list);
+    resolve(list)
   });
+}).then(resp=>{playerdataRef.child(playerid).child('friends').set(list);})
 }
 
 export function removeFriend(playerid, friend) {
-  console.log(playerid)
+  //console.log(playerid)
   var specificRef = playerdataRef.child(playerid).child('friends')
   var list = []
-  console.log("\n\nFRIENDID: "+friend)
+  //console.log("\n\nFRIENDID: "+friend)
   return new Promise(function(resolve){
     specificRef.on('value', function(snap) {
-      console.log(snap.val())
+      //console.log(snap.val())
       resolve(snap.val());
     });
   }).then(function(resp){
     resp = deleteEle(friend, resp);
-    console.log(resp);
+    //console.log(resp);
     if (resp.length != 0){
       specificRef.set(resp);
     }
@@ -183,9 +205,9 @@ export function removeFriend(playerid, friend) {
 }
 
 function deleteEle(value, array) {
-  console.log("DELETING")
-  console.log(array)
-  console.log(value)
+  //console.log("DELETING")
+  //console.log(array)
+  //console.log(value)
   var index = array.indexOf(value);
   if(index > -1){
     array.splice(index, 1);
@@ -317,6 +339,8 @@ function getFriends(playerid){
     })
   })
 }
+
+
 function getFriendsMatches(playerid) {
   return new Promise(function(resolve) {
     var matches = [];
@@ -326,12 +350,14 @@ function getFriendsMatches(playerid) {
         i++;
         matches = matches.concat(friendobj.matches);
         if (i == resp.length){
-          resolve(matches)
+          resolve(unique(matches))
         }
       })
     })
   })
 }
+
+
 function unique(list) {
   return list.filter(function(elem, pos, arr) {
     return arr.indexOf(elem) == pos;
@@ -367,6 +393,41 @@ export  var default_player = {
 //searchPlayers(query,function(resp){console.log("RESPONSE:"+resp)})
 //GetPlayer(id).then(resp=>console.log(resp))
 //getFriendsMatches(0).then(resp=>console.log("RESPONSE: "+resp));
+/*
+ * function sendImageToS3(uri){
+ *   // need to change so we POST with Form
+ *   var AWSSignature = require('react-native-aws-signature');
+ * var awsSignature = new AWSSignature();
+ * var source1 = {uri: response.uri, isStatic: true}; // this is uris which got from image picker
+ *         console.log("source:"+JSON.stringify(source1));
+ *         var credentials = {
+ *           SecretKey: ‘security-key’,
+ *           AccessKeyId: ‘AccesskeyId’,
+ *           Bucket:’Bucket_name’
+ *         };
+ *         var options = {
+ *           path: '/?Param2=value2&Param1=value1',
+ *             method: 'POST',
+ *             service: 'service',
+ *             headers: {
+ *                 'X-Amz-Date': '20150209T123600Z',
+ *                 'host': 'xxxxx.aws.amazon.com'
+ *             },
+ *           region: ‘us-east-1,
+ *           body: response.uri,
+ *           credentials
+ *         };
+ *         awsSignature.setParams(options);
+ *         var signature = awsSignature.getSignature();
+ *         var authorization = awsSignature.getAuthorizationHeader();
+ * }
+ */
+//FOR EMERGENCIES ONLY
+//playerdataRef.child(0).child('friends').remove();
+
+
+
+
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, removeFriend, _AddTournament,
                    searchPlayers, getFriends, getFriendsMatches};

@@ -60,21 +60,26 @@ var NewsFeedPage = React.createClass({
   },
 
   componentDidMount: function () {
-      
+
     AsyncStorage.getItem('user', (err, result)=>{
        //console.log("PLAYER");
       //this is our matches
       console.log("USING ASYNC MATCHES")
       result = JSON.parse(result);
-      Player.getFriendsMatches(result.playerid).then(resp=>this.setState({fmatches:resp}));
+      Player.getFriendsMatches(result.playerid).then(resp=>{resp.concat(result.matches); this.setState({fmatches:resp})});
     });
-      
-
     // this.state.match = this.props.match
   },
 
   onRefresh: function() {
     console.log("REFRESHING")
+        AsyncStorage.getItem('user', (err, result)=>{
+           //console.log("PLAYER");
+          //this is our matches
+          console.log("USING ASYNC MATCHES")
+          result = JSON.parse(result);
+          Player.getFriendsMatches(result.playerid).then(resp=>{resp.concat(result.matches); this.setState({fmatches:resp})});
+        });
   },
 
   goBack: function() {

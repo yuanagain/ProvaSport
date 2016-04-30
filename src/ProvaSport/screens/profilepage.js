@@ -58,10 +58,10 @@ var ProfilePage = React.createClass({
       loginFunction,
       ...props
     } = this.props;
+    console.log("WE ARE RUNNING++========+++==++=====+==+=+++=++\n"+this.state.my_user.playerid)
 
     // add friend component
     var add_friend = <View></View>
-
     if (this.state.my_player) {
 
       if (this.state.my_user.playerid != this.props.playerid
@@ -220,7 +220,7 @@ var ProfilePage = React.createClass({
     var value = AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
-      console.log(obj.playerid)
+      //console.log(obj.playerid)
       this.setState({player: obj})
     });
   },
@@ -234,7 +234,7 @@ var ProfilePage = React.createClass({
     AsyncStorage.getItem('user', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
-      //console.log(obj.playerid)
+      console.log("**************** GOT USER *****************")
       this.setState({my_user: obj})
     });
   },
@@ -261,10 +261,14 @@ var ProfilePage = React.createClass({
 
   toggleFriend: function() {
     // TODO change status of friend, update local data store
+    console.log("HELLLLLLlllllllllllloooooooooooo"+this.state.my_player.friends.indexOf(this.props.playerid) == -1))
+    console.log(this.state.my_user.playerid+"      "+this.props.playerid);
     if (this.state.my_player.friends.indexOf(this.props.playerid) == -1) {
-      Player.addFriend(this.state.my_player.playerid, this.props.playerid)
+      console.log("ADDING");
+      Player.addFriend(this.state.my_user.playerid, this.props.playerid);
     }
     else {
+      console.log("REMOVE!!")
       Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
         this.state.my_player.friends = resp;
         console.log("REP:"+resp)
@@ -279,6 +283,7 @@ var ProfilePage = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
+    this.getMe();
     Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
   },
 

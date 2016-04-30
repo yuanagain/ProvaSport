@@ -265,14 +265,20 @@ var PlayerPage = React.createClass({
 
   toggleFriend: function() {
     // TODO change status of friend, update local data store
+    var setPlayer = this.setMyPlayer;
     if (this.state.my_player.friends.indexOf(this.props.playerid) == -1) {
-      Player.addFriend(this.state.my_player.playerid, this.props.playerid)
+      Player.addFriend(this.state.my_user.playerid, this.props.playerid)
+      this.state.my_player.friends.push(this.props.playerid)
+      setPlayer(this.state.my_player)
+      this.setState({loaded: true})
     }
     else {
+      console.log("REMOVE Friend");
+      var player = this.state.my_player;
       Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
-        this.state.my_player.friends = resp;
-        console.log("REP:"+resp)
-        this.setMyPlayer(this.state.my_player);
+        player.friends = resp;
+        setPlayer(player);
+        this.setState({my_player: player})
       })
     }
   },
