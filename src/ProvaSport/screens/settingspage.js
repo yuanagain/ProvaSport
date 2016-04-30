@@ -128,7 +128,7 @@ var SettingsPage = React.createClass({
           />
 
           <View style={_cstyles.section_divider_line}></View>
-          
+
           <PopoverSelector
             title={'Country'}
             items={settings.countries}
@@ -240,15 +240,7 @@ var SettingsPage = React.createClass({
   validUsername() {
     return (this.state.username.length >= 6)
   },
-  newPassword(email, old, password, passwordConf) {
-    if (this.validPasswordConf()){
-     User.changePassword(old, password, email);
-   }
-   else {
-     alert('error');
-   }
 
-  },
 });
 
 

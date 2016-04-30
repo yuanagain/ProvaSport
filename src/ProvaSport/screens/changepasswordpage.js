@@ -38,6 +38,7 @@ var PasswordChangePage = React.createClass({
         new_password: "",
         old_password: "",
         passwordConf: "",
+        email: ""
       }
     );
   },
@@ -59,6 +60,14 @@ var PasswordChangePage = React.createClass({
                 mode={'nav'}
                 navigator={this.props.navigator} />
         <ScrollView style={_cstyles.body_container}>
+        <TextField
+            label="email"
+            placeholder="login@email.com"
+            secureTextEntry={false}
+            keyboardType='default'
+            onChangeText={(email) => this.setState({email})}
+          />
+
 
           <TextField
               label="Old Password "
@@ -117,8 +126,15 @@ var PasswordChangePage = React.createClass({
     return (this.state.new_password == this.state.passwordConf)
   },
 
-  change_password: function() {
-    // Change password
+  change_password() {
+    if (this.validPasswordConf()){
+      console.log(String(this.state.old_password) + String(this.state.new_password)+ String(this.state.email))
+     User.changePassword(String(this.state.old_password), String(this.state.new_password), String(this.state.email));
+     this.props.navigator.pop()
+   }
+   else {
+     alert('error');
+   }
   },
 
 });

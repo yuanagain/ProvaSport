@@ -286,6 +286,7 @@ function _Login(email, password, callback) {
 
 /* Forgotten password and in-app reset */
 function changePassword(oldPass, newPass, email) {
+  
   ref.changePassword({
     email       : email,
     oldPassword : oldPass,
@@ -441,4 +442,4 @@ var default_user = {
  */
 
 module.exports = {_GetUser, GetUser, default_user, createUser, login, _Login, logout, setUser,
-                  };
+                  changePassword};
