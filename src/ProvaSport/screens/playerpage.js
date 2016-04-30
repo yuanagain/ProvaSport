@@ -246,7 +246,14 @@ var PlayerPage = React.createClass({
   },
   onRefresh: function() {
     this.setState({isRefreshing: true})
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    this.getMe();
+
+    if (this.props.playerid == -1){
+      this.getPlayerId();
+    }
+    else {
+      Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    }
     setTimeout(() => {
       this.setState({isRefreshing: false})
     }, _cvals.timeout);

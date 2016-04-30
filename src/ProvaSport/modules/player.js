@@ -363,7 +363,7 @@ function unique(list) {
     return arr.indexOf(elem) == pos;
   });
 }
-export  var default_player = {
+export var default_player = {
     "name" : {
       "first": "Loading",
       "last": "Loading",
