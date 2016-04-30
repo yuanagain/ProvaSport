@@ -34,6 +34,7 @@
     "express": "~4.9.8",
     "react": "^0.14.8",
     "react-addons-shallow-compare": "^0.14.8",
+    "react-bootstrap": "^0.29.3",
     "react-dom": "^0.14.8",
     "react-router": "^2.3.0"
   }

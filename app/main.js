@@ -8,6 +8,7 @@ import Bracket from './bracket';
 import RoundRobin from './roundrobin';
 import About from './about';
 import Matches from './matches';
+import SearchBox from './search';
 
 ReactDOM.render((
   <Router history={hashHistory}>
@@ -18,6 +19,7 @@ ReactDOM.render((
       <Route path="/matches" component={Matches}/>
       <Route path="/tournamentsBrack" component={Bracket}/>
       <Route path="/tournamentsRR" component={RoundRobin}/>
+      <Route path="/search" component={SearchBox}/>
       <Route path="/about" component={About}/>
     </Route>
   </Router>

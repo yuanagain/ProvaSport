@@ -45,6 +45,7 @@ var Menu = React.createClass({
             <Link to="/matches" activeStyle={activeLink}><li>Matches</li></Link>
             <Link to="/tournamentsBrack" activeStyle={activeLink}><li>Bracket</li></Link>
             <Link to="/tournamentsRR" activeStyle={activeLink}><li>Round Robin</li></Link>
+            <Link to="/search" activeStyle={activeLink}><li>Search</li></Link>
             <Link to="/about" activeStyle={activeLink}><li>About</li></Link>
           </ul>
         </div>

@@ -46,6 +46,7 @@ var Newsfeed = React.createClass({
   render: function() {
     return (
       <div className="entry">
+        <p style={title}> Community News </p>
         <EntryMap data={this.props.data} />
       </div>
     );
@@ -96,11 +97,20 @@ var entry = {
   padding: 30,
   margin: 30,
   marginTop: 10,
+  marginLeft: 40,
   fontFamily: _cvals.mainfont,
   color: '#262626',
   fontSize: 20,
   display: 'block',
 };
+var title = {
+  fontFamily: _cvals.mainfont,
+  fontSize: 36,
+  marginLeft: 20,
+  marginTop: 40,
+  marginBottom: 30,
+
+}
 var text = {
   width: width,
   // float: 'left',
