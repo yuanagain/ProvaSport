@@ -34,7 +34,7 @@ var Search = React.createClass({
                     onChange={this.handleChange}
                     placeholder="Player Name"
           />
-          <Button type="submit" style={styles.submitButton} onClick={this.search}>
+          <Button style={styles.submitButton} onClick={this.search}>
             Search
           </Button>
         </Form>
