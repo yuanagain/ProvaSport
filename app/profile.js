@@ -60,6 +60,7 @@ var InfoBlock = React.createClass({
           <InfoRow title="Country" contents={this.props.player.nationality}/>
           <InfoRow title="Location" contents={this.props.player.home}/>
           <InfoRow title="Sports" contents={this.props.player.sports}/>
+          <InfoRow title="Teams" contents={this.props.player.teams}/>
         </div>
       </div>
     );
