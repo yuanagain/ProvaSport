@@ -6,54 +6,118 @@ var Form = require('react-bootstrap/lib/Form');
 var FormControl = require('react-bootstrap/lib/FormControl');
 var Button = require('react-bootstrap/lib/Button');
 
+var PlayerRow = require('./parts/playerrow');
+
 import './styles/menu.css'
 import _cvals from './constants/customvals'
 
+import * as Player from './modules/player';
 
-var SearchBox = React.createClass({
+
+var Search = React.createClass({
   getInitialState: function() {
     return {
+      players: [],
+      searching: false,
       query: "",
     };
   },
 
   render:function() {
-      return (
-        <div style={styles.body}>
-          <p style={styles.title}> Search Players, Teams </p>
-          <Form inline>
-            <FormControl
+    return (
+      <div style={styles.body}>
+        <p style={styles.title}> Search Players</p>
+        <Form inline>
+          <FormControl
                     type="text"
                     style={styles.input}
-                    value={this.state.query}
-                    placeholder="Player, Team Name"
-                    onChange={this.search}
-            />
-            <Button type="submit" style={styles.submitButton} onClick={this.search}>
-              Search
-            </Button>
-          </Form>
-          <hr style={styles.hline}/>
+                    onChange={this.handleChange}
+                    placeholder="Player Name"
+          />
+          <Button type="submit" style={styles.submitButton} onClick={this.search}>
+            Search
+          </Button>
+        </Form>
+        <hr style={styles.hline}/>
+        <div>
+          <p style={styles.title}> Results </p>
+          {this.state.players.map(function(playerid) {
+            return (
+              <PlayerRow playerid={playerid}/>
+            )
+          })}
         </div>
-      );
+      </div>
+    );
+  },
+  handleChange(e) {
+    this.setState({ query: e.target.value });
+  },
+
+  search: function() {
+    // don't initiate two searches
+    if (this.state.searching == true) {
+      return
     }
+    // don't search empty input
+    if (this.state.query.length == 0) {
+      return
+    }
+    this.setState({searching: true})
+    Player.searchPlayers(this.state.query, this.update)
+  },
+
+  update: function(players) {
+    setTimeout(() => {
+      this.setState({players: players})
+      this.setState({searching: false})
+    }, 500);
+  },
 });
 
-var SearchResults = React.createClass({
+
+/*var SearchResults = React.createClass({
   getInitialState: function() {
     return {
-
+      players: [],
+      searching: false,
+      query: "",
     };
   },
 
   render:function() {
-      return (
-        <div style={styles.body}>
-          <p style={styles.title}> Results </p>
-          <PlayerRow/>
-        </div>
-      );
+    return (
+      <div style={styles.body}>
+        <p style={styles.title}> Results </p>
+        <PlayerRow/>
+      </div>
+    );
+  },
+
+  updateQuery: function(query) {
+    this.setState({query})
+    this.search()
+  },
+
+  search: function() {
+    // don't initiate two searches
+    if (this.state.searching == true) {
+      return
     }
+    // don't search empty input
+    if (this.state.query.length == 0) {
+      return
+    }
+    this.setState({searching: true})
+    Player.searchPlayers(this.state.query, this.update)
+  },
+
+  update: function(players) {
+    setTimeout(() => {
+      this.setState({players: players})
+      this.setState({searching: false})
+    }, 500);
+  },
 });
 
 var Search = React.createClass({
@@ -71,7 +135,7 @@ var Search = React.createClass({
         </div>
       );
     }
-});
+});*/
 
 var styles = {
   title: {
@@ -106,7 +170,8 @@ var styles = {
   },
   hline: {
     marginTop: 40,
-  }
+    marginRight: 15,
+  },
 }
 
 export default Search;

@@ -3,13 +3,16 @@ var React = require('react');
 var _cvals = require('../constants/customvals');
 var _cstyles  = require('../constants/customstyles');
 var defaults  = require('../constants/defaults');
+import {Link} from 'react-router';
+
+import * as Player from '../modules/player';
 
 var PlayerRow = React.createClass({
 
   getInitialState: function() {
     return (
       {
-        player: defaults.default_player,
+        player: Player.default_player,
         // Temp
         //loaded: false,
         loaded: true,
@@ -28,20 +31,23 @@ var PlayerRow = React.createClass({
     var {
       playerid,
     } = this.props;
-      /*return (
-        <div style={styles.playerbrick} >
-          <div style={[styles.center, styles.left]} >
-            <im style={styles.im}
-                   src="http://facebook.github.io/react/img/logo_og.png"/>
-          </div>
-          <div style={styles.right}>
-            <div >
-              <p style={styles.header_text}>{this.state.player.name.full} </p>
+      return (
+        <Link to="/profile" query={{ playerid: this.props.playerid }}>
+          <div style={styles.playerbrick} >
+            <div style={[styles.center, styles.left]} >
+              <img style={styles.im}
+                     src={this.state.player.prof_pic}/>
+            </div>
+            <div style={styles.right}>
+              <div >
+                <p style={styles.name}>{this.state.player.name.full}</p>
+              </div>
             </div>
           </div>
-        </div>
-      )*/
-
+        </Link>
+      )
+    },
+/*
       return (
         <div style={styles.playerbrick} >
           <div style={[styles.center, styles.left]} >
@@ -56,7 +62,7 @@ var PlayerRow = React.createClass({
         </div>
       )
     },
-
+*/
   onPress: function() {
     /*var PlayerPage = require('../screens/playerpage')
     this.props.navigator.push({
@@ -77,36 +83,37 @@ var PlayerRow = React.createClass({
 
   componentDidMount: function () {
     // this.state.match = this.props.match
-    //Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
   },
-
+/*
   componentWillReceiveProps: function(nextProps) {
-    //Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
-  },
+    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+  },*/
 });
 
 var styles = {
   playerbrick: {
     display: 'flex',
-    height: 50,
+    height: 75,
     width: 300,
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingLeft: 4,
+    paddingBottom: 25,
   },
   im: {
-    height: _cvals.thumbslength,
-    width: _cvals.thumbslength,
-    borderRadius: _cvals.thumbslength / 2,
+    height: 60,
+    width: 60,
+    borderRadius: 30,
     marginHorizontal: 4,
   },
   name: {
     fontFamily: _cvals.mainfont,
-    fontSize: 18,
+    fontSize: 28,
+    fontColor: "#626771",
     paddingLeft: 10,
     margin: 0,
-    lineHeight: 2.5,
+    textDecoration: 'none',
   },
   left:{
     display: 'flex',

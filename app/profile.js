@@ -2,23 +2,27 @@ import React from 'react';
 import Newsfeed from './newsfeed'
 
 import _cvals from './constants/customvals'
-
-var data = [
-  {winner: 'James Smith', loser: 'Jen Johnson', result: 'beat', sport: 'tennis', date: 'April 20, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'Johnny Jones', loser: 'Jackie Anderson', result: 'lost to', sport: 'squash',  date: 'April 18, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'Josh Watson', loser: 'Jill Jameson', result: 'tied', sport: 'soccer', date: 'April 16, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'Jessie Wang', loser: 'Joe Arnolds', result: 'beat', sport: 'tennis', date: 'April 10, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'James Smith', loser: 'Jen Johnson', result: 'beat', sport: 'tennis', date: 'April 20, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'Johnny Jones', loser: 'Jackie Anderson', result: 'lost to', sport: 'squash',  date: 'April 18, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'Josh Watson', loser: 'Jill Jameson', result: 'tied', sport: 'soccer', date: 'April 16, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'Jessie Wang', loser: 'Joe Arnolds', result: 'beat', sport: 'tennis', date: 'April 10, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'James Smith', loser: 'Jen Johnson', result: 'beat', sport: 'tennis', date: 'April 20, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'Johnny Jones', loser: 'Jackie Anderson', result: 'lost to', sport: 'squash',  date: 'April 18, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'Josh Watson', loser: 'Jill Jameson', result: 'tied', sport: 'soccer', date: 'April 16, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-  {winner: 'Jessie Wang', loser: 'Joe Arnolds', result: 'beat', sport: 'tennis', date: 'April 10, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
-];
+import * as Player from './modules/player'
 
 var Profile = React.createClass({
+  getInitialState: function() {
+    let { query } = this.props.location
+    return (
+      {
+        playerid: query.playerid,
+        player: Player.default_player,
+      }
+    );
+  },
+
+  fetchPlayer: function(data) {
+    this.setState({player : data})
+  },
+
+  componentDidMount: function () {
+    Player._GetPlayer(this.state.playerid, this.fetchPlayer)
+  },
+
   render: function() {
     return (
       <div>
@@ -26,17 +30,16 @@ var Profile = React.createClass({
         </div>
         <div style={headerContents}>
           <div style={image}>
-            <img src='http://facebook.github.io/react/img/logo_og.png' style={image}/>
+            <img src={this.state.player.prof_pic} style={image}/>
           </div>
-          <p style={name}> Jeremiah Jenkins </p>
+          <p style={name}> {this.state.player.name.full}</p>
         </div>
         <div style={content}>
-          <InfoBlock/>
-          <StatBlock/>
+          <InfoBlock player={this.state.player}/>
+          <StatBlock player={this.state.player}/>
         </div>
         <div style={newsfeedContainer}>
           <p style={newsfeedTitle}> ACTIVITY </p>
-          <Newsfeed data={data}/>
         </div>
       </div>
     );
@@ -46,14 +49,17 @@ var Profile = React.createClass({
 var InfoBlock = React.createClass({
 
   render: function() {
+    var {
+      player,
+    } = this.props;
+
     return (
       <div style={infoBlock}>
         <p style={blockTitle}> PERSONAL INFO </p>
         <div style={info}>
-          <InfoRow title="Location" contents="Princeton University"/>
-          <InfoRow title="Sports" contents="SportBall, GameFrisbee"/>
-          <InfoRow title="Availability" contents="24/7"/>
-          <InfoRow title="Affiliations" contents="Princeton"/>
+          <InfoRow title="Country" contents={this.props.player.nationality}/>
+          <InfoRow title="Location" contents={this.props.player.home}/>
+          <InfoRow title="Sports" contents={this.props.player.sports}/>
         </div>
       </div>
     );
@@ -63,14 +69,18 @@ var InfoBlock = React.createClass({
 var StatBlock = React.createClass({
 
   render: function() {
+    var {
+      player,
+    } = this.props;
+
     return (
       <div style={statBlock}>
         <p style={blockTitle}> STATS </p>
         <div style={stats}>
-          <InfoRow title="Account" contents="$$$$"/>
-          <InfoRow title="Experience" contents="Over 9000"/>
-          <InfoRow title="Friends" contents="24"/>
-          <InfoRow title="Trophies" contents="0 :("/>
+          <InfoRow title="Account" contents={this.props.player.earnings[0].cash}/>
+          <InfoRow title="Experience" contents={this.props.player.earnings[0].xp}/>
+          <InfoRow title="Friends" contents={this.props.player.friends.length}/>
+          <InfoRow title="Trophies" contents={this.props.player.earnings[0].trophies}/>
         </div>
       </div>
     );
@@ -98,7 +108,7 @@ var titleFontSize = 24;
 var leftMargin = 35;
 
 var header = {
-  width: window.innerWidth,
+  width: 2000,
   height: 125,
   backgroundColor: 'gray',
   position: 'relative',
@@ -124,7 +134,7 @@ var name = {
   color: 'white',
   fontSize: 36,
   paddingLeft: 175,
-  marginTop: -150,
+  marginTop: -130,
 };
 
 var content = {

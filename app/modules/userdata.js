@@ -12,9 +12,6 @@
  import * as Match from '../modules/match'
 
 
-import Store from 'react-native-store';
-
-
 var ref= require("firebase");
 ref = new Firebase("https://shining-torch-4767.firebaseio.com");
 

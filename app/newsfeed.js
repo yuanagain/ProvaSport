@@ -6,6 +6,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var _cvals = require('./constants/customvals');
+import * as Match from './modules/match';
+import * as Team from './modules/team';
 
 var dummyData = [
   {winner: 'James Smith', loser: 'Jen Johnson', result: 'beat', sport: 'tennis', date: 'April 20, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
@@ -36,55 +38,84 @@ var Entry = React.createClass({
 });
 
 var Newsfeed = React.createClass({
-  getDefaultProps: function() {
+  getInitialState: function() {
     return (
       {
-        data: dummyData
+        data: null,
       }
     )
   },
+
+  componentDidMount: function() {
+    Match.getAllMatches().then(
+      resp=>{
+        this.setState({data: resp})
+      }
+    )
+  },
+
   render: function() {
+
     return (
       <div className="entry">
         <p style={title}> Community News </p>
-        <EntryMap data={this.props.data} />
+        <EntryMap data={this.state.data} />
       </div>
     );
-  }
+  },
+
 });
 
 var EntryMap = React.createClass({
   render: function() {
-    var vals = this.props.data.map(function(entry) {
+    if (this.props.data == null) {
       return (
-        <Entry winner={entry.winner} result={entry.result} loser={entry.loser} sport={entry.sport}>
-          <div style={date}>
-            {entry.date}
-          </div>
-          <div style={pic_container}>
-            <img style={pic}
-              src = {entry.pic_a}
-            />
-            <div style={score}>
-              {entry.score_a}
-            </div>
-          </div>
-          <div style={pic_container}>
-            <img style={pic}
-              src = {entry.pic_b}
-            />
-            <div style={score}>
-              {entry.score_b}
-            </div>
-          </div>
-        </Entry>
+        <div className="entryMap">
+          <p> Loading... </p>
+        </div>
+      )
+    }
+    else {
+      var vals = this.props.data.map(function(entry) {
+        var team1;
+        var team2;
+        Team.getTeam(entry.teams[0]).then(resp1=>{
+          team1 = resp1
+          Team.getTeam(entry.teams[1]).then(resp2=>{
+            team2 = resp2
+            return (
+              <Entry winner={team1.name} result={entry.result} loser={entry.loser} sport={entry.sport}>
+                <div style={date}>
+                  {entry.date}
+                </div>
+                <div style={pic_container}>
+                  <img style={pic}
+                    src = {entry.pic_a}
+                  />
+                  <div style={score}>
+                    {entry.score_a}
+                  </div>
+                </div>
+                <div style={pic_container}>
+                  <img style={pic}
+                    src = {entry.pic_b}
+                  />
+                  <div style={score}>
+                    {entry.score_b}
+                  </div>
+                </div>
+              </Entry>
+            );
+          })
+        })
+      });
+      console.log(vals)
+      return (
+        <div className="entryMap">
+          {vals}
+        </div>
       );
-    });
-    return (
-      <div className="entryMap">
-        {vals}
-      </div>
-    );
+    }
   }
 });
 
