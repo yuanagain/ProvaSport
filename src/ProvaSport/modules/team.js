@@ -66,6 +66,10 @@ export function addPlayer(teamid, playerid) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
         var players = []
         players = snapshot.val();
+        //corner case handling
+        if(players === null){
+          resolve([])
+        }
         resolve(players);
       });
    });
@@ -77,25 +81,27 @@ export function addPlayer(teamid, playerid) {
   });
 }
 
+/*
+
+  @params: teamid of Team object adding match
+  TODO ADD MATCHES TO PlAYERS TOO
+  */
 export function addMatch(teamid, matchid) {
-  var promise = new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('matches').on("value", function(snapshot) {
         var matches = []
         matches = snapshot.val();
-        if (matches)
-          matches.push(matchid);
-        else {
-          matches = [matchid];
+        //corner case handling
+        if(matches === null){
+          resolve([])
         }
-        resolve(matches);
+        else {
+          matches.push(matchid);
+          resolve(matches);
+        }
       });
-   });
-  promise.then(function(list){
-    /*INPUT STOCK DATA TODO*/
-    //list.push(1);
-
+   }).then(function(list){
     teamdb.child(teamid).child('matches').set(list)
-    //add to players
   }).catch(function(err){
     console.log("Failed to add match to team "+teamid+ "   "+matchid + "\n" + err);
   });

@@ -115,6 +115,7 @@ var createRR = function(data) {
           //could possibly connect here too if connection not an issue
           matchi.teams[0] = team1;
           matchi.teams[1] = team2;
+          matchi.tournamentid = data.id;
           matches.push(matchi);
           //console.log(matchi) //correct object form testing
         }
@@ -164,6 +165,7 @@ var createBracket = function(data) {
       //could possibly connect here too if connection not an issue
       matchi.teams[0] = team1;
       matchi.teams[1] = team2;
+      matchi.tournamentid = data.id;
       matches.push(matchi);
     }
     //console.log("matches.length: "+matches.length)

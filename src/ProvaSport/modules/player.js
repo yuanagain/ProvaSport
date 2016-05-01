@@ -182,7 +182,7 @@ export function addFriend(playerid, friend) {
 }).then(resp=>{playerdataRef.child(playerid).child('friends').set(list);})
 }
 
-export function removeFriend(playerid, friend) {
+export function removeFriend(playerid, friend, callback) {
   //console.log(playerid)
   var specificRef = playerdataRef.child(playerid).child('friends')
   var list = []
@@ -190,31 +190,27 @@ export function removeFriend(playerid, friend) {
   return new Promise(function(resolve){
     specificRef.on('value', function(snap) {
       //console.log(snap.val())
-      resolve(snap.val());
+      var list = snap.val();
+      // corner case if they have no friends to begin with
+      if (list === null|| list === undefined){
+        resolve([])
+      }
+      else {
+        resolve(list);
+      }
     });
   }).then(function(resp){
-    resp = deleteEle(friend, resp);
-    //console.log(resp);
-    if (resp.length != 0){
+      //console.log(resp);
+      var index = resp.indexOf(friend);
+      if (index > -1){
+        resp.splice(index, 1);
+      }
+      //console.log(resp);
       specificRef.set(resp);
-    }
-    else {
-      resp = [];
-      specificRef.set(resp);
-    }
+      return Promise.resolve(resp)
   })
 }
-
-function deleteEle(value, array) {
-  //console.log("DELETING")
-  //console.log(array)
-  //console.log(value)
-  var index = array.indexOf(value);
-  if(index > -1){
-    array.splice(index, 1);
-  }
-  return array;
-}
+//removeFriend(1, 0).then(resp=>console.log("TEST"+resp))
 
 export function addMatch(playerid, matchid) {
   console.log(playerid);

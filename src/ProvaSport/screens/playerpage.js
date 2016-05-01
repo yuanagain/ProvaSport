@@ -204,8 +204,8 @@ var PlayerPage = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
-    if (nextState.player == null 
-        || nextState.my_player == null 
+    if (nextState.player == null
+        || nextState.my_player == null
         || nextState.my_user == null) {
       return false
     }
@@ -279,31 +279,52 @@ var PlayerPage = React.createClass({
   toggleFriend: function() {
     // TODO change status of friend, update local data store
     var setPlayer = this.setMyPlayer;
-
     if (this.state.my_player.friends.indexOf(this.props.playerid) == -1) {
-      Player.addFriend(this.state.my_user.playerid, this.props.playerid)
-      this.state.my_player.friends.push(this.props.playerid)
-      setPlayer(this.state.my_player)
-      this.setState({loaded: true})
+      /*
+       * Player.addFriend(this.state.my_user.playerid, this.props.playerid)
+       * this.state.my_player.friends.push(this.props.playerid)
+       * setPlayer(this.state.my_player)
+       * this.setState({loaded: true})
+       */
+       this.addFrnd()
     }
     else {
       console.log("REMOVE Friend");
-      var player = this.state.my_player;
-      console.log("calling remove friend"+this.state.my_user.playerid+"  "+this.props.playerid)
-      Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
-        player.friends = resp;
-        console.log("changing in cache")
-        setPlayer(player);
-        this.setState({my_player: player})
-      })
+      this.removeFrnd();
+      /*
+       * var player = this.state.my_player;
+       * console.log("calling remove friend"+this.state.my_user.playerid+"  "+this.props.playerid)
+       * Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
+       *   player.friends = resp;
+       *   console.log("changing in cache")
+       *   setPlayer(player);
+       *   this.setState({my_player: player})
+       * })
+       */
     }
   },
   setMyPlayer: function(obj){
     AsyncStorage.setItem('player', JSON.stringify(obj), (error, response)=>{
       console.log(obj)
+      this.setState({player:response})
     });
   },
-
+  removeFrnd: function(){
+    var setPlayer = this.setMyPlayer;
+    var player = this.state.my_player;
+    console.log("calling remove friend"+this.state.my_user.playerid+"  "+this.props.playerid)
+    Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
+      player.friends = resp;
+      //console.log("changing in cache")
+      setPlayer(player);
+    })
+  },
+  addFrnd: function() {
+    var setPlayer = this.setMyPlayer;
+    Player.addFriend(this.state.my_user.playerid, this.props.playerid)
+    this.state.my_player.friends.push(this.props.playerid)
+    setPlayer(this.state.my_player)
+  },
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.playerid === -1){
       this.getPlayerId()

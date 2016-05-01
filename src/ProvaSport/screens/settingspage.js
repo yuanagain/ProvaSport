@@ -115,7 +115,7 @@ var SettingsPage = React.createClass({
             items={settings.sports}
             navigator={this.props.navigator}
             selection={this.state.sports}
-            harvest={this.setSport}
+            harvest={(sports) => this.setSport(sports)}
           />
 
           <View style={_cstyles.section_divider_line}></View>
@@ -144,7 +144,7 @@ var SettingsPage = React.createClass({
       <View style={_cstyles.buttons_container}>
         <WideButton
           text="Save Changes"
-          onPress={this.loginFunction}
+          onPress={this.setSport}
           />
       </View>
     </View>
@@ -238,14 +238,14 @@ var SettingsPage = React.createClass({
     this.state.player.country = this.state.country;
     Player.setPlayer(this.state.playerid, this.state.player)
   },
-  setSport(val) {
-    var player = JSON.parse(JSON.stringify(this.state.player));
-    player.sport = val;
+  setSport(selection) {
+    var player = this.state.player;
+    console.log("PLAYER");
     console.log(player);
     //NOW set up earnings
-    player.earnings.forEach(function(sportKey){
+    player.earnings.forEach(function(sportKey) {
       //if earnings does not have new Sport add
-      if (player.sports.indexOf(sportKey) == -1)
+      if (selection.indexOf(sportKey) == -1)
       {
         player.earnings[sportKey] = {
           cash: 0,
@@ -258,6 +258,7 @@ var SettingsPage = React.createClass({
 
       }
     })
+    //player.sports = selection;
     Player.setPlayer(this.state.playerid, player)
     setAsyncP(player)
   },
@@ -266,6 +267,11 @@ var SettingsPage = React.createClass({
       console.log(resp)
     })
   },
+  getAsyncP(){
+    AsyncStorage.setItem('player', (err, resp)=>{
+      return resp;
+    })
+  }
 
 });
 

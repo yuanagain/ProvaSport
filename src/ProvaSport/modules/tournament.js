@@ -26,20 +26,18 @@ function createTournament(obj) {
           reject();
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
-          /*
-           * obj.matches.forEach(function(matchid) {
-           *   Match.addTournament(matchid, newRef.key());
-           * });
-           * //bind team to tourn
-           * obj.teams.forEach(function(teamid) {
-           *   Team.addTournament(teamid, newRef.key());
-           *   Team.getTeam(teamid).then(function(team){
-           *     team.players.forEach(function(playerid){
-           *       Player.addTournament(playerid, newRef.key())
-           *     });
-           *   });
-           * });
-           */
+          obj.matches.forEach(function(matchid) {
+            Match.addTournament(matchid, newRef.key());
+          });
+          //bind team to tourn
+          obj.teams.forEach(function(teamid) {
+            Team.addTournament(teamid, newRef.key());
+            Team.getTeam(teamid).then(function(team){
+              team.players.forEach(function(playerid){
+                Player.addTournament(playerid, newRef.key())
+              });
+            });
+          });
           resolve(newRef.key());
         }
       });
@@ -162,6 +160,9 @@ function addTeam(tournamentid, teamid) {
       tourndb.child(tournamentid).child('teams').on("value", function(snapshot) {
         var teams = []
         teams = snapshot.val();
+        if (teams === null){
+          resolve([])
+        }
         resolve(teams);
       });
    });
@@ -178,6 +179,9 @@ function addMatches(tournamentid, matchid) {
       tourndb.child(tournamentid).child('matches').on("value", function(snapshot) {
         var matches = []
         matches = snapshot.val();
+        if (matches === null){
+          resolve([])
+        }
         resolve(matches);
       });
    });
@@ -194,6 +198,9 @@ function _AddTeam(tournamentid, teamid, callback) {
       tourndb.child(tournamentid).child('teams').on("value", function(snapshot) {
         var teams = []
         teams = snapshot.val();
+        if (teams === null){
+          resolve([])
+        }
         resolve(teams);
       });
    });
@@ -211,6 +218,9 @@ function _AddMatches(tournamentid, matchid, callback) {
       tourndb.child(tournamentid).child('matches').on("value", function(snapshot) {
         var matches = []
         matches = snapshot.val();
+        if (matches === null){
+          resolve([])
+        }
         resolve(matches);
       });
    });
@@ -222,22 +232,6 @@ function _AddMatches(tournamentid, matchid, callback) {
     console.log("Failed");
   });
 }
-function makeTournament(obj){
-  createTournament(obj).then(function(newTournid){
-
-  })
-}
-
-function updateTourn(tournObject) {
-  //updates
-}
-
-
-
-/*Autonation of updating the tournament
-   Will be called when the previous match is completed by both teams */
-
-
 
 
 

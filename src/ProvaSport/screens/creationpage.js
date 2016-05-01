@@ -188,6 +188,7 @@ var ContractsPage = React.createClass({
     tournament.name = this.state.name;
     tournament.location = this.state.location;
 
+
     if (this.state.event_type[0] == 'Round Robin') {
       console.log("CREATE RR!")
       this.createRR(tournament)
@@ -279,9 +280,10 @@ output -
     console.log("CreateRR2:  "+id+ "   ")
       var data = {
         teams: obj.teams,
-        defaultM: defaults
-      }
-      console.log(obj.teams)
+        defaultM: defaults,
+        id: id
+      };
+      //console.log(obj.teams)
       _clogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(()=>this.toRR(id)).catch(function(err){console.log(err)})
   },
   createBracket: function(obj, defaults) {
@@ -291,7 +293,8 @@ output -
   createBracket2: function(id, obj, defaults) {
       var data = {
         teams: obj.teams,
-        defaultM: defaults
+        defaultM: defaults,
+        id: id
       }
       _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
   },

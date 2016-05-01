@@ -24,6 +24,9 @@ function _GetMatch(matchid, callback) {
     var promise = new Promise(function(resolve, reject) {
         matchdb.child(matchid).on("value", function(snapshot) {
           var match = snapshot.val();
+          if(match === null){
+            match = default_match;
+          }
           if(!match.hasOwnProperty('teams')){
             match.teams = [];
           }
@@ -165,12 +168,7 @@ function updateScores(matchid, data) {
 //  return getMatch(matchid)
 }
 
-//THIS may not work...
-function selectScores(matchid, index, num = 1){
-  getMatch(matchid).then(function (value) {
-    value.scores.splice(index, num);
-  })
-}
+
 /*Update the status of the match
   0- 4 for code numbers
   */
@@ -438,6 +436,11 @@ function getAllMatches() {
       });
    });
 }
+
+function addTournament(matchid, tournid) {
+
+}
+
 //getAllMatches().then(resp=>console.log(resp))
 //tieMatchTo(35, 1, 1)
 /*CHANGED ***************HOW TO PARSE ARRAYS************** TODO*/
