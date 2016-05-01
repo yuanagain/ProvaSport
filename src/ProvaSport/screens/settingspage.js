@@ -50,10 +50,12 @@ var SettingsPage = React.createClass({
       {
         user: User.default_user,
         name: "",
+        playerid: -1,
         player: Player.default_player,
         profImage: AddImageIcon,
         country: [],
         sports: [],
+        home: "",
       }
     );
   },
@@ -95,7 +97,7 @@ var SettingsPage = React.createClass({
       ...props
     } = this.props;
 
-    var settings = _settings.getSettings()
+    var settings = _settings.config;
     return (
 
     <View style={styles.container}>
@@ -115,7 +117,7 @@ var SettingsPage = React.createClass({
             items={settings.sports}
             navigator={this.props.navigator}
             selection={this.state.sports}
-            harvest={(sports) => this.setSport(sports)}
+            harvest={(sports) => this.setState({sports})}
           />
 
           <View style={_cstyles.section_divider_line}></View>
@@ -137,6 +139,13 @@ var SettingsPage = React.createClass({
             onPress={this.toChangePassword} />
 
           <View style={_cstyles.divider_line}/>
+
+          <TextField
+            label="Home "
+            placeholder="location"
+            secureTextEntry={false}
+            onChangeText={(home) => this.setState({home})}
+          />
         </ScrollView>
 
       </View>
@@ -144,7 +153,7 @@ var SettingsPage = React.createClass({
       <View style={_cstyles.buttons_container}>
         <WideButton
           text="Save Changes"
-          onPress={this.setSport}
+          onPress={this.harvest}
           />
       </View>
     </View>
@@ -164,10 +173,12 @@ var SettingsPage = React.createClass({
 
   componentDidMount: function() {
     AsyncStorage.getItem('player', (error, response)=>{
-      this.setState({player: response})
+      var player = JSON.parse(response)
+      this.setState({player: player})
     })
     AsyncStorage.getItem('user', (error, response)=>{
-      this.setState({playerid: response.playerid})
+      var user = JSON.parse(response);
+      this.setState({playerid: user.playerid})
     })
 
     console.log(_clogic.createTrace(4))
@@ -235,41 +246,69 @@ var SettingsPage = React.createClass({
     return (this.state.username.length >= 6)
   },
   changeCountry() {
-    this.state.player.country = this.state.country;
-    Player.setPlayer(this.state.playerid, this.state.player)
-  },
-  setSport(selection) {
+    var pid = this.state.playerid;
     var player = this.state.player;
-    console.log("PLAYER");
-    console.log(player);
-    //NOW set up earnings
-    player.earnings.forEach(function(sportKey) {
-      //if earnings does not have new Sport add
-      if (selection.indexOf(sportKey) == -1)
-      {
-        player.earnings[sportKey] = {
-          cash: 0,
-          xp: 0,
-          trophies: -1
-        };
-      }
-      //keep sport's earnings for later?
-      else {
-
-      }
+    if (this.state.country.length === 1) {
+      player.nationality = this.state.country;
+      Player.setPlayer(pid, player)
+      this.setAsyncP(player)
+   }
+  },
+  setHome() {
+    var pid = this.state.playerid;
+    var player = this.state.player;
+    player.home = this.state.home;
+    Player.setPlayer(pid, player);
+    this.setAsyncP(player);
+  },
+  setSport() {
+    var pid = this.props.playerid;
+    var sports = this.state.sports;
+    AsyncStorage.getItem('player', (err, resp)=>{
+      var player = JSON.parse(resp);
+      player.sports = sports;
+      var i = 0;
+      sports.forEach(function(sport){
+        i++;
+        //new sport need to initialize earnings
+        if (!(sport in player.earnings)) {
+          //console.log("adding earnings");
+          player.earnings[sport] = {
+            cash: 0,
+            xp: 0,
+            trophies: []
+          };
+        }
+        if (i == sports.length) {
+          // all done now set
+          AsyncStorage.setItem('player', JSON.stringify(player),(err, resp)=>{
+            console.log("RESPONSE");
+            console.log(player);
+            Player.setPlayer(pid, player);
+          })
+        }
+      })
     })
-    //player.sports = selection;
-    Player.setPlayer(this.state.playerid, player)
-    setAsyncP(player)
+  },
+  harvest: function() {
+    //only set data if data has been inputted
+    if (this.state.sports.length > 0){
+      this.setSport();
+    }
+    this.changeCountry();
+    if (this.state.home.length > 0){
+      this.setHome();
+    }
+    this.props.navigator.pop()
   },
   setAsyncP(playerobj) {
-    AsyncStorage.setItem('player', playerobj, (err, resp)=>{
+    AsyncStorage.setItem('player', JSON.stringify(playerobj), (err, resp)=>{
       console.log(resp)
     })
   },
   getAsyncP(){
     AsyncStorage.setItem('player', (err, resp)=>{
-      return resp;
+      return Promise.resolve(JSON.parse(resp))
     })
   }
 

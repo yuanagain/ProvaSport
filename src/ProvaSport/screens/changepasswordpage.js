@@ -51,7 +51,7 @@ var PasswordChangePage = React.createClass({
       ...props
     } = this.props;
 
-    var settings = _settings.getSettings()
+    //var settings = _settings.getSettings()
     return (
 
     <View style={styles.container}>

@@ -31,6 +31,7 @@ var {
   Platform,
   TouchableOpacity,
   AndroidDatePicker,
+  Alert,
 } = React;
 
 var LoginPage = React.createClass({
@@ -151,8 +152,16 @@ var LoginPage = React.createClass({
        *  DB.user.find().then(resp => console.log(resp))
        *  DB.player.find().then(resp => console.log(resp))
         */
-       User._Login(email, pass, this.grabUser);
-        // watch this it might jump the gun
+       User.login(email, pass).then(this.grabUser).catch(function(error){
+         console.log(error)
+         Alert.alert(
+           'Invalid Login',
+           String(error),
+           [
+             {text: 'OK'},
+           ]
+         )
+       });
   },
   _setInitialUser: function(obj) {
 
@@ -166,7 +175,7 @@ var LoginPage = React.createClass({
       });
 
     } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
+      console.log('AsyncStorage error: ' + error.message);
     }
   },
   _setInitialPlayer: function(obj) {

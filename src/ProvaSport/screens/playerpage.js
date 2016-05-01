@@ -305,8 +305,8 @@ var PlayerPage = React.createClass({
   },
   setMyPlayer: function(obj){
     AsyncStorage.setItem('player', JSON.stringify(obj), (error, response)=>{
-      console.log(obj)
-      this.setState({player:response})
+      //console.log(obj)
+      this.setState({my_player: obj})
     });
   },
   removeFrnd: function(){
@@ -318,6 +318,7 @@ var PlayerPage = React.createClass({
       //console.log("changing in cache")
       setPlayer(player);
     })
+
   },
   addFrnd: function() {
     var setPlayer = this.setMyPlayer;

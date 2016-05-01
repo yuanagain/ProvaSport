@@ -16,40 +16,7 @@ import Store from 'react-native-store';
 
 
 var ref= require("firebase");
-ref = new Firebase("https://shining-torch-4767.firebaseio.com");
-
-    /* LOGIN TODO
-    On Shutdown: ref.unauth(); to deauthorize.
-    */
-function something() {
-    if (isNew){
-      newName();
-    }
-    else {
-      ref.authWithPassword({
-        email    : email,
-        password : password
-      }, authHandler);
-    }
-    /*Firebase generate a user id*/
-  }
-
-
-
-/* check if the user is logged in given authentication data */
-function authDataCallback(authData) {
-  if (authData) {
-    console.log("User " + authData.uid + " is logged in with " + authData.provider);
-    ref.offAuth(authDataCallback);// logged in no longer need to listen for login
-  } else {
-    console.log("User is logged out");
-  }
-}
-  /* authenitcation handler */
-function authHandler() {
-  ref.offAuth()
-}
-
+ref = new Firebase("https://shining-torch-4767.firebaseio.com")
 /* register new user */
 function create(authData, object) {
   /*Actual login*/
@@ -230,16 +197,16 @@ function login(email, password) {
       if (error) {
        switch (error.code) {
          case "INVALID_EMAIL":
-           console.log("The specified user account email is invalid.");
+           reject("The specified user account email is invalid.");
            break;
          case "INVALID_PASSWORD":
-           console.log("The specified user account password is incorrect.");
+           reject("The specified user account password is incorrect.");
            break;
          case "INVALID_USER":
-           console.log("The specified user account does not exist.");
+           reject("The specified user account does not exist.");
            break;
          default:
-           console.log("Error logging user in:", error);
+           reject("Error logging user in:", error);
        }
         reject();
      } else {
@@ -286,7 +253,7 @@ function _Login(email, password, callback) {
 
 /* Forgotten password and in-app reset */
 function changePassword(oldPass, newPass, email) {
-  
+
   ref.changePassword({
     email       : email,
     oldPassword : oldPass,

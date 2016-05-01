@@ -1,7 +1,12 @@
 import * as User from '../modules/userdata'
-
-var getSettings = function() {
-  return (
+/*
+  SETINGS object
+  acccess each field in the main app by calling:
+  Settings.config.attribute
+  represents what we support
+  input data validation
+ */
+var config =
   {
     "sports": ['Tennis', 'Basketball', 'Soccer', 'Squash',
                'Badminton', 'Football', 'Baseball', 'Other'],
@@ -13,8 +18,6 @@ var getSettings = function() {
     			20,21,22,23,24,25,26,27,28,29,30,31,32],
     "eventTypes": ["Elimination", "Round Robin"],
     "countries": ["USA", "Canada", "Mexico"]
-  }
-  )
 };
 
-module.exports = {getSettings};
+module.exports = {config};

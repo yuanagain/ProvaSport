@@ -32,7 +32,7 @@ function _GetPlayer(playerid, callback) {
         playerdataRef.child(playerid).on("value", function(snapshot) {
           var player = snapshot.val();
           if (player==null){
-            console.log("\n\n*******************NULL********************\n"+playerid)
+            //console.log("\n\n*******************NULL********************\n"+playerid)
             resolve(default_player)
           }
           if(!player.hasOwnProperty('teams')){
@@ -87,15 +87,20 @@ function GetPlayer(playerid) {
      });
    }
 }
-/*
- * function enterTournment(player, playerid, tournamentid) {
- *   player.tournaments.append(torunamentid);
- *   Tournament.addPlayer(tournamentid, playerid).then(resp => if (resp){
- *     set
- *   return player;
- *
- * }
- */
+function setPlayer(id, obj) {
+  /* var match = new Match(matchid); */
+    return new Promise(function(resolve, reject) {
+      playerdataRef.child(id).set(obj, function(error) {
+        if (error) {
+          console.log("Data could not be saved." + error);
+          reject();
+        } else {
+          console.log("Data saved successfully ");
+          resolve(obj);
+        }
+      });
+    });
+}
 function _CreatePlayer(callback) {
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
@@ -202,7 +207,7 @@ export function removeFriend(playerid, friend, callback) {
   }).then(function(resp){
       //console.log(resp);
       var index = resp.indexOf(friend);
-      if (index > -1){
+      if (index > -1) {
         resp.splice(index, 1);
       }
       //console.log(resp);
@@ -496,4 +501,4 @@ function uploadFile() {
 
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, removeFriend, _AddTournament,
-                   searchPlayers, getFriends, getFriendsMatches};
+                   searchPlayers, getFriends, getFriendsMatches, setPlayer};

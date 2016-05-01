@@ -112,8 +112,7 @@ var PlayerSearchPage = React.createClass({
       return
     }
     this.setState({searching: true})
-    Player.searchPlayers(this.state.query, this.update)
-
+    Player.searchPlayers(this.state.query).then(this.update)
   },
 
   update: function(players) {
