@@ -24,6 +24,9 @@ function _GetMatch(matchid, callback) {
     var promise = new Promise(function(resolve, reject) {
         matchdb.child(matchid).on("value", function(snapshot) {
           var match = snapshot.val();
+          if(!match.hasOwnProperty('teams')){
+            match.teams = [];
+          }
           resolve(match);
         });
      });
@@ -38,6 +41,9 @@ function getMatch(matchid) {
   return new Promise(function(resolve, reject) {
       matchdb.child(matchid).on("value", function(snapshot) {
         var match = snapshot.val();
+        if(!match.hasOwnProperty('teams')){
+          match.teams = [];
+        }
         resolve(match);
       });
    });
@@ -233,7 +239,9 @@ function _SetFromList(matchidlist, matchobjlist, callback) {
   var matchids = []
   var i = 0;
   matchobjlist.forEach(function(matchobj){
-    setMatch(matchidlist[i], matchobj).then(resp=>{if(i == matchidlist.length)callback(matchobjlist)}).catch(function(err){console.log("IN SetFromList: 229:\t"+err)});
+    setMatch(matchidlist[i], matchobj).then(resp=>{
+      if(i == matchidlist.length)callback(matchobjlist)
+    }).catch(function(err){console.log("IN SetFromList: 229:\t"+err)});
       i+=1;
   })
 }
@@ -243,7 +251,9 @@ function setFromList(matchidlist, matchobjlist) {
     var matchids = []
     var i = 0;
     matchobjlist.forEach(function(matchobj){
-      setMatch(matchidlist[i], matchobj).then(resp=>{if(i == matchidlist.length)resolve(matchobjlist)}).catch(function(err){console.log("IN SetFromList: 229:\t"+err)});
+      setMatch(matchidlist[i], matchobj).then(resp=>{
+        if(i == matchidlist.length)resolve(matchobjlist)
+      }).catch(function(err){console.log("IN SetFromList: 229:\t"+err)});
         i+=1;
     })
   })
@@ -417,6 +427,9 @@ function getAllMatches() {
         var i = 0;
         snapshot.forEach(function(match){
           i++;
+          if(!match.hasOwnProperty('teams')){
+            match.teams = [];
+          }
           matches.push(match.val())
           if(i == len){
             resolve(matches)

@@ -170,9 +170,10 @@ var LoginPage = React.createClass({
     }
   },
   _setInitialPlayer: function(obj) {
-    /* 
+    /*
      * var configObject = {
-     *
+     *  max_team_size: 2,
+        max_teams_particpating: 16,
      * };
      * AsyncStorage.setItem('config',  configObject, (err, result)=>{
      *   //write the configuration file

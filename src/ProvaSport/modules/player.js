@@ -33,6 +33,7 @@ function _GetPlayer(playerid, callback) {
           var player = snapshot.val();
           if (player==null){
             console.log("\n\n*******************NULL********************\n"+playerid)
+            resolve(default_player)
           }
           if(!player.hasOwnProperty('teams')){
             player.teams = [];
@@ -216,48 +217,56 @@ function deleteEle(value, array) {
 }
 
 export function addMatch(playerid, matchid) {
-  var promise = new Promise(function(resolve, reject) {
+  console.log(playerid);
+  console.log(matchid);
+  return new Promise(function(resolve, reject) {
       playerdataRef.child(playerid).child('matches').on("value", function(snapshot) {
         var matches = []
         matches = snapshot.val();
+        if(matches == null){
+          resolve([])
+        }
         resolve(matches);
       });
-   });
-  promise.then(function(list){
+   }).then(function(list){
     list.push(matchid);
     playerdataRef.child(playerid).child('matches').set(list)
   }).catch(function(){
     console.log("Failed");
   });
 }
-
+//addMatch('-KGYDKMSon-By4z-oLx8', 1).then(resp=>console.log(resp))
 
 export function addTeam(playerid, teamid) {
-  var promise = new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
       playerdataRef.child(playerid).child('teams').on("value", function(snapshot) {
         var teams = []
         teams = snapshot.val();
+        if (teams === null){
+          resolve([]);
+        }
         resolve(teams);
       });
-   });
-  promise.then(function(list){
+   }).then(function(list){
     list.push(teamid);
     playerdataRef.child(playerid).child('teams').set(list)
   }).catch(function(){
     console.log("Failed");
   });
 }
-
+//addTeam('-KGYDKMSon-By4z-oLx8', 0).then(resp=>console.log(resp))
 
 export function addTournament(playerid, torunamentid) {
-  var promise = new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
       playerdataRef.child(playerid).child('tournaments').on("value", function(snapshot) {
         var tournaments = []
         tournaments = snapshot.val();
+        if (tournaments === null){
+          resolve([])
+        }
         resolve(tournaments);
       });
-   });
-  promise.then(function(list){
+   }).then(function(list) {
     list.push(tournamentid);
     playerdataRef.child(playerid).child('tournaments').set(list)
   }).catch(function(){
@@ -270,10 +279,12 @@ function _AddMatch(playerid, matchid, callback) {
       playerdataRef.child(playerid).child('matches').on("value", function(snapshot) {
         var matches = []
         matches = snapshot.val();
+        if (matches === null){
+          resolve([])
+        }
         resolve(matches);
       });
-   });
-  promise.then(function(list){
+   }).then(function(list){
     list.push(matchid);
     playerdataRef.child(playerid).child('matches').set(list)
     callback(list)
@@ -288,6 +299,9 @@ function _AddTeam(playerid, teamid, callback) {
       playerdataRef.child(playerid).child('teams').on("value", function(snapshot) {
         var teams = []
         teams = snapshot.val();
+        if (teams === null){
+          resolve([])
+        }
         resolve(teams);
       });
    });
@@ -306,6 +320,9 @@ function _AddTournament(playerid, tournamentid, callback) {
       playerdataRef.child(playerid).child('tournaments').on("value", function(snapshot) {
         var tournaments = []
         tournaments = snapshot.val();
+        if (tournaments === null){
+          resolve([])
+        }
         resolve(tournaments);
       });
    });
@@ -317,6 +334,8 @@ function _AddTournament(playerid, tournamentid, callback) {
     console.log("Failed to add Tournament to Player   " + err);
   });
 }
+
+
 function getFriends(playerid){
   return new Promise(function(resolve){
     GetPlayer(playerid).then(resp=>{

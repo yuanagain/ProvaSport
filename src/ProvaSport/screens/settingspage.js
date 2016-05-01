@@ -50,16 +50,7 @@ var SettingsPage = React.createClass({
       {
         user: User.default_user,
         name: "",
-        old: "",
-        first: "",
-        last: "",
-        gender: null,
-        birthDate: new Date(),
-        age: '',
-        email: '',
-        username: '',
-        password: '',
-        passwordConf: '',
+        player: Player.default_player,
         profImage: AddImageIcon,
         country: [],
         sports: [],
@@ -160,10 +151,6 @@ var SettingsPage = React.createClass({
     );
   },
 
-  setSport: function(selection) {
-    this.setState({sports: selection})
-  },
-
   toChangePassword() {
     var ChangePasswordPage = require('../screens/changepasswordpage')
     this.props.navigator.push({
@@ -176,6 +163,13 @@ var SettingsPage = React.createClass({
   },
 
   componentDidMount: function() {
+    AsyncStorage.getItem('player', (error, response)=>{
+      this.setState({player: response})
+    })
+    AsyncStorage.getItem('user', (error, response)=>{
+      this.setState({playerid: response.playerid})
+    })
+
     console.log(_clogic.createTrace(4))
     var matches = [
       {
@@ -239,6 +233,38 @@ var SettingsPage = React.createClass({
 
   validUsername() {
     return (this.state.username.length >= 6)
+  },
+  changeCountry() {
+    this.state.player.country = this.state.country;
+    Player.setPlayer(this.state.playerid, this.state.player)
+  },
+  setSport(val) {
+    var player = JSON.parse(JSON.stringify(this.state.player));
+    player.sport = val;
+    console.log(player);
+    //NOW set up earnings
+    player.earnings.forEach(function(sportKey){
+      //if earnings does not have new Sport add
+      if (player.sports.indexOf(sportKey) == -1)
+      {
+        player.earnings[sportKey] = {
+          cash: 0,
+          xp: 0,
+          trophies: -1
+        };
+      }
+      //keep sport's earnings for later?
+      else {
+
+      }
+    })
+    Player.setPlayer(this.state.playerid, player)
+    setAsyncP(player)
+  },
+  setAsyncP(playerobj) {
+    AsyncStorage.setItem('player', playerobj, (err, resp)=>{
+      console.log(resp)
+    })
   },
 
 });
