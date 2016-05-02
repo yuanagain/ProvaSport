@@ -125,7 +125,7 @@ var NewsEntry = React.createClass({
     this.setState({loser: team})
   },
 
-  componentDidMount: function() {
+  componentWillMount: function() {
     if (this.props.match.teams) {
       var winnerIndex = _ctools.getWinnerIndex(this.props.match)
       var loserIndex = (winnerIndex = 1) ? 0 : 1;

@@ -29,13 +29,11 @@ var Matches = React.createClass({
   },
 
   componentWillMount: function() {
-   /* var matchid;
-    for (matchid in this.state.matchids)
-      Match._GetMatch(matchid, this.fetchMatch)*/
     var matchid;
-    for (var i = 0; i < this.state.matchids.length; i++)
-      Match._GetMatch(this.state.matchids[i], this.fetchMatch)
-    console.log(this.state.matches)
+    if (this.state.matchids != null) {
+      for (var i = 0; i < this.state.matchids.length; i++)
+        Match._GetMatch(this.state.matchids[i], this.fetchMatch)
+    }
   },
 
   render: function() {
