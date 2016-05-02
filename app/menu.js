@@ -24,7 +24,6 @@ var Menu = React.createClass({
         <div id = "menu" style={menu}>
           <ul style={menuItems}>
             <Link to="/home" activeStyle={activeLink}><li>Home</li></Link>
-            <Link to="/matches" activeStyle={activeLink}><li>Matches</li></Link>
             <Link to="/search" activeStyle={activeLink}><li>Search</li></Link>
             <Link to="/about" activeStyle={activeLink}><li>About</li></Link>
           </ul>

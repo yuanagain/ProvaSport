@@ -41,17 +41,14 @@ var Newsfeed = React.createClass({
   getInitialState: function() {
     return (
       {
-        data: null,
+        matches: null,
       }
     )
   },
 
   componentDidMount: function() {
-    Match.getAllMatches().then(
-      resp=>{
-        this.setState({data: resp})
-      }
-    )
+    var matchData = Match.getAllMatches()
+    this.setState({matches: matchData})
   },
 
   render: function() {
@@ -59,7 +56,7 @@ var Newsfeed = React.createClass({
     return (
       <div className="entry">
         <p style={title}> Community News </p>
-        <EntryMap data={this.state.data} />
+        <EntryMap matches={this.state.matches} />
       </div>
     );
   },
@@ -68,7 +65,7 @@ var Newsfeed = React.createClass({
 
 var EntryMap = React.createClass({
   render: function() {
-    if (this.props.data == null) {
+    if (this.props.matches == null) {
       return (
         <div className="entryMap">
           <p> Loading... </p>
@@ -76,7 +73,7 @@ var EntryMap = React.createClass({
       )
     }
     else {
-      var vals = this.props.data.map(function(entry) {
+      var vals = this.props.matches.map(function(entry) {
         var team1;
         var team2;
         Team.getTeam(entry.teams[0]).then(resp1=>{

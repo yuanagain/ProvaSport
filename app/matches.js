@@ -8,6 +8,7 @@ import _ctools from './libs/customtools'
 import * as Match from './modules/match'
 import * as Team from './modules/team'
 import * as Player from './modules/player'
+import {Link} from 'react-router';
 
 var Matches = React.createClass({
   getInitialState: function() {
@@ -70,7 +71,7 @@ var Matches = React.createClass({
         <div id="column_right" style={column_right}>
           <TitleEntry match={this.state.matches[this.state.activeMatchIndex]} />
           <h1 style={section_label}>PLAYERS</h1>
-          <PlayersMap data={this.props.data} />
+          <PlayersEntry match={this.state.matches[this.state.activeMatchIndex]} />
           <h1 style={section_label}>MATCH INFO</h1>
           <MatchEntry match={this.state.matches[this.state.activeMatchIndex]} />
           <h1 style={section_label}>SCORES</h1>
@@ -116,12 +117,33 @@ var TitleEntry = React.createClass({
 
 // Players layout
 var PlayersEntry = React.createClass({
+  getInitialState: function() {
+    return (
+      {
+        team1: Team.default_team,
+        team2: Team.default_team,
+      }
+    );
+  },
   getDefaultProps: function() {
     return (
       {
         match: null,
       }
     )
+  },
+
+  fetchTeam1: function(team) {
+    this.setState({team1: team})
+  },
+
+  fetchTeam2: function(team) {
+    this.setState({team2: team})
+  },
+
+  componentWillReceiveProps: function(nextprops) {
+    Team._GetTeam(nextprops.match.teams[0], this.fetchTeam1)
+    Team._GetTeam(nextprops.match.teams[1], this.fetchTeam2)
   },
 
   render: function() {
@@ -134,17 +156,75 @@ var PlayersEntry = React.createClass({
         <div></div>
       )
     }
+
     return (
       <span style={entry}>
         <div style={team_label_1}>
-          {this.props.team_1}
+          {this.state.team1.name}
         </div>
-        {this.props.children}
+        <PlayersRow playerids={this.state.team1.players}/>
         <div style={team_label_2}>
-          {this.props.team_2}
+          {this.state.team2.name}
         </div>
-        {this.props.children}
+        <PlayersRow playerids={this.state.team2.players}/>
       </span>
+    );
+  }
+});
+
+var PlayersRow = React.createClass({
+  getInitialState: function() {
+    return (
+      {
+        players: [],
+        initialLoad: true,
+      }
+    );
+  },
+  getDefaultProps: function() {
+    return (
+      {
+        playerids: [],
+      }
+    )
+  },
+
+  fetchPlayer: function(player) {
+    if (this.state.players.length < this.props.playerids.length) {
+      var players = this.state.players.slice()
+      players.push(player)
+      this.setState({players: players})
+    }
+  },
+
+  componentWillReceiveProps: function(nextprops) {
+    var playerid;
+    for (playerid in nextprops.playerids) {
+      Player._GetPlayer(playerid, this.fetchPlayer)
+    }
+  },
+
+  render: function() {
+    var self = this
+    var {
+      playerids,
+    } = this.props;
+    if (this.state.players == null) {
+      return (
+        <div></div>
+      )
+    }
+
+    var playerPics = this.state.players.map(function(player, index) {
+      return (
+        <img style={pic} src={player.prof_pic}/>
+      );
+    })
+
+    return (
+      <div style={pic_container}>
+        {playerPics}
+      </div>
     );
   }
 });
@@ -255,96 +335,6 @@ var ScoresEntry = React.createClass({
     );
   }
 });
-
-
-
-// TODO: How do I map the pics separately from var data[]?
-var PlayersMap = React.createClass({
-  render: function() {
-    var vals = this.props.data.map(function(entry) {
-      return (
-        <PlayersEntry team_1={entry.team_1} team_2={entry.team_2}>
-          <div style={pic_container}>
-            <img style={pic}
-              src = 'http://facebook.github.io/react/img/logo_og.png'
-            />
-            <img style={pic}
-              src = 'http://facebook.github.io/react/img/logo_og.png'
-            />
-            <img style={pic}
-              src = 'http://facebook.github.io/react/img/logo_og.png'
-            />
-            <img style={pic}
-              src = 'http://facebook.github.io/react/img/logo_og.png'
-            />
-          </div>
-        </PlayersEntry>
-      );
-    });
-    return (
-      <div className="playersMap">
-        {vals}
-      </div>
-    );
-  }
-});
-
-// Match Info
-/*
-var MatchMap = React.createClass({
-  render: function() {
-    var vals = this.props.data.map(function(entry) {
-      return (
-        <MatchEntry date_abbr={entry.date_abbr} time={entry.time} location={entry.location} sport_cap={entry.sport_cap} payout={entry.payout} win_bonus={entry.win_bonus}>
-        </MatchEntry>
-      );
-    });
-    return (
-      <div className="scoresMap" style={matchInfo}>
-        {vals}
-      </div>
-    );
-  }
-});
-*/
-
-// Scores
-var ScoresMap = React.createClass({
-  render: function() {
-    var vals = this.props.data.map(function(entry) {
-      return (
-        <ScoresEntry team_1={entry.team_1} score_1={entry.score_a} team_2={entry.team_2} score_2={entry.score_b}>
-        </ScoresEntry>
-      );
-    });
-    return (
-      <div className="matchMap">
-        {vals}
-      </div>
-    );
-  }
-});
-
-// Page title
-/*var TitleMap = React.createClass({
-  render: function() {
-    var vals = this.props.data.map(function(entry, i) {
-      return (
-        <div key={i}>
-          <TitleEntry date={entry.date} key={i}>
-          </TitleEntry>
-        </div>
-      );
-    });
-    return (
-      <div className="matchMap">
-        {vals}
-      </div>
-    );
-  }
-});
-*/
-
 
 
 // Sidebar
@@ -489,7 +479,7 @@ var cover_pic = {
 var section_label = {
   fontFamily: _cvals.mainfont,
   fontWeight: 200,
-  paddingTop: 28,
+  paddingTop: 10,
   paddingLeft: 28,
   width: 300,
   color: '#262626',
