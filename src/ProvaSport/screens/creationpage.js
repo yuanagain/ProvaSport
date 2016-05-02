@@ -207,6 +207,9 @@ var ContractsPage = React.createClass({
   },
   createRR: function(obj) {
     var defaults = Match.default_match;
+    defaults.location = obj.location;
+    defaults.name = obj.name;
+    defaults.sports = obj.sports;
     Tournament.createTournament(obj).then(resp=>this.createRR2(resp, obj, defaults))
   },
   createRR2: function(id, obj, defaults) {
@@ -225,6 +228,9 @@ var ContractsPage = React.createClass({
   },
   createBracket: function(obj) {
     var defaults = Match.default_match;
+    defaults.location = obj.location;
+    defaults.name = obj.name;
+    defaults.sports = obj.sports;
     Tournament.createTournament(obj).then(resp=>this.createBracket2(resp, obj, defaults))
   },
   createBracket2: function(id, obj, defaults) {
@@ -240,7 +246,7 @@ var ContractsPage = React.createClass({
   },
 
   setTeam: function(players, index) {
-    this.state.teams[index] = players
+    this.state.teams[index] = players;
     this.setState({teams: this.state.teams})
   },
 

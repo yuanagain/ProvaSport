@@ -14,18 +14,23 @@ teamdb = new Firebase("https://shining-torch-4767.firebaseio.com/team");
 /*possibly add stuff like isOnTeam etc.*/
 
 function _GetTeam(teamid, callback) {
-  console.log("_GetTeam");
+  console.log("_GetTeam  "+teamid);
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
         teamdb.child(teamid).on("value", function(snapshot) {
           var team = snapshot.val();
-          if(!team.hasOwnProperty('players')){
-            team.players = [];
+          if(team === null){
+            resolve(default_team)
           }
-          if(!team.hasOwnProperty('matches')){
-            team.matches = [];
+          else {
+            if(!team.hasOwnProperty('players')){
+              team.players = [];
+            }
+            if(!team.hasOwnProperty('matches')){
+              team.matches = [];
+            }
+            resolve(team);
           }
-          resolve(team);
         });
      });
     promise.then(function(value){
@@ -40,17 +45,22 @@ export function getTeam(teamid) {
     return new Promise(function(resolve, reject) {
         teamdb.child(teamid).on("value", function(snapshot) {
           var team = snapshot.val();
-          if(!team.hasOwnProperty('players')){
-            team.players = [];
+          if(team === null){
+            resolve(TBD)
           }
-          if(!team.hasOwnProperty('matches')){
-            team.matches = [];
+          else {
+            if(!team.hasOwnProperty('players')){
+              team.players = [];
+            }
+            if(!team.hasOwnProperty('matches')){
+              team.matches = [];
+            }
+            resolve(team);
           }
-          resolve(team);
         });
      });
 }
-
+//getTeam("BYE").then(resp=>{console.log(resp)})
 function updatePlayers(teamid, playerArray) {
   teamdb.child(teamid).update({
     "players": playerArray,
@@ -109,6 +119,7 @@ export function addMatch(teamid, matchid) {
           });
           matches.push(matchid);
           console.log("Added match: "+matches+" to team "+teamid+" with players "+team.players)
+          matches = unique(matches);
           resolve(matches);
         }
       });
@@ -119,7 +130,7 @@ export function addMatch(teamid, matchid) {
   });
 }
 export function addTournament(teamid, tournid) {
-  console.log("addTourn");
+  //console.log("addTourn");
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).on("value", function(snapshot) {
         var team = snapshot.val();
@@ -132,7 +143,11 @@ export function addTournament(teamid, tournid) {
     console.log("Failed to add tournament to team "+teamid+ "   "+tournid + "\n" + err);
   });
 }
-
+function unique(list) {
+  return list.filter(function(elem, pos, arr) {
+    return arr.indexOf(elem) == pos;
+  });
+}
 var findOne = function (haystack, arr) {
     return arr.some(function (v) {
         return haystack.indexOf(v) >= 0;
@@ -239,6 +254,8 @@ function createTeam(obj) {
 
 function _CreateTeam(obj, callback) {
   console.log("_Create");
+  console.log("SETTING PROFPIC");
+  //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic;})
   var promise = new Promise(function(resolve, reject) {
       var newRef = teamdb.push();
       newRef.set(obj, function(error) {
@@ -253,6 +270,7 @@ function _CreateTeam(obj, callback) {
     })
     promise.then(function (value) {
       //connect player to team
+      //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic})
       obj.players.forEach(function(playerid){
         Player.addTeam(playerid, value)
       });

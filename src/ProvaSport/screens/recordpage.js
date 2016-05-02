@@ -18,6 +18,7 @@ var SimpleRow = require('../smallparts/simplerow')
 var TextField = require('../smallparts/textfield')
 
 import * as Match from '../modules/match'
+import * as Player from '../modules/player'
 import * as Team from '../modules/team'
 import * as _settings from '../modules/settings'
 
@@ -243,19 +244,17 @@ var RecordPage = React.createClass({
   reset: function() {
     this.setState(reset_form)
     this.setState({teams: [[],[],]})
-    this.setState({scores: []})
+    this.setScores([])
   },
 
   // attempt to create ad hoc teams
   /* TODO: team customization*/
   createTeams: function() {
     //console.log(this.state.teams[1])
-    var team1 = {
-      "name": "Team 1",
-      "players": this.state.teams[0],
-      "matches": [],
-      "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
-    }
+    var team1 = Team.default_team;
+    team1.name = "Team 1";
+    team1.players = [].concat(this.state.teams[0]);
+    //Player.GetPlayer(team1.players[0]).then(resp=>{team1.thumbnail = resp.prof_pic})
     //validate teams
     if (this.validateTeams()) {
      Team._CreateTeam(team1, this.harvestTeam1)
@@ -264,12 +263,10 @@ var RecordPage = React.createClass({
   },
 
   harvestTeam1: function(team) {
-    var team2 = {
-      "name": "Team 2",
-      "players": this.state.teams[1],
-      "matches": [],
-      "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
-    }
+    var team2 = Team.default_team;
+    team2.name = "Team 2";
+    team2.players = [].concat(this.state.teams[1]);
+    //Player.GetPlayer(team2.players[0]).then(resp=>{team1.thumbnail = resp.prof_pic})
     this.state.teams[0] = team;
     Team._CreateTeam(team2, this.harvestTeam2)
   },
@@ -293,15 +290,23 @@ var RecordPage = React.createClass({
   },
 
   // run once both teams have been created
+  //pass along navigaotr
   // TODO: add match to teams' and players' match lists
   submitMatch: function() {
+    //could introduce error with reporting no scores
+    var now = Date.now();
     var match = {
       name: this.state.name,
       location: this.state.location,
       contract: this.state.contract,
       sport: this.state.sport,
       teams: [this.state.teams[0], this.state.teams[1]],
-      status: 0,
+      scores: this.state.scores,
+      status: {
+        0: 0,
+        1: 0
+      },
+      datetime: now,
       payoutdata: {
         xp : 100,
         cash: 100,
@@ -313,6 +318,10 @@ var RecordPage = React.createClass({
 
   confirmSubmit: function(match) {
     //Player.addMatch(this.state.teams[0][0], match);
+    Team.addMatch(this.state.teams[0], match)
+    Team.addMatch(this.state.teams[1], match)
+    //incase we added ourselves
+    this.reloadPlayer();
     console.log(match)
     this.reset()
   },
@@ -337,7 +346,16 @@ var RecordPage = React.createClass({
   setSport: function(sport) {
     this.setState({sport: sport})
   },
-
+  reloadPlayer: function(){
+    AsyncStorage.getItem('user',(err,resp)=>{
+      resp = JSON.parse(resp);
+      Player._GetPlayer(resp.playerid, function(playerobj){
+        AsyncStorage.setItem('player', JSON.stringify(playerobj),(err,resp)=>{
+          console.log(resp);
+        })
+      })
+    })
+  }
 });
 
 

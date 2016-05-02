@@ -130,7 +130,7 @@ var getWinner = function(match) {
   }
 
   var status = codeToString(match.status)
-  if (status == "Recording needed") {
+  if (match.status[0]!=4 || match.status[1]!=4) {
     return "TBD"
   }
 

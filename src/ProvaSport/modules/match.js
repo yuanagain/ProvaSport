@@ -101,7 +101,7 @@ function createMatch(obj) {
             obj.teams.forEach(function(teamid){
               Team.addMatch(teamid, key);
               //Get the team?
-              Team.addTeamPlayersToMatch(teamid, key);
+              //Team.addTeamPlayersToMatch(teamid, key);
             /* if(obj.tournamentid != -1 ){
               Player.addTournament(playerid, obj.tournamentid)
             }*/
@@ -112,7 +112,11 @@ function createMatch(obj) {
       });
     });
 }
-
+function unique(list) {
+  return list.filter(function(elem, pos, arr) {
+    return arr.indexOf(elem) == pos;
+  });
+}
 
 function _CreateMatch(obj, callback) {
   var promise = new Promise(function(resolve, reject) {
@@ -134,11 +138,13 @@ function _CreateMatch(obj, callback) {
           Team.addMatch(teamid, value);
           //Get the team?
 
-           Team.getTeam(teamid).then(function(team){
-              team.players.forEach(function(playerid){
-                Player.addMatch(playerid, value)
-             });
-            });
+           /*
+           *  Team.getTeam(teamid).then(function(team){
+           *     team.players.forEach(function(playerid){
+           *       Player.addMatch(playerid, value)
+           *    });
+           *   });
+            */
 
 
           /* if(obj.tournamentid != -1 ){
@@ -308,16 +314,6 @@ var default_match =
           "location": "TBD"
     };
 
-
-/* Simultanious update of match player test module to
- * determine futhur use
- * Then we create tournaments tonight
- */
-function tieMatchTo(matchid, playerid, teamid) {
-   Match.addTeam(teamid);
-   Team.addMatch(matchid);
-   Player.addMatch(matchid);
-}
 /*Fetch a bunch of match objects and return the list of objects
   We need the list of objects to be in order of matchidArr
   this can be accomplished by:

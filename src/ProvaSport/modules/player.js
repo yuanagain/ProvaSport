@@ -231,6 +231,7 @@ export function addMatch(playerid, matchid) {
       });
    }).then(function(list){
     list.push(matchid);
+    list = unique(list);
     playerdataRef.child(playerid).child('matches').set(list)
   }).catch(function(){
     console.log("Failed");
@@ -250,6 +251,7 @@ export function addTeam(playerid, teamid) {
       });
    }).then(function(list){
     list.push(teamid);
+    list = unique(list);
     playerdataRef.child(playerid).child('teams').set(list)
   }).catch(function(){
     console.log("Failed");
@@ -269,6 +271,7 @@ export function addTournament(playerid, tournamentid) {
       });
    }).then(function(list) {
     list.push(tournamentid);
+    list = unique(list);
     playerdataRef.child(playerid).child('tournaments').set(list)
   }).catch(function(){
     console.log("Failed to add tournament "+tournamentid);
@@ -288,7 +291,7 @@ function _AddMatch(playerid, matchid, callback) {
    }).then(function(list){
     list.push(matchid);
     playerdataRef.child(playerid).child('matches').set(list)
-    callback(list)
+    callback(unique(list))
   }).catch(function(){
     console.log("Failed");
   });
@@ -309,7 +312,7 @@ function _AddTeam(playerid, teamid, callback) {
   promise.then(function(list){
     list.push(teamid);
     playerdataRef.child(playerid).child('teams').set(list)
-    callback(list)
+    callback(unique(list))
   }).catch(function(){
     console.log("Failed");
   });
@@ -330,7 +333,7 @@ function _AddTournament(playerid, tournamentid, callback) {
   promise.then(function(list){
     list.push(tournamentid);
     playerdataRef.child(playerid).child('tournaments').set(list)
-    callback(list)
+    callback(unique(list))
   }).catch(function(err){
     console.log("Failed to add Tournament to Player   " + err);
   });

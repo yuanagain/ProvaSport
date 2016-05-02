@@ -98,7 +98,7 @@ update if needed
       // if this is an unconfirmed match
       buttons = <WideButtonPair textRight={"Confirm"}
                                 textLeft={"Adjust"}
-                                onPressRight={()=>{this.changeStatus(4);} }
+                                onPressRight={()=>{this.changeStatus(4); this.checkToUpdate()} }
                                 onPressLeft={()=>this.toRecordPage()} />
     }
 
@@ -194,7 +194,10 @@ update if needed
     //console.log("LOADTEAMS")
     return this.state.match.teams[0]
   },
+  //will update the match and possibly the tournament correctly
+  checkToUpdate: function(){
 
+  },
   getTeamid2: function() {
     //console.log("LOADTEAMS")
     return this.state.match.teams[1]
@@ -220,13 +223,12 @@ update if needed
     this.loadTeams()
   },
   teamOn:function(){
-
-    if (this.state.team1.players.indexOf(this.state.playerid) > -1){
+    if (this.state.playerid in this.state.team1.players){
       var code = this.state.match.status[0];
       this.setState({myStatus: code,
         myTeam: 0})
     }
-    else if (this.state.team2.players.indexOf(this.state.playerid) > -1){
+    else if (this.state.playerid in this.state.team2.players){
       var code = this.state.match.status[1];
       this.setState({myStatus: code,
       myTeam: 1})
@@ -246,6 +248,7 @@ update if needed
       id: "RecordingScores",
       component: RecordPage,
       passProps: {
+        mode: "nav",
         navigator: this.props.navigator,
         matchid: this.props.matchid,
         match: this.state.match,

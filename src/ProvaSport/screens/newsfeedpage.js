@@ -69,6 +69,7 @@ var NewsFeedPage = React.createClass({
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
           var matches = resp.concat(player.matches);
+          //matches = unique(matches);
           this.setState({fmatches: matches})
         });
       });
@@ -85,6 +86,7 @@ var NewsFeedPage = React.createClass({
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
           var matches = resp.concat(player.matches);
+          //matches = unique(matches);
           this.setState({fmatches: matches})
         });
       });
@@ -93,22 +95,27 @@ var NewsFeedPage = React.createClass({
   },
 
   onRefresh: function() {
-    AsyncStorage.getItem('player', (err, player)=>{
-      player = JSON.parse(player);
-      AsyncStorage.getItem('user', (err, result)=>{
-         //console.log("PLAYER");
-        //this is our matches
-        //console.log("USING ASYNC MATCHES")
-        result = JSON.parse(result);
-        Player.getFriendsMatches(result.playerid).then(resp=>{
-          var matches = resp.concat(player.matches);
-          this.setState({fmatches: matches})
+//hard re-fresh fetch from server
+    AsyncStorage.getItem('user', (err, result)=>{
+      result = JSON.parse(result);
+
+      Player.GetPlayer(result.playerid).then(player=>{
+        AsyncStorage.setItem('player', JSON.stringify(player), (err, response)=>{
+          Player.getFriendsMatches(result.playerid).then(resp=>{
+            var matches = resp.concat(player.matches);
+            //matches = unique(matches);
+            this.setState({fmatches: matches})
+          });
         });
       });
       // this.state.match = this.props.match
     })
   },
-
+  unique: function(list) {
+    return list.filter(function(elem, pos, arr) {
+      return arr.indexOf(elem) == pos;
+    });
+  },
   goBack: function() {
     this.props.navigator.pop()
   },
