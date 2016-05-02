@@ -96,17 +96,19 @@ function createMatch(obj) {
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
           var key = newRef.key();
-          //console.log(Team.addMatch)
-         if (obj.teams) {
-            obj.teams.forEach(function(teamid){
-              Team.addMatch(teamid, key);
-              //Get the team?
-              Team.addTeamPlayersToMatch(teamid, key);
-            /* if(obj.tournamentid != -1 ){
-              Player.addTournament(playerid, obj.tournamentid)
-            }*/
-            });
-          }
+          //is this what we really need to call?
+         /*
+         *  if (obj.teams) {
+         *     obj.teams.forEach(function(teamid){
+         *       Team.addMatch(teamid, key);
+         *       //Get the team?
+         *       Team.addTeamPlayersToMatch(teamid, key);
+         *     /* if(obj.tournamentid != -1 ){
+         *       Player.addTournament(playerid, obj.tournamentid)
+         *     }*
+         *     });
+         *   }
+          */
           resolve(newRef.key());
         }
       });
@@ -129,23 +131,25 @@ function _CreateMatch(obj, callback) {
     })
     promise.then(function (value) {
       // add all matchid to players
-      if (obj.teams){
-        obj.teams.forEach(function(teamid){
-          Team.addMatch(teamid, value);
-          //Get the team?
-
-           Team.getTeam(teamid).then(function(team){
-              team.players.forEach(function(playerid){
-                Player.addMatch(playerid, value)
-             });
-            });
-
-
-          /* if(obj.tournamentid != -1 ){
-            Player.addTournament(playerid, obj.tournamentid)
-          }*/
-        });
-      }
+      /*
+       * if (obj.teams){
+       *   obj.teams.forEach(function(teamid){
+       *     Team.addMatch(teamid, value);
+       *     //Get the team?
+       *
+       *      Team.getTeam(teamid).then(function(team){
+       *         team.players.forEach(function(playerid){
+       *           Player.addMatch(playerid, value)
+       *        });
+       *       });
+       *
+       *
+       *     /* if(obj.tournamentid != -1 ){
+       *       Player.addTournament(playerid, obj.tournamentid)
+       *     }*
+       *   });
+       * }
+       */
 
       callback(value);
     }).catch(function(err) {

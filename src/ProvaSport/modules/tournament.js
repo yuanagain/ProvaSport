@@ -26,12 +26,8 @@ function createTournament(obj) {
           reject();
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
-          obj.matches.forEach(function(matchid) {
-            Match.addTournament(matchid, newRef.key());
-          });
           //bind team to tourn
           obj.teams.forEach(function(teamid) {
-            Team.addTournament(teamid, newRef.key());
             Team.getTeam(teamid).then(function(team){
               team.players.forEach(function(playerid){
                 Player.addTournament(playerid, newRef.key())
@@ -56,15 +52,11 @@ function _CreateTournament(obj, callback) {
           resolve(newRef.key());
         }
       });
-    })
-    promise.then(function (value) {
+    }).then(function (value) {
       // add all matchid to players
-      obj.matches.forEach(function(matchid) {
-        Match.addTournament(matchid, value);
-      });
-      //bind team to tourn
+      //matches already bound by tournamentid
+      //bind team's players to tourn
       obj.teams.forEach(function(teamid) {
-        Team.addTournament(teamid, value);
         Team.getTeam(teamid).then(function(team){
           team.players.forEach(function(playerid){
             Player.addTournament(playerid, value)

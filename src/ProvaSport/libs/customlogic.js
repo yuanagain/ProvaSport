@@ -110,7 +110,8 @@ var createRR = function(data) {
           var team1 = data.teams[i];
           var team2 = data.teams[j];
           //make a copy of the JSON object
-          var matchi = JSON.parse(JSON.stringify(Match.default_match));
+          console.log(data.defaultM)
+          var matchi = JSON.parse(JSON.stringify(data.defaultM));
           //var matchi = data.matchinfo[j + teams.length*i] // get data match obj (just stock data but migh have a name and other attributes)
           //could possibly connect here too if connection not an issue
           matchi.teams[0] = team1;
@@ -160,7 +161,7 @@ var createBracket = function(data) {
     for (var i = 0; i < placements.length - 1; i += 2) {
       var team1 = placements[i];
       var team2 = placements[i+1];
-      var matchi = JSON.parse(JSON.stringify(Match.default_match));
+      var matchi = JSON.parse(JSON.stringify(data.defaultM));
       //var matchi = data.matchinfo[j + teams.length*i] // get data match obj (just stock data but migh have a name and other attributes)
       //could possibly connect here too if connection not an issue
       matchi.teams[0] = team1;

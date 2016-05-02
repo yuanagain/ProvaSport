@@ -30,7 +30,7 @@ function _GetTeam(teamid, callback) {
     promise.then(function(value){
       callback(value);
     }).catch(function(err){
-      console.log("Failed  "+ err);
+      console.log("Failed to _GetTeam  "+ err);
     });
 }
 export function getTeam(teamid) {
@@ -77,7 +77,7 @@ export function addPlayer(teamid, playerid) {
     list.push(playerid);
     teamdb.child(teamid).child('players').set(list)
   }).catch(function(){
-    console.log("Failed to add player to team");
+    console.log("Failed to add player "+playerid+" to team "+teamid);
   });
 }
 
@@ -88,15 +88,23 @@ export function addPlayer(teamid, playerid) {
   */
 export function addMatch(teamid, matchid) {
   return new Promise(function(resolve, reject) {
-      teamdb.child(teamid).child('matches').on("value", function(snapshot) {
+      teamdb.child(teamid).on("value", function(snapshot) {
         var matches = []
-        matches = snapshot.val();
+        var team = snapshot.val();
+        if (team.hasOwnProperty('matches')) {
+          matches = team.matches;
+        }
         //corner case handling
-        if(matches === null){
-          resolve([])
+        if(team === null){
+          //tie each to player
+          console.log("ERROR NO TEAM FOUND WITH ID: "+teamid);
         }
         else {
+          team.players.forEach(function(playerid){
+            Player.addMatch(playerid, matchid)
+          });
           matches.push(matchid);
+          console.log("Added match: "+matches+" to team "+teamid+" with players "+team.players)
           resolve(matches);
         }
       });
@@ -106,7 +114,19 @@ export function addMatch(teamid, matchid) {
     console.log("Failed to add match to team "+teamid+ "   "+matchid + "\n" + err);
   });
 }
-
+export function addTournament(teamid, tournid) {
+  return new Promise(function(resolve, reject) {
+      teamdb.child(teamid).on("value", function(snapshot) {
+        var team = snapshot.val();
+        team.players.forEach(function(playerid){
+          Player.addTournament(playerid, tournid)
+        });
+        resolve(players);
+      });
+   }).catch(function(err){
+    console.log("Failed to add tournament to team "+teamid+ "   "+tournid + "\n" + err);
+  });
+}
 
 var findOne = function (haystack, arr) {
     return arr.some(function (v) {
@@ -120,7 +140,12 @@ function _AddPlayer(teamid, playerid, callback) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
         var players = []
         players = snapshot.val();
-        resolve(players);
+        if(players == null){
+          resolve([])
+        }
+        else {
+          resolve(players);
+        }
       });
    });
   promise.then(function(list){
@@ -134,13 +159,26 @@ function _AddPlayer(teamid, playerid, callback) {
 
 function _AddMatch(teamid, matchid, callback) {
   var promise = new Promise(function(resolve, reject) {
-      teamdb.child(teamid).child('matches').on("value", function(snapshot) {
-        var matches = []
-        matches = snapshot.val();
+    teamdb.child(teamid).on("value", function(snapshot) {
+      var matches = []
+      var team = snapshot.val();
+      matches = team.matches;
+      //corner case handling
+      if(matches === null){
+        //tie each to player
+        team.players.forEach(function(playerid){
+          Player.addTeam(playerid, matchid)
+        });
+        resolve([]);
+      }
+      else {
+        team.players.forEach(function(playerid){
+          Player.addTeam(playerid, matchid)
+        });
         resolve(matches);
-      });
-   });
-  promise.then(function(list){
+      }
+    });
+ }).then(function(list){
     list.push(matchid);
     teamdb.child(teamid).child('matches').set(list)
     callback(list)
@@ -148,7 +186,7 @@ function _AddMatch(teamid, matchid, callback) {
     console.log("Failed to add match to team\n" + err);
   });
 }
-
+//make sure updated with current data and not new object
 function _SetTeam(obj, teamid, callback) {
   var promise = new Promise(function(resolve, reject) {
       teamdb.child(teamid).set(obj, function(error) {
@@ -180,11 +218,10 @@ function createTeam(obj) {
         } else {
           var key = newRef.key();
           console.log("Data CREATED successfully createT "+ newRef.key());
-          /*
-           * [obj.players].forEach(function(playerid){
-           *   Player.addTeam(playerid, key)
-           * });
-           */
+          // connect the player to the team
+          obj.players.forEach(function(playerid){
+            Player.addTeam(playerid, key)
+          });
           resolve(newRef.key());
         }
       });
@@ -205,8 +242,8 @@ function _CreateTeam(obj, callback) {
       });
     })
     promise.then(function (value) {
-      //console.log("\n\n"+Player.default_player)
-      [0,1].forEach(function(playerid){
+      //connect player to team
+      obj.players.forEach(function(playerid){
         Player.addTeam(playerid, value)
       });
       callback(value)
@@ -302,4 +339,4 @@ var bye = {
  */
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
    getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch,
-   teamOneorTwo, onTeams, createFromList, findOne};
+   teamOneorTwo, onTeams, createFromList, findOne, addTournament};

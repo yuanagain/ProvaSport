@@ -24,6 +24,7 @@ var TextField = require('../smallparts/textfield')
 
 import * as Match from '../modules/match'
 import * as Team from '../modules/team'
+import * as Player from '../modules/player'
 import * as Tournament from '../modules/tournament'
 import * as _ctools from '../libs/customtools.js'
 import * as _clogic from '../libs/customlogic.js'
@@ -59,6 +60,7 @@ var ContractsPage = React.createClass({
         teams: [[],[],],
         num_teams: [2],
         items: [0,1],
+        playerid: -1,
       }
     );
   },
@@ -174,9 +176,13 @@ var ContractsPage = React.createClass({
   start: function(){
     var teamss = []
     var numTeams = this.state.teams.length;
+    var i = 0;
     this.state.teams.forEach(function(team_i){
+      i++;
       var team = JSON.parse(JSON.stringify(Team.default_team));
       team.players = team_i;
+      team.name = "Team "+i;
+      Player.GetPlayer(team.players[0]).then(resp=>team.thumbnail = resp.prof_pic)
       teamss.push(team)
     });
     Team.createFromList(teamss).then(teamids=>this.create(teamids)).catch(function(err){console.log(err)})
@@ -189,7 +195,7 @@ var ContractsPage = React.createClass({
     tournament.sport = this.state.selectedSport[0];
     tournament.name = this.state.name;
     tournament.location = this.state.location;
-
+    tournament.creator = this.state.playerid;
 
     if (this.state.event_type[0] == 'Round Robin') {
       console.log("CREATE RR!")
@@ -199,18 +205,54 @@ var ContractsPage = React.createClass({
       this.createBracket(tournament)
     }
   },
+  createRR: function(obj) {
+    var defaults = Match.default_match;
+    Tournament.createTournament(obj).then(resp=>this.createRR2(resp, obj, defaults))
+  },
+  createRR2: function(id, obj, defaults) {
+    console.log("CreateRR2:  "+id+ "   ")
+      var data = {
+        teams: obj.teams,
+        defaultM: defaults,
+        id: id
+      };
+      //tie to players
+      obj.teams.forEach(function(teamid){
+        Team.addTournament(teamid, id)
+      })
+      console.log("\n\n CHECKPOINT 2")
+      _clogic.createRR(data).then(reply=>{obj.matches=reply; console.log("\n\n CHECKPOINT 3")}).then(()=>Tournament.setTournament(id, obj)).then(()=>this.toRR(id)).catch(function(err){console.log(err)})
+  },
+  createBracket: function(obj) {
+    var defaults = Match.default_match;
+    Tournament.createTournament(obj).then(resp=>this.createBracket2(resp, obj, defaults))
+  },
+  createBracket2: function(id, obj, defaults) {
+      var data = {
+        teams: obj.teams,
+        defaultM: defaults,
+        id: id
+      }
+      obj.teams.forEach(function(teamid){
+        Team.addTournament(teamid, id)
+      })
+      _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
+  },
 
   setTeam: function(players, index) {
     this.state.teams[index] = players
     this.setState({teams: this.state.teams})
   },
+
   componentDidMount(){
     AsyncStorage.getItem('user', (err, user)=>{
       user = JSON.parse(user);
+
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
         var items = player.friends.concat(user.playerid);
-        this.setState({items: items});
+        this.setState({items: items,
+                      playerid: user.playerid});
       })
     })
   },
@@ -222,7 +264,8 @@ var ContractsPage = React.createClass({
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
         var items = player.friends.concat(user.playerid);
-        this.setState({items: items});
+        this.setState({items: items,
+                      playerid: user.playerid});
       })
     })
   },
@@ -272,66 +315,6 @@ var ContractsPage = React.createClass({
         selection: this.state.selection,
       }
     })
-  },
-/*
-DeleteGame:
-function -
-input -
-output -
-*/
-  deleteGame: function(index) {
-
-    // reorder states
-    for (var i = 0; i < this.state.SomeData.length; i++) {
-
-      if (this.state.SomeData[i]['key'] == index) {
-
-        this.state.SomeData.splice(i, 1)
-        var SomeData = this.state.SomeData
-
-        this.setState({SomeData: SomeData})
-
-        return;
-      }
-    }
-  },
-  createRR: function(obj) {
-    var defaults = Match.default_match;
-    Tournament.createTournament(obj).then(resp=>this.createRR2(resp, obj, defaults))
-  },
-  createRR2: function(id, obj, defaults) {
-    console.log("CreateRR2:  "+id+ "   ")
-      var data = {
-        teams: obj.teams,
-        defaultM: defaults,
-        id: id
-      };
-      //console.log(obj.teams)
-      _clogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(()=>this.toRR(id)).catch(function(err){console.log(err)})
-  },
-  createBracket: function(obj, defaults) {
-    var defaults = Match.default_match;
-    Tournament.createTournament(obj).then(resp=>this.createBracket2(resp, obj, defaults))
-  },
-  createBracket2: function(id, obj, defaults) {
-      var data = {
-        teams: obj.teams,
-        defaultM: defaults,
-        id: id
-      }
-      _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
-  },
-
-  /*
-  AddGame:
-  what do we need?
-
-  function -
-  input -
-  output -
-  */
-  addGame: function(scores) {
-
   },
 
   onSelect: function(name) {

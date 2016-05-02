@@ -257,7 +257,7 @@ export function addTeam(playerid, teamid) {
 }
 //addTeam('-KGYDKMSon-By4z-oLx8', 0).then(resp=>console.log(resp))
 
-export function addTournament(playerid, torunamentid) {
+export function addTournament(playerid, tournamentid) {
   return new Promise(function(resolve, reject) {
       playerdataRef.child(playerid).child('tournaments').on("value", function(snapshot) {
         var tournaments = []
@@ -271,7 +271,7 @@ export function addTournament(playerid, torunamentid) {
     list.push(tournamentid);
     playerdataRef.child(playerid).child('tournaments').set(list)
   }).catch(function(){
-    console.log("Failed");
+    console.log("Failed to add tournament "+tournamentid);
   });
 }
 
