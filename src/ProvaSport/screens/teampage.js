@@ -26,7 +26,7 @@ var TeamPage = React.createClass({
   getInitialState: function() {
     return (
       {
-        team: this.props.team,
+        team: Team.default_team,
         loaded: false,
       }
     );
