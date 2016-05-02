@@ -6,6 +6,7 @@ var defaults  = require('../constants/defaults');
 import {Link} from 'react-router';
 
 import * as Player from '../modules/player';
+import default_pic from '../styles/default_pic.jpg';
 
 var PlayerRow = React.createClass({
 
@@ -31,12 +32,16 @@ var PlayerRow = React.createClass({
     var {
       playerid,
     } = this.props;
+    var pic = this.state.player.prof_pic
+    if (this.state.player.prof_pic == "Loading")
+      pic = default_pic
+
       return (
         <Link to="/profile" query={{ playerid: this.props.playerid }}>
           <div style={styles.playerbrick} >
             <div style={[styles.center, styles.left]} >
               <img style={styles.im}
-                     src={this.state.player.prof_pic}/>
+                     src={pic}/>
             </div>
             <div style={styles.right}>
               <div >
@@ -106,6 +111,8 @@ var styles = {
     width: 60,
     borderRadius: 30,
     marginHorizontal: 4,
+    border: 'solid',
+    borderWidth: 1,
   },
   name: {
     fontFamily: _cvals.mainfont,

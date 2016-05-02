@@ -6,6 +6,7 @@ import {Link} from 'react-router';
 import _cvals from './constants/customvals'
 import * as Player from './modules/player'
 import * as Match from './modules/match'
+import default_pic from './styles/default_pic.jpg';
 
 var Profile = React.createClass({
   getInitialState: function() {
@@ -27,13 +28,16 @@ var Profile = React.createClass({
   },
 
   render: function() {
+    var pic = this.state.player.prof_pic
+    if (this.state.player.prof_pic == "Loading")
+      pic = default_pic
     return (
       <div>
         <div className="profile" style={header}>
         </div>
         <div style={headerContents}>
           <div style={image}>
-            <img src={this.state.player.prof_pic} style={image}/>
+            <img src={pic} style={image}/>
             <Link  to="/matches" query={{ matches: this.state.player.matches }}>
               <Button style={matchesButton}>
                 View Past Matches
@@ -179,6 +183,8 @@ var image = {
   height: 150,
   borderRadius: 75,
   backgroundColor: 'black',
+  border: 'solid',
+  borderWidth: 2,
 };
 
 var name = {
