@@ -10,31 +10,14 @@ var Menu = React.createClass({
   getInitialState: function() {
     return {
       focused: 0,
-      width: window.innerWidth,
     };
   },
-  updateDimensions: function() {
-    this.setState({width: $(window).width()});
-  },
-  componentWillMount: function() {
-    this.updateDimensions();
-  },
-  componentDidMount: function() {
-    window.addEventListener("resize", this.updateDimensions);
-  },
-  componentWillUnmount: function() {
-    window.removeEventListener("resize", this.updateDimensions);
-  },
-  clicked: function(index) {
-    this.setState({
-      focused: index,
-    });
-  },
+
   render: function() {
     var self = this;
     var activeLink = {backgroundColor: '#F5A623'}
     return (
-      <div id="header_container" style={Object.assign({width: this.state.width}, wrapper)}>
+      <div id="header_container" style={wrapper}>
         <div id="logo">
           <p style={logo}>PROVASPORT</p>
         </div>
@@ -63,6 +46,7 @@ var wrapper = {
   flex: 1,
   marginLeft: -70,
   marginTop: -70,
+  width: 1250,
 };
 var logo = {
   height: 50,

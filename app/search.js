@@ -75,68 +75,6 @@ var Search = React.createClass({
   },
 });
 
-
-/*var SearchResults = React.createClass({
-  getInitialState: function() {
-    return {
-      players: [],
-      searching: false,
-      query: "",
-    };
-  },
-
-  render:function() {
-    return (
-      <div style={styles.body}>
-        <p style={styles.title}> Results </p>
-        <PlayerRow/>
-      </div>
-    );
-  },
-
-  updateQuery: function(query) {
-    this.setState({query})
-    this.search()
-  },
-
-  search: function() {
-    // don't initiate two searches
-    if (this.state.searching == true) {
-      return
-    }
-    // don't search empty input
-    if (this.state.query.length == 0) {
-      return
-    }
-    this.setState({searching: true})
-    Player.searchPlayers(this.state.query, this.update)
-  },
-
-  update: function(players) {
-    setTimeout(() => {
-      this.setState({players: players})
-      this.setState({searching: false})
-    }, 500);
-  },
-});
-
-var Search = React.createClass({
-  getInitialState: function() {
-    return {
-
-    };
-  },
-
-  render:function() {
-      return (
-        <div style={styles.body}>
-          <SearchBox/>
-          <SearchResults/>
-        </div>
-      );
-    }
-});*/
-
 var styles = {
   title: {
     fontSize: 36,

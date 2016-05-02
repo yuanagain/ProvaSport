@@ -1,8 +1,11 @@
 import React from 'react';
 import Newsfeed from './newsfeed'
+var Button = require('react-bootstrap/lib/Button');
+import {Link} from 'react-router';
 
 import _cvals from './constants/customvals'
 import * as Player from './modules/player'
+import * as Match from './modules/match'
 
 var Profile = React.createClass({
   getInitialState: function() {
@@ -19,7 +22,7 @@ var Profile = React.createClass({
     this.setState({player : data})
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     Player._GetPlayer(this.state.playerid, this.fetchPlayer)
   },
 
@@ -31,6 +34,11 @@ var Profile = React.createClass({
         <div style={headerContents}>
           <div style={image}>
             <img src={this.state.player.prof_pic} style={image}/>
+            <Link  to="/matches" query={{ matches: this.state.player.matches }}>
+              <Button style={matchesButton}>
+                View Past Matches
+              </Button>
+            </Link>
           </div>
           <p style={name}> {this.state.player.name.full}</p>
         </div>
@@ -38,15 +46,24 @@ var Profile = React.createClass({
           <InfoBlock player={this.state.player}/>
           <StatBlock player={this.state.player}/>
         </div>
-        <div style={newsfeedContainer}>
-          <p style={newsfeedTitle}> ACTIVITY </p>
-        </div>
       </div>
     );
   }
 });
 
 var InfoBlock = React.createClass({
+  getInitialState: function() {
+    return (
+      {
+        player: Player.default_player,
+      }
+    );
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({
+      player: nextProps.player
+    });
+  },
 
   render: function() {
     var {
@@ -57,10 +74,9 @@ var InfoBlock = React.createClass({
       <div style={infoBlock}>
         <p style={blockTitle}> PERSONAL INFO </p>
         <div style={info}>
-          <InfoRow title="Country" contents={this.props.player.nationality}/>
-          <InfoRow title="Location" contents={this.props.player.home}/>
-          <InfoRow title="Sports" contents={this.props.player.sports}/>
-          <InfoRow title="Teams" contents={this.props.player.teams}/>
+          <InfoRow title="Country" contents={this.state.player.nationality}/>
+          <InfoRow title="Location" contents={this.state.player.home}/>
+          <InfoRow title="Sports" contents={this.state.player.sports}/>
         </div>
       </div>
     );
@@ -68,20 +84,31 @@ var InfoBlock = React.createClass({
 });
 
 var StatBlock = React.createClass({
+  getInitialState: function() {
+    return (
+      {
+        player: Player.default_player,
+      }
+    );
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({
+      player: nextProps.player
+    });
+  },
 
   render: function() {
     var {
       player,
     } = this.props;
-
+    console.log(this.props.player)
     return (
       <div style={statBlock}>
         <p style={blockTitle}> STATS </p>
         <div style={stats}>
-          <InfoRow title="Account" contents={this.props.player.earnings[0].cash}/>
-          <InfoRow title="Experience" contents={this.props.player.earnings[0].xp}/>
-          <InfoRow title="Friends" contents={this.props.player.friends.length}/>
-          <InfoRow title="Trophies" contents={this.props.player.earnings[0].trophies}/>
+          <InfoRow title="Friends" contents={this.state.player.friends.length}/>
+          <InfoRow title="Teams" contents={this.state.player.teams.length}/>
+          <InfoRow title="Matches Played" contents={this.state.player.matches.length}/>
         </div>
       </div>
     );
@@ -215,9 +242,18 @@ var newsfeedTitle = {
   paddingTop: 25,
 }
 
+var matchesButton = {
+    height: 40,
+    width: 200,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    backgroundColor: _cvals.skorange,
+    marginLeft: 175,
+    marginTop: -50,
+    fontFamily: _cvals.mainfont,
+    fontSize: 18,
+}
 
-//ReactDOM.render(
-//  <Profile/>,
-//  document.getElementById('profile_container')
-//);
+
 export default Profile;

@@ -3,8 +3,23 @@ var ReactDOM = require('react-dom');
 
 import './styles/menu.css';
 import _cvals from './constants/customvals';
+import _ctools from './libs/customtools'
+
+import * as Match from './modules/match'
+import * as Team from './modules/team'
+import * as Player from './modules/player'
 
 var Matches = React.createClass({
+  getInitialState: function() {
+    let { query } = this.props.location
+    return (
+      {
+        matchids: query.matches,
+        matches: [],
+        activeMatchIndex: 0,
+      }
+    );
+  },
   getDefaultProps: function() {
     // dummy match data
     var data = [{
@@ -30,6 +45,19 @@ var Matches = React.createClass({
       }
     )
   },
+
+  fetchMatch: function(data) {
+    var matches = this.state.matches.slice()
+    matches.push(data)
+    this.setState({matches: matches})
+  },
+
+  componentWillMount: function() {
+    var matchid;
+    for (matchid in this.state.matchids)
+      Match._GetMatch(matchid, this.fetchMatch)
+  },
+
   render: function() {
     return (
       <div style={content}>
@@ -37,17 +65,50 @@ var Matches = React.createClass({
           src = 'http://beingcovers.com/media/facebook-cover/Soccer-Stadium-facebook-covers-3555.jpg'
         />
         <div id="column_left" style={column_left}>
-          <Sidebar items = {dates}/>
+          <Sidebar matches={this.state.matches} callback={this.changeMatch}/>
         </div>
         <div id="column_right" style={column_right}>
-          <TitleMap data={this.props.data} />
+          <TitleEntry match={this.state.matches[this.state.activeMatchIndex]} />
           <h1 style={section_label}>PLAYERS</h1>
           <PlayersMap data={this.props.data} />
           <h1 style={section_label}>MATCH INFO</h1>
-          <MatchMap data={this.props.data} />
+          <MatchEntry match={this.state.matches[this.state.activeMatchIndex]} />
           <h1 style={section_label}>SCORES</h1>
-          <ScoresMap data={this.props.data} />
+          <ScoresEntry match={this.state.matches[this.state.activeMatchIndex]} />
         </div>
+      </div>
+    );
+  },
+
+  changeMatch: function(index) {
+    this.setState({activeMatchIndex: index})
+  },
+});
+
+// Title layout
+var TitleEntry = React.createClass({
+  getDefaultProps: function() {
+    return (
+      {
+        match: null,
+      }
+    )
+  },
+
+  render: function() {
+    var {
+      match,
+    } = this.props;
+    if (match == null) {
+      return (
+        <div style={title_div}>
+          No Matches To Display
+        </div>
+      )
+    }
+    return (
+      <div style={title_div}>
+        Match on {_ctools.toDate(new Date(this.props.match.datetime))}
       </div>
     );
   }
@@ -55,7 +116,24 @@ var Matches = React.createClass({
 
 // Players layout
 var PlayersEntry = React.createClass({
+  getDefaultProps: function() {
+    return (
+      {
+        match: null,
+      }
+    )
+  },
+
   render: function() {
+    var {
+      match,
+    } = this.props;
+
+    if (match == null) {
+      return (
+        <div></div>
+      )
+    }
     return (
       <span style={entry}>
         <div style={team_label_1}>
@@ -73,7 +151,24 @@ var PlayersEntry = React.createClass({
 
 // Information layout
 var MatchEntry = React.createClass({
+  getDefaultProps: function() {
+    return (
+      {
+        match: null,
+      }
+    )
+  },
+
   render: function() {
+    var {
+      match,
+    } = this.props;
+
+    if (match == null) {
+      return (
+        <div></div>
+      )
+    }
     return (
       <span style={entry}>
         <div id="data_col_left" style={info_column_left}>
@@ -85,12 +180,12 @@ var MatchEntry = React.createClass({
           <p style={data_column_left}>Win Bonus</p>
         </div>
         <div id="data_col_right" style={info_column_right}>
-          <p style={data_column_right}>{this.props.date_abbr}</p>
-          <p style={data_column_right}>{this.props.time}</p>
-          <p style={data_column_right}>{this.props.location}</p>
-          <p style={data_column_right}>{this.props.sport_cap}</p>
-          <p style={data_column_right}>{this.props.payout}</p>
-          <p style={data_column_right}>{this.props.win_bonus}</p>
+          <p style={data_column_right}>{_ctools.toDateShort(new Date(match.datetime))}</p>
+          <p style={data_column_right}>{_ctools.formatTime(new Date(match.datetime))}</p>
+          <p style={data_column_right}>{match.location}</p>
+          <p style={data_column_right}>{match.sport.charAt(0).toUpperCase() + match.sport.slice(1)}</p>
+          <p style={data_column_right}>{match.payoutdata.xp + " EXP"}</p>
+          <p style={data_column_right}>{"$" + match.payoutdata.cash}</p>
         </div>
         <div style={info_column_filler}>
         </div>
@@ -101,36 +196,67 @@ var MatchEntry = React.createClass({
 
 // Scores layout
 var ScoresEntry = React.createClass({
+  getInitialState: function() {
+    return (
+      {
+        team1: Team.default_team,
+        team2: Team.default_team,
+      }
+    );
+  },
+  getDefaultProps: function() {
+    return (
+      {
+        match: null,
+      }
+    )
+  },
+
+  fetchTeam1: function(team) {
+    this.setState({team1: team})
+  },
+
+  fetchTeam2: function(team) {
+    this.setState({team2: team})
+  },
+
+  componentWillReceiveProps: function(nextprops) {
+    Team._GetTeam(nextprops.match.teams[0], this.fetchTeam1)
+    Team._GetTeam(nextprops.match.teams[1], this.fetchTeam2)
+  },
+
   render: function() {
+    var {
+      match,
+    } = this.props;
+
+    if (match == null) {
+      return (
+        <div></div>
+      )
+    }
+
+    var scores = _ctools.getScoreStrings(match.scores)
     return (
       <span style={entry}>
         <div style={team_label_1}>
-          {this.props.team_1}
+          {this.state.team1.name}
         </div>
         <div style={score}>
-          {this.props.score_1}
+          {scores[0]}
         </div>
         <div style={team_label_2}>
-          {this.props.team_2}
+          {this.state.team2.name}
         </div>
         <div style={score}>
-          {this.props.score_2}
+          {scores[1]}
         </div>
       </span>
     );
   }
 });
 
-// Title layout
-var TitleEntry = React.createClass({
-  render: function() {
-    return (
-      <div style={title_div}>
-        Match on {this.props.date}
-      </div>
-    );
-  }
-});
+
 
 // TODO: How do I map the pics separately from var data[]?
 var PlayersMap = React.createClass({
@@ -164,6 +290,7 @@ var PlayersMap = React.createClass({
 });
 
 // Match Info
+/*
 var MatchMap = React.createClass({
   render: function() {
     var vals = this.props.data.map(function(entry) {
@@ -173,12 +300,13 @@ var MatchMap = React.createClass({
       );
     });
     return (
-      <div className="scoresMap">
+      <div className="scoresMap" style={matchInfo}>
         {vals}
       </div>
     );
   }
 });
+*/
 
 // Scores
 var ScoresMap = React.createClass({
@@ -198,12 +326,12 @@ var ScoresMap = React.createClass({
 });
 
 // Page title
-var TitleMap = React.createClass({
+/*var TitleMap = React.createClass({
   render: function() {
-    var vals = this.props.data.map(function(entry) {
+    var vals = this.props.data.map(function(entry, i) {
       return (
-        <div>
-          <TitleEntry date={entry.date}>
+        <div key={i}>
+          <TitleEntry date={entry.date} key={i}>
           </TitleEntry>
         </div>
       );
@@ -215,50 +343,42 @@ var TitleMap = React.createClass({
     );
   }
 });
+*/
+
+
 
 // Sidebar
 var Sidebar = React.createClass({
   getInitialState: function() {
     return {
       focused: 0,
-      width: window.innerWidth,
     };
-  },
-  updateDimensions: function() {
-    this.setState({width: $(window).width()});
-  },
-  componentWillMount: function() {
-    this.updateDimensions();
-  },
-  componentDidMount: function() {
-    window.addEventListener("resize", this.updateDimensions);
-  },
-  componentWillUnmount: function() {
-    window.removeEventListener("resize", this.updateDimensions);
   },
   clicked: function(index) {
     this.setState({
       focused: index,
     });
+    this.props.callback(index)
   },
   render: function() {
     var self = this;
+    var {
+      matches,
+    } = this.props;
+
     return (
       <div style={sidebar}>
         <ol> {
-          this.props.items.map(function(m, index) {
+          this.props.matches.map(function(match, index) {
             var style = '';
             if (self.state.focused == index) {
               style = 'focused';
             }
-            return <li className = {
-              style
-            }
-            onClick = {
-              self.clicked.bind(self, index)
-            } > {
-              m
-            } </li>;
+            return (
+              <li className={style} onClick={self.clicked.bind(self, index)} key={index}>
+                {_ctools.toDate(new Date(match.datetime))}
+              </li>
+            )
           })
         }
         </ol>
@@ -267,43 +387,23 @@ var Sidebar = React.createClass({
   }
 });
 
-
-
-// Dummy dates
-var dates = ['April 20, 2016',
-             'April 18, 2016',
-             'April 13, 2016',
-             'April 9, 2016',
-             'April 2, 2016',
-             'March 31, 2016',
-             'March 10, 2016',
-             'February 14, 2016',
-             'February 13, 2016',
-             'February 11, 2016',
-             'February 9, 2016',
-             'January 31, 2016',
-             'January 15, 2016',
-             'January 14, 2016',
-             'January 13, 2016',
-             'January 4, 2016',
-             'January 3, 2016',
-             'January 2, 2016'];
-
 // Styling
-var width = window.innerWidth / 2.5;
 var content = {
   paddingLeft: 50,
 }
 var column_left = {
-  width: width / 1.5,
-  height: 1250,
+  width: 300,
+  height: 1500,
   float: 'left',
   marginLeft: -100,
   marginTop: -20,
+  border: 'solid',
+  borderWidth: 1,
+  borderColor: 'gray',
   color: '#262626',
 };
 var column_right = {
-  width: width - width / 1.5,
+  width: 300,
   float: 'left',
   paddingLeft: 30,
   color: '#262626',
@@ -343,17 +443,22 @@ var data_column_right = {
   color: '#262626',
 };
 var entry = {
-  width: width,
+  width: 750,
   backgroundColor: _cvals.backgroundColor,
   padding: 30,
   margin: 30,
+  paddingTop: 10,
+  marginTop: 10,
   fontFamily: _cvals.mainfont,
   color: '#262626',
   fontSize: 20,
   display: 'block',
 };
+var matchInfo = {
+    width: 500,
+};
 var text = {
-  width: width,
+  width: 200,
   display: 'block',
   color: '#262626',
 };
@@ -376,7 +481,7 @@ var pic = {
   borderRadius: 50,
 };
 var cover_pic = {
-  width: window.innerWidth,
+  width: 1250,
   height: 200,
   marginLeft: -60,
   padding:0,

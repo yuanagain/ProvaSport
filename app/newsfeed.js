@@ -90,7 +90,7 @@ var EntryMap = React.createClass({
                 </div>
                 <div style={pic_container}>
                   <img style={pic}
-                    src = {entry.pic_a}
+                    src = {team1.thumbnail}
                   />
                   <div style={score}>
                     {entry.score_a}
@@ -98,7 +98,7 @@ var EntryMap = React.createClass({
                 </div>
                 <div style={pic_container}>
                   <img style={pic}
-                    src = {entry.pic_b}
+                    src = {team2.thumbnail}
                   />
                   <div style={score}>
                     {entry.score_b}
