@@ -21,31 +21,6 @@ var Matches = React.createClass({
       }
     );
   },
-  getDefaultProps: function() {
-    // dummy match data
-    var data = [{
-      date:      'April 20, 2016',
-      date_abbr: '04/20/2016',
-      time:      '07:00 PM',
-      location:  'ProClub Seattle',
-      team_1:    'The Microsofties',
-      team_2:    'Amazon\'s BaseBallers',
-      result:    'beat',
-      sport:     'baseball',
-      sport_cap: 'Baseball',
-      payout:    '10,000',
-      win_bonus: '4,000',
-      score_a:   '0 2 1 0 3 2 2 1 0',
-      score_b:   '3 2 2 0 1 2 0 0 0',
-      total_a:   '11',
-      total_b:   '10'
-    }];
-    return (
-      {
-        data: data,
-      }
-    )
-  },
 
   fetchMatch: function(data) {
     var matches = this.state.matches.slice()
@@ -54,9 +29,13 @@ var Matches = React.createClass({
   },
 
   componentWillMount: function() {
-    var matchid;
+   /* var matchid;
     for (matchid in this.state.matchids)
-      Match._GetMatch(matchid, this.fetchMatch)
+      Match._GetMatch(matchid, this.fetchMatch)*/
+    var matchid;
+    for (var i = 0; i < this.state.matchids.length; i++)
+      Match._GetMatch(this.state.matchids[i], this.fetchMatch)
+    console.log(this.state.matches)
   },
 
   render: function() {
@@ -263,7 +242,7 @@ var MatchEntry = React.createClass({
           <p style={data_column_right}>{_ctools.toDateShort(new Date(match.datetime))}</p>
           <p style={data_column_right}>{_ctools.formatTime(new Date(match.datetime))}</p>
           <p style={data_column_right}>{match.location}</p>
-          <p style={data_column_right}>{match.sport.charAt(0).toUpperCase() + match.sport.slice(1)}</p>
+          <p style={data_column_right}>{match.sport[0].charAt(0).toUpperCase() + match.sport[0].slice(1)}</p>
           <p style={data_column_right}>{match.payoutdata.xp + " EXP"}</p>
           <p style={data_column_right}>{"$" + match.payoutdata.cash}</p>
         </div>
@@ -355,7 +334,6 @@ var Sidebar = React.createClass({
     var {
       matches,
     } = this.props;
-
     return (
       <div style={sidebar}>
         <ol> {

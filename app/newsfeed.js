@@ -6,8 +6,10 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var _cvals = require('./constants/customvals');
+import _ctools from './libs/customtools'
 import * as Match from './modules/match';
 import * as Team from './modules/team';
+
 
 var dummyData = [
   {winner: 'James Smith', loser: 'Jen Johnson', result: 'beat', sport: 'tennis', date: 'April 20, 2016', score_a: '5 4 3 2 1', score_b: '1 2 3 4 5', pic_a: 'http://facebook.github.io/react/img/logo_og.png', pic_b: 'http://facebook.github.io/react/img/logo_og.png'},
@@ -29,13 +31,14 @@ var Entry = React.createClass({
     return (
       <span style={entry}>
         <div style={text}>
-          {this.props.winner} {this.props.result} {this.props.loser} in a game of {this.props.sport}.
+          {this.props.team1} played {this.props.team2} in a game of {this.props.sport}.
         </div>
         {this.props.children}
       </span>
     );
   }
 });
+/* Pass props to component within map */
 
 var Newsfeed = React.createClass({
   getInitialState: function() {
@@ -46,13 +49,17 @@ var Newsfeed = React.createClass({
     )
   },
 
-  componentDidMount: function() {
-    var matchData = Match.getAllMatches()
-    this.setState({matches: matchData})
+  componentWillMount: function() {
+    Match.getAllMatches().then(resp =>(
+      this.setState({matches: resp})
+    ))
   },
 
   render: function() {
-
+    var matches = this.state.matches
+    if (matches != null) {
+      matches = matches.sort(this.compareMatches)
+    }
     return (
       <div className="entry">
         <p style={title}> Community News </p>
@@ -61,59 +68,113 @@ var Newsfeed = React.createClass({
     );
   },
 
+  compareMatches: function(match1, match2) {
+    console.log("Here")
+    if (match1.datetime < match2.datetime)
+      return 1;
+    else if (match1.datetime > match2.datetime)
+      return -1;
+    else
+      return 0;
+  },
+
 });
 
 var EntryMap = React.createClass({
   render: function() {
     if (this.props.matches == null) {
+      console.log(this.props.matches)
       return (
         <div className="entryMap">
-          <p> Loading... </p>
+          <p>Loading...</p>
         </div>
       )
     }
     else {
-      var vals = this.props.matches.map(function(entry) {
-        var team1;
-        var team2;
-        Team.getTeam(entry.teams[0]).then(resp1=>{
-          team1 = resp1
-          Team.getTeam(entry.teams[1]).then(resp2=>{
-            team2 = resp2
-            return (
-              <Entry winner={team1.name} result={entry.result} loser={entry.loser} sport={entry.sport}>
-                <div style={date}>
-                  {entry.date}
-                </div>
-                <div style={pic_container}>
-                  <img style={pic}
-                    src = {team1.thumbnail}
-                  />
-                  <div style={score}>
-                    {entry.score_a}
-                  </div>
-                </div>
-                <div style={pic_container}>
-                  <img style={pic}
-                    src = {team2.thumbnail}
-                  />
-                  <div style={score}>
-                    {entry.score_b}
-                  </div>
-                </div>
-              </Entry>
-            );
-          })
-        })
-      });
-      console.log(vals)
+      console.log(this.props.matches)
+      var entries = this.props.matches.map(function(match, i) {
+        return (
+          <NewsEntry match={match} key={i}/>
+        );
+      })
+    }
+    return (
+      <div className="entryMap">
+        {entries}
+      </div>
+    );
+  }
+});
+
+var NewsEntry = React.createClass({
+  getInitialState: function() {
+    return (
+      {
+        match: null,
+        winner: Team.default_team,
+        loser: Team.default_team,
+      }
+    )
+  },
+
+  fetchWinner: function(team) {
+    this.setState({winner: team})
+  },
+
+  fetchLoser: function(team) {
+    this.setState({loser: team})
+  },
+
+  componentDidMount: function() {
+    if (this.props.match.teams) {
+      var winnerIndex = _ctools.getWinnerIndex(this.props.match)
+      var loserIndex = (winnerIndex = 1) ? 0 : 1;
+      Team._GetTeam(this.props.match.teams[winnerIndex], this.fetchWinner)
+      Team._GetTeam(this.props.match.teams[loserIndex], this.fetchLoser)
+    }
+    this.setState({match: this.props.match})
+  },
+
+  render: function() {
+    var {
+      match,
+    } = this.props;
+    if (this.state.match == null || this.state.match.teams == null) {
       return (
         <div className="entryMap">
-          {vals}
+          <p></p>
         </div>
-      );
+      )
     }
-  }
+
+    var scores = _ctools.getScoreStrings(this.state.match.scores)
+    var winnerIndex = _ctools.getWinnerIndex(this.state.match)
+    var loserIndex = (winnerIndex == 1) ? 0 : 1;
+    return (
+      <Entry team1={this.state.winner.name} team2={this.state.loser.name} sport={this.state.match.sport}>
+        <div style={date}>
+          {_ctools.toDate(new Date(this.state.match.datetime))}
+        </div>
+        <div style={pic_container}>
+          <img style={pic}
+            src = {this.state.winner.thumbnail}
+          />
+          <div style={score}>
+            {scores[winnerIndex]}
+          </div>
+        </div>
+        <div style={pic_container}>
+          <img style={pic}
+            src = {this.state.loser.thumbnail}
+          />
+          <div style={score}>
+            {scores[loserIndex]}
+          </div>
+        </div>
+      </Entry>
+    )
+  },
+
 });
 
 // Styling
@@ -166,7 +227,7 @@ var score = {
   float: 'left',
   color: '#262626',
   fontSize: 25,
-  marginLeft: 25,
+  paddingLeft: 10,
   margin: 5,
 };
 

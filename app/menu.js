@@ -4,6 +4,7 @@ var ReactDOM = require('react-dom');
 import './styles/menu.css'
 import _cvals from './constants/customvals'
 import {Link} from 'react-router';
+import logoImg from './styles/logo2x.png';
 
 // Header
 var Menu = React.createClass({
@@ -18,7 +19,8 @@ var Menu = React.createClass({
     var activeLink = {backgroundColor: '#F5A623'}
     return (
       <div id="header_container" style={wrapper}>
-        <div id="logo">
+        <img src={logoImg} style={logoImage}/>
+        <div style={{display: 'inline-block'}} id="logo">
           <p style={logo}>PROVASPORT</p>
         </div>
         <div id = "menu" style={menu}>
@@ -47,7 +49,15 @@ var wrapper = {
   marginTop: -70,
   width: 1250,
 };
+var logoImage = {
+    height: 45,
+    width: 45,
+    marginTop: 0,
+    position: 'relative',
+    top: -8,
+};
 var logo = {
+  display: 'inline-block',
   height: 50,
   backgroundColor: _cvals.skblue,
   float: 'left',
@@ -64,6 +74,7 @@ var logo = {
   margin: 0,
 };
 var menu = {
+  display: 'inline-block',
   height: 50,
   backgroundColor: _cvals.skblue,
   flex: 10,
@@ -73,7 +84,7 @@ var menu = {
   margin: 0,
 };
 var menuItems = {
-  display: 'inline-block',
+  display: 'table-cell',
   margin: 0,
 }
 var newsfeed = {

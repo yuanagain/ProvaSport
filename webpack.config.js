@@ -25,6 +25,11 @@ module.exports = {
       {test: /\.css$/,
         loader: "style-loader!css-loader",
         include: path.join(__dirname, 'app', 'styles') },
+
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: "url-loader?limit=5000&name=img/img-[hash:6].[ext]"
+      }
     ]
   },
   postcss: [

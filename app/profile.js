@@ -116,15 +116,39 @@ var StatBlock = React.createClass({
 });
 
 var InfoRow = React.createClass({
+  getInitialState: function() {
+    return (
+      {
+        contents: null,
+      }
+    );
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    var contents = nextProps.contents
+    if (contents) {
+      if (contents.constructor === Array) {
+        this.setState({
+          contents: contents.join(", ")
+        });
+      }
+      else {
+        this.setState({
+          contents: contents
+        });
+      }
+    }
+  },
 
   render: function() {
+
     return (
       <div style={infoRow}>
         <div style={rowTitle}>
           <p style={rowTitleText}> {this.props.title}</p>
         </div>
         <div style={rowContents}>
-          <p style={rowContentsText}> {this.props.contents} </p>
+          <p style={rowContentsText}> {this.state.contents} </p>
         </div>
       </div>
 
@@ -136,7 +160,7 @@ var titleFontSize = 24;
 var leftMargin = 35;
 
 var header = {
-  width: 2000,
+  width: 1320,
   height: 125,
   backgroundColor: 'gray',
   position: 'relative',

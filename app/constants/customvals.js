@@ -8,7 +8,7 @@ const _cvals = {
   skblue: '#4A90E2',
   skbluelight: '#a6c9f2',
   skgray: '#404040',
-  skbackground: '#E6E6E6',
+  skbackground: '#C2C2C2',
   slength: slength,
   bricklength: (slength) * 2.5 - 2,
   brickheight: slength,
