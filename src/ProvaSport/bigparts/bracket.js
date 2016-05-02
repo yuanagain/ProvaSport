@@ -160,7 +160,9 @@ var Fork = React.createClass({
         </View>
       </View>
     )
-  }
+  },
+
+
 });
 
 var ForkColumn = React.createClass({
@@ -261,6 +263,13 @@ var Bracket = React.createClass({
     }
   },
 
+  componentDidMount: function () {
+    // Should not have to do this, fix in future, track prop passing
+    setTimeout(() => {
+      this.forceUpdate()
+    }, 100);
+  },
+
 });
 
 var Final = React.createClass({
@@ -299,7 +308,6 @@ var Final = React.createClass({
       navigator,
       ...props
     } = this.props;
-
     return (
       <View style={styles.column}>
       <View style={[styles.fork_wrapper, ]}>
@@ -313,7 +321,24 @@ var Final = React.createClass({
       </View>
       </View>
     )
-  }
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    var fmargin = getForkMargin(nextProps.level)
+    var fheight = getForkHeight(nextProps.level)
+
+    if (this.props.level == 0) {
+      fmargin = 0
+    }
+
+    this.setState(
+      {
+        match: this.props.data,
+        fmargin: fmargin,
+        fheight: fheight,
+      })
+
+    },
 });
 
 var styles = StyleSheet.create({

@@ -297,7 +297,7 @@ var default_match =
     {
           "datetime": 0,
           "sport": "LOADING",
-          "scores": [["...","..."]],
+          "scores": [],
           "tournamentid": -1,
           "winner": -1,
           "data": {},
