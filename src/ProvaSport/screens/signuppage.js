@@ -15,6 +15,8 @@ var TextField = require('../smallparts/textfield')
 import * as Player from '../modules/player'
 import * as User from '../modules/userdata'
 import * as _settings from '../modules/settings'
+//for uploading images
+import { RNS3 } from 'react-native-aws3';
 
 
 var {
@@ -76,7 +78,7 @@ var SignUpPage = React.createClass({
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
         //upload image
-        Upload(source)
+        this.upload(source)
         this.setState({
           profImage: source
         });
@@ -108,7 +110,7 @@ var SignUpPage = React.createClass({
       navToHomeFunc,
       ...props
     } = this.props;
-    var settings = _settings.getSettings()
+    var settings = _settings.config;
 
     // Known issue with DatePickerIOS results in warnings. This suppresses the
     // yellow warning boxes. React Native team is currently working on this.
@@ -396,16 +398,6 @@ var SignUpPage = React.createClass({
   },
   _setInitialUser: function(obj) {
     console.log("CACHE user")
-/*
- *     AsyncStorage.setItem(store_key, JSON.stringify(UID123_object), () => {
- *      AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
- *        AsyncStorage.getItem('UID123', (err, result) => {
- *          console.log(result);
- *          // => {'name':'Chris','age':31,'traits':{'shoe_size':10,'hair':'brown','eyes':'blue'}}
- *        });
- *      });
- *    });
- */
     try {
       //THIS WORKS!!!
       AsyncStorage.setItem('user', JSON.stringify(obj), () => {
@@ -417,6 +409,31 @@ var SignUpPage = React.createClass({
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
+  },
+
+
+  upload: function() {
+    let file = {
+      // `uri` can also be a file system path (i.e. file://)
+      uri: this.state.profImage.uri,
+      name: "image.png",
+      type: "image/png"
+    }
+
+    let options = {
+      keyPrefix: "uploads/",
+      bucket: "your-bucket",
+      region: "us-east-1",
+      accessKey: "your-access-key",
+      secretKey: "your-secret-key",
+      successActionStatus: 201
+    }
+
+    RNS3.put(file, options).then(response => {
+      if (response.status !== 201)
+        throw new Error("Failed to upload image to S3");
+      console.log(response.body);
+    });
   },
   _setInitialPlayer: function(obj) {
 /*

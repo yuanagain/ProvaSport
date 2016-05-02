@@ -67,7 +67,7 @@ var ContractsPage = React.createClass({
       ...props
     } = this.props;
 
-    var settings = _settings.getSettings()
+    var settings = _settings.config;
 
     var teamCts = settings.teamCts_elim
 
@@ -207,7 +207,7 @@ var ContractsPage = React.createClass({
     this.setState({event_type: event_type})
 
     if (this.state.event_type[0] == 'Round Robin') {
-      var settings = _settings.getSettings()
+      var settings = _settings.config;
       var maxTeams = Math.max.apply(Math, settings.teamCts_rr)
 
       if (this.state.num_teams[0] > maxTeams) {

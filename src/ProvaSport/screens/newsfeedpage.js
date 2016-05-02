@@ -60,26 +60,53 @@ var NewsFeedPage = React.createClass({
   },
 
   componentDidMount: function () {
-
-    AsyncStorage.getItem('user', (err, result)=>{
-       //console.log("PLAYER");
-      //this is our matches
-      //console.log("USING ASYNC MATCHES")
-      result = JSON.parse(result);
-      Player.getFriendsMatches(result.playerid).then(resp=>{resp.concat(result.matches); this.setState({fmatches:resp})});
-    });
-    // this.state.match = this.props.match
+    AsyncStorage.getItem('player', (err, player)=>{
+      player = JSON.parse(player);
+      AsyncStorage.getItem('user', (err, result)=>{
+         //console.log("PLAYER");
+        //this is our matches
+        //console.log("USING ASYNC MATCHES")
+        result = JSON.parse(result);
+        Player.getFriendsMatches(result.playerid).then(resp=>{
+          var matches = resp.concat(player.matches);
+          this.setState({fmatches: matches})
+        });
+      });
+      // this.state.match = this.props.match
+    })
+  },
+  componentWillReceiveProps: function (nextProps) {
+    AsyncStorage.getItem('player', (err, player)=>{
+      player = JSON.parse(player);
+      AsyncStorage.getItem('user', (err, result)=>{
+         //console.log("PLAYER");
+        //this is our matches
+        //console.log("USING ASYNC MATCHES")
+        result = JSON.parse(result);
+        Player.getFriendsMatches(result.playerid).then(resp=>{
+          var matches = resp.concat(player.matches);
+          this.setState({fmatches: matches})
+        });
+      });
+      // this.state.match = this.props.match
+    })
   },
 
   onRefresh: function() {
-    //console.log("REFRESHING")
-        AsyncStorage.getItem('user', (err, result)=>{
-           //console.log("PLAYER");
-          //this is our matches
-          //console.log("USING ASYNC MATCHES")
-          result = JSON.parse(result);
-          Player.getFriendsMatches(result.playerid).then(resp=>{resp.concat(result.matches); this.setState({fmatches:resp})});
+    AsyncStorage.getItem('player', (err, player)=>{
+      player = JSON.parse(player);
+      AsyncStorage.getItem('user', (err, result)=>{
+         //console.log("PLAYER");
+        //this is our matches
+        //console.log("USING ASYNC MATCHES")
+        result = JSON.parse(result);
+        Player.getFriendsMatches(result.playerid).then(resp=>{
+          var matches = resp.concat(player.matches);
+          this.setState({fmatches: matches})
         });
+      });
+      // this.state.match = this.props.match
+    })
   },
 
   goBack: function() {

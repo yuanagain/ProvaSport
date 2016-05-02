@@ -90,7 +90,7 @@ var RecordPage = React.createClass({
     } = this.props;
     //console.log(this.props.match);
 
-    var settings = _settings.getSettings()
+    var settings = _settings.config;
 
     return (
     <View style={styles.container}>
