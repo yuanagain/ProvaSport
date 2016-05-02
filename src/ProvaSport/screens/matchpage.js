@@ -98,7 +98,7 @@ update if needed
       // if this is an unconfirmed match
       buttons = <WideButtonPair textRight={"Confirm"}
                                 textLeft={"Adjust"}
-                                onPressRight={()=>this.changeStatus(4)}
+                                onPressRight={()=>{this.changeStatus(4);} }
                                 onPressLeft={()=>this.toRecordPage()} />
     }
 

@@ -107,6 +107,14 @@ export function addMatch(teamid, matchid) {
   });
 }
 
+
+var findOne = function (haystack, arr) {
+    return arr.some(function (v) {
+        return haystack.indexOf(v) >= 0;
+    });
+};
+
+
 function _AddPlayer(teamid, playerid, callback) {
   var promise = new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
@@ -294,4 +302,4 @@ var bye = {
  */
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
    getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch,
-   teamOneorTwo, onTeams, createFromList};
+   teamOneorTwo, onTeams, createFromList, findOne};

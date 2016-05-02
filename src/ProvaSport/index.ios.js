@@ -164,7 +164,7 @@ class ProvaSport extends Component {
   logout() {
     AsyncStorage.removeItem('player')
     AsyncStorage.removeItem('user')
-
+    
     this.setState({
         selectedTab: 'login'
     });

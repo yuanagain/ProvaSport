@@ -30,6 +30,7 @@ import * as _clogic from '../libs/customlogic.js'
 import * as _settings from '../modules/settings'
 
 var {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   View,
@@ -57,6 +58,7 @@ var ContractsPage = React.createClass({
         event_type: [],
         teams: [[],[],],
         num_teams: [2],
+        items: [0,1],
       }
     );
   },
@@ -85,7 +87,7 @@ var ContractsPage = React.createClass({
           <PopoverSelector
             title={'Team ' + String(i + 1)}
             magic={'player'}
-            items={[0, 1]}
+            items={this.state.items}
             navigator={this.props.navigator}
             selection={this.state.teams[i]}
             harvest={this.setTeam}
@@ -202,7 +204,28 @@ var ContractsPage = React.createClass({
     this.state.teams[index] = players
     this.setState({teams: this.state.teams})
   },
+  componentDidMount(){
+    AsyncStorage.getItem('user', (err, user)=>{
+      user = JSON.parse(user);
+      AsyncStorage.getItem('player', (err, player)=>{
+        player = JSON.parse(player);
+        var items = player.friends.concat(user.playerid);
+        this.setState({items: items});
+      })
+    })
+  },
 
+  componentWillReceiveProps(nextProps){
+    // for incase we pop off navigator and don't refresh
+    AsyncStorage.getItem('user', (err, user)=>{
+      user = JSON.parse(user);
+      AsyncStorage.getItem('player', (err, player)=>{
+        player = JSON.parse(player);
+        var items = player.friends.concat(user.playerid);
+        this.setState({items: items});
+      })
+    })
+  },
   setEventType: function(event_type) {
     this.setState({event_type: event_type})
 

@@ -22,6 +22,7 @@ import * as Team from '../modules/team'
 import * as _settings from '../modules/settings'
 
 var {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   View,
@@ -68,6 +69,7 @@ var RecordPage = React.createClass({
   getDefaultProps: function() {
     return ({
       mode: '',
+      items: [0, 1],
       form: blank_form,
       match: {
               name: "",
@@ -141,7 +143,7 @@ var RecordPage = React.createClass({
             <PopoverSelector
               title={'Team 1'}
               magic={'player'}
-              items={[0, 1]}
+              items={this.state.items}
               navigator={this.props.navigator}
               selection={this.state.teams[0]}
               harvest={this.setTeams}
@@ -153,7 +155,7 @@ var RecordPage = React.createClass({
             <PopoverSelector
               title={'Team 2'}
               magic={'player'}
-              items={[0, 1]}
+              items={this.state.items}
               navigator={this.props.navigator}
               selection={this.state.teams[1]}
               harvest={this.setTeams}
@@ -190,6 +192,28 @@ var RecordPage = React.createClass({
     this.props.logout()
   },
 
+  componentDidMount(){
+    AsyncStorage.getItem('user', (err, user)=>{
+      user = JSON.parse(user);
+      AsyncStorage.getItem('player', (err, player)=>{
+        player = JSON.parse(player);
+        var items = player.friends.concat(user.playerid);
+        this.setState({items: items});
+      })
+    })
+  },
+
+  componentWillReceiveProps(nextProps){
+    // for incase we pop off navigator and don't refresh
+    AsyncStorage.getItem('user', (err, user)=>{
+      user = JSON.parse(user);
+      AsyncStorage.getItem('player', (err, player)=>{
+        player = JSON.parse(player);
+        var items = player.friends.concat(user.playerid);
+        this.setState({items: items});
+      })
+    })
+  },
 
   setName: function(name) {
     if (true) {
@@ -202,7 +226,24 @@ var RecordPage = React.createClass({
       this.setState({location})
     }
   },
-
+  validateTeams: function(){
+    var team1 = this.state.teams[0];
+    var team2 = this.state.teams[1];
+    //rules for team validation
+    if (team1.length != team2.length){
+      return false;
+    }
+    else if (this.state.teams.length != 2){
+      return false;
+    }
+    //see if teams are distinct
+    else if (Team.findOne(team1, team2)){
+      return false;
+    }
+    else {
+      return true;
+    }
+  },
   reset: function() {
     this.setState(reset_form)
     this.setState({teams: [[],[],]})
@@ -210,33 +251,29 @@ var RecordPage = React.createClass({
   },
 
   // attempt to create ad hoc teams
-  // TODO: recall teams
+  /* TODO: team customization*/
   createTeams: function() {
-    console.log(this.state.teams[1])
+    //console.log(this.state.teams[1])
     var team1 = {
-      "name": "Team",
+      "name": "Team 1",
       "players": this.state.teams[0],
       "matches": [],
       "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
     }
-    var team2 = {
-      "name": "Team",
-      "players": this.state.teams[1],
-      "matches": [],
-      "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
-    }
-     Team._CreateTeam(team1, this.harvestTeam1)/*.then(resp=>this.state.teams[0] = resp) */
+    //validate teams
+    if (this.validateTeams()) {
+     Team._CreateTeam(team1, this.harvestTeam1)
+   }
     //Team._CreateTeam(team2, this.harvestTeam2)//.then(resp=>this.state.teams[1] = resp).then(this.submitMatch())
   },
 
   harvestTeam1: function(team) {
     var team2 = {
-      "name": "Team",
+      "name": "Team 2",
       "players": this.state.teams[1],
       "matches": [],
       "thumbnail": "https://image.freepik.com/free-icon/multiple-users-silhouette_318-49546.png"
     }
-    //console.log("checkpoint 1")
     this.state.teams[0] = team;
     Team._CreateTeam(team2, this.harvestTeam2)
   },
@@ -253,7 +290,7 @@ var RecordPage = React.createClass({
       this.createTeams()
     }
     else {
-      this.props.match.status[0] = 3;
+      //this.props.match.status[0] = 3;//WTF?
       Match.setMatch(this.props.matchid, this.props.match).then(this.props.navigator.pop())
       //Match.updateStatus(this.props.matchid, 3)
     }
