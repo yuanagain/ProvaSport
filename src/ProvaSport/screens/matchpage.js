@@ -203,8 +203,8 @@ update if needed
         //grab tournament object
         Tournament.getTournament(this.state.match.tournamentid).then(tournament=>{
           //get a list of match objects
-          Match.getFromList(tournament.matches).then(matchobjs=>{
-            //updat that list and the tournament
+          Match.fetchList(tournament.matches).then(matchobjs=>{
+            //update that list and the tournament
             _clogic.update(matchobjs);
           })
         })
