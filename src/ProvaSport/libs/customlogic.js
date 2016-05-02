@@ -144,7 +144,7 @@ var createBracket = function(data) {
   var depth = Math.ceil(Math.log(teams.length) / Math.log(2))
   var target_length = Math.pow(2, depth)
   //console.log("DEPTH  "+depth+"  TARGET:"+target_length)
-  for (var i = 0; i < target_length - teams.length + 2; i++) {
+  for (var i = 0; i < target_length - teams.length; i++) {
     //create the Bye teamid this should be fine
     //console.log("BYE")
     teams.push("Bye")

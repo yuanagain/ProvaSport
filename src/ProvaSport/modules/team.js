@@ -14,6 +14,7 @@ teamdb = new Firebase("https://shining-torch-4767.firebaseio.com/team");
 /*possibly add stuff like isOnTeam etc.*/
 
 function _GetTeam(teamid, callback) {
+  console.log("_GetTeam");
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
         teamdb.child(teamid).on("value", function(snapshot) {
@@ -34,6 +35,7 @@ function _GetTeam(teamid, callback) {
     });
 }
 export function getTeam(teamid) {
+  console.log("getTeam");
   /* var match = new Match(matchid); */
     return new Promise(function(resolve, reject) {
         teamdb.child(teamid).on("value", function(snapshot) {
@@ -62,6 +64,7 @@ function updateMatches(teamid, matchArray) {
 }
 
 export function addPlayer(teamid, playerid) {
+  console.log("addPlayer");
   var promise = new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
         var players = []
@@ -87,6 +90,7 @@ export function addPlayer(teamid, playerid) {
   TODO ADD MATCHES TO PlAYERS TOO
   */
 export function addMatch(teamid, matchid) {
+  console.log("addMatch");
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).on("value", function(snapshot) {
         var matches = []
@@ -115,13 +119,14 @@ export function addMatch(teamid, matchid) {
   });
 }
 export function addTournament(teamid, tournid) {
+  console.log("addTourn");
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).on("value", function(snapshot) {
         var team = snapshot.val();
         team.players.forEach(function(playerid){
           Player.addTournament(playerid, tournid)
         });
-        resolve(players);
+        resolve(true);
       });
    }).catch(function(err){
     console.log("Failed to add tournament to team "+teamid+ "   "+tournid + "\n" + err);
@@ -136,6 +141,7 @@ var findOne = function (haystack, arr) {
 
 
 function _AddPlayer(teamid, playerid, callback) {
+
   var promise = new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
         var players = []
@@ -158,6 +164,7 @@ function _AddPlayer(teamid, playerid, callback) {
 }
 
 function _AddMatch(teamid, matchid, callback) {
+  console.log("_ADDMatch");
   var promise = new Promise(function(resolve, reject) {
     teamdb.child(teamid).on("value", function(snapshot) {
       var matches = []
@@ -188,6 +195,7 @@ function _AddMatch(teamid, matchid, callback) {
 }
 //make sure updated with current data and not new object
 function _SetTeam(obj, teamid, callback) {
+  console.log("_SetTeam");
   var promise = new Promise(function(resolve, reject) {
       teamdb.child(teamid).set(obj, function(error) {
         if (error) {
@@ -209,6 +217,7 @@ function _SetTeam(obj, teamid, callback) {
 /* needs and object for th full data of a team fields
   */
 function createTeam(obj) {
+  console.log("create");
   return new Promise(function(resolve, reject) {
       var newRef = teamdb.push();
       newRef.set(obj, function(error) {
@@ -229,6 +238,7 @@ function createTeam(obj) {
 }
 
 function _CreateTeam(obj, callback) {
+  console.log("_Create");
   var promise = new Promise(function(resolve, reject) {
       var newRef = teamdb.push();
       newRef.set(obj, function(error) {
@@ -252,6 +262,7 @@ function _CreateTeam(obj, callback) {
     });
 }
 function createFromList(teamobjlist, callback) {
+  console.log("cFromList");
   return new Promise(function (resolve) {
     var teamids = []
     var i = 0;
@@ -266,10 +277,11 @@ function createFromList(teamobjlist, callback) {
   })
 }
 export function addTeamPlayersToMatch(teamid, matchid) {
+  console.log("addTeamPlayersToMatch");
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
         var players = []
-        players.concat(snapshot.val())
+        players = players.concat(snapshot.val())
         if (players) {
           players.forEach(function(playerid){
             Player.addMatch(playerid, matchid)
@@ -281,6 +293,7 @@ export function addTeamPlayersToMatch(teamid, matchid) {
 }
 /*returns which team the player is on*/
 export function teamOneorTwo(team0id, playerid) {
+  console.log("Team1or2");
   return new Promise(function(resolve){
     getTeam(team0id).then(resp=>{
       if(inArray(playerid, resp.players))
@@ -292,6 +305,7 @@ export function teamOneorTwo(team0id, playerid) {
 }
 //returns true if on team and false if not on either team
 export function onTeams(teamid1, teamid2, playerid) {
+  console.log("onTeam");
   return new Promise(function(resolve){
     getTeam(teamid1).then(function(value){
       getTeam(teamid2).then(function(resp) {
