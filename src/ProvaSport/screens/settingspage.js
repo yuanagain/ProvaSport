@@ -17,7 +17,7 @@ var Header = require('../parts/header')
 var AddImageIcon = require('../assets/add.png')
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var TextField = require('../smallparts/textfield')
-
+import { RNS3 } from 'react-native-aws3';
 
 import * as Player from '../modules/player'
 import * as User from '../modules/userdata'
@@ -82,6 +82,7 @@ var SettingsPage = React.createClass({
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
         //upload image
+        this.upload(source.uri)
         //Upload(source).then(resp=>)
         this.setState({
           profImage: source
@@ -310,6 +311,31 @@ var SettingsPage = React.createClass({
     AsyncStorage.setItem('player', (err, resp)=>{
       return Promise.resolve(JSON.parse(resp))
     })
+  },
+  upload(uri){
+    console.log(uri);
+    var name = this.state.playerid+".png"
+    let file = {
+      // `uri` can also be a file system path (i.e. file://)
+      uri: uri,
+      name: name,
+      type: "image/png"
+    }
+
+    let options = {
+      keyPrefix: "provasport_profile_pics/",
+      bucket: "provasport",
+      region: "us-west-2",
+      accessKey: "AKIAIOKYIRF3NPM6QJFA",
+      secretKey: "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",
+      successActionStatus: 201
+    }
+
+    RNS3.put(file, options).then(response => {
+      if (response.status !== 201)
+        throw new Error("Failed to upload image to S3");
+      console.log(response.body);
+    });
   }
 
 });
