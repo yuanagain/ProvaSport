@@ -31,7 +31,7 @@ function _GetPlayer(playerid, callback) {
         else {
         playerdataRef.child(playerid).on("value", function(snapshot) {
           var player = snapshot.val();
-          if (player==null){
+          if (player == null){
             //console.log("\n\n*******************NULL********************\n"+playerid)
             resolve(default_player)
           }
