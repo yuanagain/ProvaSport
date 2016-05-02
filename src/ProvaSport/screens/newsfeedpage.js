@@ -62,13 +62,25 @@ var NewsFeedPage = React.createClass({
   componentDidMount: function () {
     AsyncStorage.getItem('player', (err, player)=>{
       player = JSON.parse(player);
+      if (player.friends.length == 0){
+        this.setState({fmatches: player.matches})
+      }
       AsyncStorage.getItem('user', (err, result)=>{
          //console.log("PLAYER");
         //this is our matches
         //console.log("USING ASYNC MATCHES")
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
-          var matches = resp.concat(player.matches);
+          var matches = [];
+          console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
+          console.log(resp);
+          console.log(player.matches);
+          if(resp!=null || resp!= undefined) {
+            matches = resp.concat(player.matches);
+          }
+          else {
+            matches = player.matches;
+          }
           //matches = unique(matches);
           this.setState({fmatches: matches})
         });
@@ -85,7 +97,16 @@ var NewsFeedPage = React.createClass({
         //console.log("USING ASYNC MATCHES")
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
-          var matches = resp.concat(player.matches);
+          var matches = [];
+          console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
+          console.log(resp);
+          console.log(player.matches);
+          if (resp!=null || resp!= undefined) {
+            matches = resp.concat(player.matches);
+          }
+          else {
+            matches = player.matches;
+          }
           //matches = unique(matches);
           this.setState({fmatches: matches})
         });
@@ -102,7 +123,16 @@ var NewsFeedPage = React.createClass({
       Player.GetPlayer(result.playerid).then(player=>{
         AsyncStorage.setItem('player', JSON.stringify(player), (err, response)=>{
           Player.getFriendsMatches(result.playerid).then(resp=>{
-            var matches = resp.concat(player.matches);
+            var matches = [];
+            console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
+            console.log(resp);
+            console.log(player.matches);
+            if(resp!=null || resp!= undefined) {
+              matches = resp.concat(player.matches);
+            }
+            else {
+              matches = player.matches;
+            }
             //matches = unique(matches);
             this.setState({fmatches: matches})
           });
