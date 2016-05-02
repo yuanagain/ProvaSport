@@ -180,16 +180,12 @@ var RecordPage = React.createClass({
       <View style={_cstyles.buttons_container}>
         <WideButton
           text="Record Activity"
-          onPress={()=>this.logout()}
+          onPress={()=>this.submit()}
           />
       </View>
 
     </View>
     );
-  },
-
-  logout: function() {
-    this.props.logout()
   },
 
   componentDidMount(){
