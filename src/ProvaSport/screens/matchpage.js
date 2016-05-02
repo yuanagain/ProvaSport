@@ -196,10 +196,15 @@ update if needed
   },
   //will update the match and possibly the tournament correctly
   checkToUpdate: function(){
-    if (this.state.match.status[0]=== 4 && this.state.match.status[1]=== 4){
-      if(this.state.match.tournamentid != -1){
+    //check that both teams have confirmed attitude towards match
+    if (this.state.match.status[0] === 4 && this.state.match.status[1] === 4){
+      //see if it is bound to a tournamentid
+      if (this.state.match.tournamentid != -1) {
+        //grab tournament object
         Tournament.getTournament(this.state.match.tournamentid).then(tournament=>{
+          //get a list of match objects
           Match.getFromList(tournament.matches).then(matchobjs=>{
+            //updat that list and the tournament
             _clogic.update(matchobjs);
           })
         })

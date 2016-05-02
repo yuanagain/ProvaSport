@@ -263,7 +263,7 @@ var SettingsPage = React.createClass({
     this.setAsyncP(player);
   },
   setSport() {
-    var pid = this.props.playerid;
+    var pid = this.state.playerid;
     var sports = this.state.sports;
     AsyncStorage.getItem('player', (err, resp)=>{
       var player = JSON.parse(resp);
