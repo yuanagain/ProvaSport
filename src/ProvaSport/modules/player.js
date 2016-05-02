@@ -362,7 +362,11 @@ function getFriends(playerid){
     })
   })
 }
-
+function setProfPic(playerid, url) {
+  return new Promise(function(resolve) {
+    playerdataRef.child(playerid).update({prof_pic: url})
+  })
+}
 
 function getFriendsMatches(playerid) {
   return new Promise(function(resolve) {
@@ -421,4 +425,4 @@ export var default_player = {
 
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, removeFriend, _AddTournament,
-                   searchPlayers, getFriends, getFriendsMatches, setPlayer};
+                   searchPlayers, getFriends, getFriendsMatches, setPlayer, setProfPic};

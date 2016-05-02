@@ -78,11 +78,11 @@ var SettingsPage = React.createClass({
         // You can display the image using either data:
         // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
         // uri (on iOS)
-        const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+        const source = {uri: response.uri.replace('file:/', ''), isStatic: true};
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
         //upload image
-        this.upload(source.uri)
+        this.upload(source.uri, this.state.playerid);
         //Upload(source).then(resp=>)
         this.setState({
           profImage: source
@@ -312,20 +312,19 @@ var SettingsPage = React.createClass({
       return Promise.resolve(JSON.parse(resp))
     })
   },
-  upload(uri){
-    console.log(uri);
-    var name = this.state.playerid+".png"
+  upload(uri, playerid) {
+    var name = "prof_pic"+playerid+".jpg"
     let file = {
       // `uri` can also be a file system path (i.e. file://)
-      uri: uri,
-      name: "image.jpg",
+      uri: "file:///Users/kenanfarmer/Library/Developer/CoreSimulator/Devices/9212EF35-3593-450A-84D1-87112A2A717A/data/Containers/Data/Application/463DAE6D-E6F2-4D77-B1CB-4A6A73455C13/Documents/751C50B2-AE47-4DAA-B323-3EE8C5E06736.jpg",
+      name: name,
       type: "image/jpeg"
     }
 
     let options = {
       keyPrefix: "provasport_profile_pics/",
       bucket: "provasport",
-      region: "us-west-2",
+      region: "us-east-1",
       accessKey: "AKIAIOKYIRF3NPM6QJFA",
       secretKey: "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",
       successActionStatus: 201
@@ -334,9 +333,16 @@ var SettingsPage = React.createClass({
     RNS3.put(file, options).then(response => {
       if (response.status !== 201)
         throw new Error("Failed to upload image to S3");
-      console.log(response.body);
-    });
-  }
+      console.log(response.body.postResponse.location);
+      return Promise.resolve(response.body.postResponse.location)
+
+    }).then(url=>{
+      this.state.player.prof_pic = url;
+      console.log(this.state.player);
+      Player.setProfPic(this.state.playerid, url);
+      this.setAsyncPlayer(this.state.player);
+    })
+  },
 
 });
 

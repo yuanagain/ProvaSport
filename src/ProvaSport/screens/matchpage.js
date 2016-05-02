@@ -196,7 +196,15 @@ update if needed
   },
   //will update the match and possibly the tournament correctly
   checkToUpdate: function(){
-
+    if (this.state.match.status[0]=== 4 && this.state.match.status[1]=== 4){
+      if(this.state.match.tournamentid != -1){
+        Tournament.getTournament(this.state.match.tournamentid).then(tournament=>{
+          Match.getFromList(tournament.matches).then(matchobjs=>{
+            _clogic.update(matchobjs);
+          })
+        })
+      }
+    }
   },
   getTeamid2: function() {
     //console.log("LOADTEAMS")
