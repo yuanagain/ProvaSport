@@ -250,13 +250,13 @@ var update_matches = function(matches, matchids, callback) {
     for (var j = 0; j < cap; j++) {
       // check status of match
       var match = matches[two_sum + j]
-      var status = _ctools.codeToString(match.status)
+      var status = _ctools.codeToString(match.status[0])
 
       if (match.teams[0] == 'TBD' || match.teams[1] == 'TBD') {
         continue
       }
 
-      if (status == "Unplayed") {
+      if (status == "Unplayed" || match.status[0] < 4|| match.status[1] < 4) {
         continue
       }
       // entails that updates will continuet to be passed down

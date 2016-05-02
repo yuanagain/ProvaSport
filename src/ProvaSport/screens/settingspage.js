@@ -318,8 +318,8 @@ var SettingsPage = React.createClass({
     let file = {
       // `uri` can also be a file system path (i.e. file://)
       uri: uri,
-      name: name,
-      type: "image/png"
+      name: "image.jpg",
+      type: "image/jpeg"
     }
 
     let options = {

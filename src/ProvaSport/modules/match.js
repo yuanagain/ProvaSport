@@ -117,7 +117,14 @@ function unique(list) {
     return arr.indexOf(elem) == pos;
   });
 }
-
+/* 
+ * function addTeamToMatch(matchid, teamid) {
+ *   getMatch(matchid).then(matchobj=>{
+ *     if(matchobj.teams[0])
+ *   })
+ *
+ * }
+ */
 function _CreateMatch(obj, callback) {
   var promise = new Promise(function(resolve, reject) {
       var newRef = matchdb.push();
