@@ -35,7 +35,7 @@ var MatchBrick = React.createClass({
         component: MatchPage,
         passProps: {
           navigator: this.props.navigator,
-          playerid: this.props.matchid
+          matchid: this.props.matchid
         }
       })
     }
