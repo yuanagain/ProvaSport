@@ -195,7 +195,7 @@ var ContractsPage = React.createClass({
     //build the tournament object
     tournament.teams = teamids;
     tournament.type = this.state.event_type[0];
-    tournament.sport = this.state.selectedSport[0];
+    tournament.sport = this.state.selectedSport;
     if(this.state.name !== undefined)
       tournament.name = this.state.name;
     if(this.state.location !== undefined)
@@ -213,9 +213,9 @@ var ContractsPage = React.createClass({
   createRR: function(obj) {
     var defaults = Match.default_match;
     defaults.datetime = Date.now();
-    //defaults.location = obj.location;
+    defaults.location = obj.location;
     defaults.name = obj.name;
-    defaults.sports = obj.sports;
+    defaults.sport = obj.sport;
     Tournament.createTournament(obj).then(resp=>this.createRR2(resp, obj, defaults))
   },
   createRR2: function(id, obj, defaults) {
@@ -234,9 +234,9 @@ var ContractsPage = React.createClass({
   createBracket: function(obj) {
     var defaults = Match.default_match;
     defaults.datetime = Date.now();
-    //defaults.location = obj.location;
+    defaults.location = obj.location;
     defaults.name = obj.name;
-    defaults.sports = obj.sports;
+    defaults.sport = obj.sport;
     console.log("DEFAULTS");
     Tournament.createTournament(obj).then(resp=>this.createBracket2(resp, obj, defaults))
   },
@@ -250,7 +250,7 @@ var ContractsPage = React.createClass({
         Team.addTournament(teamid, id)
       })
       console.log("BRACET2");
-      _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>{Tournament.setTournament(id, obj); return Promise.resolve()}).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
+      _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>{Tournament.setTournament(id, obj); return Promise.resolve()}).then(reps=>this.hardReset()).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
   },
   reset: function() {
     this.setState({
@@ -367,9 +367,28 @@ var ContractsPage = React.createClass({
       />
     )
   },
-
-  updateGames: function() {
-    //update match
+  _setInitialPlayer: function(obj) {
+    try {
+      //THIS WORKS!!!
+      AsyncStorage.setItem('player', JSON.stringify(obj), () => {
+        AsyncStorage.getItem('player', (err, result)=>{
+          //console.log("User");
+          console.log(JSON.parse(result));
+        });
+      });
+    } catch (error) {
+      this._appendMessage('AsyncStorage error: ' + error.message);
+    }
+  },
+  handlePlayer: function(player){
+    //console.log("handleplayer")
+    this._setInitialPlayer(player)
+  },
+  hardReset: function() {
+    var callback = this.handlePlayer;
+    AsyncStorage.getItem('user', (err, response)=>{
+      Player._GetPlayer(response.playerid, callback)
+    })
   },
 
   //// TODO POPULATE W/ REAL DATA
@@ -382,6 +401,7 @@ var ContractsPage = React.createClass({
         navigator: this.props.navigator
       }
     })
+    this.reset();
   },
   toBracket(tid) {
     console.log("TO BRACKET");
@@ -393,6 +413,7 @@ var ContractsPage = React.createClass({
         navigator: this.props.navigator
       }
     })
+    this.reset()
   },
   toTeamPage() {
     this.props.navigator.push({
