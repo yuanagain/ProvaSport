@@ -75,10 +75,10 @@ var EntryMap = React.createClass({
     else {
       var matches
       console.log(this.props.matches.length)
-      if (this.props.matches.length <= 20)
+      if (this.props.matches.length <= 25)
         matches = this.props.matches
       else {
-        matches = this.props.matches.slice(0, 10)
+        matches = this.props.matches.slice(0, 25)
       }
       var entries = matches.map(function(match, i) {
         return (
