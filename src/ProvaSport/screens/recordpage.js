@@ -97,7 +97,7 @@ var RecordPage = React.createClass({
 
     return (
     <View style={styles.container}>
-      <View style={(Platform.OS === 'ios') ? {height: 565 * _cvals.vscale} : {height: 540 * _cvals.vscale}}>
+      <View style={(Platform.OS === 'ios') ? {height: 525 * _cvals.vscale} : {height: 520 * _cvals.vscale}}>
         <Header title={"RECORD"}
                   mode={this.props.mode}
                   navigator={this.props.navigator} />
