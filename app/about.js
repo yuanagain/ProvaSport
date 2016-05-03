@@ -48,9 +48,6 @@ var About = React.createClass({
         </div>
         <div style={footer}>
           <p style={title}>Interested? You should be.</p>
-          <div style={get_started}>
-            Get Started
-          </div>
         </div>
       </div>
     );

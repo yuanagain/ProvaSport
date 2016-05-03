@@ -78,7 +78,7 @@ var EntryMap = React.createClass({
       if (this.props.matches.length <= 20)
         matches = this.props.matches
       else {
-        matches = this.props.matches.slice(0, 20)
+        matches = this.props.matches.slice(0, 10)
       }
       var entries = matches.map(function(match, i) {
         return (
