@@ -383,7 +383,17 @@ function getFriendsMatches(playerid) {
     })
   })
 }
-
+/*
+@params: sport: string sport
+data in the form of the json object containing data to be totalled  */
+function totalEarnings(pid, sport, data) {
+  if (sport.constructor === Array.object()){
+    sport = sport[0]
+  }
+  GetPlayer(pid).then(player=>{
+    
+  })
+}
 
 function unique(list) {
   return list.filter(function(elem, pos, arr) {

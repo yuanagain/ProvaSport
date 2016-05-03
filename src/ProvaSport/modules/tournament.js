@@ -18,6 +18,7 @@ tourndb = new Firebase("https://shining-torch-4767.firebaseio.com/tournament");
 /* needs and object for th full data of a team fields
   */
 function createTournament(obj) {
+  console.log("tournament");
   return new Promise(function(resolve, reject) {
       var newRef = tourndb.push();
       newRef.set(obj, function(error) {
@@ -26,7 +27,10 @@ function createTournament(obj) {
           reject();
         } else {
           console.log("Data CREATED successfully "+ newRef.key());
-          //bind team to tourn
+          //bind team players to tourn
+          var i = 0;
+          var len = obj.teams.length
+          //we can assume no tournament with 0 teams
           obj.teams.forEach(function(teamid) {
             Team.getTeam(teamid).then(function(team){
               team.players.forEach(function(playerid){
@@ -41,6 +45,7 @@ function createTournament(obj) {
 }
 
 function _CreateTournament(obj, callback) {
+  console.log("TOURNAMENT");
   var promise = new Promise(function(resolve, reject) {
       var newRef = tourndb.push();
       newRef.set(obj, function(error) {

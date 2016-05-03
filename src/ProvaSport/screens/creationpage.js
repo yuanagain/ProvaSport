@@ -181,10 +181,13 @@ var ContractsPage = React.createClass({
       i++;
       var team = JSON.parse(JSON.stringify(Team.default_team));
       team.players = team_i;
-      //team.name = "Team "+i;
+      team.name = "Team "+i;
       teamss.push(team)
+      if(i == numTeams){
+        Team.createFromList(teamss).then(teamids=>this.create(teamids)).catch(function(err){console.log(err)})
+      }
     });
-    Team.createFromList(teamss).then(teamids=>this.create(teamids)).catch(function(err){console.log(err)})
+
   },
   create: function(teamids) {
     var tournament = JSON.parse(JSON.stringify(Tournament.default_tournament));

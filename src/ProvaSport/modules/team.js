@@ -280,12 +280,15 @@ function _CreateTeam(obj, callback) {
           resolve(newRef.key());
         }
       });
-    }).then(tid=>{
-      Player.GetPlayer(team.players[0]).then(resp=>{
-        Team.setProfPic(tid, resp.prof_pic);
-        Team.setName(tid, resp.name.full);
-      })
-      return Promise.resolve(tid);
+    
+    /*
+     * }).then(tid=>{
+     *   Player.GetPlayer(team.players[0]).then(resp=>{
+     *     Team.setProfPic(tid, resp.prof_pic);
+     *     Team.setName(tid, resp.name.full);
+     *   })
+     *   return Promise.resolve(tid);
+     */
     })
     promise.then(function (value) {
 
@@ -300,26 +303,28 @@ function _CreateTeam(obj, callback) {
     });
 }
 function createFromList(teamobjlist, callback) {
-  console.log("cFromList");
+  //console.log("cFromList");
   return new Promise(function (resolve) {
     var teamids = []
     var i = 0;
 
     teamobjlist.forEach(function(teamobj){
       createTeam(teamobj).then(resp=>{
-        Player.GetPlayer(teamobj.players[0]).then(resp=>{
-          Team.setProfPic(tid, resp.prof_pic);
-          Team.setName(tid, resp.name.full);
-        })
-        teamids.push(resp);
-        i+=1;
-        if(i == teamobjlist.length) resolve(teamids);
+        /*
+         * Player.GetPlayer(teamobj.players[0]).then(response=>{
+         *   Team.setProfPic(tid, response.prof_pic);
+         *   Team.setName(tid, response.name.full);
+         * }).then(()=>{
+         */
+          teamids.push(resp);
+          i+=1;
+          if(i == teamobjlist.length) resolve(teamids);
       }).catch(function(err){console.log(err)});
     })
   })
 }
 export function addTeamPlayersToMatch(teamid, matchid) {
-  console.log("addTeamPlayersToMatch");
+  //console.log("addTeamPlayersToMatch");
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).child('players').on("value", function(snapshot) {
         var players = []

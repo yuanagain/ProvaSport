@@ -300,6 +300,7 @@ var update_matches = function(matches, matchids, callback) {
     }
     two_sum += cap
   }
+  //tie the new match with the team
   //push then pull the matche object to the server
   Match.setFromList(matchids, matches).then(resp=>callback(matches)).catch(function(err){
     console.log("in customlogic.js 301: "+err)})
