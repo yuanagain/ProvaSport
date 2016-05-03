@@ -256,10 +256,14 @@ function createTeam(obj) {
           var key = newRef.key();
           console.log("Data CREATED successfully createT "+ newRef.key());
           // connect the player to the team
+          Player.GetPlayer(team.players[0]).then(playerobj=>{
+              Team.setProfPic(newRef.key(), playerobj.prof_pic);
+              Team.setName(newRef.key(), playobj.name.full);
+              resolve(newRef.key());
+          })
           obj.players.forEach(function(playerid){
             Player.addTeam(playerid, key)
           });
-          resolve(newRef.key());
         }
       });
     });
@@ -271,16 +275,21 @@ function _CreateTeam(obj, callback) {
   //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic;})
   var promise = new Promise(function(resolve, reject) {
       var newRef = teamdb.push();
+
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
           console.log("Data CREATED successfully _CreateT "+ newRef.key());
-          resolve(newRef.key());
+          Player.GetPlayer(team.players[0]).then(playerobj=>{
+              Team.setProfPic(newRef.key(), playerobj.prof_pic);
+              Team.setName(newRef.key(), playobj.name.full);
+              resolve(newRef.key());
+          })
         }
       });
-    
+
     /*
      * }).then(tid=>{
      *   Player.GetPlayer(team.players[0]).then(resp=>{
