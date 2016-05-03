@@ -118,7 +118,7 @@ update if needed
 
     return (
       <View style={styles.container}>
-        <View style={{height: 565 * _cvals.vscale}}>
+        <View style={(Platform.OS === 'ios') ? {height: 565 * _cvals.vscale} : {height: 540 * _cvals.vscale}}>
           <Header title={"MATCH"}
                 mode={'nav'}
                 navigator={this.props.navigator} />
@@ -129,7 +129,7 @@ update if needed
                           onRefresh={this.onRefresh}
                           tintColor={'white'}
                           colors={['#ff0000', '#00ff00', '#0000ff']}
-                          backgroundColor={_cvals.skorange}
+                          backgroundColor={(Platform.OS === 'ios') ? _cvals.skorange : 'white'}
                         />
                       }>
             <View style={_cstyles.body_container}>
@@ -318,7 +318,7 @@ var styles = StyleSheet.create({
     width: windowSize.width,
     flexDirection: 'column',
     flex: 1,
-    height: (Platform === 'ios') ? windowSize.height / 1.33 : windowSize.height / 1.43,
+    height: (Platform.OS === 'ios') ? (windowSize.height / 1.33) : (windowSize.height / 1.43),
   },
   // Not sure this is needed, removed for now
   content: {
@@ -326,7 +326,7 @@ var styles = StyleSheet.create({
     width: windowSize.width,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-
+    height: 200,
   },
 })
 

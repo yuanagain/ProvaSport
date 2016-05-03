@@ -27,6 +27,7 @@ var {
   ListView,
   RefreshControl,
   Modal,
+  Platform,
 } = React;
 
 var PlayerPage = React.createClass({
@@ -109,7 +110,7 @@ var PlayerPage = React.createClass({
                       onRefresh={this.onRefresh}
                       tintColor={'white'}
                       colors={['#ff0000', '#00ff00', '#0000ff']}
-                      backgroundColor={_cvals.skorange}
+                      backgroundColor={(Platform.OS === 'ios') ? _cvals.skorange : 'white'}
                     />
                   }>
         <Image source={{uri: this.state.player.prof_pic}}

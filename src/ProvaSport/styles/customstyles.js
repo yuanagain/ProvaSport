@@ -143,7 +143,7 @@ var CustomStylesDefault = StyleSheet.create({
     height: 28 * _cvals.dscale,
     width: 28 * _cvals.dscale,
     marginLeft: 12 * _cvals.dscale,
-    marginTop: _cvals.headerHeight / 10, // (Platform.OS === 'ios') ? 0 : 
+    marginTop: _cvals.headerHeight / 10, // (Platform.OS === 'ios') ? 0 :
   },
   right_arrow: {
     height: 28 * _cvals.dscale,
