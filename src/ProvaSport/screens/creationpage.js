@@ -183,8 +183,9 @@ var ContractsPage = React.createClass({
       team.players = team_i;
       team.name = "Team "+i;
       teamss.push(team)
+      var callback = this.create;
       if(i == numTeams){
-        Team.createFromList(teamss).then(teamids=>this.create(teamids)).catch(function(err){console.log(err)})
+        Team.createFromList(teamss).then(teamids=>{callback(teamids)}).catch(function(err){console.log(err)})
       }
     });
 

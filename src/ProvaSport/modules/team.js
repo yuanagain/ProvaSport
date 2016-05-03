@@ -256,9 +256,11 @@ function createTeam(obj) {
           var key = newRef.key();
           console.log("Data CREATED successfully createT "+ newRef.key());
           // connect the player to the team
-          Player.GetPlayer(team.players[0]).then(playerobj=>{
-              Team.setProfPic(newRef.key(), playerobj.prof_pic);
-              Team.setName(newRef.key(), playobj.name.full);
+          Player.GetPlayer(obj.players[0]).then(playerobj=>{
+              obj.thumbnail = playerobj.prof_pic;
+              obj.name = playerobj.name.full;
+              setProfPic(newRef.key(), playerobj.prof_pic);
+              setName(newRef.key(), playerobj.name.full);
               resolve(newRef.key());
           })
           obj.players.forEach(function(playerid){
@@ -282,9 +284,11 @@ function _CreateTeam(obj, callback) {
           reject();
         } else {
           console.log("Data CREATED successfully _CreateT "+ newRef.key());
-          Player.GetPlayer(team.players[0]).then(playerobj=>{
-              Team.setProfPic(newRef.key(), playerobj.prof_pic);
-              Team.setName(newRef.key(), playobj.name.full);
+          Player.GetPlayer(obj.players[0]).then(playerobj=>{
+              obj.thumbnail = playerobj.prof_pic;
+              obj.name = playerobj.name.full;
+              setProfPic(newRef.key(), playerobj.prof_pic);
+              setName(newRef.key(), playerobj.name.full);
               resolve(newRef.key());
           })
         }
@@ -300,7 +304,6 @@ function _CreateTeam(obj, callback) {
      */
     })
     promise.then(function (value) {
-
       //connect player to team
       //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic})
       obj.players.forEach(function(playerid){

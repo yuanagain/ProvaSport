@@ -73,7 +73,7 @@ var TeamPage = React.createClass({
           <SimpleRow title={"Matches Played"} value={"TBD"}
                      navigator={this.props.navigator} />
           <View style={_cstyles.section_divider_line} ></View>
-  
+
           <SimpleRow title={"Recent Matches"} value={""} />
 
           <View style={styles.matches}>
@@ -104,6 +104,10 @@ var TeamPage = React.createClass({
     // this.state.match = this.props.match
       Team._GetTeam(this.props.teamid, this.fetchTeam)
     },
+    componentWillReceiveProps: function (nextProps) {
+     // this.state.match = this.props.match
+       Team._GetTeam(nextProps.teamid, this.fetchTeam)
+     },
 });
 
 var styles = StyleSheet.create({
