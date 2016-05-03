@@ -27,6 +27,7 @@ var {
   TouchableOpacity,
   AndroidDatePicker,
   Alert,
+  ScrollView,
 } = React;
 
 var LoginPage = React.createClass({
@@ -53,65 +54,72 @@ var LoginPage = React.createClass({
     ];
 
     return (
-    <View style={styles.container}>
+      <ScrollView ref='scrollView' style={styles.scroll}>
+        <View style={styles.container}>
 
-      <View style={styles.logo_container}>
-        <Image style={styles.logo}
-               source={require('../assets/logo_white_orange.png')} />
-      </View>
+          <View style={styles.logo_container}>
+            <Image style={styles.logo}
+                   source={require('../assets/logo_white_orange.png')} />
+          </View>
 
-      <View style={styles.header_container}>
-        <Text style={styles.title_text}>
-          {"ProvaSport"}
-        </Text>
-      </View>
+          <View style={styles.header_container}>
+            <Text style={styles.title_text}>
+              {"ProvaSport"}
+            </Text>
+          </View>
 
 
+          <View style={styles.inputs_container}>
 
-      <View style={styles.inputs_container}>
+            <TextInput
+            ref='emailInput'
+            onFocus={this.inputFocused.bind(this, 'emailInput')}
+            onEndEditing={() => { this.refs.scrollView.scrollTo({y: 0}); }}
+            style={styles.login_input}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            onChangeText={(username) => this.setState({username})}
+            value={this.state.username}
+            placeholder={"user@email.com"}
+            autoCapitalize={"none"}
+            />
 
-        <TextInput
-        style={styles.login_input}
-        underlineColorAndroid='rgba(0,0,0,0)'
-        onChangeText={(username) => this.setState({username})}
-        value={this.state.username}
-        placeholder={"user@email.com"}
-        autoCapitalize={"none"}
-        />
+            <View style={styles.white_line}>
+            </View>
 
-        <View style={styles.white_line}>
+            <TextInput
+            ref='passwordInput'
+            onFocus={this.inputFocused.bind(this, 'passwordInput')}
+            onEndEditing={() => { this.refs.scrollView.scrollTo({y: 0}); }}
+            style={styles.login_input}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+            placeholder={"Password"}
+            secureTextEntry={true}
+            autoCapitalize={"none"}
+            />
+          </View>
+
+          <View style={styles.buttons_container}>
+            <WideButton
+              text={"Sign In"}
+              style={styles.login_button}
+              styleDisabled={{color: 'grey'}}
+              onPress={this.onSignInPress}
+              />
+
+            <TouchableOpacity
+              style={styles.signup_button}
+              onPress={this.onSignUpPress} >
+              <Text style={{fontFamily: _cvals.mainfont,
+                            fontSize: 20 * _cvals.dscale,
+                            color: 'white',}}>
+                {"New user? Sign Up!"}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-
-        <TextInput
-        style={styles.login_input}
-        underlineColorAndroid='rgba(0,0,0,0)'
-        onChangeText={(password) => this.setState({password})}
-        value={this.state.password}
-        placeholder={"Password"}
-        secureTextEntry={true}
-        autoCapitalize={"none"}
-        />
-      </View>
-
-      <View style={styles.buttons_container}>
-        <WideButton
-          text={"Sign In"}
-          style={styles.login_button}
-          styleDisabled={{color: 'grey'}}
-          onPress={this.onSignInPress}
-          />
-
-        <TouchableOpacity
-          style={styles.signup_button}
-          onPress={this.onSignUpPress} >
-          <Text style={{fontFamily: _cvals.mainfont,
-                        fontSize: 20 * _cvals.dscale,
-                        color: 'white',}}>
-            {"New user? Sign Up!"}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      </ScrollView>
     );
   },
   onSignUpPress: function(name) {
@@ -211,12 +219,26 @@ var LoginPage = React.createClass({
     this._setInitialPlayer(player)
     var callback = this.props.navToHomeFunc;
     callback()
+  },
+  inputFocused (refName) {
+    setTimeout(() => {
+      let scrollResponder = this.refs.scrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        React.findNodeHandle(this.refs[refName]),
+        50, //additionalOffset
+        true
+      );
+    }, 50);
   }
 });
 
 
 var styles = StyleSheet.create({
+  scroll: {
+
+  },
   logo: {
+    marginTop: (Platform.OS === 'ios') ? 100 : 65,
     width: 200 * _cvals.dscale,
     height: 200 * _cvals.dscale
   },
@@ -248,7 +270,6 @@ var styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.5,
     shadowOffset: {width: 0, height: 3},
-
   },
   signup_button: {
     opacity: 1,
@@ -281,7 +302,8 @@ var styles = StyleSheet.create({
     // height: windowSize.height * 6 / 10,
     width: windowSize.width,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: 110,
   },
   inputs_container: {
     width: windowSize.width,

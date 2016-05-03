@@ -72,28 +72,28 @@ render() {
       navigator,
       ...props
     } = this.props;
-	
-return (
-  <View style={styles.container}>
-	<View>
-        <Header title={"MESSAGES"}
-                mode={"nav"}
-                navigator={this.props.navigator} />
-  </View>
-  <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        style={styles.listView}
-      />
 
-  </View>
-      );
+    return (
+      <View style={styles.container}>
+    	<View>
+            <Header title={"MESSAGES"}
+                    mode={"nav"}
+                    navigator={this.props.navigator} />
+      </View>
+        <View style={styles.android_container}>
+          <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this.renderRow}
+                style={styles.listView}
+              />
+        </View>
+      </View>
+          );
   },
-
 
   renderRow(data) {
     return (
-      <ChatRow playerid={data} 
+      <ChatRow playerid={data}
                navigator={this.props.navigator} />
     );
   },
@@ -137,7 +137,7 @@ render() {
       navigator,
       ...props
     } = this.props;
-  
+
 return (
   <View style={styles.friendContainer}>
     <TouchableOpacity onPress = {()=>this.onPress()} style = {styles.container}>
@@ -147,13 +147,13 @@ return (
           source={this.state.player.prof_pic}
           style={styles.profpic}
         />
-      </View> 
+      </View>
       <View>
         <View style={styles.details}>
             <Text style={_cstyles.standard_text}>{this.state.player.name.first}</Text>
             <Text style={_cstyles.detail_text}>{this.state.player.name.last}</Text>
           </View>
-          <View style={_cstyles.section_divider_line} ></View> 
+          <View style={_cstyles.section_divider_line} ></View>
       </View>
     </TouchableOpacity>
   </View>
@@ -176,7 +176,7 @@ return (
   fetchPlayer: function(data) {
     this.setState({loaded : true})
     this.setState({player : data})
-    
+
   },
 
   componentDidMount: function () {
@@ -208,6 +208,9 @@ var styles = StyleSheet.create({
     width: windowSize.width,
     marginTop: _cvals.dscale * 4,
     marginBottom: _cvals.dscale * 4
+  },
+  android_container: {
+    marginTop: 50,
   },
   player_row: {
     flexDirection: 'row',
