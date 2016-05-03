@@ -128,7 +128,7 @@ var SignUpPage = React.createClass({
               mode={'nav'}
               navigator={this.props.navigator} />
         <View>
-        <SmartScrollView>
+        <ScrollView>
           <View style={styles.image_container}>
             <TouchableOpacity onPress={this.showImagePicker}>
               <Image source={this.state.profImage} style={styles.avatar}/>
@@ -214,7 +214,7 @@ var SignUpPage = React.createClass({
 
             onPress={this.onSubmit}
           />
-        </SmartScrollView>
+        </ScrollView>
         </View>
       </View>
     );
