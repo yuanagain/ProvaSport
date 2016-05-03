@@ -32,6 +32,7 @@ var TextField = React.createClass({
             autoCorrect={false}
             maxLength={35}
             keyboardType={this.props.keyboardType}
+            onChangeText={this.props.onChangeText}
           />
         </View>
         <View style={_cstyles.divider_line}/>
