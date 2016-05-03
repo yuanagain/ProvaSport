@@ -118,7 +118,7 @@ update if needed
 
     return (
       <View style={styles.container}>
-        <View style={(Platform.OS === 'ios') ? {height: 565 * _cvals.vscale} : {height: 540 * _cvals.vscale}}>
+        <View style={(Platform.OS === 'ios') ? {height: 535 * _cvals.vscale} : {height: 520 * _cvals.vscale}}>
           <Header title={"MATCH"}
                 mode={'nav'}
                 navigator={this.props.navigator} />

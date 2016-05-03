@@ -40,6 +40,10 @@ class ProvaSport extends Component {
   }
 
   render() {
+    console.ignoredYellowBox = [
+      'Warning: Native component for \'RCTModalHostView\' does not exist'
+    ];
+    
     if (this.state.selectedTab == 'login') {
       return (
         <Navigator
