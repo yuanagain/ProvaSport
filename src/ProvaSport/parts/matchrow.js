@@ -115,6 +115,7 @@ var MatchRow = React.createClass({
 
   componentDidMount: function () {
     // this.state.match = this.props.match
+    console.log("GET MATCH  "+this.props.matchid);
     Match._GetMatch(this.props.matchid, this.fetchMatch)
   },
 

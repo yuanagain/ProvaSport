@@ -64,7 +64,6 @@ var SettingsPage = React.createClass({
     var options = {
       title: 'Select Profile Picture',
       cancelButtonTitle: 'Cancel',
-      takePhotoButtonTitle: 'Take Photo...',
       chooseFromLibraryButtonTitle: 'Choose from Library...',
       mediaType: 'photo',
       storageOptions: {
@@ -74,6 +73,9 @@ var SettingsPage = React.createClass({
     };
 
     ImagePickerManager.showImagePicker(options, (response) => {
+      //console.log(response);
+      if(!response.didCancel){
+
       console.log('Response = ', response);
         // You can display the image using either data:
         // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
@@ -82,11 +84,13 @@ var SettingsPage = React.createClass({
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
         //upload image
+
         this.upload(source.uri, this.state.playerid);
         //Upload(source).then(resp=>)
         this.setState({
           profImage: source
         });
+      }
       }
     );
   },
@@ -316,7 +320,7 @@ var SettingsPage = React.createClass({
     var name = "prof_pic"+playerid+".jpg"
     let file = {
       // `uri` can also be a file system path (i.e. file://)
-      uri: "file:///Users/kenanfarmer/Library/Developer/CoreSimulator/Devices/9212EF35-3593-450A-84D1-87112A2A717A/data/Containers/Data/Application/463DAE6D-E6F2-4D77-B1CB-4A6A73455C13/Documents/751C50B2-AE47-4DAA-B323-3EE8C5E06736.jpg",
+      uri: uri,
       name: name,
       type: "image/jpeg"
     }

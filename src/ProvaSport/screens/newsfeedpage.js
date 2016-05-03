@@ -72,7 +72,7 @@ var NewsFeedPage = React.createClass({
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
           var matches = [];
-          console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
+          console.log("RESPONSE FrOM SDNJDKFJJNKDFJNKSD");
           console.log(resp);
           console.log(player.matches);
           if(resp!=null || resp!= undefined) {
@@ -81,7 +81,7 @@ var NewsFeedPage = React.createClass({
           else {
             matches = player.matches;
           }
-          //matches = unique(matches);
+          matches = this.unique(matches);
           this.setState({fmatches: matches})
         });
       });
@@ -99,15 +99,15 @@ var NewsFeedPage = React.createClass({
         Player.getFriendsMatches(result.playerid).then(resp=>{
           var matches = [];
           console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
-          console.log(resp);
-          console.log(player.matches);
+          console.log(this.unique(player.matches.concat(resp)));
           if (resp!=null || resp!= undefined) {
             matches = resp.concat(player.matches);
           }
           else {
             matches = player.matches;
           }
-          //matches = unique(matches);
+          matches = this.unique(matches);
+          console.log(matches);
           this.setState({fmatches: matches})
         });
       });
@@ -124,7 +124,7 @@ var NewsFeedPage = React.createClass({
         AsyncStorage.setItem('player', JSON.stringify(player), (err, response)=>{
           Player.getFriendsMatches(result.playerid).then(resp=>{
             var matches = [];
-            console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
+            console.log("RESPONSE FROM");
             console.log(resp);
             console.log(player.matches);
             if(resp!=null || resp!= undefined) {

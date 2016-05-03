@@ -98,7 +98,7 @@ update if needed
       // if this is an unconfirmed match
       buttons = <WideButtonPair textRight={"Confirm"}
                                 textLeft={"Adjust"}
-                                onPressRight={()=>{this.changeStatus(4); this.checkToUpdate()} }
+                                onPressRight={()=>{this.changeStatus(4)} }
                                 onPressLeft={()=>this.toRecordPage()} />
     }
 
@@ -247,7 +247,7 @@ update if needed
       myTeam: 1})
     }
     else {
-      console.log("you are not on this team")
+      console.log("you are not in this Match")
     }
   },
   componentDidMount: function () {
