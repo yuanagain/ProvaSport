@@ -242,7 +242,21 @@ var ProfilePage = React.createClass({
   },
   onRefresh: function() {
     this.setState({isRefreshing: true})
-    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    AsyncStorage.getItem('user', (err, reps)=>{
+      reps = JSON.parse(reps);
+      Player.getPlayer(reps.playerid).then(player=>{
+        AsyncStorage.setItem('player', JSON.stringify(player), (err, resp)=>{
+          console.log(resp);
+        })
+      })
+    })
+    this.getMe()
+    if (this.props.playerid == -1){
+      this.getPlayerId();
+    }
+    else {
+      Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+    }
     setTimeout(() => {
       this.setState({isRefreshing: false})
     }, _cvals.timeout);

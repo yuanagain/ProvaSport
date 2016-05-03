@@ -20,7 +20,18 @@ export function unique(list) {
     return result;
 }
 
-/* 
+/*
  * HARD reset
  * pull form DB into
+ */
+
+/* 
+ * AsyncStorage.getItem('user', (err, reps)=>{
+ *   reps = JSON.parse(reps);
+ *   Player.getPlayer(reps.playerid).then(player=>{
+ *     AsyncStorage.setItem('player', JSON.stringify(player), (err, resp)=>{
+ *       console.log(resp);
+ *     })
+ *   })
+ * })
  */

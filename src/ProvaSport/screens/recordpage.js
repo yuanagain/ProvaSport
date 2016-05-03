@@ -108,7 +108,7 @@ var RecordPage = React.createClass({
               label="Match Name"
               placeholder="Optional"
               keyboardType='default'
-              onChangeText={(name) => this.setName(name)}
+              onChangeText={(name) => this.setState({name})}
             />
 
             <TextField
@@ -116,7 +116,7 @@ var RecordPage = React.createClass({
               label="Location"
               placeholder="Optional"
               keyboardType='default'
-              onChangeText={(location) => this.setLocation(location)}
+              onChangeText={(location) => this.setState({location})}
             />
 
             <PopoverSelector
@@ -190,14 +190,16 @@ var RecordPage = React.createClass({
   },
 
   componentDidMount(){
-    AsyncStorage.getItem('user', (err, user)=>{
-      user = JSON.parse(user);
-      AsyncStorage.getItem('player', (err, player)=>{
-        player = JSON.parse(player);
-        var items = player.friends.concat(user.playerid);
-        this.setState({items: items});
-      })
-    })
+    /* 
+     * AsyncStorage.getItem('user', (err, user)=>{
+     *   user = JSON.parse(user);
+     *   AsyncStorage.getItem('player', (err, player)=>{
+     *     player = JSON.parse(player);
+     *     var items = player.friends.concat(user.playerid);
+     *     this.setState({items: items});
+     *   })
+     * })
+     */
   },
 
   componentWillReceiveProps(nextProps){

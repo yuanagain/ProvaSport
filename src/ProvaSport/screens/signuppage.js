@@ -219,6 +219,7 @@ var SignUpPage = React.createClass({
   },
 
   validEmail() {
+    console.log(this.state.email);
     var re = /\S+@\S+\.\S+/;
     return re.test(this.state.email)
   },

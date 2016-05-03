@@ -9,8 +9,6 @@ import * as Team from './team'
 import * as Tournament from '../modules/tournament'
 import * as Trophy from '../modules/trophy'
 
-
-
 var matchdb = require("firebase");
 var ref = require("firebase");
 /*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
@@ -425,13 +423,20 @@ function myStatus(matchid, playerobj) {
   })
 }
 
-function getAllMatches() {
+function getAllMatches(length) {
   var matches = []
   return new Promise(function(resolve, reject) {
       ref.child('match').on("value", function(snapshot) {
         var val = snapshot.val();
-        var len = Object.keys(val).length;
+        var len = 0;
+        if(length == -1){
+          len = Object.keys(val).length;
+        }
+        else{
+          len = length;
+        }
         var i = 0;
+        console.log(len);
         snapshot.forEach(function(match){
           i++;
           if(!match.hasOwnProperty('teams')){
@@ -450,7 +455,7 @@ function addTournament(matchid, tournid) {
 
 }
 
-//getAllMatches().then(resp=>console.log(resp))
+//getAllMatches(5).then(resp=>console.log(resp))
 //tieMatchTo(35, 1, 1)
 /*CHANGED ***************HOW TO PARSE ARRAYS************** TODO*/
 /*
