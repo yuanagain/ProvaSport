@@ -26,7 +26,6 @@ var {
 
 var defaultHeight = _cvals.slength / 2 * _cvals.dscale + 1
 
-
 // ==================================================
 
 var fork_styles = StyleSheet.create({
