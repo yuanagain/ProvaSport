@@ -118,6 +118,7 @@ export function addMatch(teamid, matchid) {
       teamdb.child(teamid).on("value", function(snapshot) {
         var matches = []
         var team = snapshot.val();
+        team.players = [].concat(team.players)
         if (team.hasOwnProperty('matches')) {
           matches = team.matches;
         }
@@ -127,6 +128,7 @@ export function addMatch(teamid, matchid) {
           console.log("ERROR NO TEAM FOUND WITH ID: "+teamid);
         }
         else {
+          console.log(team.players);
           team.players.forEach(function(playerid){
             Player.addMatch(playerid, matchid)
           });
@@ -147,6 +149,8 @@ export function addTournament(teamid, tournid) {
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).on("value", function(snapshot) {
         var team = snapshot.val();
+        team.players = [].concat(team.players)
+        console.log(team.players);
         team.players.forEach(function(playerid){
           Player.addTournament(playerid, tournid)
         });
@@ -202,13 +206,13 @@ function _AddMatch(teamid, matchid, callback) {
       if(matches === null){
         //tie each to player
         team.players.forEach(function(playerid){
-          Player.addTeam(playerid, matchid)
+          Player.addMatch(playerid, matchid)
         });
         resolve([]);
       }
       else {
         team.players.forEach(function(playerid){
-          Player.addTeam(playerid, matchid)
+          Player.addMatch(playerid, matchid)
         });
         resolve(matches);
       }

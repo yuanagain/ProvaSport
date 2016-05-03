@@ -44,6 +44,15 @@ var RRMatrix = function(tournament) {
 
 var bracketMatrix = function(tournament) {
   var teams = tournament.teams
+  var depth = Math.ceil(Math.log(teams.length) / Math.log(2))
+  var placements = new Array(teams.length)
+  var trace = createTrace(depth)
+  for (var i = 0; i < trace.length; i++) {
+    placements[i] = teams[trace[i] - 1]
+  }
+  teams = placements
+
+
   var matches = tournament.matches
   var matrix = [[]]
   var k = 0
