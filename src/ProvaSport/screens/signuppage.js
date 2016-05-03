@@ -318,13 +318,6 @@ var SignUpPage = React.createClass({
      * }
      */
     else {
-      /* Valid Login? now authenticate?*/
-      /*
-
-       */
-
-
-
       var callback = this.props.navToHomeFunc;
       var email = this.state.email;
       var pass = this.state.password;
@@ -336,10 +329,12 @@ var SignUpPage = React.createClass({
       player.name.full = this.state.first + " " + this.state.last;
       player.nationality = String(this.state.country);
       player.sports = this.state.sports;
+
       setUser.sports = this.state.sports;
       setUser.email = email;
       setUser.birthday = this.state.age;
       setUser.nationality = String(this.state.country);
+
       var earnings = []
       var i = 0;
       var len = this.state.sports.length;
@@ -372,21 +367,29 @@ var SignUpPage = React.createClass({
     player.userid = uid;
     var callback = this.props.navToHomeFunc;
     var call1 = this._setInitialUser;
+    var uri = this.state.profImage.uri;
+    var pid = this.state.playerid;
+    var upload = this.upload;
     Player.createPlayer(player).then(function(id){
       //given the id add to the user and create data in FB
-      console.log(this.state.profImage.uri);
-      //this.upload(this.state.profpic.source.uri, this.state.playerid);
+      console.log(uri);
+      if(uri){
+        upload(uri, pid);
+      }
       user.playerid = id;
       console.log(user)
       User.setUser(uid, user);
       call1(user)
+    }).then(()=>{
+      this._setInitialPlayer(player)
+      callback()
+    }).catch(function(err) {
+      console.log(err);
     })
-    this._setInitialPlayer(player)
-    callback()
     //create player
   },
   _setInitialUser: function(obj) {
-    console.log("CACHE user")
+    console.log("CACHED user")
     try {
       //THIS WORKS!!!
       AsyncStorage.setItem('user', JSON.stringify(obj), () => {
@@ -403,9 +406,10 @@ var SignUpPage = React.createClass({
 
   upload(uri, playerid) {
     var name = "prof_pic"+playerid+".jpg"
+    uri = "file://"+uri;
     let file = {
       // `uri` can also be a file system path (i.e. file://)
-      uri: "file:///Users/kenanfarmer/Library/Developer/CoreSimulator/Devices/9212EF35-3593-450A-84D1-87112A2A717A/data/Containers/Data/Application/463DAE6D-E6F2-4D77-B1CB-4A6A73455C13/Documents/751C50B2-AE47-4DAA-B323-3EE8C5E06736.jpg",
+      uri: uri,
       name: name,
       type: "image/jpeg"
     }
@@ -418,11 +422,14 @@ var SignUpPage = React.createClass({
       secretKey: "vd1Zq0VleKh2Gcs1Ix4dHF0RBSgzO4AB0g+6ViNC",
       successActionStatus: 201
     }
-
+    var location = "";
     RNS3.put(file, options).then(response => {
       if (response.status !== 201)
         throw new Error("Failed to upload image to S3");
-      console.log(response.body.location);
+      location = response.body.location;
+      //upload
+      Player.setProfPic(playerid, location).then(resp=>console.log(location))
+
     }).catch(function(err){console.log(err);});
   },
   _setInitialPlayer: function(obj) {

@@ -346,10 +346,11 @@ var RecordPage = React.createClass({
   setSport: function(sport) {
     this.setState({sport: sport})
   },
+
   reloadPlayer: function(){
     AsyncStorage.getItem('user',(err,resp)=>{
       resp = JSON.parse(resp);
-      Player._GetPlayer(resp.playerid, function(playerobj){
+      Player._GetPlayer(resp.playerid, function(playerobj) {
         AsyncStorage.setItem('player', JSON.stringify(playerobj),(err,resp)=>{
           console.log(resp);
         })

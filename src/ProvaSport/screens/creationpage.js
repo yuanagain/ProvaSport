@@ -177,14 +177,18 @@ var ContractsPage = React.createClass({
     var teamss = []
     var numTeams = this.state.teams.length;
     var i = 0;
+    var callback = this.create;
     this.state.teams.forEach(function(team_i){
       i++;
       var team = JSON.parse(JSON.stringify(Team.default_team));
       team.players = team_i;
-      //team.name = "Team "+i;
+      team.name = "Team "+i;
       teamss.push(team)
+      if(i == numTeams){
+        Team.createFromList(teamss).then(teamids=>{callback(teamids)}).catch(function(err){console.log(err)})
+      }
     });
-    Team.createFromList(teamss).then(teamids=>this.create(teamids)).catch(function(err){console.log(err)})
+
   },
   create: function(teamids) {
     var tournament = JSON.parse(JSON.stringify(Tournament.default_tournament));
@@ -206,6 +210,7 @@ var ContractsPage = React.createClass({
   },
   createRR: function(obj) {
     var defaults = Match.default_match;
+    defaults.datetime = Date.now();
     defaults.location = obj.location;
     defaults.name = obj.name;
     defaults.sports = obj.sports;
@@ -222,14 +227,15 @@ var ContractsPage = React.createClass({
       obj.teams.forEach(function(teamid){
         Team.addTournament(teamid, id)
       })
-      console.log("\n\n CHECKPOINT 2")
-      _clogic.createRR(data).then(reply=>{obj.matches=reply; console.log("\n\n CHECKPOINT 3")}).then(()=>Tournament.setTournament(id, obj)).then(()=>this.toRR(id)).catch(function(err){console.log(err)})
+      _clogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(()=>this.toRR(id)).catch(function(err){console.log(err)})
   },
   createBracket: function(obj) {
     var defaults = Match.default_match;
+    defaults.datetime = Date.now();
     defaults.location = obj.location;
     defaults.name = obj.name;
     defaults.sports = obj.sports;
+    console.log("DEFAULTS");
     Tournament.createTournament(obj).then(resp=>this.createBracket2(resp, obj, defaults))
   },
   createBracket2: function(id, obj, defaults) {
