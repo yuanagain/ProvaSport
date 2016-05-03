@@ -11,6 +11,7 @@ var WideButton = require('../smallparts/widebutton');
 var AddImageIcon = require('../assets/add.png')
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var TextField = require('../smallparts/textfield')
+var KeyboardHandler = require('../parts/keyboardhandler')
 
 import * as Player from '../modules/player'
 import * as User from '../modules/userdata'
@@ -126,14 +127,14 @@ var SignUpPage = React.createClass({
         <Header title={"SIGN UP"}
               mode={'nav'}
               navigator={this.props.navigator} />
-        <ScrollView style={styles.input_container}>
+        <View>
+        <SmartScrollView>
           <View style={styles.image_container}>
             <TouchableOpacity onPress={this.showImagePicker}>
               <Image source={this.state.profImage} style={styles.avatar}/>
             </TouchableOpacity>
           </View>
           <View style={_cstyles.body_container}>
-
             <TextField
               label="Email "
               placeholder="user@email.com"
@@ -213,7 +214,8 @@ var SignUpPage = React.createClass({
 
             onPress={this.onSubmit}
           />
-        </ScrollView>
+        </SmartScrollView>
+        </View>
       </View>
     );
   },
