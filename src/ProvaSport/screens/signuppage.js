@@ -257,7 +257,7 @@ var SignUpPage = React.createClass({
         ]
       )
     }*/
-    else if (!this.validPasswordLength()) {
+    if (!this.validPasswordLength()) {
       Alert.alert(
         'Invalid Password',
         'Password must be at least 8 characters long',
