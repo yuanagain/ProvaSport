@@ -42,6 +42,7 @@ var Search = React.createClass({
         <div>
           <p style={styles.title}> Results </p>
           {this.state.players.map(function(playerid) {
+            console.log(playerid)
             return (
               <PlayerRow playerid={playerid}/>
             )
@@ -68,10 +69,8 @@ var Search = React.createClass({
   },
 
   update: function(players) {
-    setTimeout(() => {
-      this.setState({players: players})
-      this.setState({searching: false})
-    }, 500);
+    this.setState({players: players})
+    this.setState({searching: false})
   },
 });
 

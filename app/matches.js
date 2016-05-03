@@ -192,9 +192,10 @@ var PlayersRow = React.createClass({
       )
     }
 
-    var playerPics = this.state.players.map(function(player, index) {
+    var playerPics = this.state.players.map(function(player, i) {
+      console.log(i)
       return (
-        <img style={pic} src={player.prof_pic}/>
+        <img style={pic} src={player.prof_pic} key={i}/>
       );
     })
 
