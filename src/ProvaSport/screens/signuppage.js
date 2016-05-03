@@ -218,10 +218,10 @@ var SignUpPage = React.createClass({
     );
   },
 
-  validEmail() {
+  /*validEmail() {
     var re = /\S+@\S+\.\S+/;
     return re.test(this.state.email)
-  },
+  },*/
 
   validPasswordLength() {
     return (this.state.password.length >= 8)
