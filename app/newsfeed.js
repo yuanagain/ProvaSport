@@ -73,8 +73,7 @@ var EntryMap = React.createClass({
       )
     }
     else {
-      var matches
-      console.log(this.props.matches.length)
+      var matches = this.props.matches
       if (this.props.matches.length <= 25)
         matches = this.props.matches
       else {

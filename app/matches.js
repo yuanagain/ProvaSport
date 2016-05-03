@@ -168,17 +168,18 @@ var PlayersRow = React.createClass({
 
   fetchPlayer: function(player) {
     if (this.state.players.length < this.props.playerids.length) {
-      var players = this.state.players.slice()
+      var players = [].concat(this.state.players)
       players.push(player)
       this.setState({players: players})
     }
   },
 
   componentWillReceiveProps: function(nextprops) {
-    var playerid;
-    for (playerid in nextprops.playerids) {
-      Player._GetPlayer(playerid, this.fetchPlayer)
-    }
+    var fetchPlayer = this.fetchPlayer
+    nextprops.playerids.forEach(function(playerid) {
+      Player._GetPlayer(playerid, fetchPlayer)
+    })
+    this.forceUpdate();
   },
 
   render: function() {
@@ -193,7 +194,6 @@ var PlayersRow = React.createClass({
     }
 
     var playerPics = this.state.players.map(function(player, i) {
-      console.log(i)
       return (
         <img style={pic} src={player.prof_pic} key={i}/>
       );
