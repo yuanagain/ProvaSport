@@ -344,7 +344,7 @@ var SettingsPage = React.createClass({
       this.state.player.prof_pic = url;
       console.log(this.state.player);
       Player.setProfPic(this.state.playerid, url);
-      this.setAsyncPlayer(this.state.player);
+      this.setAsyncP(this.state.player);
     })
   },
 

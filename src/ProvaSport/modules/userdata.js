@@ -322,6 +322,9 @@ function GetUser(uid){
   return new Promise(function(resolve, reject) {
       ref.child('user').child(uid).on("value", function(snapshot) {
         var user = snapshot.val();
+        if(user == null){
+
+        }
         if(!user.hasOwnProperty('sports')){
           user.sports = [];
         }

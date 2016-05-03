@@ -249,7 +249,18 @@ var ContractsPage = React.createClass({
       })
       _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
   },
-
+  reset: function() {
+    this.setState({
+      tournament: Tournament.default_tournament,
+      selectedSport: ["Tennis"],
+      selection: [],
+      event_type: [],
+      teams: [[],[],],
+      num_teams: [2],
+      items: [0,1],
+      playerid: -1,
+    })
+  },
   setTeam: function(players, index) {
     this.state.teams[index] = players;
     this.setState({teams: this.state.teams})
@@ -258,7 +269,6 @@ var ContractsPage = React.createClass({
   componentDidMount(){
     AsyncStorage.getItem('user', (err, user)=>{
       user = JSON.parse(user);
-
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
         var items = player.friends.concat(user.playerid);
