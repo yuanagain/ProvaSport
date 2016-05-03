@@ -64,13 +64,13 @@ var TeamPage = React.createClass({
           <SimpleRow title={"Sport"} value={this.state.team.sport} />
           <View style={_cstyles.section_divider_line} ></View>
 
-          <SimpleRow title={"Location"} value={"MBBC"} />
+          <SimpleRow title={"Location"} value={""} />
           <View style={_cstyles.section_divider_line} ></View>
 
           <SimpleRow title={"Members"} value={this.state.team.players.length} />
           <View style={_cstyles.section_divider_line} ></View>
 
-          <SimpleRow title={"Matches Played"} value={"TBD"}
+          <SimpleRow title={"Matches Played"} value={""}
                      navigator={this.props.navigator} />
           <View style={_cstyles.section_divider_line} ></View>
 
