@@ -11,7 +11,6 @@ var WideButton = require('../smallparts/widebutton');
 var AddImageIcon = require('../assets/add.png')
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var TextField = require('../smallparts/textfield')
-var SmartScrollView = require('react-native-smart-scroll-view')
 
 import * as Player from '../modules/player'
 import * as User from '../modules/userdata'
@@ -134,6 +133,7 @@ var SignUpPage = React.createClass({
             </TouchableOpacity>
           </View>
           <View style={_cstyles.body_container}>
+
             <TextField
               label="Email "
               placeholder="user@email.com"
@@ -218,10 +218,10 @@ var SignUpPage = React.createClass({
     );
   },
 
-  /*validEmail() {
+  validEmail() {
     var re = /\S+@\S+\.\S+/;
     return re.test(this.state.email)
-  },*/
+  },
 
   validPasswordLength() {
     return (this.state.password.length >= 8)
@@ -248,7 +248,7 @@ var SignUpPage = React.createClass({
      *   )
      * }
      */
-    /*if (!this.validEmail()) {
+    if (!this.validEmail()) {
       Alert.alert(
         'Invalid Email',
         'Invalid email address',
@@ -256,8 +256,8 @@ var SignUpPage = React.createClass({
           {text: 'OK'},
         ]
       )
-    }*/
-    if (!this.validPasswordLength()) {
+    }
+    else if (!this.validPasswordLength()) {
       Alert.alert(
         'Invalid Password',
         'Password must be at least 8 characters long',
