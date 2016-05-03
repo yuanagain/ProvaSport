@@ -53,10 +53,12 @@ var TournamentListingPage = React.createClass({
                 mode={'nav'}
                 navigator={this.props.navigator} />
 
-        <ListView   style={styles.container}
-                    renderRow={this.renderRow}
-                    dataSource={dataSource}>
-        </ListView>
+        <View style={{height: windowSize.height - 130 * _cvals.vscale}}>
+          <ListView   style={styles.container}
+                      renderRow={this.renderRow}
+                      dataSource={dataSource}>
+          </ListView>
+        </View>
       </View>
     );
   },
