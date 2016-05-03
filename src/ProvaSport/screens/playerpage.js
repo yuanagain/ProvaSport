@@ -251,14 +251,21 @@ var PlayerPage = React.createClass({
 
   onRefresh: function() {
     this.setState({isRefreshing: true})
-    this.getMe();
+    var pid = this.state.my_user.playerid;
+    Player.GetPlayer(pid).then(playerobj=>{
+      AsyncStorage.setItem('player', JSON.stringify(playerobj), (error, response)=>{
+        // this is player id of person logged in. WORKS!!
+        //console.log(obj.playerid)
+        this.setState({my_player: playerobj})
+        if (this.props.playerid == -1){
+          this.setState({player: playerobj})
+        }
+        else {
+          Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+        }
+      });
+    })
 
-    if (this.props.playerid == -1){
-      this.getPlayerId();
-    }
-    else {
-      Player._GetPlayer(this.props.playerid, this.fetchPlayer)
-    }
     setTimeout(() => {
       this.setState({isRefreshing: false})
     }, _cvals.timeout);
