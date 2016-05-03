@@ -1,5 +1,6 @@
 'use strict';
 import React, {
+  AsyncStorage,
   AppRegistry,
   Component,
   StyleSheet,
@@ -23,9 +24,9 @@ var LoginPage = require('./screens/loginpage')
 var PlayerPage = require('./screens/playerpage')
 var RecordPage = require('./screens/recordpage')
 var NewsFeedPage = require('./screens/newsfeedpage')
-var ContractsScreen = require('./screens/contractspage')
-var SettingsPage = require('./screens/settingspage')
-var SignUpPage = require('./screens/signup')
+var CreationPage = require('./screens/creationpage')
+var MorePage = require('./screens/morepage')
+var SignUpPage = require('./screens/signuppage')
 
 var _cvals = require('./styles/customvals.js')
 
@@ -85,16 +86,16 @@ class ProvaSport extends Component {
           </TabNavigator.Item>
           <TabNavigator.Item
             //title="Contracts"
-            selected={this.state.selectedTab === 'contracts'}
+            selected={this.state.selectedTab === 'create'}
             renderIcon={() => <Image style={styles.icon}
               source={scheduleIcon}
             />}
             renderSelectedIcon={() => <Image source={scheduleIcon} style={styles.selectedIcon}/>}
-            onPress={() => {this.onTabPress('contracts', this.refs.contractsRef)}}
+            onPress={() => {this.onTabPress('create', this.refs.createRef)}}
             >
             <Navigator
-              ref='contractsRef'
-              initialRoute={{name: 'ContractsScreen', component: ContractsScreen}}
+              ref='createRef'
+              initialRoute={{name: 'CreationPage', component: CreationPage}}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                   return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
@@ -114,7 +115,7 @@ class ProvaSport extends Component {
             >
             <Navigator
               ref='recordRef'
-              initialRoute={{name: 'RecordPage', component: RecordPage}}
+              initialRoute={{name: 'RecordPage', component: RecordPage,  }}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );
@@ -134,7 +135,7 @@ class ProvaSport extends Component {
             >
             <Navigator
               ref='profRef'
-              initialRoute={{name: 'PlayerPage', component: PlayerPage}}
+              initialRoute={{name: 'PlayerPage', component: PlayerPage, passProps: {mode: 'root'} }}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );
@@ -144,17 +145,16 @@ class ProvaSport extends Component {
           </TabNavigator.Item>
 
           <TabNavigator.Item
-            //title="Settings"
-            selected={this.state.selectedTab === 'settings'}
+            selected={this.state.selectedTab === 'more'}
             renderIcon={() => <Image style={styles.icon}
               source={listsIcon}
             />}
             renderSelectedIcon={() => <Image source={listsIcon} style={styles.selectedIcon}/>}
-            onPress={() => {this.onTabPress('settings', this.refs.settingsRef)}}
+            onPress={() => {this.onTabPress('more', this.refs.moreRef)}}
             >
             <Navigator
-              ref='settingsRef'
-              initialRoute={{name: 'SettingsScreen', component: SettingsPage}}
+              ref='moreRef'
+              initialRoute={{name: 'MorePage', component: MorePage, passProps: {logout: ()=>this.logout()} }}
               renderScene={(route, navigator) =>    {
                 if (route.component) {
                 return React.createElement(route.component, {  ...route.passProps, navigator, route } );
@@ -165,6 +165,15 @@ class ProvaSport extends Component {
         </TabNavigator>
       )
     }
+  }
+
+  logout() {
+    AsyncStorage.removeItem('player')
+    AsyncStorage.removeItem('user')
+
+    this.setState({
+        selectedTab: 'login'
+    });
   }
 
   onTabPress(tab, navRef) {

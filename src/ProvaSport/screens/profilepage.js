@@ -27,6 +27,7 @@ var {
   ListView,
   RefreshControl,
   Modal,
+  Platform,
 } = React;
 
 var ProfilePage = React.createClass({
@@ -102,7 +103,7 @@ var ProfilePage = React.createClass({
                       onRefresh={this.onRefresh}
                       tintColor={'white'}
                       colors={['#ff0000', '#00ff00', '#0000ff']}
-                      backgroundColor={_cvals.skorange}
+                      backgroundColor={(Platform.OS === 'ios') ? _cvals.skorange : 'white'}
                     />
                   }>
         <Image source={{uri: this.state.player.prof_pic}}
@@ -156,7 +157,7 @@ var ProfilePage = React.createClass({
           title={'Teams'}
           value={this.state.player.teams.length}
           onPress={this.toTeamListing} />
-          
+
         <View style={_cstyles.section_divider_line}></View>
 
         <SimpleRow
@@ -262,7 +263,6 @@ var ProfilePage = React.createClass({
 
   toggleFriend: function() {
     // TODO change status of friend, update local data store
-    console.log("HELLLLLLlllllllllllloooooooooooo"+this.state.my_player.friends.indexOf(this.props.playerid) == -1))
     console.log(this.state.my_user.playerid+"      "+this.props.playerid);
     if (this.state.my_player.friends.indexOf(this.props.playerid) == -1) {
       console.log("ADDING");

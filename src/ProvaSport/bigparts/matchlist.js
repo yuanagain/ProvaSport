@@ -17,7 +17,8 @@ var {
   TextInput,
   Image,
   ListView,
-  RefreshControl
+  RefreshControl,
+  Platform,
 } = React;
 
 var MatchList = React.createClass({
@@ -53,7 +54,7 @@ var MatchList = React.createClass({
             onRefresh={this.onRefresh}
             tintColor={'white'}
             colors={['#ff0000', '#00ff00', '#0000ff']}
-            backgroundColor={_cvals.skorange}
+            backgroundColor={(Platform.OS === 'ios') ? _cvals.skorange : 'white'}
           />
         }
         dataSource={dataSource}
@@ -144,6 +145,7 @@ var MatchList_Player = React.createClass({
 var styles = StyleSheet.create({
   listView: {
     backgroundColor: 'transparent',
+    flex: 1,
   }
 })
 
