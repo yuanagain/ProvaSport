@@ -50,7 +50,7 @@ var bracketMatrix = function(tournament) {
   for (var i = 0; i < trace.length; i++) {
     placements[i] = teams[trace[i] - 1]
   }
-  teams = placements
+  teams = placements;
 
 
   var matches = tournament.matches

@@ -4,7 +4,7 @@ var _cstyles = require('../styles/customstyles.js')
 var _cvals = require('../styles/customvals.js')
 var Dimensions = require('Dimensions')
 var windowSize = Dimensions.get('window')
-var KeyboardAwareScrollView = require('react-native-keyboard-aware-scroll-view')
+//var KeyboardAwareScrollView = require('react-native-keyboard-aware-scroll-view')
 
 var {
   StyleSheet,

@@ -19,3 +19,8 @@ export function unique(list) {
     });
     return result;
 }
+
+/* 
+ * HARD reset
+ * pull form DB into
+ */

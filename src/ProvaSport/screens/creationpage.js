@@ -196,8 +196,10 @@ var ContractsPage = React.createClass({
     tournament.teams = teamids;
     tournament.type = this.state.event_type[0];
     tournament.sport = this.state.selectedSport[0];
-    tournament.name = this.state.name;
-    tournament.location = this.state.location;
+    if(this.state.name !== undefined)
+      tournament.name = this.state.name;
+    if(this.state.location !== undefined)
+      tournament.location = this.state.location;
     tournament.creator = this.state.playerid;
 
     if (this.state.event_type[0] == 'Round Robin') {
@@ -211,7 +213,7 @@ var ContractsPage = React.createClass({
   createRR: function(obj) {
     var defaults = Match.default_match;
     defaults.datetime = Date.now();
-    defaults.location = obj.location;
+    //defaults.location = obj.location;
     defaults.name = obj.name;
     defaults.sports = obj.sports;
     Tournament.createTournament(obj).then(resp=>this.createRR2(resp, obj, defaults))
@@ -232,7 +234,7 @@ var ContractsPage = React.createClass({
   createBracket: function(obj) {
     var defaults = Match.default_match;
     defaults.datetime = Date.now();
-    defaults.location = obj.location;
+    //defaults.location = obj.location;
     defaults.name = obj.name;
     defaults.sports = obj.sports;
     console.log("DEFAULTS");
@@ -247,7 +249,8 @@ var ContractsPage = React.createClass({
       obj.teams.forEach(function(teamid){
         Team.addTournament(teamid, id)
       })
-      _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
+      console.log("BRACET2");
+      _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>{Tournament.setTournament(id, obj); return Promise.resolve()}).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
   },
   reset: function() {
     this.setState({
@@ -381,6 +384,7 @@ var ContractsPage = React.createClass({
     })
   },
   toBracket(tid) {
+    console.log("TO BRACKET");
     this.props.navigator.push({
       id: "BracketPage3",
       component: BracketPage,

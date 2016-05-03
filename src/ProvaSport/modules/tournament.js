@@ -21,6 +21,7 @@ function createTournament(obj) {
   console.log("tournament");
   return new Promise(function(resolve, reject) {
       var newRef = tourndb.push();
+      console.log(obj);
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
