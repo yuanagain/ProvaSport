@@ -113,6 +113,7 @@ var NewsFeedPage = React.createClass({
       });
       // this.state.match = this.props.match
     })
+     this.onRefresh()
   },
 
   onRefresh: function() {

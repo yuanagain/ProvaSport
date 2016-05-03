@@ -181,8 +181,7 @@ var ContractsPage = React.createClass({
       i++;
       var team = JSON.parse(JSON.stringify(Team.default_team));
       team.players = team_i;
-      team.name = "Team "+i;
-      Player.GetPlayer(team.players[0]).then(resp=>team.thumbnail = resp.prof_pic)
+      //team.name = "Team "+i;
       teamss.push(team)
     });
     Team.createFromList(teamss).then(teamids=>this.create(teamids)).catch(function(err){console.log(err)})

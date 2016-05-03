@@ -289,7 +289,7 @@ function setFromList(matchidlist, matchobjlist) {
 var default_match =
   {
         "datetime": 0,
-        "sport": "LOADING",
+        "sport": ["LOADING"],
         "scores": [["...","..."]],
         "tournamentid": -1,
         "winner": -1,
@@ -309,7 +309,7 @@ var default_match =
   var TBD =
     {
           "datetime": 0,
-          "sport": "LOADING",
+          "sport": ["LOADING"],
           "scores": [],
           "tournamentid": -1,
           "winner": -1,

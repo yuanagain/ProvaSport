@@ -78,7 +78,7 @@ var SignUpPage = React.createClass({
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
         //upload image
-        this.upload(source)
+        //this.upload(source)
         this.setState({
           profImage: source
         });
@@ -372,7 +372,8 @@ var SignUpPage = React.createClass({
     var call1 = this._setInitialUser;
     Player.createPlayer(player).then(function(id){
       //given the id add to the user and create data in FB
-      console.log("\n\nOK\n\n"+user.playerid)
+      console.log(this.state.profImage.uri);
+      //this.upload(this.state.profpic.source.uri, this.state.playerid);
       user.playerid = id;
       console.log(user)
       User.setUser(uid, user);
