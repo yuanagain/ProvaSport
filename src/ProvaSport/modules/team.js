@@ -67,6 +67,19 @@ function updatePlayers(teamid, playerArray) {
   })
 }
 
+function setProfPic(teamid, url) {
+  teamdb.child(teamid).update({
+    "thumbnail": url,
+  })
+}
+//setProfPic("-KGnxwNWvzMWyXZD438Q","http://img02.deviantart.net/5e42/i/2007/011/7/1/kitten_stock___looking_scared_by_gracies_stock.jpg")
+function setName(teamid, name) {
+  teamdb.child(teamid).update({
+    "name": name,
+  })
+}
+//setName("-KGnxwNWvzMWyXZD438Q", "Mr. Jenkins")
+
 function updateMatches(teamid, matchArray) {
   teamdb.child(teamid).update({
     "matches": matchArray,
@@ -267,8 +280,15 @@ function _CreateTeam(obj, callback) {
           resolve(newRef.key());
         }
       });
+    }).then(tid=>{
+      Player.GetPlayer(team.players[0]).then(resp=>{
+        Team.setProfPic(tid, resp.prof_pic);
+        Team.setName(tid, resp.name.full);
+      })
+      return Promise.resolve(tid);
     })
     promise.then(function (value) {
+
       //connect player to team
       //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic})
       obj.players.forEach(function(playerid){
@@ -287,6 +307,10 @@ function createFromList(teamobjlist, callback) {
 
     teamobjlist.forEach(function(teamobj){
       createTeam(teamobj).then(resp=>{
+        Player.GetPlayer(teamobj.players[0]).then(resp=>{
+          Team.setProfPic(tid, resp.prof_pic);
+          Team.setName(tid, resp.name.full);
+        })
         teamids.push(resp);
         i+=1;
         if(i == teamobjlist.length) resolve(teamids);
@@ -371,4 +395,4 @@ var bye = {
  */
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
    getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch,
-   teamOneorTwo, onTeams, createFromList, findOne, addTournament};
+   teamOneorTwo, onTeams, createFromList, findOne, addTournament, setProfPic};

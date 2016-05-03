@@ -30,6 +30,9 @@ function _GetMatch(matchid, callback) {
           if(!match.hasOwnProperty('teams')){
             match.teams = [];
           }
+          if(!match.hasOwnProperty('scores')){
+            match.scores = [[" ", ' ']];
+          }
           resolve(match);
         });
      });
@@ -46,6 +49,9 @@ function getMatch(matchid) {
         var match = snapshot.val();
         if(!match.hasOwnProperty('teams')){
           match.teams = [];
+        }
+        if(!match.hasOwnProperty('scores')){
+          match.scores = [[" "," "]];
         }
         resolve(match);
       });
@@ -117,7 +123,7 @@ function unique(list) {
     return arr.indexOf(elem) == pos;
   });
 }
-/* 
+/*
  * function addTeamToMatch(matchid, teamid) {
  *   getMatch(matchid).then(matchobj=>{
  *     if(matchobj.teams[0])
@@ -283,7 +289,7 @@ function setFromList(matchidlist, matchobjlist) {
 var default_match =
   {
         "datetime": 0,
-        "sport": "LOADING",
+        "sport": ["LOADING"],
         "scores": [["...","..."]],
         "tournamentid": -1,
         "winner": -1,
@@ -303,7 +309,7 @@ var default_match =
   var TBD =
     {
           "datetime": 0,
-          "sport": "LOADING",
+          "sport": ["LOADING"],
           "scores": [],
           "tournamentid": -1,
           "winner": -1,

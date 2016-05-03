@@ -98,7 +98,7 @@ update if needed
       // if this is an unconfirmed match
       buttons = <WideButtonPair textRight={"Confirm"}
                                 textLeft={"Adjust"}
-                                onPressRight={()=>{this.changeStatus(4); this.checkToUpdate()} }
+                                onPressRight={()=>{this.changeStatus(4)} }
                                 onPressLeft={()=>this.toRecordPage()} />
     }
 
@@ -143,7 +143,7 @@ update if needed
               <SimpleRow title={"Location "} value={this.state.match.location} />
               <View style={_cstyles.section_divider_line} ></View>
 
-              <SimpleRow title={"Sport "} value={this.state.match.sport} />
+              <SimpleRow title={"Sport "} value={this.state.match.sport[0]} />
               <View style={_cstyles.section_divider_line} ></View>
 
 
@@ -236,18 +236,22 @@ update if needed
     this.loadTeams()
   },
   teamOn:function(){
-    if (this.state.playerid in this.state.team1.players){
+    console.log("TEAM ON");
+
+    if (this.state.team1.players.indexOf(this.state.playerid)>-1 || this.state.playerid in this.state.team1.players){
+      console.log("\n\nTEAM1");
       var code = this.state.match.status[0];
       this.setState({myStatus: code,
         myTeam: 0})
     }
-    else if (this.state.playerid in this.state.team2.players){
+    else if (this.state.team2.players.indexOf(this.state.playerid)>-1 || this.state.playerid in this.state.team2.players) {
+      console.log("\n\nTEAM2");
       var code = this.state.match.status[1];
       this.setState({myStatus: code,
       myTeam: 1})
     }
     else {
-      console.log("you are not on this team")
+      console.log("you are not in this Match")
     }
   },
   componentDidMount: function () {

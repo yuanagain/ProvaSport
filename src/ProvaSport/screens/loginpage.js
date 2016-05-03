@@ -114,32 +114,6 @@ var LoginPage = React.createClass({
     </View>
     );
   },
-
-  upload(uri) {
-    var name = this.state.playerid+".png"
-    let file = {
-      // `uri` can also be a file system path (i.e. file://)
-      uri: "file:///Users/kenanfarmer/Library/Developer/CoreSimulator/Devices/9212EF35-3593-450A-84D1-87112A2A717A/data/Containers/Data/Application/463DAE6D-E6F2-4D77-B1CB-4A6A73455C13/Documents/751C50B2-AE47-4DAA-B323-3EE8C5E06736.jpg",
-      name: "image.jpg",
-      type: "image/jpeg"
-    }
-
-    let options = {
-      keyPrefix: "provasport_profile_pics/",
-      bucket: "provasport",
-      region: "us-east-1",
-      accessKey: "AKIAIOKYIRF3NPM6QJFA",
-      secretKey: "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",
-      successActionStatus: 201
-    }
-
-    RNS3.put(file, options).then(response => {
-      if (response.status !== 201)
-        throw new Error("Failed to upload image to S3");
-      console.log(response.body.location);
-    }).catch(function(err){console.log(err);});
-  },
-
   onSignUpPress: function(name) {
 
     this.props.navigator.push({

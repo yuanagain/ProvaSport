@@ -59,7 +59,7 @@ function _GetPlayer(playerid, callback) {
 }
 
 /*possilby add stuff like isOnTeam etc.*/
-function GetPlayer(playerid) {
+export function GetPlayer(playerid) {
   /* var match = new Match(matchid); */
   if (playerid == -1)
   {

@@ -199,7 +199,7 @@ var codeToString = function(code){
       return "Completed"
       break;
     default:
-      return "Unplayed"
+      return "Not In Match"
   }
 }
 

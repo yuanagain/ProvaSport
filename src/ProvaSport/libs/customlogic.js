@@ -110,7 +110,7 @@ var createRR = function(data) {
           var team1 = data.teams[i];
           var team2 = data.teams[j];
           //make a copy of the JSON object
-          console.log(data.defaultM)
+          //console.log(data.defaultM)
           var matchi = JSON.parse(JSON.stringify(data.defaultM));
           //var matchi = data.matchinfo[j + teams.length*i] // get data match obj (just stock data but migh have a name and other attributes)
           //could possibly connect here too if connection not an issue
