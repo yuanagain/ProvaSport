@@ -67,6 +67,7 @@ var Search = React.createClass({
       return
     }
     this.setState({searching: true})
+        console.log(this.state.query)
     Player.searchPlayers(this.state.query, this.update)
   },
 

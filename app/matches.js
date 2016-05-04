@@ -175,11 +175,11 @@ var PlayersRow = React.createClass({
   },
 
   componentWillReceiveProps: function(nextprops) {
+    this.setState({players: []})
     var fetchPlayer = this.fetchPlayer
     nextprops.playerids.forEach(function(playerid) {
       Player._GetPlayer(playerid, fetchPlayer)
     })
-    this.forceUpdate();
   },
 
   render: function() {
@@ -187,6 +187,8 @@ var PlayersRow = React.createClass({
     var {
       playerids,
     } = this.props;
+
+    console.log(this.state.players)
     if (this.state.players == null) {
       return (
         <div></div>
