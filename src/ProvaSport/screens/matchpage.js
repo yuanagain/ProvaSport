@@ -92,13 +92,13 @@ removes player from match (and possibly tournament)
 sets match to BYE
 update if needed
      */
-     console.log("STATUS:  "+this.state.myStatus)
+     //console.log("STATUS:  "+this.state.myStatus)
     if (this.state.myStatus == 3) {
       //console.log("MATCH  "+ this.state.match.status['0'])
       // if this is an unconfirmed match
       buttons = <WideButtonPair textRight={"Confirm"}
                                 textLeft={"Adjust"}
-                                onPressRight={()=>{this.changeStatus(4)} }
+                                onPressRight={()=>{this.changeStatus(4); this.checkToUpdate()} }
                                 onPressLeft={()=>this.toRecordPage()} />
     }
 
@@ -205,7 +205,13 @@ update if needed
           //get a list of match objects
           Match.fetchList(tournament.matches).then(matchobjs=>{
             //update that list and the tournament
-            _clogic.update(matchobjs);
+            var data = _clogic.update(matchobjs);
+            var matches = data.matches;
+            var teams = data.teams;
+            console.log(teams);
+            Team.updateMatches(teams);
+            Match.setFromList(matchids, matches).then(resp=>callback(matches)).catch(function(err){
+              console.log("in customlogic.js 301: "+err)})
           })
         })
       }

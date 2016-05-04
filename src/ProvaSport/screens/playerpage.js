@@ -229,7 +229,7 @@ var PlayerPage = React.createClass({
     var value = AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
-      console.log(obj.playerid)
+      //console.log(obj.playerid)
       this.setState({player: obj})
     });
   },
@@ -297,7 +297,7 @@ var PlayerPage = React.createClass({
        this.addFrnd()
     }
     else {
-      console.log("REMOVE Friend");
+      //console.log("REMOVE Friend");
       this.removeFrnd();
       /*
        * var player = this.state.my_player;
@@ -320,7 +320,7 @@ var PlayerPage = React.createClass({
   removeFrnd: function(){
     var setPlayer = this.setMyPlayer;
     var player = this.state.my_player;
-    console.log("calling remove friend"+this.state.my_user.playerid+"  "+this.props.playerid)
+    //console.log("calling remove friend"+this.state.my_user.playerid+"  "+this.props.playerid)
     Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
       player.friends = resp;
       //console.log("changing in cache")

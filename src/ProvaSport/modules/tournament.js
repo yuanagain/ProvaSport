@@ -21,7 +21,7 @@ function createTournament(obj) {
   console.log("tournament");
   return new Promise(function(resolve, reject) {
       var newRef = tourndb.push();
-      console.log(obj);
+      obj.tournamentid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -49,6 +49,7 @@ function _CreateTournament(obj, callback) {
   console.log("TOURNAMENT");
   var promise = new Promise(function(resolve, reject) {
       var newRef = tourndb.push();
+      obj.tournamentid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -140,7 +141,8 @@ function setTournament(tournamentid, obj) {
       "name": "",
       "sport": "Loading",
       "matches": [],
-      "creator": "pid"
+      "creator": "pid",
+      "tournamentid":0
   };
 /*
  * function makeTournament(matches, teams, location, type){

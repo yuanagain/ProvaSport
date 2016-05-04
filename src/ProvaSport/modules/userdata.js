@@ -352,6 +352,7 @@ function _GetUser(uid, callback){
 }
 function setUser(uid, obj) {
   return new Promise(function(resolve, reject){
+    obj.userid = uid;
     if (obj){
       ref.child('user').child(uid).set(obj)
       console.log("created object USER")
@@ -365,6 +366,7 @@ function setUser(uid, obj) {
 //sets the user to the specificed object
 function _SetUser(uid, obj) {
   return new Promise(function(resolve, reject){
+    obj.userid = uid;
     if (obj){
       ref.child('user').child(uid).set(obj)
       console.log("created object USER")
@@ -382,7 +384,7 @@ var default_user = {
   "playerid": 0,
   "prof_pic": "loading",
   "nationality": "USA",
-  "gender": "gender",
+  "userid": 0,
   "birthday": 0,
   "sports": []
 };

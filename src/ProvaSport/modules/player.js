@@ -95,30 +95,18 @@ function setPlayer(id, obj) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data saved successfully ");
+          //console.log("Data saved successfully ");
           resolve(obj);
         }
       });
     });
 }
-function _CreatePlayer(callback) {
-  /* var match = new Match(matchid); */
-    var promise = new Promise(function(resolve, reject) {
-        var newRef = playerdataRef.child(playerid).push("value", function(snapshot) {
-          var player = snapshot.val();
-          resolve(newRef.key());
-        });
-     });
-    promise.then(function(value){
-      callback(value);
-    }).catch(function(){
-      console.log("Failed");
-    });
-}
+
 function createPlayer(obj) {
   /* var match = new Match(matchid); */
     return new Promise(function(resolve, reject) {
       var newRef = playerdataRef.push();
+      obj.playerid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           //console.log("Data could not be saved." + error);
@@ -172,7 +160,7 @@ export function addFriend(playerid, friend) {
   }
   //console.log(friend);
   return new Promise(function(resolve){
-  playerdataRef.child(playerid).child('friends').on('value', function(snap) {
+  playerdataRef.child(playerid).child('following').on('value', function(snap) {
     var val = snap.val()
     //console.log(val)
     if(val)
@@ -180,11 +168,34 @@ export function addFriend(playerid, friend) {
       list = list.concat(val);
     }
     list.push(friend);
-    console.log("PLAYER ADDED FRIENDS:"+playerid)
-    console.log(list);
     resolve(list)
   });
-}).then(resp=>{playerdataRef.child(playerid).child('friends').set(list);})
+}).then(resp=>{playerdataRef.child(playerid).child('following').set(list); addFollower(friend, playerid)})
+}
+
+
+export function addFollower(playerid, follower) {
+  var list = []
+
+  if (playerid === undefined || playerid === -1){
+    console.log("ERROR")
+    return;
+  }
+
+  return new Promise(function(resolve){
+  playerdataRef.child(playerid).child('followedBy').on('value', function(snap) {
+    var val = snap.val()
+    //console.log(val)
+    if(val)
+    {
+      list = list.concat(val);
+    }
+    list.push(friend);
+    //console.log("PLAYER ADDED FRIENDS:"+playerid)
+    //console.log(list);
+    resolve(list)
+  });
+}).then(resp=>{playerdataRef.child(playerid).child('followedBy').set(list);})
 }
 
 export function removeFriend(playerid, friend, callback) {
@@ -218,8 +229,8 @@ export function removeFriend(playerid, friend, callback) {
 //removeFriend(1, 0).then(resp=>console.log("TEST"+resp))
 
 export function addMatch(playerid, matchid) {
-  console.log(playerid);
-  console.log(matchid);
+  //console.log(playerid);
+  //console.log(matchid);
   return new Promise(function(resolve, reject) {
       playerdataRef.child(playerid).child('matches').on("value", function(snapshot) {
         var matches = []
@@ -349,8 +360,8 @@ function getFriends(playerid){
         resolve([])
       }
       var friendObjList = [];
-      var friends = player.friends;
-      console.log(player.friends)
+      var friends = player.following;
+      //console.log(player.friends)
       friends.forEach(function(friend){
         GetPlayer(friend).then(resp=>{
           friendObjList.push(resp);
@@ -391,7 +402,6 @@ function totalEarnings(pid, sport, data) {
     sport = sport[0]
   }
   GetPlayer(pid).then(player=>{
-    
   })
 }
 
@@ -419,10 +429,12 @@ export var default_player = {
     "home": " ",
     "sports": "LOADING",
     "imageURL": "http://www.jennstrends.com/wp-content/uploads/2013/10/bad-profile-pic-2.jpeg",
-    "friends": [],
+    "following": [],
+    "followedBy": [],
     "teams": [],
     "matches": [],
-    "tournaments": []
+    "tournaments": [],
+    "playerid": 0
   };
   //_AddTeam(0,1,function(resp){console.log(resp)}) //TESTED SUCCESSFULLY(and _AddTournament, an)
   var query = "DJ"

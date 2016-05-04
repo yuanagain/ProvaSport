@@ -93,6 +93,7 @@ function createMatch(obj) {
   //console.log("CALLED MATCH.CREATEMATCH!!!")
   return new Promise(function(resolve, reject) {
       var newRef = matchdb.push();
+      obj.matchid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -132,6 +133,7 @@ function unique(list) {
 function _CreateMatch(obj, callback) {
   var promise = new Promise(function(resolve, reject) {
       var newRef = matchdb.push();
+      obj.matchid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -302,12 +304,13 @@ var default_match =
           '1': 0
         },
         "name": "Loading",
-        "location": "LOADING"
+        "location": "LOADING",
+        "matchid": 0,
   };
   var TBD =
     {
           "datetime": 0,
-          "sport": ["LOADING"],
+          "sport": [],
           "scores": [],
           "tournamentid": -1,
           "winner": -1,
@@ -322,7 +325,8 @@ var default_match =
             '1': 0
           },
           "name": "TBD",
-          "location": "TBD"
+          "location": "TBD",
+          "matchid": "TBD"
     };
 
 /*Fetch a bunch of match objects and return the list of objects

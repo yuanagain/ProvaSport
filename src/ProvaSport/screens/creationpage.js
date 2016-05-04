@@ -173,7 +173,34 @@ var ContractsPage = React.createClass({
     </View>
     );
   },
+  validateName() {
+    if(this.state.name.length < 2){
+      console.log("ERROR need a name longer than 1 character");
+      return false;
+    }
+    else {
+      return true;
+    }
+  },
+  validateTeams() {
+    //much more complicated. make a list of players seen, no duplicate players,
+    //rn just make sure each team has players and does not exceed max player
+    var MAX_PLAYER_COUNT = _settings.config.maxPlayers;
+    this.state.teams.forEach(function(team){
+      if(team.length < 1 || team.length > MAX_PLAYER_COUNT){
+        console.log("ERROR")
+        return false;
+      }
+      else{
+        return true;
+      }
+    })
+  },
   start: function(){
+    if(!this.validateTeams() || !this.validateTeams()){
+      console.log("ERROR");
+      return;
+    }
     var teamss = []
     var numTeams = this.state.teams.length;
     var i = 0;
@@ -182,6 +209,7 @@ var ContractsPage = React.createClass({
       i++;
       var team = JSON.parse(JSON.stringify(Team.default_team));
       team.players = team_i;
+      //default name
       team.name = "Team "+i;
       teamss.push(team)
       if(i == numTeams){
@@ -203,7 +231,6 @@ var ContractsPage = React.createClass({
     tournament.creator = this.state.playerid;
 
     if (this.state.event_type[0] == 'Round Robin') {
-      console.log("CREATE RR!")
       this.createRR(tournament)
     }
     if (this.state.event_type[0] == 'Elimination') {
@@ -211,15 +238,10 @@ var ContractsPage = React.createClass({
     }
   },
   createRR: function(obj) {
-    var defaults = Match.default_match;
-    defaults.datetime = Date.now();
-    defaults.location = obj.location;
-    defaults.name = obj.name;
-    defaults.sport = obj.sport;
+    var defaults = this.defaultsGen();
     Tournament.createTournament(obj).then(resp=>this.createRR2(resp, obj, defaults))
   },
   createRR2: function(id, obj, defaults) {
-    console.log("CreateRR2:  "+id+ "   ")
       var data = {
         teams: obj.teams,
         defaultM: defaults,
@@ -232,12 +254,7 @@ var ContractsPage = React.createClass({
       _clogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(()=>this.toRR(id)).catch(function(err){console.log(err)})
   },
   createBracket: function(obj) {
-    var defaults = Match.default_match;
-    defaults.datetime = Date.now();
-    defaults.location = obj.location;
-    defaults.name = obj.name;
-    defaults.sport = obj.sport;
-    console.log("DEFAULTS");
+    var defaults = this.defaultsGen(obj);
     Tournament.createTournament(obj).then(resp=>this.createBracket2(resp, obj, defaults))
   },
   createBracket2: function(id, obj, defaults) {
@@ -251,6 +268,23 @@ var ContractsPage = React.createClass({
       })
       console.log("BRACET2");
       _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>{Tournament.setTournament(id, obj); return Promise.resolve()}).then(reps=>this.hardReset()).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
+  },
+  /*
+  * We need Tournament to fill in the fields :
+  * Name, datetime is created time, sport,
+  *
+  */
+  defaultsGen: function(obj){
+    var defaults = Match.default_match;
+    defaults.datetime = Date.now();
+    if (obj.location !== "Loading")
+      defaults.location = obj.location;
+    else {
+      defaults.location = "  "
+    }
+    defaults.name = obj.name;
+    defaults.sport = obj.sport;
+    return defaults;
   },
   reset: function() {
     this.setState({

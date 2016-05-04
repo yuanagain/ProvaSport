@@ -244,8 +244,11 @@ var dictTest = {
 
 
 //
-var update_matches = function(matches, matchids, callback) {
-
+var update_matches = function(matches, tournament) {
+  var teams = {}
+  for team in tournament.teams {
+    teams[team] = []
+  }
   // check through all the matches
   var depth = Math.log(matches.length + 1) / Math.log(2)
   var k = 0
@@ -300,8 +303,13 @@ var update_matches = function(matches, matchids, callback) {
       // advance player
       target_match.teams[place] = winner_id
 
+      teams[target_match.teams[0]].push(target_match.matchid)
+      teams[target_match.teams[1]].push(target_match.matchid)
       // change status if necessary
-      target_match.status = 2
+      target_match.status = {
+        '0': 2,
+        '1': 2
+      };
     }
 
     if (changed == false) {
@@ -311,9 +319,10 @@ var update_matches = function(matches, matchids, callback) {
   }
   //tie the new match with the team
   //push then pull the matche object to the server
-  Match.setFromList(matchids, matches).then(resp=>callback(matches)).catch(function(err){
-    console.log("in customlogic.js 301: "+err)})
-  //return matches
+  return {
+    matches: matches,
+    teams: teams
+  };
 }
 //var matchlist = [Match.default_match, Match.default_match, Match.default_match, Match.default_match]
 //createFromList(matchlist, function(array){console.log(array)})
