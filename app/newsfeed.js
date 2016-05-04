@@ -1,7 +1,6 @@
 // Mapping help: https://facebook.github.io/react/docs/tutorial.html
 // Accessed: April 20, 2016
-// Marked: https://github.com/chjj/marked
-// Accessed: April 20, 2016
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -9,19 +8,9 @@ var _cvals = require('./constants/customvals');
 import _ctools from './libs/customtools'
 import * as Match from './modules/match';
 import * as Team from './modules/team';
+import default_pic from './styles/default_pic.jpg';
 
-var Entry = React.createClass({
-  render: function() {
-    return (
-      <span style={entry}>
-        <div style={text}>
-          {this.props.team1} played {this.props.team2} in a game of {this.props.sport}.
-        </div>
-        {this.props.children}
-      </span>
-    );
-  }
-});
+
 /* Pass props to component within map */
 var Newsfeed = React.createClass({
   getInitialState: function() {
@@ -60,6 +49,19 @@ var Newsfeed = React.createClass({
       return 0;
   },
 
+});
+
+var Entry = React.createClass({
+  render: function() {
+    return (
+      <span style={entry}>
+        <div style={text}>
+          {this.props.team1} played {this.props.team2} in a game of {this.props.sport}.
+        </div>
+        {this.props.children}
+      </span>
+    );
+  }
 });
 
 var EntryMap = React.createClass({
@@ -137,14 +139,26 @@ var NewsEntry = React.createClass({
     var scores = _ctools.getScoreStrings(this.state.match.scores)
     var winnerIndex = _ctools.getWinnerIndex(this.state.match)
     var loserIndex = (winnerIndex == 1) ? 0 : 1;
+
+    var picWinner = this.state.winner.thumbnail
+    if (picWinner == "Loading")
+      picWinner = default_pic
+
+    var picLoser = this.state.loser.thumbnail
+    if (picLoser == "Loading")
+      picLoser = default_pic
+
+    if (this.state.winner.name == "BYE" || this.state.loser.name == "BYE")
+        return (<div></div>)
+
     return (
       <Entry team1={this.state.winner.name} team2={this.state.loser.name} sport={this.state.match.sport}>
         <div style={date}>
-          {_ctools.toDate(new Date(this.state.match.datetime))}
+          {_ctools.toDate(new Date(this.state.match.datetime)) + " at " + _ctools.formatTime(new Date(this.state.match.datetime))}
         </div>
         <div style={pic_container}>
           <img style={pic}
-            src = {this.state.winner.thumbnail}
+            src = {picWinner}
           />
           <div style={score}>
             {scores[winnerIndex]}
@@ -152,7 +166,7 @@ var NewsEntry = React.createClass({
         </div>
         <div style={pic_container}>
           <img style={pic}
-            src = {this.state.loser.thumbnail}
+            src = {picLoser}
           />
           <div style={score}>
             {scores[loserIndex]}

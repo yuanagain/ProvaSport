@@ -14,9 +14,6 @@ var PlayerRow = React.createClass({
     return (
       {
         player: Player.default_player,
-        // Temp
-        //loaded: false,
-        loaded: true,
       }
     );
   },
@@ -52,48 +49,15 @@ var PlayerRow = React.createClass({
         </Link>
       )
     },
-/*
-      return (
-        <div style={styles.playerbrick} >
-          <div style={[styles.center, styles.left]} >
-            <img style={styles.im}
-                   src='http://facebook.github.io/react/img/logo_og.png'/>
-          </div>
-          <div style={styles.right}>
-            <div >
-              <p style={styles.name}>Jeremiah Jenkins</p>
-            </div>
-          </div>
-        </div>
-      )
-    },
-*/
-  onPress: function() {
-    /*var PlayerPage = require('../screens/playerpage')
-    this.props.navigator.push({
-      id: "PlayerPage" + String(_ctools.randomKey()),
-      component: PlayerPage,
-      passProps: {
-        navigator: this.props.navigator,
-        playerid: this.props.playerid
-      }
-    })*/
-  },
 
   fetchPlayer: function(data) {
     this.state.player = data
     this.setState({loaded : true})
-    // _GetTeam(this.state.player.teams[0], this.fetchTeam)
   },
 
   componentDidMount: function () {
-    // this.state.match = this.props.match
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
   },
-/*
-  componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
-  },*/
 });
 
 var styles = {

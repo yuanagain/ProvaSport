@@ -41,10 +41,10 @@ var Search = React.createClass({
         <hr style={styles.hline}/>
         <div>
           <p style={styles.title}> Results </p>
-          {this.state.players.map(function(playerid) {
+          {this.state.players.map(function(playerid, i) {
             console.log(playerid)
             return (
-              <PlayerRow playerid={playerid}/>
+              <PlayerRow playerid={playerid} key={i}/>
             )
           })}
         </div>
@@ -53,6 +53,8 @@ var Search = React.createClass({
   },
   handleChange(e) {
     this.setState({ query: e.target.value });
+    this.setState({players:[]})
+    this.search()
   },
 
   search: function() {
@@ -69,8 +71,11 @@ var Search = React.createClass({
   },
 
   update: function(players) {
+    console.log("Updating players to: " + players)
+    this.setState({players: []})
     this.setState({players: players})
     this.setState({searching: false})
+    console.log("State after change: " + this.state.players)
   },
 });
 

@@ -4,11 +4,9 @@ import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import Menu from './menu';
 import Newsfeed from './newsfeed';
 import Profile from './profile';
-import Bracket from './bracket';
-import RoundRobin from './roundrobin';
 import About from './about';
 import Matches from './matches';
-import SearchBox from './search';
+import Search from './search';
 
 ReactDOM.render((
   <Router history={hashHistory}>
@@ -17,7 +15,7 @@ ReactDOM.render((
       <Route path="/home" component={Newsfeed}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/matches" component={Matches}/>
-      <Route path="/search" component={SearchBox}/>
+      <Route path="/search" component={Search}/>
       <Route path="/about" component={About}/>
     </Route>
   </Router>
