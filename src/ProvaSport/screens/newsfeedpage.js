@@ -62,7 +62,7 @@ var NewsFeedPage = React.createClass({
   componentDidMount: function () {
     AsyncStorage.getItem('player', (err, player)=>{
       player = JSON.parse(player);
-      if (player.friends.length == 0){
+      if (player.following.length == 0){
         this.setState({fmatches: player.matches})
       }
       AsyncStorage.getItem('user', (err, result)=>{
@@ -72,7 +72,6 @@ var NewsFeedPage = React.createClass({
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
           var matches = [];
-          console.log("RESPONSE FrOM SDNJDKFJJNKDFJNKSD");
           console.log(resp);
           console.log(player.matches);
           if(resp!=null || resp!= undefined) {
@@ -82,10 +81,13 @@ var NewsFeedPage = React.createClass({
             matches = player.matches;
           }
           matches = this.unique(matches);
+          //sort the matches by datetime
+          matches.sort(function(match_a, match_b){
+            return match_a.datetime - match_b.datetime;
+          })
           this.setState({fmatches: matches})
         });
       });
-      // this.state.match = this.props.match
     })
   },
   componentWillReceiveProps: function (nextProps) {
@@ -107,6 +109,9 @@ var NewsFeedPage = React.createClass({
             matches = player.matches;
           }
           matches = this.unique(matches);
+          matches.sort(function(match_a, match_b){
+            return match_a.datetime - match_b.datetime;
+          })
           console.log(matches);
           this.setState({fmatches: matches})
         });
@@ -134,6 +139,9 @@ var NewsFeedPage = React.createClass({
             else {
               matches = player.matches;
             }
+            matches.sort(function(match_a, match_b){
+              return match_a.datetime - match_b.datetime;
+            })
             //matches = unique(matches);
             this.setState({fmatches: matches})
           });

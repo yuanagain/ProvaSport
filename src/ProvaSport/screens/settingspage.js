@@ -185,53 +185,6 @@ var SettingsPage = React.createClass({
       var user = JSON.parse(response);
       this.setState({playerid: user.playerid})
     })
-
-    console.log(_clogic.createTrace(4))
-    var matches = [
-      {
-        status: 4,
-        teams: [0, 1],
-        scores: [[1, 2]],
-      },
-
-      {
-        status: 2,
-        teams: [2, 'BYE'],
-        scores: [[2, 1]],
-      },
-
-      {
-        status: 4,
-        teams: [4, 5],
-        scores: [[1, 2]],
-      },
-
-      {
-        status: 2,
-        teams: ['BYE', 7],
-        scores: [],
-      },
-
-      {
-        status: 0,
-        teams: ['TBD', 'TBD'],
-        scores: [],
-      },
-
-      {
-        status: 0,
-        teams: ['TBD', 'TBD'],
-        scores: [],
-      },
-
-      {
-        status: 0,
-        teams: ['TBD', 'TBD'],
-        scores: [],
-      },
-
-    ]
-    console.log(_clogic.update_matches(matches))
   },
 
   validEmail() {

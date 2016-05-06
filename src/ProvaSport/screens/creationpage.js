@@ -308,7 +308,7 @@ var ContractsPage = React.createClass({
       user = JSON.parse(user);
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
-        var items = player.friends.concat(user.playerid);
+        var items = player.following.concat(user.playerid);
         this.setState({items: items,
                       playerid: user.playerid});
       })
@@ -321,7 +321,7 @@ var ContractsPage = React.createClass({
       user = JSON.parse(user);
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
-        var items = player.friends.concat(user.playerid);
+        var items = player.following.concat(user.playerid);
         this.setState({items: items,
                       playerid: user.playerid});
       })

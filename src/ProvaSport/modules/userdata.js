@@ -1,8 +1,4 @@
-/*TODO: login users and clean up constructor
-  data validation and crash handling
 
-  Actual Login may require Firebase Token Handler
- */
  /*
   * Imports
   */
@@ -10,10 +6,6 @@
  import * as Team from '../modules/team'
  import * as Trophy from '../modules/trophy'
  import * as Match from '../modules/match'
-
-
-import Store from 'react-native-store';
-
 
 var ref= require("firebase");
 ref = new Firebase("https://shining-torch-4767.firebaseio.com")
@@ -164,7 +156,7 @@ function createUser(email, password) {
       }, function(error, userData) {
         if (error) {
           console.log("Error creating user:", error);
-          resolve(-1);
+          reject("Error creating " + email);
         } else {
           console.log("Successfully created user account with uid:", userData.uid);
           resolve(userData.uid);
@@ -173,20 +165,6 @@ function createUser(email, password) {
     });
 }
 
-/*
-function setAllUserData(uid, obj, callback) {
-  ref.onAuth(function(authData) {
-  if (authData) {
-    // save the user's profile into the database so we can list users,
-    // use them in Security and Firebase Rules, and show profiles
-    ref.child("users").child(authData.uid).set({
-      provider: authData.provider,
-      data: obj
-    });
-  }
-});
-
-}*/
 /* Login existing user */
 function login(email, password) {
   return new Promise(function(resolve, reject) {

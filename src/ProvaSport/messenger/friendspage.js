@@ -105,7 +105,7 @@ render() {
 
   // adds friend userids to data
   getFriends: function (player) {
-    this.state.data = player.friends;
+    this.state.data = player.following;
     //this.setState({data: player.friends});
   },
 

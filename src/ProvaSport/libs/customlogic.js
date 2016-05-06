@@ -246,9 +246,10 @@ var dictTest = {
 //
 var update_matches = function(matches, tournament) {
   var teams = {}
-  for team in tournament.teams {
+  tournament.teams.forEach(function(team){
     teams[team] = []
-  }
+  })
+
   // check through all the matches
   var depth = Math.log(matches.length + 1) / Math.log(2)
   var k = 0

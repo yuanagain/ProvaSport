@@ -40,7 +40,7 @@ function nukePlayerConnections(){
   ref.child('player').on('value',function(snapshot){
     snapshot.forEach(function(playerdata){
       var playerobj = playerdata.val()
-      playerobj.friends = [];
+      playerobj.following = [];
       playerobj.matches = [];
       playerobj.teams = [];
       playerobj.tournaments = [];

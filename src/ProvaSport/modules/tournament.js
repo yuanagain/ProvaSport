@@ -132,18 +132,7 @@ function setTournament(tournamentid, obj) {
       });
    });
 }
-  var default_tournament =
-  {
-      "type": "Loading",
-      "teams": [], //alphabetical list of teams or sorted by priority
-      "location": "Loading", /*tuple of  Latitude and Longitude*/
-      "dates": [],
-      "name": "",
-      "sport": "Loading",
-      "matches": [],
-      "creator": "pid",
-      "tournamentid":0
-  };
+
 /*
  * function makeTournament(matches, teams, location, type){
  *  var newTourn = $.extend( true, {}, default_tournament);
@@ -232,7 +221,18 @@ function _AddMatches(tournamentid, matchid, callback) {
     console.log("Failed");
   });
 }
-
+var default_tournament =
+{
+    "type": "Loading",
+    "teams": [], //alphabetical list of teams or sorted by priority
+    "location": "Loading", /*tuple of  Latitude and Longitude*/
+    "dates": [],
+    "name": "",
+    "sport": "Loading",
+    "matches": [],
+    "creator": "pid",
+    "tournamentid":0
+};
 
 
 module.exports = {_GetTournament, getTournament, setTournament, default_tournament,

@@ -285,49 +285,6 @@ function setFromList(matchidlist, matchobjlist) {
     },
 
     BUT we will begin with integer codes  and work up*/
-//actual team id team id indexed status
-var default_match =
-  {
-        "datetime": 0,
-        "sport": ["LOADING"],
-        "scores": [["...","..."]],
-        "tournamentid": -1,
-        "winner": -1,
-        "data": {},
-        "teams": [],
-        "payoutdata": {
-          "xp": -1,
-          "cash": -1
-        },
-        "status": {
-          '0': 0,
-          '1': 0
-        },
-        "name": "Loading",
-        "location": "LOADING",
-        "matchid": 0,
-  };
-  var TBD =
-    {
-          "datetime": 0,
-          "sport": [],
-          "scores": [],
-          "tournamentid": -1,
-          "winner": -1,
-          "data": {},
-          "teams": ["TBD","TBD"],
-          "payoutdata": {
-            "xp": -1,
-            "cash": -1
-          },
-          "status": {
-            '0': 0,
-            '1': 0
-          },
-          "name": "TBD",
-          "location": "TBD",
-          "matchid": "TBD"
-    };
 
 /*Fetch a bunch of match objects and return the list of objects
   We need the list of objects to be in order of matchidArr
@@ -506,6 +463,49 @@ function addTournament(matchid, tournid) {
  */
 //DB.player.find().then(resp=>console.log(resp))
  //DB.player.add(Player.default_player, 0)//.then(()=>DB.player.find().then(resp=>console.log(resp)))
+ //actual team id team id indexed status
+ var default_match =
+   {
+         "datetime": 0,
+         "sport": ["LOADING"],
+         "scores": [["...","..."]],
+         "tournamentid": -1,
+         "winner": -1,
+         "data": {},
+         "teams": [],
+         "payoutdata": {
+           "xp": -1,
+           "cash": -1
+         },
+         "status": {
+           '0': 0,
+           '1': 0
+         },
+         "name": "Loading",
+         "location": "LOADING",
+         "matchid": 0,
+   };
+   var TBD =
+     {
+           "datetime": 0,
+           "sport": [],
+           "scores": [],
+           "tournamentid": -1,
+           "winner": -1,
+           "data": {},
+           "teams": ["TBD","TBD"],
+           "payoutdata": {
+             "xp": -1,
+             "cash": -1
+           },
+           "status": {
+             '0': 0,
+             '1': 0
+           },
+           "name": "TBD",
+           "location": "TBD",
+           "matchid": "TBD"
+     };
 
 
 

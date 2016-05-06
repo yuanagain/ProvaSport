@@ -385,7 +385,7 @@ var TBD = {
     "players": [],
     "matches": [],
     "teamid": 0,
-    "thumbnail": ""
+    "thumbnail": "",
     "teamid": 'TBD'
 };
 

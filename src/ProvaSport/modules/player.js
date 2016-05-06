@@ -44,8 +44,11 @@ function _GetPlayer(playerid, callback) {
           if(!player.hasOwnProperty('tournaments')){
             player.tournaments = [];
           }
-          if(!player.hasOwnProperty('friends')){
-            player.friends = [];
+          if(!player.hasOwnProperty('following')){
+            player.following = [];
+          }
+          if(!player.hasOwnProperty('followedBy')){
+            player.followedBy = [];
           }
           resolve(player);
         });
@@ -79,8 +82,11 @@ export function GetPlayer(playerid) {
           if(!player.hasOwnProperty('tournaments')){
             player.tournaments = [];
           }
-          if(!player.hasOwnProperty('friends')){
-            player.friends = [];
+          if(!player.hasOwnProperty('following')){
+            player.following = [];
+          }
+          if(!player.hasOwnProperty('followedBy')){
+            player.followedBy = [];
           }
           resolve(player);
         });
@@ -190,7 +196,7 @@ export function addFollower(playerid, follower) {
     {
       list = list.concat(val);
     }
-    list.push(friend);
+    list.push(follower);
     //console.log("PLAYER ADDED FRIENDS:"+playerid)
     //console.log(list);
     resolve(list)
@@ -200,7 +206,7 @@ export function addFollower(playerid, follower) {
 
 export function removeFriend(playerid, friend, callback) {
   //console.log(playerid)
-  var specificRef = playerdataRef.child(playerid).child('friends')
+  var specificRef = playerdataRef.child(playerid).child('following')
   var list = []
   //console.log("\n\nFRIENDID: "+friend)
   return new Promise(function(resolve){
@@ -227,6 +233,11 @@ export function removeFriend(playerid, friend, callback) {
   })
 }
 //removeFriend(1, 0).then(resp=>console.log("TEST"+resp))
+
+export function removeMatch(playerid, matchid) {
+  //console.log(playerid)
+
+}
 
 export function addMatch(playerid, matchid) {
   //console.log(playerid);
@@ -355,7 +366,7 @@ function getFriends(playerid){
   return new Promise(function(resolve){
     GetPlayer(playerid).then(resp=>{
       var player = resp;
-      if (!player.hasOwnProperty('friends')){
+      if (!player.hasOwnProperty('following')){
         console.log("NO friends :(")
         resolve([])
       }
