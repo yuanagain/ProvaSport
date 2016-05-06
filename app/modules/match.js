@@ -24,6 +24,15 @@ function _GetMatch(matchid, callback) {
     var promise = new Promise(function(resolve, reject) {
         matchdb.child(matchid).on("value", function(snapshot) {
           var match = snapshot.val();
+          if (match == null) {
+            match = default_match
+          }
+          if (!match.hasOwnProperty('teams')) {
+            match.teams = []
+          }
+          if (!match.hasOwnProperty('scores')) {
+            match.teams = [['','']]
+          }
           resolve(match);
         });
      });
@@ -38,6 +47,15 @@ function getMatch(matchid) {
   return new Promise(function(resolve, reject) {
       matchdb.child(matchid).on("value", function(snapshot) {
         var match = snapshot.val();
+        if (match == null) {
+          match = default_match
+        }
+        if (!match.hasOwnProperty('teams')) {
+          match.teams = []
+        }
+        if (!match.hasOwnProperty('scores')) {
+          match.teams = [['','']]
+        }
         resolve(match);
       });
    });
