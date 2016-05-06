@@ -21,7 +21,7 @@ function createTournament(obj) {
   console.log("tournament");
   return new Promise(function(resolve, reject) {
       var newRef = tourndb.push();
-      console.log(obj);
+      obj.tournamentid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -49,6 +49,7 @@ function _CreateTournament(obj, callback) {
   console.log("TOURNAMENT");
   var promise = new Promise(function(resolve, reject) {
       var newRef = tourndb.push();
+      obj.tournamentid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -131,17 +132,7 @@ function setTournament(tournamentid, obj) {
       });
    });
 }
-  var default_tournament =
-  {
-      "type": "Loading",
-      "teams": [], //alphabetical list of teams or sorted by priority
-      "location": "Loading", /*tuple of  Latitude and Longitude*/
-      "dates": [],
-      "name": "",
-      "sport": "Loading",
-      "matches": [],
-      "creator": "pid"
-  };
+
 /*
  * function makeTournament(matches, teams, location, type){
  *  var newTourn = $.extend( true, {}, default_tournament);
@@ -230,7 +221,18 @@ function _AddMatches(tournamentid, matchid, callback) {
     console.log("Failed");
   });
 }
-
+var default_tournament =
+{
+    "type": "Loading",
+    "teams": [], //alphabetical list of teams or sorted by priority
+    "location": "Loading", /*tuple of  Latitude and Longitude*/
+    "dates": [],
+    "name": "",
+    "sport": "Loading",
+    "matches": [],
+    "creator": "pid",
+    "tournamentid":0
+};
 
 
 module.exports = {_GetTournament, getTournament, setTournament, default_tournament,

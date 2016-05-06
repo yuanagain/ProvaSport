@@ -249,7 +249,7 @@ var RecordPage = React.createClass({
 
   componentDidMount(){
     if (this.props.matchid == -1) {
-      return
+      
     }
     else {
       Match._GetMatch(this.props.matchid, this.fetchMatch)
@@ -264,6 +264,11 @@ var RecordPage = React.createClass({
      *   })
      * })
      */
+    AsyncStorage.getItem('player', (err, player)=>{
+      player = JSON.parse(player);
+      var items = player.following.concat(player.playerid);
+      this.setState({items: items});
+    })
   },
 
   fetchMatch: function(data) {
@@ -290,7 +295,7 @@ var RecordPage = React.createClass({
       user = JSON.parse(user);
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
-        var items = player.friends.concat(user.playerid);
+        var items = player.following.concat(user.playerid);
         this.setState({items: items});
       })
     })

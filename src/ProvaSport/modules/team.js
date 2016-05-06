@@ -80,11 +80,6 @@ function setName(teamid, name) {
 }
 //setName("-KGnxwNWvzMWyXZD438Q", "Mr. Jenkins")
 
-function updateMatches(teamid, matchArray) {
-  teamdb.child(teamid).update({
-    "matches": matchArray,
-  })
-}
 
 export function addPlayer(teamid, playerid) {
   console.log("addPlayer");
@@ -113,7 +108,7 @@ export function addPlayer(teamid, playerid) {
   TODO ADD MATCHES TO PlAYERS TOO
   */
 export function addMatch(teamid, matchid) {
-  console.log("addMatch");
+  //console.log("addMatch");
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).on("value", function(snapshot) {
         var matches = []
@@ -249,9 +244,10 @@ function _SetTeam(obj, teamid, callback) {
 /* needs and object for th full data of a team fields
   */
 function createTeam(obj) {
-  console.log("create");
+  //console.log("create");
   return new Promise(function(resolve, reject) {
       var newRef = teamdb.push();
+      obj.teamid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -276,12 +272,11 @@ function createTeam(obj) {
 }
 
 function _CreateTeam(obj, callback) {
-  console.log("_Create");
-  console.log("SETTING PROFPIC");
+
   //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic;})
   var promise = new Promise(function(resolve, reject) {
       var newRef = teamdb.push();
-
+      obj.teamid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -297,15 +292,6 @@ function _CreateTeam(obj, callback) {
           })
         }
       });
-
-    /*
-     * }).then(tid=>{
-     *   Player.GetPlayer(team.players[0]).then(resp=>{
-     *     Team.setProfPic(tid, resp.prof_pic);
-     *     Team.setName(tid, resp.name.full);
-     *   })
-     *   return Promise.resolve(tid);
-     */
     })
     promise.then(function (value) {
       //connect player to team
@@ -326,12 +312,6 @@ function createFromList(teamobjlist, callback) {
 
     teamobjlist.forEach(function(teamobj){
       createTeam(teamobj).then(resp=>{
-        /*
-         * Player.GetPlayer(teamobj.players[0]).then(response=>{
-         *   Team.setProfPic(tid, response.prof_pic);
-         *   Team.setName(tid, response.name.full);
-         * }).then(()=>{
-         */
           teamids.push(resp);
           i+=1;
           if(i == teamobjlist.length) resolve(teamids);
@@ -387,12 +367,36 @@ function inArray(value, array) {
   return array.indexOf(value) > -1;
 }
 
+/* updateMatches()
+ * @params takes in a dictionary of teams indexed by team id with match arrays that need to be updated
+ * data : {
+  tid: [matches]
+}
+ */
+function updateMatches(data) {
+  for (var teamid in data){
+    getTeam(teamid).then(teamobj=>{
+      var matches = data[teamid];
+      teamobj.matches.concat(matches);
+      unique(teamobj.matches);
+      //update team's matches to incude new matches
+      teamdb.child(teamid).child('matches').update([3, 0, 2]);
+    })
+  }
+}
+function addMatches(teamid, matchidArray) {
+  teamdb.child(teamid);
+
+}
+//
+
 var TBD = {
     "name": "TBD",
     "players": [],
     "matches": [],
     "teamid": 0,
-    "thumbnail": ""
+    "thumbnail": "",
+    "teamid": 'TBD'
 };
 
 
@@ -400,7 +404,8 @@ var default_team = {
     "name": "Loading",
     "players": [],
     "matches": [],
-    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
+    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg",
+    "teamid": -1
 };
 
 var bye = {
@@ -414,6 +419,11 @@ var bye = {
  * _SetTeam(bye, 'BYE', function(resp){console.log("SET BYE")})
  * _SetTeam(TBD, 'TBD', function(resp){console.log("SET TBD")})
  */
+
+
+
+
+
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
    getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch,
    teamOneorTwo, onTeams, createFromList, findOne, addTournament, setProfPic};

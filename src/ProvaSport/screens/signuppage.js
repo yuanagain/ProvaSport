@@ -70,20 +70,21 @@ var SignUpPage = React.createClass({
     };
 
     ImagePickerManager.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+      if(!response.didCancel) {
+        //console.log('Response = ', response);
         // You can display the image using either data:
         // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
         // uri (on iOS)
         const source = {uri: response.uri.replace('file://', ''), isStatic: true};
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
-        //upload image
-        //this.upload(source)
+
+        //Upload(source).then(resp=>)
         this.setState({
           profImage: source
         });
       }
-    );
+    });
   },
 
   async showDatePicker(stateKey, options) {
@@ -218,6 +219,10 @@ var SignUpPage = React.createClass({
     );
   },
 
+/*Validate the email input
+  @returns false if invalid email
+  @returns true if valid email (now handled by Firebase)
+  */
   validEmail() {
     console.log(this.state.email);
     var re = /\S+@\S+\.\S+/;
@@ -232,23 +237,15 @@ var SignUpPage = React.createClass({
     return (this.state.password == this.state.passwordConf)
   },
 
-  validUsername() {
-    return (this.state.username.length >= 6)
+  validLast() {
+    return (this.state.last.length > 0)
+  },
+  validFirst() {
+    return (this.state.first.length > 0)
   },
 
-
   onSubmit() {
-    /*
-     * if (!this.validUsername()) {
-     *   Alert.alert(
-     *     'Invalid Username',
-     *     'Username must be at least 6 characters long',
-     *     [
-     *       {text: 'OK'},
-     *     ]
-     *   )
-     * }
-     */
+
     if (!this.validEmail()) {
       Alert.alert(
         'Invalid Email',
@@ -276,54 +273,44 @@ var SignUpPage = React.createClass({
         ]
       )
     }
-    /*
-     * else if (!this.validName()) {
-     *   Alert.alert(
-     *     'Invalid Name',
-     *     'Name field must not be left blank',
-     *     [
-     *       {text: 'OK'},
-     *     ]
-     *   )
-     * }
-     */
-    /*
-     * else if (this.state.gender == null) {
-     *   Alert.alert(
-     *     'Invalid Gender',
-     *     'Please select a gender',
-     *     [
-     *       {text: 'OK'},
-     *     ]
-     *   )
-     * }
-     * else if (this.state.country == null) {
-     *   Alert.alert(
-     *     'Invalid Country',
-     *     'Please select a country',
-     *     [
-     *       {text: 'OK'},
-     *     ]
-     *   )
-     * }
-     * else if (this.state.sports == null) {
-     *   Alert.alert(
-     *     'Invalid Country',
-     *     'Please select at least 1 sport',
-     *     [
-     *       {text: 'OK'},
-     *     ]
-     *   )
-     * }
-     */
+    else if (!this.validFirst()) {
+      Alert.alert(
+        'Invalid First Name',
+        'Name fields must not be left blank',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+    else if (!this.validLast()) {
+      Alert.alert(
+        'Invalid Last Name',
+        'Name fields must not be left blank',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+
+    else if (this.state.country == null) {
+      Alert.alert(
+        'Invalid Country',
+        'Please select a country',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
+    else if (this.state.sports == null) {
+      Alert.alert(
+        'Invalid Sport Selection',
+        'Please select at least 1 sport',
+        [
+          {text: 'OK'},
+        ]
+      )
+    }
     else {
-      /* Valid Login? now authenticate?*/
-      /*
-
-       */
-
-
-
       var callback = this.props.navToHomeFunc;
       var email = this.state.email;
       var pass = this.state.password;
@@ -355,26 +342,29 @@ var SignUpPage = React.createClass({
           player.earnings = obj;
         }
       })
-//POSSIBLE RACE CONDITION
-
-
-
-//call the next functions
       var callback = this.storeUser;
       console.log(player)
-      //uid=>callback(uid, setUser, player)
-      User.createUser(email, pass).then(uid=>callback(uid, setUser, player)).catch(function(err){console.log("COULD NOT CREATE USER "+err)})
+      //create the user in Firebase
+      //this should not result in a race condition but sometimes we get -1
+      User.createUser(email, pass).then(uid=>{
+        callback(uid, setUser, player)
+      }).catch(function(err){
+        console.log("COULD NOT CREATE USER "+err)
+      })
     }
   },
   storeUser: function (uid, user, player) {
     console.log("\n"+uid+"  "+user+"  "+player)
     player.userid = uid;
+    var setImageFunc = this.upload;
     var callback = this.props.navToHomeFunc;
     var call1 = this._setInitialUser;
+    var uri = this.state.profImage.uri
     Player.createPlayer(player).then(function(id){
       //given the id add to the user and create data in FB
-      console.log(this.state.profImage.uri);
-      //this.upload(this.state.profpic.source.uri, this.state.playerid);
+      console.log(player);
+      player.playerid = id;
+      setImageFunc(uri, id, player)
       user.playerid = id;
       console.log(user)
       User.setUser(uid, user);
@@ -382,7 +372,7 @@ var SignUpPage = React.createClass({
     })
     this._setInitialPlayer(player)
     callback()
-    //create player
+
   },
   _setInitialUser: function(obj) {
     console.log("CACHE user")
@@ -400,11 +390,11 @@ var SignUpPage = React.createClass({
   },
 
 
-  upload(uri, playerid) {
+  upload(uri, playerid, player) {
     var name = "prof_pic"+playerid+".jpg"
     let file = {
       // `uri` can also be a file system path (i.e. file://)
-      uri: "file:///Users/kenanfarmer/Library/Developer/CoreSimulator/Devices/9212EF35-3593-450A-84D1-87112A2A717A/data/Containers/Data/Application/463DAE6D-E6F2-4D77-B1CB-4A6A73455C13/Documents/751C50B2-AE47-4DAA-B323-3EE8C5E06736.jpg",
+      uri: uri,
       name: name,
       type: "image/jpeg"
     }
@@ -421,8 +411,16 @@ var SignUpPage = React.createClass({
     RNS3.put(file, options).then(response => {
       if (response.status !== 201)
         throw new Error("Failed to upload image to S3");
-      console.log(response.body.location);
-    }).catch(function(err){console.log(err);});
+      console.log(response.body.postResponse.location);
+      return Promise.resolve(response.body.postResponse.location)
+    }).then(url=>{
+      player.prof_pic = url;
+      console.log(player);
+      Player.setProfPic(playerid, url);
+      this._setInitialPlayer(player);
+    }).catch(function(err){
+      console.log(err);
+    })
   },
   _setInitialPlayer: function(obj) {
 
@@ -439,9 +437,6 @@ var SignUpPage = React.createClass({
     }
   },
 });
-
-// Layout for labels and text fields
-
 
 /* Not Currently supporting birthdays
 var DatePicker = React.createClass({
