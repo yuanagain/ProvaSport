@@ -84,8 +84,7 @@ var GameScoreRowAdd_subco = React.createClass({
     if (_ctools.isValidScore(this.state.val1)
         && _ctools.isValidScore(this.state.val2)) {
       this.props.harvest([parseInt(this.state.val1), parseInt(this.state.val2)])
-      this.setState({val1: null, val2: null})
-      console.log('is numeric')
+      this.setState({val1: "", val2: ""})
     }
   }
 });

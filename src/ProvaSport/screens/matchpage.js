@@ -283,7 +283,7 @@ update if needed
     }
   },
   loadPlayer: function(){
-      var matchid = this.props.matchid;
+    var matchid = this.props.matchid;
     try {
       var value = AsyncStorage.getItem('user', (error, response)=>{
         var obj = JSON.parse(response)

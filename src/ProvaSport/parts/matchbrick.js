@@ -86,8 +86,6 @@ var MatchBrick = React.createClass({
   fetchMatch: function(data) {
     this.setState({match : data})
     this.setState({loaded : true})
-    console.log("MATCH FETCHED")
-    console.log(this.state.match)
     setTimeout(() => {
       this.forceUpdate()
     }, 500);
