@@ -72,7 +72,7 @@ var RecordPage = React.createClass({
     return ({
       mode: '',
       items: [0, 1],
-      matchid: 1,
+      matchid: -1,
       // options; 'team1', 'team2, 'name', 'sport', 'location',
       fixed_fields: [],
     })
@@ -249,7 +249,7 @@ var RecordPage = React.createClass({
 
   componentDidMount(){
     if (this.props.matchid == -1) {
-      
+
     }
     else {
       Match._GetMatch(this.props.matchid, this.fetchMatch)
