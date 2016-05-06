@@ -197,10 +197,12 @@ var ContractsPage = React.createClass({
     })
   },
   start: function(){
-    if(!this.validateTeams() || !this.validateTeams()){
-      console.log("ERROR");
-      return;
-    }
+    /* 
+     * if(!this.validateTeams() || !this.validateTeams()){
+     *   console.log("ERROR");
+     *   return;
+     * }
+     */
     var teamss = []
     var numTeams = this.state.teams.length;
     var i = 0;

@@ -17,7 +17,7 @@ import * as _ctools from '../libs/customtools'
 import * as Match from '../modules/match'
 import * as Team from '../modules/team'
 import * as Player from '../modules/player'
-
+import * as Tournament from '../modules/tournament'
 
 var {
   AsyncStorage,
@@ -199,8 +199,9 @@ update if needed
     //check that both teams have confirmed attitude towards match
     if (this.state.match.status[0] === 4 && this.state.match.status[1] === 4){
       //see if it is bound to a tournamentid
-      if (this.state.match.tournamentid != -1) {
+      if (this.state.match.tournamentid != -1 && this.state.tournamentid !== undefined && this.state.tournamentid === null) {
         //grab tournament object
+        console.log("You Have Advanced Someone!");
         Tournament.getTournament(this.state.match.tournamentid).then(tournament=>{
           //get a list of match objects
           Match.fetchList(tournament.matches).then(matchobjs=>{

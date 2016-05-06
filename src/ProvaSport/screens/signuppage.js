@@ -70,20 +70,21 @@ var SignUpPage = React.createClass({
     };
 
     ImagePickerManager.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+      if(!response.didCancel) {
+        //console.log('Response = ', response);
         // You can display the image using either data:
         // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
         // uri (on iOS)
         const source = {uri: response.uri.replace('file://', ''), isStatic: true};
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
-        //upload image
-        //this.upload(source)
+
+        //Upload(source).then(resp=>)
         this.setState({
           profImage: source
         });
       }
-    );
+    });
   },
 
   async showDatePicker(stateKey, options) {
@@ -355,13 +356,15 @@ var SignUpPage = React.createClass({
   storeUser: function (uid, user, player) {
     console.log("\n"+uid+"  "+user+"  "+player)
     player.userid = uid;
+    var setImageFunc = this.upload;
     var callback = this.props.navToHomeFunc;
     var call1 = this._setInitialUser;
     var uri = this.state.profImage.uri
     Player.createPlayer(player).then(function(id){
       //given the id add to the user and create data in FB
-      console.log(uri);
-
+      console.log(player);
+      player.playerid = id;
+      setImageFunc(uri, id, player)
       user.playerid = id;
       console.log(user)
       User.setUser(uid, user);
@@ -387,7 +390,7 @@ var SignUpPage = React.createClass({
   },
 
 
-  upload(uri, playerid) {
+  upload(uri, playerid, player) {
     var name = "prof_pic"+playerid+".jpg"
     let file = {
       // `uri` can also be a file system path (i.e. file://)
@@ -408,8 +411,16 @@ var SignUpPage = React.createClass({
     RNS3.put(file, options).then(response => {
       if (response.status !== 201)
         throw new Error("Failed to upload image to S3");
-      console.log(response.body.location);
-    }).catch(function(err){console.log(err);});
+      console.log(response.body.postResponse.location);
+      return Promise.resolve(response.body.postResponse.location)
+    }).then(url=>{
+      player.prof_pic = url;
+      console.log(player);
+      Player.setProfPic(playerid, url);
+      this._setInitialPlayer(player);
+    }).catch(function(err){
+      console.log(err);
+    })
   },
   _setInitialPlayer: function(obj) {
 

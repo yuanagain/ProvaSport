@@ -82,9 +82,14 @@ var NewsFeedPage = React.createClass({
           }
           matches = this.unique(matches);
           //sort the matches by datetime
+          console.log(matches);
           matches.sort(function(match_a, match_b){
             return match_a.datetime - match_b.datetime;
           })
+
+          console.log("MATCHES SORTED");
+          console.log(matches);
+          //matches = matches.reverse();
           this.setState({fmatches: matches})
         });
       });
@@ -108,11 +113,8 @@ var NewsFeedPage = React.createClass({
           else {
             matches = player.matches;
           }
-          matches = this.unique(matches);
-          matches.sort(function(match_a, match_b){
-            return match_a.datetime - match_b.datetime;
-          })
           console.log(matches);
+          //matches = matches.reverse();
           this.setState({fmatches: matches})
         });
       });
@@ -139,10 +141,8 @@ var NewsFeedPage = React.createClass({
             else {
               matches = player.matches;
             }
-            matches.sort(function(match_a, match_b){
-              return match_a.datetime - match_b.datetime;
-            })
-            //matches = unique(matches);
+            console.log(matches);
+            //matches = matches.reverse();
             this.setState({fmatches: matches})
           });
         });

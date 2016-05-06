@@ -235,8 +235,30 @@ export function removeFriend(playerid, friend, callback) {
 //removeFriend(1, 0).then(resp=>console.log("TEST"+resp))
 
 export function removeMatch(playerid, matchid) {
-  //console.log(playerid)
-
+    return new Promise(function(resolve, reject){
+      playerdataref.child(playerid).once('value', function (snapshot){
+        var player = snapshot.val();
+        if (player != null){
+          var matches = [];
+          if (!player.hasOwnAttribute('matches')){
+            matches = player.matches;
+            deleteEle(matches, matchid);
+            resolve(matches)
+          }
+          else {
+            resolve([]);
+          }
+        }
+        else {
+          console.log('NO player Found');
+          reject();
+        }
+      })
+    }).then(resp=>{
+      playerdataref.child(playerid).update({matches: resp});
+    }).catch(err=>{
+      console.log(err)
+    })
 }
 
 export function addMatch(playerid, matchid) {
@@ -458,4 +480,4 @@ export var default_player = {
 
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, removeFriend, _AddTournament,
-                   searchPlayers, getFriends, getFriendsMatches, setPlayer, setProfPic};
+                   searchPlayers, getFriends, getFriendsMatches, setPlayer, setProfPic, removeMatch};

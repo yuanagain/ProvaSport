@@ -412,13 +412,33 @@ function getAllMatches(length) {
    });
 }
 
-function addTournament(matchid, tournid) {
-
+function deleteMatch(matchid) {
+  /*remove all players and then teardown
+  if in tournament then teardown (TODO FUTURE)*/
+  return new Promise(function(resolve, reject){
+    matchdb.child(matchid).once('value', function (snapshot){
+      var match = snapshot.val();
+      if (match != null){
+        match.players.forEach(function(playerid){
+          Player.removeMatch(playerid, matchid)
+        })
+        resolve();
+      }
+      else {
+        console.log('NO match Found');
+        reject();
+      }
+    })
+  }).then(()=>{
+    matchdb.child(matchid).remove()
+  }).catch(err=>{
+    console.log(err)
+  })
 }
+
 
 //getAllMatches(5).then(resp=>console.log(resp))
 //tieMatchTo(35, 1, 1)
-/*CHANGED ***************HOW TO PARSE ARRAYS************** TODO*/
 /*
  * ref.child("match").child(35).child("teams").on("value", function(snapshot){
  *   var obj = snapshot.val()
@@ -512,4 +532,4 @@ function addTournament(matchid, tournid) {
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
                   _CreateMatch, updateScores, updateStatus, _CreateFromList,
                   createFromList, fetchList, _FetchList, setFromList, _SetFromList,
-                  isInMatch, myStatus, getAllMatches};
+                  isInMatch, myStatus, getAllMatches, deleteMatch};

@@ -190,16 +190,11 @@ var RecordPage = React.createClass({
   },
 
   componentDidMount(){
-    /*
-     * AsyncStorage.getItem('user', (err, user)=>{
-     *   user = JSON.parse(user);
-     *   AsyncStorage.getItem('player', (err, player)=>{
-     *     player = JSON.parse(player);
-     *     var items = player.friends.concat(user.playerid);
-     *     this.setState({items: items});
-     *   })
-     * })
-     */
+    AsyncStorage.getItem('player', (err, player)=>{
+      player = JSON.parse(player);
+      var items = player.following.concat(player.playerid);
+      this.setState({items: items});
+    })
   },
 
   componentWillReceiveProps(nextProps){

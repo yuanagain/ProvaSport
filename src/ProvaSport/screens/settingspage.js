@@ -74,9 +74,8 @@ var SettingsPage = React.createClass({
 
     ImagePickerManager.showImagePicker(options, (response) => {
       //console.log(response);
-      if(!response.didCancel){
-
-      console.log('Response = ', response);
+      if(!response.didCancel) {
+        //console.log('Response = ', response);
         // You can display the image using either data:
         // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
         // uri (on iOS)
@@ -84,15 +83,13 @@ var SettingsPage = React.createClass({
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
         //upload image
-
         this.upload(source.uri, this.state.playerid);
         //Upload(source).then(resp=>)
         this.setState({
           profImage: source
         });
       }
-      }
-    );
+    });
   },
   render: function() {
     var {

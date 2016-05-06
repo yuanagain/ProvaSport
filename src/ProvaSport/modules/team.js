@@ -80,11 +80,6 @@ function setName(teamid, name) {
 }
 //setName("-KGnxwNWvzMWyXZD438Q", "Mr. Jenkins")
 
-function updateMatches(teamid, matchArray) {
-  teamdb.child(teamid).update({
-    "matches": matchArray,
-  })
-}
 
 export function addPlayer(teamid, playerid) {
   console.log("addPlayer");
@@ -374,11 +369,26 @@ function inArray(value, array) {
 
 /* updateMatches()
  * @params takes in a dictionary of teams indexed by team id with match arrays that need to be updated
- *
+ * data : {
+  tid: [matches]
+}
  */
 function updateMatches(data) {
+  for (var teamid in data){
+    getTeam(teamid).then(teamobj=>{
+      var matches = data[teamid];
+      teamobj.matches.concat(matches);
+      unique(teamobj.matches);
+      //update team's matches to incude new matches
+      teamdb.child(teamid).child('matches').update([3, 0, 2]);
+    })
+  }
+}
+function addMatches(teamid, matchidArray) {
+  teamdb.child(teamid);
 
 }
+//
 
 var TBD = {
     "name": "TBD",
@@ -409,6 +419,11 @@ var bye = {
  * _SetTeam(bye, 'BYE', function(resp){console.log("SET BYE")})
  * _SetTeam(TBD, 'TBD', function(resp){console.log("SET TBD")})
  */
+
+
+
+
+
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
    getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch,
    teamOneorTwo, onTeams, createFromList, findOne, addTournament, setProfPic};
