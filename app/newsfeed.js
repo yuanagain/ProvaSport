@@ -48,7 +48,6 @@ var Newsfeed = React.createClass({
     else
       return 0;
   },
-
 });
 
 var Entry = React.createClass({
@@ -135,8 +134,11 @@ var NewsEntry = React.createClass({
         </div>
       )
     }
-
-    var scores = _ctools.getScoreStrings(this.state.match.scores)
+    var scores
+    if (this.state.match.scores == null)
+        scores = ["", ""]
+    else
+        scores = _ctools.getScoreStrings(this.state.match.scores)
     var winnerIndex = _ctools.getWinnerIndex(this.state.match)
     var loserIndex = (winnerIndex == 1) ? 0 : 1;
 
@@ -148,7 +150,7 @@ var NewsEntry = React.createClass({
     if (picLoser == "Loading")
       picLoser = default_pic
 
-    if (this.state.winner.name == "BYE" || this.state.loser.name == "BYE")
+    if (this.state.winner.name == "BYE" || this.state.loser.name == "BYE" || this.state.winner.name == "TBD" || this.state.loser.name == "TBD")
         return (<div></div>)
 
     return (
