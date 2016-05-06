@@ -10,6 +10,8 @@ import * as Team from './modules/team'
 import * as Player from './modules/player'
 import {Link} from 'react-router';
 
+//-KH3Z2bp004LAUomrxVB&_k=qiozo3
+
 var Matches = React.createClass({
   getInitialState: function() {
     let { query } = this.props.location
@@ -23,7 +25,7 @@ var Matches = React.createClass({
   },
 
   fetchMatch: function(data) {
-    var matches = this.state.matches.slice()
+    var matches = [].concat(this.state.matches)
     matches.push(data)
     this.setState({matches: matches})
   },
@@ -31,8 +33,15 @@ var Matches = React.createClass({
   componentWillMount: function() {
     var matchid;
     if (this.state.matchids != null) {
-      for (var i = 0; i < this.state.matchids.length; i++)
-        Match._GetMatch(this.state.matchids[i], this.fetchMatch)
+      // If multiple matches, matchids is an array, otherwise it is
+      // a string. The following if and else handle this.
+      if (this.state.matchids.constructor === Array) {
+        for (var i = 0; i < this.state.matchids.length; i++)
+          Match._GetMatch(this.state.matchids[i], this.fetchMatch)
+      }
+      else {
+        Match._GetMatch(this.state.matchids, this.fetchMatch)
+      }
     }
   },
 
@@ -84,6 +93,7 @@ var TitleEntry = React.createClass({
         </div>
       )
     }
+
     return (
       <div style={title_div}>
         Match on {_ctools.toDate(new Date(this.props.match.datetime))}
@@ -231,6 +241,7 @@ var MatchEntry = React.createClass({
         <div></div>
       )
     }
+
     return (
       <span style={entry}>
         <div id="data_col_left" style={info_column_left}>
@@ -336,10 +347,13 @@ var Sidebar = React.createClass({
     var {
       matches,
     } = this.props;
+
+    console.log(matches)
     return (
       <div style={sidebar}>
         <ol> {
           this.props.matches.map(function(match, index) {
+
             var style = '';
             if (self.state.focused == index) {
               style = 'focused';
