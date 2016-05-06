@@ -12,6 +12,7 @@ var _cstyles  = require('../styles/customstyles')
 var Header = require('../parts/header')
 
 var {
+  AsyncStorage,
   AppRegistry,
   StyleSheet,
   View,
@@ -60,9 +61,10 @@ var FriendsPage = React.createClass({
       friendsLoaded: false,
     };
   },
+  //data is the following array
   getDefaultProps: function() {
     return ({
-      data: [1],
+      data: [0, 1],
       playerid: 0
     })
   },
@@ -100,13 +102,22 @@ render() {
 
   componentDidMount: function () {
     // get friend list
-    Player._GetPlayer(this.props.playerid, this.getFriends);
-  },
+    this.setAsync();
 
-  // adds friend userids to data
-  getFriends: function (player) {
-    this.state.data = player.following;
-    //this.setState({data: player.friends});
+  },
+  componentWillReceiveProps: function (nextProps){
+    this.setAsync();
+  },
+  setAsync: function(){
+    AsyncStorage.getItem('player', (err, resp)=>{
+      var player = JSON.parse(resp);
+      //set data to people you follow
+      console.log("DATA");
+      console.log(player.following);
+      var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      var res = ds.cloneWithRows(player.following);
+      this.setState({dataSource: res});
+    })
   },
 
   // set the state to the current friend
@@ -142,11 +153,10 @@ return (
   <View style={styles.friendContainer}>
     <TouchableOpacity onPress = {()=>this.onPress()} style = {styles.container}>
       <View style={styles.profpicContainer}>
-        <Image
-          //source={{uri: picture}}
-          source={this.state.player.prof_pic}
-          style={styles.profpic}
-        />
+      <Image
+            source={{uri: this.state.player.prof_pic}}
+            style={styles.profpic}
+             />
       </View>
       <View>
         <View style={styles.details}>
@@ -168,12 +178,13 @@ return (
       passProps: {
         player: this.state.player,
         friend: this.props.playerid
-
       }
     });
   },
 
   fetchPlayer: function(data) {
+    console.log("PLAYER SET");
+    console.log(data);
     this.setState({loaded : true})
     this.setState({player : data})
 

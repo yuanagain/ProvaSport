@@ -76,24 +76,25 @@ var Messenger = React.createClass({
     }      // if (this.state._didUnmount) {
      //   clearInterval(interval_id)
      // }
-    }, 500); 
+    }, 500);
     this.setState({_interval_id: interval_id})
   },
-  
+
   // harvest
   harvest: function(data) {
     this.setState({messages: data})
   },
 
-  // load previous messages
+  // load pre-existing messages
   getMessages: function(playerid, callback) {
 
   var promise = new Promise(function(resolve, reject) {
       // examine contents of the database (current conversation)
     var messagelist = [];
     //TODO: make the child be the playerid
+    // passing in convo id
     messagedb.child(0).once("value", function(snapshot) {
-      
+
       // format each message
      	snapshot.forEach(function(childSnapshot) {
      		var text = childSnapshot.child("text").val();
@@ -113,16 +114,14 @@ var Messenger = React.createClass({
    		  messagelist.push(messagedata);
   	   });
       resolve(messagelist);
-    });      
-  });
-
-  promise.then(function(result) {
+    });
+  }).then(function(result) {
       callback(result);
     }).catch(function() {
       console.log("READ FAILED")
     });
   },
-  
+
   handleSend(message = {}, rowID = null) {
     //push to Firebase
     //TODO: make the child be the player id
@@ -138,57 +137,57 @@ var Messenger = React.createClass({
     		    reject(false);
     	     }
     	     else {
-    		    resolve(true);
+    		    resolve(newmessage.ref());
     	     }
-      }); 
+      });
     });
     promise.then(function(value) {
-      if (value === true) {
+      if (value) {
         this.MessagePage.setMessageStatus('Sent', rowID);
       }
       else {
-        this._MessagePage.setMessageStatus('ErrorButton', rowID); 
+        this._MessagePage.setMessageStatus('ErrorButton', rowID);
       }
     }).catch(function(error) {
         console.log(error);
       });
   },
-  
+
   // @oldestMessage is the oldest message already added to the list
-  onLoadEarlierMessages(oldestMessage = {}, callback = () => {}) {    
+  onLoadEarlierMessages(oldestMessage = {}, callback = () => {}) {
 
     // Your logic here
     // Eg: Retrieve old messages from your server
 
     // newest messages have to be at the begining of the array
-  
+
     setTimeout(() => {
-      callback(earlierMessages, false); // when second parameter is true, the "Load earlier messages" button will be hidden      
+      callback(earlierMessages, false); // when second parameter is true, the "Load earlier messages" button will be hidden
     }, 1000);
   },
-  
+
   handleReceive: function() {
     setTimeout(() => {
       this.getMessages(this.props.frendid, this.harvest);
     }, 1000);
   },
-  
+
   onErrorButtonPress(message = {}, rowID = null) {
     // try re-sending message
     handleSend(message, rowID);
   },
-  
+
   // will be triggered when the Image of a row is touched
   onImagePress(rowData = {}, rowID = null) {
     // Your logic here
     // Eg: Navigate to the user profile
   },
-  
+
   render() {
     return (
       <MessagePage
         ref={(c) => this._MessagePage = c}
-    
+
         styles={{
           bubbleRight: {
             marginLeft: 70,
@@ -196,7 +195,7 @@ var Messenger = React.createClass({
             // (also see backgroundColor in Navigation.js for header bar color)
           },
         }}
-        
+
         autoFocus={false}
         messages={this.state.messages}
         handleSend={this.handleSend}
@@ -209,19 +208,19 @@ var Messenger = React.createClass({
         senderImage={null}
         onImagePress={this.onImagePress}
         displayNames={true}
-        
+
         parseText={false} // disable handlePhonePress and handleUrlPress
         handlePhonePress={this.handlePhonePress}
         handleUrlPress={this.handleUrlPress}
         handleEmailPress={this.handleEmailPress}
-        
+
         inverted={true}
         navigator={this.props.navigator}
       />
 
     );
   },
-  
+
   handleUrlPress(url) {
     if (Platform.OS !== 'android') {
       LinkingIOS.openURL(url);
@@ -236,7 +235,7 @@ var Messenger = React.createClass({
         'Cancel',
       ];
       var CANCEL_INDEX = 2;
-    
+
       ActionSheetIOS.showActionSheetWithOptions({
         options: BUTTONS,
         cancelButtonIndex: CANCEL_INDEX
@@ -253,7 +252,7 @@ var Messenger = React.createClass({
       });
     }
   },
-  
+
   handleEmailPress(email) {
     Communications.email(email, null, null, null, null);
   },

@@ -21,6 +21,8 @@ playerdataRef = new Firebase("https://shining-torch-4767.firebaseio.com/player")
 
 /*possilby add stuff like isOnTeam etc.*/
 function _GetPlayer(playerid, callback) {
+  console.log("PLAYERID");
+  console.log(playerid);
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
         if (playerid == -1)
@@ -63,6 +65,8 @@ function _GetPlayer(playerid, callback) {
 
 /*possilby add stuff like isOnTeam etc.*/
 export function GetPlayer(playerid) {
+  console.log("PLAYERID");
+  console.log(playerid);
   /* var match = new Match(matchid); */
   if (playerid == -1)
   {
@@ -179,6 +183,42 @@ export function addFriend(playerid, friend) {
 }).then(resp=>{playerdataRef.child(playerid).child('following').set(list); addFollower(friend, playerid)})
 }
 
+var messageref = require('firebase');
+messageref = new Firebase('https://provamessenger.firebaseio.com')
+/*creates conversation in https://provamessenger.firebaseio.com   */
+function addConvo(playerid, firstMessageObj) {
+  var newconvoRef = messageref.push();
+  newconvoRef.set({
+
+  })
+
+}
+/* intersection between lists  */
+function intersection(a, b)
+{
+  var ai = 0, bi = 0;
+  var result = [];
+
+  while( ai < a.length && bi < b.length )
+  {
+     if (a[ai] < b[bi])
+     {
+        ai++;
+     }
+     else if (a[ai] > b[bi])
+     {
+        bi++;
+     }
+     else
+     {
+       result.push(a[ai]);
+       ai++;
+       bi++;
+     }
+  }
+
+  return result;
+}
 
 export function addFollower(playerid, follower) {
   var list = []
