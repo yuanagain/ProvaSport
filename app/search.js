@@ -70,12 +70,10 @@ var Search = React.createClass({
   },
 
   update: function(players) {
-    console.log("Updating players to: " + players)
     this.setState({players: []})
     this.setState({players: players})
     this.setState({searching: false})
-    console.log("State after change: " + this.state.players)
-  },
+  }
 });
 
 var styles = {

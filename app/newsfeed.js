@@ -66,7 +66,6 @@ var Entry = React.createClass({
 var EntryMap = React.createClass({
   render: function() {
     if (this.props.matches == null) {
-      console.log(this.props.matches)
       return (
         <div className="entryMap">
           <p>Loading...</p>

@@ -133,7 +133,6 @@ var PlayersEntry = React.createClass({
         <div></div>
       )
     }
-
     return (
       <span style={entry}>
         <div style={team_label_1}>
@@ -167,6 +166,7 @@ var PlayersRow = React.createClass({
   },
 
   fetchPlayer: function(player) {
+    this.setState({players: []})
     if (this.state.players.length < this.props.playerids.length) {
       var players = [].concat(this.state.players)
       players.push(player)
@@ -197,7 +197,9 @@ var PlayersRow = React.createClass({
 
     var playerPics = this.state.players.map(function(player, i) {
       return (
-        <img style={pic} src={player.prof_pic} key={i}/>
+        <Link to="/profile" query={{ playerid: player.playerid }} key={i}>
+            <img style={pic} src={player.prof_pic} key={i + 1}/>
+        </Link>
       );
     })
 
@@ -315,7 +317,6 @@ var ScoresEntry = React.createClass({
     );
   }
 });
-
 
 // Sidebar
 var Sidebar = React.createClass({
