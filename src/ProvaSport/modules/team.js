@@ -15,6 +15,10 @@ teamdb = new Firebase("https://shining-torch-4767.firebaseio.com/team");
 
 function _GetTeam(teamid, callback) {
   console.log("_GetTeam  "+teamid);
+  if(teamid === undefined){
+    callback(TBD)
+  }
+  else{
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
         teamdb.child(teamid).on("value", function(snapshot) {
@@ -36,8 +40,9 @@ function _GetTeam(teamid, callback) {
     promise.then(function(value){
       callback(value);
     }).catch(function(err){
-      console.log("Failed to _GetTeam  "+ err);
+      console.log("Failed to _GetTeam  "+ err + "   "+teamid);
     });
+  }
 }
 export function getTeam(teamid) {
   console.log("getTeam");
@@ -105,7 +110,7 @@ export function addPlayer(teamid, playerid) {
 /*
 
   @params: teamid of Team object adding match
-  TODO ADD MATCHES TO PlAYERS TOO
+  make sure this and Player.addMatch run unique
   */
 export function addMatch(teamid, matchid) {
   //console.log("addMatch");
@@ -128,7 +133,7 @@ export function addMatch(teamid, matchid) {
             Player.addMatch(playerid, matchid)
           });
           matches.push(matchid);
-          console.log("Added match: "+matches+" to team "+teamid+" with players "+team.players)
+          //console.log("Added match: "+matches+" to team "+teamid+" with players "+team.players)
           matches = unique(matches);
           resolve(matches);
         }
@@ -394,8 +399,7 @@ var TBD = {
     "name": "TBD",
     "players": [],
     "matches": [],
-    "teamid": 0,
-    "thumbnail": "",
+    "thumbnail": "../assets/logo_white_orange.png",
     "teamid": 'TBD'
 };
 

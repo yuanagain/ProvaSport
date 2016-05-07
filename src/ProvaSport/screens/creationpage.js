@@ -61,6 +61,7 @@ var ContractsPage = React.createClass({
         num_teams: [2],
         items: [0,1],
         playerid: -1,
+        location: "",
       }
     );
   },
@@ -197,7 +198,7 @@ var ContractsPage = React.createClass({
     })
   },
   start: function(){
-    /* 
+    /*
      * if(!this.validateTeams() || !this.validateTeams()){
      *   console.log("ERROR");
      *   return;
@@ -223,6 +224,7 @@ var ContractsPage = React.createClass({
   create: function(teamids) {
     var tournament = JSON.parse(JSON.stringify(Tournament.default_tournament));
     //build the tournament object
+    console.log(this.state.location);
     tournament.teams = teamids;
     tournament.type = this.state.event_type[0];
     tournament.sport = this.state.selectedSport;
@@ -240,7 +242,7 @@ var ContractsPage = React.createClass({
     }
   },
   createRR: function(obj) {
-    var defaults = this.defaultsGen();
+    var defaults = this.defaultsGen(obj);
     Tournament.createTournament(obj).then(resp=>this.createRR2(resp, obj, defaults))
   },
   createRR2: function(id, obj, defaults) {
@@ -274,17 +276,16 @@ var ContractsPage = React.createClass({
   /*
   * We need Tournament to fill in the fields :
   * Name, datetime is created time, sport,
-  *
   */
   defaultsGen: function(obj){
     var defaults = Match.default_match;
     defaults.datetime = Date.now();
-    if (obj.location !== "Loading")
+    if (obj.location)
       defaults.location = obj.location;
     else {
       defaults.location = "  "
     }
-    defaults.name = obj.name;
+    defaults.name = obj.name+" Match";
     defaults.sport = obj.sport;
     return defaults;
   },
@@ -296,8 +297,6 @@ var ContractsPage = React.createClass({
       event_type: [],
       teams: [[],[],],
       num_teams: [2],
-      items: [0,1],
-      playerid: -1,
     })
   },
   setTeam: function(players, index) {

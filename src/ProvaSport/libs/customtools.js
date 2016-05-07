@@ -227,10 +227,34 @@ var unique = function (list) {
     return arr.indexOf(elem) == pos;
   });
 }
+/* intersection between lists  */
+var intersection = function (a, b)
+{
+  var ai = 0, bi = 0;
+  var result = [];
 
+  while( ai < a.length && bi < b.length )
+  {
+     if (a[ai] < b[bi])
+     {
+        ai++;
+     }
+     else if (a[ai] > b[bi])
+     {
+        bi++;
+     }
+     else
+     {
+       result.push(a[ai]);
+       ai++;
+       bi++;
+     }
+  }
+  return result;
+}
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
                   selectionNeedles, toDate, shortString,
                   cumulativeEarnings, getInitials, getWinner,
                   getTally, getScoreString, codeToString,
-                  findField, findId, unique};
+                  findField, findId, unique, intersection};

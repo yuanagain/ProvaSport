@@ -40,6 +40,7 @@ function _GetMatch(matchid, callback) {
       console.log("Failed in _Getmatch "+err + " Matchid: "+matchid);
     });
 }
+//_GetMatch("-KH3StkanT49GsSpSIcY", function(resp){console.log(resp);})
 function getMatch(matchid) {
   /* var match = new Match(matchid); */
   return new Promise(function(resolve, reject) {
@@ -365,7 +366,7 @@ function myStatus(matchid, playerobj) {
   console.log("myStatus matchid:  "+matchid + "playerteams: "+ playerobj.teams);
   return new Promise(function (resolve) {
     getMatch(matchid).then(function(oMatch) {
-      if (playerobj.teams != undefined && playerobj.teams.constructor == Array){
+      if (playerobj.teams != undefined){
         console.log("Running TeamInMatch")
         teamInMatch(matchid, playerobj.teams, function(index){
           if(index != -1) {
@@ -375,32 +376,29 @@ function myStatus(matchid, playerobj) {
             resolve(1);
           }
         })
-    }
-    else {
-      resolve(1);
-    }
+      }
+      else {
+        resolve(1);
+      }
     })
   })
 }
 
-function getAllMatches(length) {
+function getAllMatches() {
   var matches = []
   return new Promise(function(resolve, reject) {
-      ref.child('match').on("value", function(snapshot) {
-        var val = snapshot.val();
+      matchdb.on("value", function(snapshot) {
         var len = 0;
-        if(length == -1){
-          len = Object.keys(val).length;
-        }
-        else{
-          len = length;
-        }
+        len = Object.keys(snapshot).length;
         var i = 0;
         console.log(len);
         snapshot.forEach(function(match){
           i++;
           if(!match.hasOwnProperty('teams')){
             match.teams = [];
+          }
+          if(!match.hasOwnProperty('scores')){
+            match.scores = [[" ", ' ']];
           }
           matches.push(match.val())
           if(i == len){
@@ -436,7 +434,7 @@ function deleteMatch(matchid) {
 }
 
 
-//getAllMatches(5).then(resp=>console.log(resp))
+//getAllMatches().then(resp=>console.log(resp))
 //tieMatchTo(35, 1, 1)
 /*
  * ref.child("match").child(35).child("teams").on("value", function(snapshot){
@@ -487,7 +485,7 @@ function deleteMatch(matchid) {
    {
          "datetime": 0,
          "sport": ["LOADING"],
-         "scores": [],
+         "scores": [[" ", " "]],
          "tournamentid": -1,
          "winner": -1,
          "data": {},
@@ -508,14 +506,14 @@ function deleteMatch(matchid) {
      {
            "datetime": 0,
            "sport": [],
-           "scores": [],
+           "scores": [[" ", " "]],
            "tournamentid": -1,
            "winner": -1,
            "data": {},
            "teams": ["TBD","TBD"],
            "payoutdata": {
-             "xp": -1,
-             "cash": -1
+             "xp": 100,
+             "cash": 100
            },
            "status": {
              '0': 0,

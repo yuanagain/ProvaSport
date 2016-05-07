@@ -1,7 +1,7 @@
 'use strict';
 
 import * as Player from '../modules/player'
-
+import * as COnversation from '../modules/conversation'
 
 var React = require('react-native');
 var Dimensions = require('Dimensions');
@@ -25,29 +25,6 @@ var {
   //RefreshControl,
 } = React;
 
-var MY_FRIENDS = [
-  {'id': 1, 'name': "Suneel", 'sports': "basketball",
-  'profpic': "http://facebook.github.io/react/img/logo_og.png"},
-  {'id': 2, 'name': "Daniel", 'sports': "tennis",
-  'profpic': "http://facebook.github.io/react/img/logo_og.png"},
-  {'id': 3, 'name': "Khadim", 'sports': "football",
-  'profpic': "http://facebook.github.io/react/img/logo_og.png"}];
-
-var player = {
-          "name" : "Sam",
-          "userid" : 2,
-          "prof_pic": "",
-          "elo": 0.0,
-          "earnings": {
-            "cash": 1000,
-            "xp": 200,
-          },
-          "sports": "Basketball",
-          "friends": [0],
-          "teams": [],
-          "matches": [],
-          "tournaments": []
-        };
 
 var FriendsPage = React.createClass({
   getInitialState: function() {
@@ -103,7 +80,6 @@ render() {
   componentDidMount: function () {
     // get friend list
     this.setAsync();
-
   },
   componentWillReceiveProps: function (nextProps){
     this.setAsync();
@@ -116,7 +92,11 @@ render() {
       console.log(player.following);
       var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       var res = ds.cloneWithRows(player.following);
-      this.setState({dataSource: res});
+      //changed to set Player also possible bug introduction
+      this.setState({
+        player: player,
+        dataSource: res
+      });
     })
   },
 
@@ -125,7 +105,6 @@ render() {
     this.setState({friend: player});
     this.setState({friendsLoaded: true});
   }
-
 });
 
 
@@ -135,6 +114,7 @@ var ChatRow = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       player: Player.default_player,
+      intersection: [],
     };
   },
   getDefaultProps: function() {
@@ -177,7 +157,8 @@ return (
       component: Messenger,
       passProps: {
         player: this.state.player,
-        friend: this.props.playerid
+        friend: this.props.playerid,
+        messageid: intersection[0]
       }
     });
   },

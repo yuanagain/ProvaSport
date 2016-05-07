@@ -1,6 +1,7 @@
 'use strict';
 
 var _const = require('./constants')
+import * as Team from '../modules/team'
 import * as Match from '../modules/match'
 import * as _ctools from './customtools'
 
@@ -111,6 +112,7 @@ var createRR = function(data) {
   var teams = data.teams
   // could do 2 forEach loops that are callback-safe
   var n = teams.length;
+  var index = 1;
   var numMatches = (n*n-n)/2.0;
   loop1:
     for (var i = 0; i < teams.length; i++) {
@@ -123,10 +125,12 @@ var createRR = function(data) {
           var matchi = JSON.parse(JSON.stringify(data.defaultM));
           //var matchi = data.matchinfo[j + teams.length*i] // get data match obj (just stock data but migh have a name and other attributes)
           //could possibly connect here too if connection not an issue
+          matchi.name = matchi.name +" "+ index;
           matchi.teams[0] = team1;
           matchi.teams[1] = team2;
           matchi.tournamentid = data.id;
           matches.push(matchi);
+          index++;
           //console.log(matchi) //correct object form testing
         }
       }
@@ -186,8 +190,12 @@ var createBracket = function(data) {
     for (var i = depth - 2; i >= 0; i--) {
       var cap = Math.pow(2, i);
       for (var j = 0; j < cap; j++){
-        //run 2^depth times
         var matchi = JSON.parse(JSON.stringify(Match.TBD));
+        matchi.teams[0] = "TBD";
+        matchi.teams[1] = "TBD";
+        matchi.datetime = Date.now();
+        matchi.sport = data.defaultM.sport;
+        matchi.tournamentid = data.id;
         matches.push(matchi)
       }
     }
