@@ -12,29 +12,8 @@ import * as Trophy from '../modules/trophy'
 import * as Match from '../modules/match'
 var ref = require('firebase')
 ref = new Firebase('https://shining-torch-4767.firebaseio.com')
-export function unique(list) {
-    var result = [];
-    $.each(list, function(i, e) {
-        if ($.inArray(e, result) == -1) result.push(e);
-    });
-    return result;
-}
 
-/*
- * HARD reset
- * pull form DB into
- */
 
-/*
- * AsyncStorage.getItem('user', (err, reps)=>{
- *   reps = JSON.parse(reps);
- *   Player.getPlayer(reps.playerid).then(player=>{
- *     AsyncStorage.setItem('player', JSON.stringify(player), (err, resp)=>{
- *       console.log(resp);
- *     })
- *   })
- * })
- */
  //free all players from in-game connections only one-way references to themselves
 function nukePlayerConnections(){
   ref.child('player').on('value',function(snapshot){

@@ -1,6 +1,6 @@
 /*
- *
  * Imports
+ * need each of these to connect the data to every other type of object
  */
 import * as User from '../modules/userdata'
 import * as Team from '../modules/team'
@@ -8,22 +8,19 @@ import * as Tournament from '../modules/tournament'
 import * as Trophy from '../modules/trophy'
 import * as Match from '../modules/match'
 
-/*
- * WARNING: methods wait on database download before returning.
- * TODO: download actual Images instead of URLs
-        (accomplished by turning pic into bitstream)
- */
-
 /* provide module to access/update player data here */
 var playerdataRef = require("firebase");
-/*Firbase data base Url with pre-set object types and accepting these defined JSON objects*/
+
+/*Firbase data base Url with pre-set object types and
+accepting these defined JSON objects*/
 playerdataRef = new Firebase("https://shining-torch-4767.firebaseio.com/player");
 
-/*possilby add stuff like isOnTeam etc.*/
+
 function _GetPlayer(playerid, callback) {
-  console.log("PLAYERID");
-  console.log(playerid);
-  /* var match = new Match(matchid); */
+  /*
+   * console.log("PLAYERID");
+   * console.log(playerid);
+   */
     var promise = new Promise(function(resolve, reject) {
         if (playerid == -1)
         {
@@ -51,6 +48,9 @@ function _GetPlayer(playerid, callback) {
           }
           if(!player.hasOwnProperty('followedBy')){
             player.followedBy = [];
+          }
+          if(!player.hasOwnProperty('convo')){
+            player.convo = [];
           }
           resolve(player);
         });
@@ -91,6 +91,9 @@ export function GetPlayer(playerid) {
           }
           if(!player.hasOwnProperty('followedBy')){
             player.followedBy = [];
+          }
+          if(!player.hasOwnProperty('convo')){
+            player.convo = [];
           }
           resolve(player);
         });
@@ -179,59 +182,40 @@ export function addFriend(playerid, friend) {
     }
     list.push(friend);
     resolve(list)
-  });
-}).then(resp=>{playerdataRef.child(playerid).child('following').set(list); addFollower(friend, playerid)})
+    });
+  }).then(resp=>{playerdataRef.child(playerid).child('following').set(list); addFollower(friend, playerid)})
 }
 
-var messageref = require('firebase');
-messageref = new Firebase('https://provamessenger.firebaseio.com')
-/*creates conversation in https://provamessenger.firebaseio.com   */
-function addConvo(playerid, firstMessageObj) {
-  var newconvoRef = messageref.push();
-  newconvoRef.set({
+/*ties the conversation indicated by convoid   */
+function addConvo(playerid, convoid) {
+  return new Promise(function(resolve, reject){
+    GetPlayer(playerid).then(player=>{
+      if(player.hasOwnProperty('convo')){
+        player.convo.push(convoid);
+        player.convo = unique(player.convo)
+        setPlayer(playerid, player)
 
-  })
+        resolve(convoid);
+      }
+      else {
+        player.convo = [convoid];
+        setPlayer(playerid, player)
 
-}
-/* intersection between lists  */
-function intersection(a, b)
-{
-  var ai = 0, bi = 0;
-  var result = [];
-
-  while( ai < a.length && bi < b.length )
-  {
-     if (a[ai] < b[bi])
-     {
-        ai++;
-     }
-     else if (a[ai] > b[bi])
-     {
-        bi++;
-     }
-     else
-     {
-       result.push(a[ai]);
-       ai++;
-       bi++;
-     }
-  }
-
-  return result;
+        resolve(convoid);
+      }
+    }).catch(function(err){console.log("Error in GetPlayer() in Player.js line: 206 \n\tError:"+ err);})
+  }).catch(function(err){console.log("Error in AddConvo() in Player.js line: 207 \n\tError:"+ err);})
 }
 
 export function addFollower(playerid, follower) {
   var list = []
-
   if (playerid === undefined || playerid === -1){
     console.log("ERROR")
     return;
   }
-
   return new Promise(function(resolve){
   playerdataRef.child(playerid).child('followedBy').on('value', function(snap) {
     var val = snap.val()
-    //console.log(val)
     if(val)
     {
       list = list.concat(val);
@@ -280,7 +264,7 @@ export function removeMatch(playerid, matchid) {
         var player = snapshot.val();
         if (player != null){
           var matches = [];
-          if (!player.hasOwnAttribute('matches')){
+          if (player.hasOwnProperty('matches')){
             matches = player.matches;
             deleteEle(matches, matchid);
             resolve(matches)
@@ -520,4 +504,4 @@ export var default_player = {
 
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, removeFriend, _AddTournament,
-                   searchPlayers, getFriends, getFriendsMatches, setPlayer, setProfPic, removeMatch};
+                   searchPlayers, getFriends, getFriendsMatches, setPlayer, setProfPic, removeMatch, addConvo};

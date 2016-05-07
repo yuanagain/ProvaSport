@@ -65,6 +65,9 @@ var RecordPage = React.createClass({
       sport: [],
       teams: [[],[]],
       scores: [],
+      myTeam: -1,
+      myStatus: 0,
+      match: Match.default_match,
     });
   },
 
@@ -91,7 +94,7 @@ var RecordPage = React.createClass({
                                   title={'Name'}
                                   key={10}
                                   value={this.state.name} />,
-                      <View style={_cstyles.section_divider_line} 
+                      <View style={_cstyles.section_divider_line}
                             key={11}/>]
 
     if (this.props.fixed_fields.indexOf('name') == -1) {
@@ -107,8 +110,8 @@ var RecordPage = React.createClass({
     var location_field = [<SimpleRow
                                       title={'Name'}
                                       key={13}
-                                      value={this.state.location} />, 
-                          <View style={_cstyles.section_divider_line} 
+                                      value={this.state.location} />,
+                          <View style={_cstyles.section_divider_line}
                                 key={14} />]
 
     if (this.props.fixed_fields.indexOf('location') == -1) {
@@ -125,10 +128,10 @@ var RecordPage = React.createClass({
     sport = <SimpleRow
                       title={'Sport'}
                       value={this.state.sport}/>
-    
+
 
     if (this.props.fixed_fields.indexOf('sport') == -1) {
-      var sport = 
+      var sport =
       <PopoverSelector
               title={'Sport'}
               items={settings.sports}
@@ -175,9 +178,9 @@ var RecordPage = React.createClass({
     else  {
       team2 = <SimpleRow
                       title={'Team 2'}
-                      key={3} 
+                      key={3}
                       value={this.state.teams[1].length}/>
-                
+
     }
 
     var team_row_1 = <View/>
@@ -193,7 +196,7 @@ var RecordPage = React.createClass({
       team_row_2 = <PlayersRow  players={this.state.teams[1]}
                                 navigator={this.props.navigator} />
     }
-   
+
 
     return (
     <View style={styles.container}>
@@ -208,7 +211,7 @@ var RecordPage = React.createClass({
             {location_field}
 
             {sport}
-            
+
             <View style={_cstyles.section_divider_line}>
             </View>
 
@@ -254,30 +257,24 @@ var RecordPage = React.createClass({
     else {
       Match._GetMatch(this.props.matchid, this.fetchMatch)
     }
-    /* 
-     * AsyncStorage.getItem('user', (err, user)=>{
-     *   user = JSON.parse(user);
-     *   AsyncStorage.getItem('player', (err, player)=>{
-     *     player = JSON.parse(player);
-     *     var items = player.friends.concat(user.playerid);
-     *     this.setState({items: items});
-     *   })
-     * })
-     */
     AsyncStorage.getItem('player', (err, player)=>{
       player = JSON.parse(player);
       var items = player.following.concat(player.playerid);
       this.setState({items: items});
     })
   },
-
+  //data MUST be populated
   fetchMatch: function(data) {
     if (this.props.matchid == -1) {
       return
     }
     this.setState({match : data})
-    this.setState({sport : [data.sport], scores : data.scores,
-                   name: data.name, location: data.location,}) 
+    this.setState({
+      sport : [data.sport],
+      scores : data.scores,
+      name: data.name,
+      location: data.location,
+    })
     Team._GetTeam(data.teams[0], (data)=>this.fetchTeam(data, 0) )
     Team._GetTeam(data.teams[1], (data)=>this.fetchTeam(data, 1) )
   },
@@ -367,15 +364,28 @@ var RecordPage = React.createClass({
     this.submitMatch()
   },
 
-  // get submission in action
+  // preesxisting match now just updating
   submit: function() {
+    //this works
     if (this.props.matchid == -1){
       this.createTeams()
     }
     else {
-      //this.props.match.status[0] = 3;//WTF?
-      Match.setMatch(this.props.matchid, this.props.match).then(this.props.navigator.pop())
-      //Match.updateStatus(this.props.matchid, 3)
+      //populate with anything
+      var match = this.state.match;
+      //update all that could be updated
+      match.name = this.state.name;
+      match.scores = this.state.scores;
+      match.location = this.state.location;
+      match.sport = this.state.sport;
+
+      var matchid = this.props.matchid;
+      //this does not work
+      Match.setMatch(matchid, match).then(matchobj=>{
+        //add match to team if players or team changed
+        Team.addMatch(matchobj.teams[1], matchid);
+        Team.addMatch(matchobj.teams[2], matchid);
+      }).then(this.props.navigator.pop())
     }
   },
 
@@ -388,7 +398,6 @@ var RecordPage = React.createClass({
     var match = {
       name: this.state.name,
       location: this.state.location,
-      contract: this.state.contract,
       sport: this.state.sport,
       teams: [this.state.teams[0], this.state.teams[1]],
       scores: this.state.scores,

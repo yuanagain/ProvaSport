@@ -3,6 +3,7 @@
 var React = require('react-native');
 
 var {
+  AsyncStorage,
   LinkingIOS,
   Platform,
   ActionSheetIOS,
@@ -16,6 +17,8 @@ var  MessagePage = require('./MessagePage.js');
 var Communications = require('react-native-communications');
 var messagedb = require('firebase');
 messagedb = new Firebase('https://provamessenger.firebaseio.com');
+
+import * as Conversation from '../modules/conversation'
 
 
 var player = {
@@ -39,6 +42,7 @@ var Messenger = React.createClass({
   getDefaultProps() {
     return {
       friendid: 0,
+      convoid: 0,
     };
   },
 
@@ -46,6 +50,7 @@ var Messenger = React.createClass({
     return (
       {
         messages: [],
+        convoid: 0,
         messagesLoaded: false,
         _isMounted: false,
         _didUnmount: false,
@@ -57,10 +62,24 @@ var Messenger = React.createClass({
   componentDidMount: function () {
     // get friend
     //get messages
+    AsyncStorage.getItem('player',(err, resp)=>{
+      var player = JSON.parse(resp);
+      this.setState({playerid: player.playerid})
+    })
     this.setState({_isMounted: true})
-    this.getMessages(this.props.friendid, this.harvest);
+    this.getMessages(this.props.convoid, this.harvest);
     this.setState({messagesLoaded: true});
     this.animate();
+  },
+  componentWillReceiveProps: function (nextProps) {
+    // get friend
+    //get messages
+    /*
+     * this.setState({convoid: nextProps.convoid})
+     * this.getMessages(nextProps.convoid, this.harvest);
+     * this.setState({messagesLoaded: true});
+     * this.animate();
+     */
   },
 
   componentWillUnmount: function() {
@@ -85,72 +104,50 @@ var Messenger = React.createClass({
     this.setState({messages: data})
   },
 
-  // load pre-existing messages
-  getMessages: function(playerid, callback) {
-
-  var promise = new Promise(function(resolve, reject) {
-      // examine contents of the database (current conversation)
-    var messagelist = [];
-    //TODO: make the child be the playerid
-    // passing in convo id
-    messagedb.child(0).once("value", function(snapshot) {
-
-      // format each message
-     	snapshot.forEach(function(childSnapshot) {
-     		var text = childSnapshot.child("text").val();
-     		var userid = childSnapshot.child("userid").val();
-     		var date = childSnapshot.child("date").val();
-     		var position = 'left';
-
-     		if (userid === player.userid) {
-     			position = 'right';
-     		}
-     		var messagedata = {
-     			"userid" : userid,
-     			"text" : text,
-     			"date" : date,
-     			"position" : position,
-     		};
-   		  messagelist.push(messagedata);
-  	   });
-      resolve(messagelist);
-    });
-  }).then(function(result) {
-      callback(result);
-    }).catch(function() {
-      console.log("READ FAILED")
-    });
+/* getMessages of conversation
+ * @calls callback with the resulting messageObjectList
+ */
+  getMessages: function(convoid, callback) {
+    //grab playerid
+    AsyncStorage.getItem('player', (err, player)=>{
+      player = JSON.parse(player);
+      //grab the most recent 15
+      Conversation.getMessagesLimited(this.props.convoid, player.playerid, 15).then(function(result) {
+        callback(result);
+      }).catch(function() {
+        console.log("READ FAILED")
+      });
+    })
   },
 
+/* send a message to the database
+ * retrieve if sent succesfully or not
+ * dependent on Conversation.newMessage()
+ */
   handleSend(message = {}, rowID = null) {
+    console.log("ADDING to "+this.props.convoid);
     //push to Firebase
     //TODO: make the child be the player id
-    var newmessage = messagedb.child(0).push();
-    var promise = new Promise(function(resolve, reject) {
-      newmessage.set(
-        {
-        userid: player.userid,
-        text: message.text,
+    if (message !== {}) {
+      var sendMessage = {
         date: Date.now(),
-        }, function(error) {
-    	     if (error) {
-    		    reject(false);
-    	     }
-    	     else {
-    		    resolve(newmessage.ref());
-    	     }
+        userid: this.state.playerid,
+        text: message.text,
+      };
+      Conversation.newMessage(this.props.convoid, sendMessage).then(function(value) {
+        if (value) {
+          this._MessagePage.setMessageStatus('Sent', rowID);
+        }
+        else {
+          this._MessagePage.setMessageStatus('ErrorButton', rowID);
+        }
+      }).catch(function(error) {
+          console.log(error);
       });
-    });
-    promise.then(function(value) {
-      if (value) {
-        this.MessagePage.setMessageStatus('Sent', rowID);
-      }
-      else {
-        this._MessagePage.setMessageStatus('ErrorButton', rowID);
-      }
-    }).catch(function(error) {
-        console.log(error);
-      });
+    }
+    else {
+      console.log("ERROR no message to send!");
+    }
   },
 
   // @oldestMessage is the oldest message already added to the list
@@ -168,7 +165,7 @@ var Messenger = React.createClass({
 
   handleReceive: function() {
     setTimeout(() => {
-      this.getMessages(this.props.frendid, this.harvest);
+      this.getMessages(this.props.convoid, this.harvest);
     }, 1000);
   },
 
