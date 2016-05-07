@@ -194,17 +194,17 @@ function addConvo(playerid, convoid) {
         player.convo.push(convoid);
         player.convo = unique(player.convo)
         setPlayer(playerid, player)
-        console.log(player);
+
         resolve(convoid);
       }
       else {
         player.convo = [convoid];
         setPlayer(playerid, player)
-        console.log(player);
+
         resolve(convoid);
       }
-    })
-  }).catch(function(err){console.log("Error in AddConvo() in Player.js line: 204 \n\tError:"+ err);})
+    }).catch(function(err){console.log("Error in GetPlayer() in Player.js line: 206 \n\tError:"+ err);})
+  }).catch(function(err){console.log("Error in AddConvo() in Player.js line: 207 \n\tError:"+ err);})
 }
 
 export function addFollower(playerid, follower) {

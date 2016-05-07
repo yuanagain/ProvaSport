@@ -42,6 +42,7 @@ var Messenger = React.createClass({
   getDefaultProps() {
     return {
       friendid: 0,
+      convoid: 0,
     };
   },
 
@@ -61,18 +62,24 @@ var Messenger = React.createClass({
   componentDidMount: function () {
     // get friend
     //get messages
+    AsyncStorage.getItem('player',(err, resp)=>{
+      var player = JSON.parse(resp);
+      this.setState({playerid: player.playerid})
+    })
     this.setState({_isMounted: true})
-    this.getMessages(this.state.convoid, this.harvest);
+    this.getMessages(this.props.convoid, this.harvest);
     this.setState({messagesLoaded: true});
     this.animate();
   },
   componentWillReceiveProps: function (nextProps) {
     // get friend
     //get messages
-    this.setState({convoid: nextProps.convoid})
-    this.getMessages(nextProps.convoid, this.harvest);
-    this.setState({messagesLoaded: true});
-    this.animate();
+    /*
+     * this.setState({convoid: nextProps.convoid})
+     * this.getMessages(nextProps.convoid, this.harvest);
+     * this.setState({messagesLoaded: true});
+     * this.animate();
+     */
   },
 
   componentWillUnmount: function() {
@@ -105,7 +112,7 @@ var Messenger = React.createClass({
     AsyncStorage.getItem('player', (err, player)=>{
       player = JSON.parse(player);
       //grab the most recent 15
-      Conversation.getMessagesLimited(convoid, player.playerid, 15).then(function(result) {
+      Conversation.getMessagesLimited(this.props.convoid, player.playerid, 15).then(function(result) {
         callback(result);
       }).catch(function() {
         console.log("READ FAILED")
@@ -118,12 +125,18 @@ var Messenger = React.createClass({
  * dependent on Conversation.newMessage()
  */
   handleSend(message = {}, rowID = null) {
+    console.log("ADDING to "+this.props.convoid);
     //push to Firebase
     //TODO: make the child be the player id
     if (message !== {}) {
-      Conversation.newMessage(convoid, message).then(function(value) {
+      var sendMessage = {
+        date: Date.now(),
+        userid: this.state.playerid,
+        text: message.text,
+      };
+      Conversation.newMessage(this.props.convoid, sendMessage).then(function(value) {
         if (value) {
-          this.MessagePage.setMessageStatus('Sent', rowID);
+          this._MessagePage.setMessageStatus('Sent', rowID);
         }
         else {
           this._MessagePage.setMessageStatus('ErrorButton', rowID);
@@ -152,7 +165,7 @@ var Messenger = React.createClass({
 
   handleReceive: function() {
     setTimeout(() => {
-      this.getMessages(this.props.frendid, this.harvest);
+      this.getMessages(this.props.convoid, this.harvest);
     }, 1000);
   },
 

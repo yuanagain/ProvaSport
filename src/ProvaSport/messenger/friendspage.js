@@ -1,7 +1,8 @@
 'use strict';
 
 import * as Player from '../modules/player'
-import * as COnversation from '../modules/conversation'
+import * as Conversation from '../modules/conversation'
+import * as _ctools from '../libs/customtools'
 
 var React = require('react-native');
 var Dimensions = require('Dimensions');
@@ -41,7 +42,7 @@ var FriendsPage = React.createClass({
   //data is the following array
   getDefaultProps: function() {
     return ({
-      data: [0, 1],
+      data: [],
       playerid: 0
     })
   },
@@ -88,8 +89,8 @@ render() {
     AsyncStorage.getItem('player', (err, resp)=>{
       var player = JSON.parse(resp);
       //set data to people you follow
-      console.log("DATA");
-      console.log(player.following);
+      //console.log("DATA");
+      //console.log(player.following);
       var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       var res = ds.cloneWithRows(player.following);
       //changed to set Player also possible bug introduction
@@ -131,7 +132,7 @@ render() {
 
 return (
   <View style={styles.friendContainer}>
-    <TouchableOpacity onPress = {()=>this.onPress()} style = {styles.container}>
+    <TouchableOpacity onPress = {()=>this.check()} style = {styles.container}>
       <View style={styles.profpicContainer}>
       <Image
             source={{uri: this.state.player.prof_pic}}
@@ -150,7 +151,7 @@ return (
       );
   },
 
-  onPress: function() {
+  onPress: function(convoid) {
     var Messenger = require('./Messenger');
     this.props.navigator.push({
       id: "Messenger",
@@ -158,17 +159,42 @@ return (
       passProps: {
         player: this.state.player,
         friend: this.props.playerid,
-        messageid: intersection[0]
+        convoid: convoid
       }
     });
   },
 
   fetchPlayer: function(data) {
     console.log("PLAYER SET");
-    console.log(data);
+    //console.log(data);
     this.setState({loaded : true})
     this.setState({player : data})
 
+  },
+  check: function() {
+    //check if both players have existing conversation
+    AsyncStorage.getItem('player',(err, resp)=>{
+      var player = JSON.parse(resp);
+      var interlist = _ctools.intersection(player.convo, this.state.player.convo)
+      console.log(interlist);
+      if(interlist.length == 1){
+        console.log("Existing CONVO");
+        this.onPress(interlist[0])
+      }
+      else if (interlist.length === 0) {
+        console.log("NEW CONVO");
+        Conversation.newConversation().then(id=>{
+          //add to both Players
+          console.log(id);
+          Player.addConvo(player.playerid, id)
+          Player.addConvo(this.state.player.playerid, id)
+          this.onPress(convoid)
+        })
+      }
+      else {
+        console.log("ERROR intersection detects multiple conversations. friendspage.js line: 191");
+      }
+    })
   },
 
   componentDidMount: function () {

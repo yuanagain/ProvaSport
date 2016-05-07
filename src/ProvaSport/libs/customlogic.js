@@ -327,7 +327,7 @@ var update_matches = function(matches, tournament) {
     two_sum += cap
   }
   //tie the new match with the team
-  //push then pull the matche object to the server
+  //push then pull the match object to the server
   return {
     matches: matches,
     teams: teams
