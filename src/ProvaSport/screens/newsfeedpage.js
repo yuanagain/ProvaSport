@@ -79,7 +79,7 @@ var NewsFeedPage = React.createClass({
             matches = [];
           }
           matches = this.unique(matches);
-          matches = matches.reverse();
+          //matches = matches;
           this.setState({fmatches: matches})
         });
       });
@@ -106,7 +106,7 @@ var NewsFeedPage = React.createClass({
             //matches = player.matches;
           }
           //console.log(matches);
-          matches = matches.reverse();
+          //matches = matches.reverse();
           this.setState({fmatches: matches})
         });
       });
@@ -134,7 +134,7 @@ var NewsFeedPage = React.createClass({
               //matches = player.matches;
             }
             //console.log(matches);
-            matches = matches.reverse();
+            //matches = matches.reverse();
             this.setState({fmatches: matches})
           });
         });

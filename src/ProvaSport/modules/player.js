@@ -445,12 +445,26 @@ function getFriendsMatches(playerid) {
         i++;
         matches = matches.concat(friendobj.matches);
         if (i == resp.length){
-          resolve(unique(matches))
+          var matchids = [];
+          Match.fetchList(matches).then(matchObjs=>{
+            matchObjs.sort(function(a, b){
+              return b.datetime - a.datetime;
+            })
+            matchObjs.forEach(function(match){
+              matchids.push(match.matchid)
+            })
+            //console.log(matchids);
+            resolve(matchids)
+          })
         }
       })
     })
   })
 }
+getFriendsMatches(0).then(resp=>console.log(resp))
+
+
+
 /*
 @params: sport: string sport
 data in the form of the json object containing data to be totalled  */

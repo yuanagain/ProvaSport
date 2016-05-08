@@ -308,7 +308,8 @@ var update_matches = function(matches, tournament) {
       console.log((two_sum + j) + ', ' + target_index + ', j = ' + j)
       var target_match = matches[target_index]
       var place = j % 2
-
+console.log("Winner: "+winner_id+"\n target_match:"+target_match.teams[place]+ "\n" +
+teams[target_match.teams[0]].push(target_match.matchid) + "\n"+ teams[target_match.teams[1]].push(target_match.matchid));
       // advance player
       target_match.teams[place] = winner_id
 

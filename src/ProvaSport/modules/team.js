@@ -481,7 +481,7 @@ function updateMatches(data) {
   console.log("DATA passed to updateMatches");
   console.log(data);
   for (var teamid in data){
-    console.log(teamid);
+    console.log("Team: "+teamid+"\t adding Match: "+data[teamid]);
     getTeam(teamid).then(teamobj=>{
       var matches = data[teamid];
       teamobj.matches.concat(matches);
