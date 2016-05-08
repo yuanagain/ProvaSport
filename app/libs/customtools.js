@@ -31,7 +31,10 @@ var formatTime = function(date) {
 var getWinnerIndex = function(match) {
   var tally = 0
 
-  // handle Byes
+  if (match.scores == null)
+    console.log("Hello")
+
+  // Handle byes
   if (match.teams[0] == 'BYE') {
     //return match.teams[1]
     return 1
