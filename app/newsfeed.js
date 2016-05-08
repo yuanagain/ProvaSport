@@ -34,7 +34,7 @@ var Newsfeed = React.createClass({
     }
     return (
       <div className="entry">
-        <p style={title}> News </p>
+        <p style={title}> Community News </p>
         <EntryMap matches={this.state.matches} />
       </div>
     );
