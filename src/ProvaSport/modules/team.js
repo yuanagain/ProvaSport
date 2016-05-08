@@ -474,17 +474,21 @@ function inArray(value, array) {
 /* updateMatches()
  * @params takes in a dictionary of teams indexed by team id with match arrays that need to be updated
  * data : {
-  tid: [matches]
-}
+ *  tid: [matches]
+ * }
  */
 function updateMatches(data) {
+  console.log("DATA passed to updateMatches");
+  console.log(data);
   for (var teamid in data){
+    console.log(teamid);
     getTeam(teamid).then(teamobj=>{
       var matches = data[teamid];
       teamobj.matches.concat(matches);
       unique(teamobj.matches);
+      console.log(teamobj.matches);
       //update team's matches to incude new matches
-      teamdb.child(teamid).child('matches').update([3, 0, 2]);
+      teamdb.child(teamid).child('matches').set(teamobj.matches);
     })
   }
 }
@@ -521,4 +525,4 @@ var bye = {
 
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
    getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch,
-   teamOneorTwo, onTeams, createFromList, findOne, addTournament, setProfPic};
+   teamOneorTwo, onTeams, createFromList, findOne, addTournament, setProfPic, updateMatches};

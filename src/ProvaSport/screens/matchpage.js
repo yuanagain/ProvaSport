@@ -14,6 +14,7 @@ var WideButton = require('../smallparts/widebutton')
 var WideButtonPair = require('../smallparts/widebuttonpair')
 var LoadingPage = require('../screens/loadingpage')
 import * as _ctools from '../libs/customtools'
+import * as _clogic from '../libs/customlogic'
 import * as Match from '../modules/match'
 import * as Team from '../modules/team'
 import * as Player from '../modules/player'
@@ -174,9 +175,9 @@ var MatchPage = React.createClass({
   //will update the match and possibly the tournament correctly
   checkToUpdate: function(){
     //check that both teams have confirmed attitude towards match
-    if (this.state.match.status[0] === 4 && this.state.match.status[1] === 4){
+    //if (this.state.match.status[0] === 4 && this.state.match.status[1] === 4){
       //see if it is bound to a tournamentid
-      if (this.state.match.tournamentid != -1 && this.state.tournamentid !== undefined && this.state.tournamentid === null) {
+      if (this.state.match.tournamentid && this.state.match.tournamentid !== -1) {
         //grab tournament object
         console.log("You Have Advanced Someone!");
         Tournament.getTournament(this.state.match.tournamentid).then(tournament=>{
@@ -184,7 +185,9 @@ var MatchPage = React.createClass({
           if (tournament.type == "Elimination") {
             Match.fetchList(tournament.matches).then(matchobjs=>{
               //update that list and the tournament
-              var data = _clogic.update(matchobjs);
+              var data = _clogic.update_matches(matchobjs, tournament);
+              console.log("DATA FROM update()");
+              console.log(data);
               var matches = data.matches;
               var teams = data.teams;
               console.log(teams);
@@ -195,7 +198,7 @@ var MatchPage = React.createClass({
           }
         })
       }
-    }
+    //}
   },
   getTeamid2: function() {
     //console.log("LOADTEAMS")
@@ -225,10 +228,12 @@ var MatchPage = React.createClass({
     this.loadTeams()
   },
   teamOn:function(){
-    console.log("TEAM ON");
-    console.log(this.state.player.playerid);
-    console.log(this.state.team1.players);
-    console.log(this.state.team2.players);
+    /*
+     * console.log("TEAM ON");
+     * console.log(this.state.player.playerid);
+     * console.log(this.state.team1.players);
+     * console.log(this.state.team2.players);
+     */
     var playerid = String(this.state.player.playerid);
     //|| this.state.playerid in this.state.team1.players
     if (this.state.team1.players.indexOf(playerid) >- 1){

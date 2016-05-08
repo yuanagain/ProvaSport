@@ -72,24 +72,14 @@ var NewsFeedPage = React.createClass({
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
           var matches = [];
-          console.log(resp);
-          console.log(player.matches);
           if(resp!=null || resp!= undefined) {
-            matches = resp.concat(player.matches);
+            matches = resp;
           }
           else {
-            matches = player.matches;
+            matches = [];
           }
           matches = this.unique(matches);
-          //sort the matches by datetime
-          console.log(matches);
-          matches.sort(function(match_a, match_b){
-            return match_a.datetime - match_b.datetime;
-          })
-
-          console.log("MATCHES SORTED");
-          console.log(matches);
-          //matches = matches.reverse();
+          matches = matches.reverse();
           this.setState({fmatches: matches})
         });
       });
@@ -105,16 +95,18 @@ var NewsFeedPage = React.createClass({
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
           var matches = [];
-          console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
-          console.log(this.unique(player.matches.concat(resp)));
+          /*
+           * console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
+           * console.log(this.unique(player.matches.concat(resp)));
+           */
           if (resp!=null || resp!= undefined) {
-            matches = resp.concat(player.matches);
+            matches = resp;
           }
           else {
-            matches = player.matches;
+            //matches = player.matches;
           }
-          console.log(matches);
-          //matches = matches.reverse();
+          //console.log(matches);
+          matches = matches.reverse();
           this.setState({fmatches: matches})
         });
       });
@@ -136,13 +128,13 @@ var NewsFeedPage = React.createClass({
             console.log(resp);
             console.log(player.matches);
             if(resp!=null || resp!= undefined) {
-              matches = resp.concat(player.matches);
+              matches = resp;
             }
             else {
-              matches = player.matches;
+              //matches = player.matches;
             }
-            console.log(matches);
-            //matches = matches.reverse();
+            //console.log(matches);
+            matches = matches.reverse();
             this.setState({fmatches: matches})
           });
         });

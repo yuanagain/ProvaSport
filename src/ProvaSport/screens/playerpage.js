@@ -350,7 +350,7 @@ var PlayerPage = React.createClass({
       component: TeamListingPage,
       passProps: {
         navigator: this.props.navigator,
-        teams: this.state.player.teams
+        teams: this.state.player.teams.reverse()
       }
     })
   },
@@ -374,7 +374,7 @@ var PlayerPage = React.createClass({
       component: TournamentListingPage,
       passProps: {
         navigator: this.props.navigator,
-        tournaments: this.state.player.tournaments
+        tournaments: this.state.player.tournaments.reverse()
       }
     })
   },
@@ -386,7 +386,7 @@ var PlayerPage = React.createClass({
       component: MatchListingPage,
       passProps: {
         navigator: this.props.navigator,
-        matches: this.state.player.matches
+        matches: this.state.player.matches.reverse()
       }
     })
   },

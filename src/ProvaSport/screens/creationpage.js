@@ -287,6 +287,10 @@ var ContractsPage = React.createClass({
     }
     defaults.name = obj.name+" Match";
     defaults.sport = obj.sport;
+    defauts.payoutdata = {
+      cash: 100,
+      xp: 100
+    };
     return defaults;
   },
   reset: function() {
