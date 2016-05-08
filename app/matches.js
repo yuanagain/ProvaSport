@@ -70,6 +70,7 @@ var Matches = React.createClass({
   changeMatch: function(index) {
     this.setState({activeMatchIndex: index})
   },
+
 });
 
 // Title layout
@@ -198,7 +199,6 @@ var PlayersRow = React.createClass({
       playerids,
     } = this.props;
 
-    console.log(this.state.players)
     if (this.state.players == null) {
       return (
         <div></div>
@@ -255,7 +255,7 @@ var MatchEntry = React.createClass({
           <p style={data_column_right}>{_ctools.toDateShort(new Date(match.datetime))}</p>
           <p style={data_column_right}>{_ctools.formatTime(new Date(match.datetime))}</p>
           <p style={data_column_right}>{match.location}</p>
-          <p style={data_column_right}>{match.sport[0].charAt(0).toUpperCase() + match.sport[0].slice(1)}</p>
+          <p style={data_column_right}>{match.sport[0]}</p>
           <p style={data_column_right}>{match.payoutdata.xp + " EXP"}</p>
           <p style={data_column_right}>{"$" + match.payoutdata.cash}</p>
         </div>
@@ -346,8 +346,7 @@ var Sidebar = React.createClass({
     var {
       matches,
     } = this.props;
-
-    console.log(matches)
+    matches = matches.sort(this.compareMatches)
     return (
       <div style={sidebar}>
         <ol> {
@@ -367,7 +366,16 @@ var Sidebar = React.createClass({
         </ol>
       </div>
     );
-  }
+  },
+
+  compareMatches: function(match1, match2) {
+    if (match1.datetime < match2.datetime)
+      return 1;
+    else if (match1.datetime > match2.datetime)
+      return -1;
+    else
+      return 0;
+  },
 });
 
 // Styling
