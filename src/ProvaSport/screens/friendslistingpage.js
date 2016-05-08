@@ -34,7 +34,7 @@ var FriendsPage = React.createClass({
   getDefaultProps: function() {
     return (
       {
-        friends: [0]
+        following: [0]
       }
     )
   },
@@ -45,14 +45,14 @@ var FriendsPage = React.createClass({
     } = this.props;
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var dataSource = ds.cloneWithRows(this.props.friends)
+    var dataSource = ds.cloneWithRows(this.props.following)
 
     return (
     <View>
       <Header title={"Friends"}
               mode={'nav'}
               navigator={this.props.navigator} />
-      
+
       <ListView style={styles.container}
                 renderRow={this.renderRow}
                 dataSource={dataSource}>
@@ -84,7 +84,7 @@ var FriendsPage = React.createClass({
     Player._GetPlayer(this.props.playerid, this.fetchPlayer)
     setTimeout(() => {
       this.setState({isRefreshing: false})
-    }, _cvals.timeout); 
+    }, _cvals.timeout);
   },
 
   componentDidMount: function () {

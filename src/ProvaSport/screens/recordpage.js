@@ -16,6 +16,7 @@ var Header = require('../parts/header')
 import * as _ctools from '../libs/customtools.js'
 var SimpleRow = require('../smallparts/simplerow')
 var TextField = require('../smallparts/textfield')
+var PlayersRow = require('../parts/playersrow')
 
 import * as Match from '../modules/match'
 import * as Player from '../modules/player'
@@ -37,20 +38,17 @@ var {
   Platform,
 } = React;
 
-var blank_form = {
-        isVisible: false,
+var blank_match = {
         name: "",
         location: "",
-        contract: ["Default"],
         sport: [],
-        teams: [[],[],],
+        teams: [],
         scores: [],
       }
 
 var reset_form = {
         name: "",
         location: "",
-        contract: ["Default"],
         sport: [],
         teams: [[],[],],
         scores: [],
@@ -61,27 +59,25 @@ var items = ["Item 1", "Item 2"];
 var RecordPage = React.createClass({
 
   getInitialState: function() {
-    this.teamids = [-1, -1]
-    return (
-      this.props.form
-    );
+    return ( {
+      name: "",
+      location: "",
+      sport: [],
+      teams: [[],[]],
+      scores: [],
+      myTeam: -1,
+      myStatus: 0,
+      match: Match.default_match,
+    });
   },
 
   getDefaultProps: function() {
     return ({
       mode: '',
       items: [0, 1],
-      form: blank_form,
-      match: {
-              name: "",
-              location: "",
-              contract: ["Default"],
-              sport: [],
-              teams: [[],[],],
-              scores: [],
-            },
-    matchid: -1,
-    teams: [[],[],]
+      matchid: -1,
+      // options; 'team1', 'team2, 'name', 'sport', 'location',
+      fixed_fields: [],
     })
   },
 
@@ -92,8 +88,115 @@ var RecordPage = React.createClass({
       ...props
     } = this.props;
     //console.log(this.props.match);
+    var settings = _settings.config
 
-    var settings = _settings.config;
+    var name_field = [<SimpleRow
+                                  title={'Name'}
+                                  key={10}
+                                  value={this.state.name} />,
+                      <View style={_cstyles.section_divider_line}
+                            key={11}/>]
+
+    if (this.props.fixed_fields.indexOf('name') == -1) {
+      name_field =  <TextField
+                      value={this.state.name}
+                      label="Match Name"
+                      placeholder="Optional"
+                      keyboardType='default'
+                      onChangeText={(name) => this.setState({name})}
+                    />
+    }
+
+    var location_field = [<SimpleRow
+                                      title={'Name'}
+                                      key={13}
+                                      value={this.state.location} />,
+                          <View style={_cstyles.section_divider_line}
+                                key={14} />]
+
+    if (this.props.fixed_fields.indexOf('location') == -1) {
+      location_field = <TextField
+                          value={this.state.location}
+                          label="Location"
+                          placeholder="Optional"
+                          keyboardType='default'
+                          onChangeText={(location) => this.setState({location})}
+                        />
+    }
+
+
+    sport = <SimpleRow
+                      title={'Sport'}
+                      value={this.state.sport}/>
+
+
+    if (this.props.fixed_fields.indexOf('sport') == -1) {
+      var sport =
+      <PopoverSelector
+              title={'Sport'}
+              items={settings.sports}
+              navigator={this.props.navigator}
+              selection={this.state.sport}
+              harvest={this.setSport}
+              mode={'single'}
+            />
+    }
+
+    var team1 = <View />
+    var team2 = <View />
+
+    if (this.props.fixed_fields.indexOf('team1') == -1) {
+      team1 = <PopoverSelector
+                title={'Team 1'}
+                magic={'player'}
+                items={this.state.items}
+                navigator={this.props.navigator}
+                selection={this.state.teams[0]}
+                harvest={this.setTeams}
+                harvestArgs={0}
+              />
+    }
+    else  {
+      team1 = <SimpleRow
+                      title={'Team 1'}
+                      value={this.state.teams[0].length}
+                      key={1}/>
+
+    }
+
+    if (this.props.fixed_fields.indexOf('team2') == -1) {
+      team2 = <PopoverSelector
+                title={'Team 2'}
+                magic={'player'}
+                items={this.state.items}
+                navigator={this.props.navigator}
+                selection={this.state.teams[1]}
+                harvest={this.setTeams}
+                harvestArgs={1}
+              />
+    }
+    else  {
+      team2 = <SimpleRow
+                      title={'Team 2'}
+                      key={3}
+                      value={this.state.teams[1].length}/>
+
+    }
+
+    var team_row_1 = <View/>
+    var team_row_2 = <View/>
+
+    if (this.state.teams[0].length > 0) {
+      team_row_1 = <PlayersRow  players={this.state.teams[0]}
+                                navigator={this.props.navigator} />
+
+    }
+
+    if (this.state.teams[1].length > 0) {
+      team_row_2 = <PlayersRow  players={this.state.teams[1]}
+                                navigator={this.props.navigator} />
+    }
+
 
     return (
     <View style={styles.container}>
@@ -103,75 +206,33 @@ var RecordPage = React.createClass({
                   navigator={this.props.navigator} />
           <ScrollView>
           <View style={_cstyles.body_container}>
-            <TextField
-              value={this.state.name}
-              label="Match Name"
-              placeholder="Optional"
-              keyboardType='default'
-              onChangeText={(name) => this.setState({name})}
-            />
 
-            <TextField
-              value={this.state.location}
-              label="Location"
-              placeholder="Optional"
-              keyboardType='default'
-              onChangeText={(location) => this.setState({location})}
-            />
+            {name_field}
+            {location_field}
 
-            <PopoverSelector
-              title={'Contract'}
-              items={['Default']}
-              navigator={this.props.navigator}
-              selection={this.state.contract}
-              mode={'single'}
-              harvest={this.setContract}
-            />
+            {sport}
+
             <View style={_cstyles.section_divider_line}>
             </View>
 
-            <PopoverSelector
-              title={'Sport'}
-              items={settings.sports}
-              navigator={this.props.navigator}
-              selection={this.state.sport}
-              harvest={this.setSport}
-              mode={'single'}
-            />
+            {team1}
+            {team_row_1}
+
             <View style={_cstyles.section_divider_line}>
             </View>
 
-            <PopoverSelector
-              title={'Team 1'}
-              magic={'player'}
-              items={this.state.items}
-              navigator={this.props.navigator}
-              selection={this.state.teams[0]}
-              harvest={this.setTeams}
-              harvestArgs={0}
-            />
-            <View style={_cstyles.section_divider_line}>
-            </View>
+            {team2}
+            {team_row_2}
 
-            <PopoverSelector
-              title={'Team 2'}
-              magic={'player'}
-              items={this.state.items}
-              navigator={this.props.navigator}
-              selection={this.state.teams[1]}
-              harvest={this.setTeams}
-              harvestArgs={1}
-            />
             <View style={_cstyles.section_divider_line}>
             </View>
 
             <SimpleRow
-              title={'Scores '}
+              title={'Scores'}
               value={''}/>
 
-
             <DynamicList
-              items={this.props.match.scores}
+              items={this.state.scores}
               magic={'scores'}
               harvest={this.setScores}
               />
@@ -180,7 +241,7 @@ var RecordPage = React.createClass({
       </View>
       <View style={_cstyles.buttons_container}>
         <WideButton
-          text="Record Activity"
+          text={"Record Activity"}
           onPress={()=>this.submit()}
           />
       </View>
@@ -190,16 +251,39 @@ var RecordPage = React.createClass({
   },
 
   componentDidMount(){
-    /* 
-     * AsyncStorage.getItem('user', (err, user)=>{
-     *   user = JSON.parse(user);
-     *   AsyncStorage.getItem('player', (err, player)=>{
-     *     player = JSON.parse(player);
-     *     var items = player.friends.concat(user.playerid);
-     *     this.setState({items: items});
-     *   })
-     * })
-     */
+    if (this.props.matchid == -1) {
+
+    }
+    else {
+      Match._GetMatch(this.props.matchid, this.fetchMatch)
+    }
+    AsyncStorage.getItem('player', (err, player)=>{
+      player = JSON.parse(player);
+      var items = player.following.concat(player.playerid);
+      this.setState({items: items});
+    })
+  },
+  //data MUST be populated
+  fetchMatch: function(data) {
+    if (this.props.matchid == -1) {
+      return
+    }
+    this.setState({match : data})
+    this.setState({
+      sport : [data.sport],
+      scores : data.scores,
+      name: data.name,
+      location: data.location,
+    })
+    Team._GetTeam(data.teams[0], (data)=>this.fetchTeam(data, 0) )
+    Team._GetTeam(data.teams[1], (data)=>this.fetchTeam(data, 1) )
+  },
+
+  fetchTeam: function(data, index) {
+    console.log("TEAMS LOADED " + (index + 1))
+    this.state.teams[index] = data.players
+    this.setState({teams : this.state.teams})
+    this.setState({loaded : true})
   },
 
   componentWillReceiveProps(nextProps){
@@ -208,7 +292,7 @@ var RecordPage = React.createClass({
       user = JSON.parse(user);
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
-        var items = player.friends.concat(user.playerid);
+        var items = player.following.concat(user.playerid);
         this.setState({items: items});
       })
     })
@@ -229,20 +313,21 @@ var RecordPage = React.createClass({
     var team1 = this.state.teams[0];
     var team2 = this.state.teams[1];
     //rules for team validation
-    if (team1.length != team2.length){
-      return false;
-    }
-    else if (this.state.teams.length != 2){
+    // if (team1.length != team2.length){
+    //   return false;
+    // }
+    if (this.state.teams.length != 2){
       return false;
     }
     //see if teams are distinct
-    else if (Team.findOne(team1, team2)){
+    if (Team.findOne(team1, team2)){
       return false;
     }
     else {
       return true;
     }
   },
+
   reset: function() {
     this.setState(reset_form)
     this.setState({teams: [[],[],]})
@@ -279,15 +364,28 @@ var RecordPage = React.createClass({
     this.submitMatch()
   },
 
-  // get submission in action
+  // preesxisting match now just updating
   submit: function() {
+    //this works
     if (this.props.matchid == -1){
       this.createTeams()
     }
     else {
-      //this.props.match.status[0] = 3;//WTF?
-      Match.setMatch(this.props.matchid, this.props.match).then(this.props.navigator.pop())
-      //Match.updateStatus(this.props.matchid, 3)
+      //populate with anything
+      var match = this.state.match;
+      //update all that could be updated
+      match.name = this.state.name;
+      match.scores = this.state.scores;
+      match.location = this.state.location;
+      match.sport = this.state.sport;
+
+      var matchid = this.props.matchid;
+      //this does not work
+      Match.setMatch(matchid, match).then(matchobj=>{
+        //add match to team if players or team changed
+        Team.addMatch(matchobj.teams[1], matchid);
+        Team.addMatch(matchobj.teams[2], matchid);
+      }).then(this.props.navigator.pop())
     }
   },
 
@@ -300,7 +398,6 @@ var RecordPage = React.createClass({
     var match = {
       name: this.state.name,
       location: this.state.location,
-      contract: this.state.contract,
       sport: this.state.sport,
       teams: [this.state.teams[0], this.state.teams[1]],
       scores: this.state.scores,
@@ -314,7 +411,6 @@ var RecordPage = React.createClass({
         cash: 100,
       },
     }
-    console.log(match)
     Match._CreateMatch(match, this.confirmSubmit)
   },
 
@@ -324,7 +420,6 @@ var RecordPage = React.createClass({
     Team.addMatch(this.state.teams[1], match)
     //incase we added ourselves
     this.reloadPlayer();
-    console.log(match)
     this.reset()
   },
 
@@ -358,6 +453,16 @@ var RecordPage = React.createClass({
         })
       })
     })
+  },
+
+
+
+  setName: function(name) {
+    this.setState({name})
+  },
+
+  setLocation: function(location) {
+    this.setState({name})
   }
 });
 

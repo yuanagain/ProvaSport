@@ -62,7 +62,7 @@ var NewsFeedPage = React.createClass({
   componentDidMount: function () {
     AsyncStorage.getItem('player', (err, player)=>{
       player = JSON.parse(player);
-      if (player.friends.length == 0){
+      if (player.following.length == 0){
         this.setState({fmatches: player.matches})
       }
       AsyncStorage.getItem('user', (err, result)=>{
@@ -72,20 +72,17 @@ var NewsFeedPage = React.createClass({
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
           var matches = [];
-          console.log("RESPONSE FrOM SDNJDKFJJNKDFJNKSD");
-          console.log(resp);
-          console.log(player.matches);
           if(resp!=null || resp!= undefined) {
-            matches = resp.concat(player.matches);
+            matches = resp;
           }
           else {
-            matches = player.matches;
+            matches = [];
           }
           matches = this.unique(matches);
+          matches = matches.reverse();
           this.setState({fmatches: matches})
         });
       });
-      // this.state.match = this.props.match
     })
   },
   componentWillReceiveProps: function (nextProps) {
@@ -98,16 +95,18 @@ var NewsFeedPage = React.createClass({
         result = JSON.parse(result);
         Player.getFriendsMatches(result.playerid).then(resp=>{
           var matches = [];
-          console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
-          console.log(this.unique(player.matches.concat(resp)));
+          /*
+           * console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
+           * console.log(this.unique(player.matches.concat(resp)));
+           */
           if (resp!=null || resp!= undefined) {
-            matches = resp.concat(player.matches);
+            matches = resp;
           }
           else {
-            matches = player.matches;
+            //matches = player.matches;
           }
-          matches = this.unique(matches);
-          console.log(matches);
+          //console.log(matches);
+          matches = matches.reverse();
           this.setState({fmatches: matches})
         });
       });
@@ -129,12 +128,13 @@ var NewsFeedPage = React.createClass({
             console.log(resp);
             console.log(player.matches);
             if(resp!=null || resp!= undefined) {
-              matches = resp.concat(player.matches);
+              matches = resp;
             }
             else {
-              matches = player.matches;
+              //matches = player.matches;
             }
-            //matches = unique(matches);
+            //console.log(matches);
+            matches = matches.reverse();
             this.setState({fmatches: matches})
           });
         });

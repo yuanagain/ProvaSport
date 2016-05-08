@@ -63,7 +63,6 @@ var TournamentListingPage = React.createClass({
     );
   },
 
-
   renderRow: function(data) {
     return (
       <View style={styles.container}>

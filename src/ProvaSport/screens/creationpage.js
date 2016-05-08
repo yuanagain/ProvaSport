@@ -61,6 +61,7 @@ var ContractsPage = React.createClass({
         num_teams: [2],
         items: [0,1],
         playerid: -1,
+        location: "",
       }
     );
   },
@@ -173,7 +174,36 @@ var ContractsPage = React.createClass({
     </View>
     );
   },
+  validateName() {
+    if(this.state.name.length < 2){
+      console.log("ERROR need a name longer than 1 character");
+      return false;
+    }
+    else {
+      return true;
+    }
+  },
+  validateTeams() {
+    //much more complicated. make a list of players seen, no duplicate players,
+    //rn just make sure each team has players and does not exceed max player
+    var MAX_PLAYER_COUNT = _settings.config.maxPlayers;
+    this.state.teams.forEach(function(team){
+      if(team.length < 1 || team.length > MAX_PLAYER_COUNT){
+        console.log("ERROR")
+        return false;
+      }
+      else{
+        return true;
+      }
+    })
+  },
   start: function(){
+    /*
+     * if(!this.validateTeams() || !this.validateTeams()){
+     *   console.log("ERROR");
+     *   return;
+     * }
+     */
     var teamss = []
     var numTeams = this.state.teams.length;
     var i = 0;
@@ -182,6 +212,7 @@ var ContractsPage = React.createClass({
       i++;
       var team = JSON.parse(JSON.stringify(Team.default_team));
       team.players = team_i;
+      //default name
       team.name = "Team "+i;
       teamss.push(team)
       if(i == numTeams){
@@ -193,9 +224,10 @@ var ContractsPage = React.createClass({
   create: function(teamids) {
     var tournament = JSON.parse(JSON.stringify(Tournament.default_tournament));
     //build the tournament object
+    console.log(this.state.location);
     tournament.teams = teamids;
     tournament.type = this.state.event_type[0];
-    tournament.sport = this.state.selectedSport[0];
+    tournament.sport = this.state.selectedSport;
     if(this.state.name !== undefined)
       tournament.name = this.state.name;
     if(this.state.location !== undefined)
@@ -203,7 +235,6 @@ var ContractsPage = React.createClass({
     tournament.creator = this.state.playerid;
 
     if (this.state.event_type[0] == 'Round Robin') {
-      console.log("CREATE RR!")
       this.createRR(tournament)
     }
     if (this.state.event_type[0] == 'Elimination') {
@@ -211,15 +242,10 @@ var ContractsPage = React.createClass({
     }
   },
   createRR: function(obj) {
-    var defaults = Match.default_match;
-    defaults.datetime = Date.now();
-    //defaults.location = obj.location;
-    defaults.name = obj.name;
-    defaults.sports = obj.sports;
+    var defaults = this.defaultsGen(obj);
     Tournament.createTournament(obj).then(resp=>this.createRR2(resp, obj, defaults))
   },
   createRR2: function(id, obj, defaults) {
-    console.log("CreateRR2:  "+id+ "   ")
       var data = {
         teams: obj.teams,
         defaultM: defaults,
@@ -232,12 +258,7 @@ var ContractsPage = React.createClass({
       _clogic.createRR(data).then(reply=>{obj.matches=reply}).then(()=>Tournament.setTournament(id, obj)).then(()=>this.toRR(id)).catch(function(err){console.log(err)})
   },
   createBracket: function(obj) {
-    var defaults = Match.default_match;
-    defaults.datetime = Date.now();
-    //defaults.location = obj.location;
-    defaults.name = obj.name;
-    defaults.sports = obj.sports;
-    console.log("DEFAULTS");
+    var defaults = this.defaultsGen(obj);
     Tournament.createTournament(obj).then(resp=>this.createBracket2(resp, obj, defaults))
   },
   createBracket2: function(id, obj, defaults) {
@@ -250,7 +271,27 @@ var ContractsPage = React.createClass({
         Team.addTournament(teamid, id)
       })
       console.log("BRACET2");
-      _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>{Tournament.setTournament(id, obj); return Promise.resolve()}).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
+      _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>{Tournament.setTournament(id, obj); return Promise.resolve()}).then(reps=>this.hardReset()).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
+  },
+  /*
+  * We need Tournament to fill in the fields :
+  * Name, datetime is created time, sport,
+  */
+  defaultsGen: function(obj){
+    var defaults = Match.default_match;
+    defaults.datetime = Date.now();
+    if (obj.location)
+      defaults.location = obj.location;
+    else {
+      defaults.location = "  "
+    }
+    defaults.name = obj.name+" Match";
+    defaults.sport = obj.sport;
+    defauts.payoutdata = {
+      cash: 100,
+      xp: 100
+    };
+    return defaults;
   },
   reset: function() {
     this.setState({
@@ -260,8 +301,6 @@ var ContractsPage = React.createClass({
       event_type: [],
       teams: [[],[],],
       num_teams: [2],
-      items: [0,1],
-      playerid: -1,
     })
   },
   setTeam: function(players, index) {
@@ -274,7 +313,7 @@ var ContractsPage = React.createClass({
       user = JSON.parse(user);
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
-        var items = player.friends.concat(user.playerid);
+        var items = player.following.concat(user.playerid);
         this.setState({items: items,
                       playerid: user.playerid});
       })
@@ -287,7 +326,7 @@ var ContractsPage = React.createClass({
       user = JSON.parse(user);
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
-        var items = player.friends.concat(user.playerid);
+        var items = player.following.concat(user.playerid);
         this.setState({items: items,
                       playerid: user.playerid});
       })
@@ -367,9 +406,28 @@ var ContractsPage = React.createClass({
       />
     )
   },
-
-  updateGames: function() {
-    //update match
+  _setInitialPlayer: function(obj) {
+    try {
+      //THIS WORKS!!!
+      AsyncStorage.setItem('player', JSON.stringify(obj), () => {
+        AsyncStorage.getItem('player', (err, result)=>{
+          //console.log("User");
+          console.log(JSON.parse(result));
+        });
+      });
+    } catch (error) {
+      this._appendMessage('AsyncStorage error: ' + error.message);
+    }
+  },
+  handlePlayer: function(player){
+    //console.log("handleplayer")
+    this._setInitialPlayer(player)
+  },
+  hardReset: function() {
+    var callback = this.handlePlayer;
+    AsyncStorage.getItem('user', (err, response)=>{
+      Player._GetPlayer(response.playerid, callback)
+    })
   },
 
   //// TODO POPULATE W/ REAL DATA
@@ -382,6 +440,7 @@ var ContractsPage = React.createClass({
         navigator: this.props.navigator
       }
     })
+    this.reset();
   },
   toBracket(tid) {
     console.log("TO BRACKET");
@@ -393,6 +452,7 @@ var ContractsPage = React.createClass({
         navigator: this.props.navigator
       }
     })
+    this.reset()
   },
   toTeamPage() {
     this.props.navigator.push({

@@ -71,7 +71,7 @@ var PlayerPage = React.createClass({
         var friend_status_text = "Follow"
 
         // if they're a friend
-        if (this.state.my_player.friends.indexOf(this.props.playerid) != -1) {
+        if (this.state.my_player.following.indexOf(this.props.playerid) != -1) {
           friend_status_text = "Unfollow"
         }
 
@@ -167,7 +167,7 @@ var PlayerPage = React.createClass({
 
         <SimpleRow
           title={'Friends'}
-          value={this.state.player.friends.length}
+          value={this.state.player.following.length}
           onPress={this.toFriendsListing} />
         <View style={_cstyles.section_divider_line}></View>
 
@@ -229,7 +229,7 @@ var PlayerPage = React.createClass({
     var value = AsyncStorage.getItem('player', (error, response)=>{
       var obj = JSON.parse(response)
       // this is player id of person logged in. WORKS!!
-      console.log(obj.playerid)
+      //console.log(obj.playerid)
       this.setState({player: obj})
     });
   },
@@ -251,14 +251,21 @@ var PlayerPage = React.createClass({
 
   onRefresh: function() {
     this.setState({isRefreshing: true})
-    this.getMe();
+    var pid = this.state.my_user.playerid;
+    Player.GetPlayer(pid).then(playerobj=>{
+      AsyncStorage.setItem('player', JSON.stringify(playerobj), (error, response)=>{
+        // this is player id of person logged in. WORKS!!
+        //console.log(obj.playerid)
+        this.setState({my_player: playerobj})
+        if (this.props.playerid == -1){
+          this.setState({player: playerobj})
+        }
+        else {
+          Player._GetPlayer(this.props.playerid, this.fetchPlayer)
+        }
+      });
+    })
 
-    if (this.props.playerid == -1){
-      this.getPlayerId();
-    }
-    else {
-      Player._GetPlayer(this.props.playerid, this.fetchPlayer)
-    }
     setTimeout(() => {
       this.setState({isRefreshing: false})
     }, _cvals.timeout);
@@ -280,23 +287,23 @@ var PlayerPage = React.createClass({
   toggleFriend: function() {
     // TODO change status of friend, update local data store
     var setPlayer = this.setMyPlayer;
-    if (this.state.my_player.friends.indexOf(this.props.playerid) == -1) {
+    if (this.state.my_player.following.indexOf(this.props.playerid) == -1) {
       /*
        * Player.addFriend(this.state.my_user.playerid, this.props.playerid)
-       * this.state.my_player.friends.push(this.props.playerid)
+       * this.state.my_player.following.push(this.props.playerid)
        * setPlayer(this.state.my_player)
        * this.setState({loaded: true})
        */
        this.addFrnd()
     }
     else {
-      console.log("REMOVE Friend");
+      //console.log("REMOVE Friend");
       this.removeFrnd();
       /*
        * var player = this.state.my_player;
        * console.log("calling remove friend"+this.state.my_user.playerid+"  "+this.props.playerid)
        * Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
-       *   player.friends = resp;
+       *   player.following = resp;
        *   console.log("changing in cache")
        *   setPlayer(player);
        *   this.setState({my_player: player})
@@ -313,9 +320,9 @@ var PlayerPage = React.createClass({
   removeFrnd: function(){
     var setPlayer = this.setMyPlayer;
     var player = this.state.my_player;
-    console.log("calling remove friend"+this.state.my_user.playerid+"  "+this.props.playerid)
+    //console.log("calling remove friend"+this.state.my_user.playerid+"  "+this.props.playerid)
     Player.removeFriend(this.state.my_user.playerid, this.props.playerid).then(function(resp){
-      player.friends = resp;
+      player.following = resp;
       //console.log("changing in cache")
       setPlayer(player);
     })
@@ -324,7 +331,7 @@ var PlayerPage = React.createClass({
   addFrnd: function() {
     var setPlayer = this.setMyPlayer;
     Player.addFriend(this.state.my_user.playerid, this.props.playerid)
-    this.state.my_player.friends.push(this.props.playerid)
+    this.state.my_player.following.push(this.props.playerid)
     setPlayer(this.state.my_player)
   },
   componentWillReceiveProps: function(nextProps) {
@@ -343,7 +350,7 @@ var PlayerPage = React.createClass({
       component: TeamListingPage,
       passProps: {
         navigator: this.props.navigator,
-        teams: this.state.player.teams
+        teams: this.state.player.teams.reverse()
       }
     })
   },
@@ -355,7 +362,7 @@ var PlayerPage = React.createClass({
       component: FriendsListingPage,
       passProps: {
         navigator: this.props.navigator,
-        friends: this.state.player.friends
+        following: this.state.player.following
       }
     })
   },
@@ -367,7 +374,7 @@ var PlayerPage = React.createClass({
       component: TournamentListingPage,
       passProps: {
         navigator: this.props.navigator,
-        tournaments: this.state.player.tournaments
+        tournaments: this.state.player.tournaments.reverse()
       }
     })
   },
@@ -379,7 +386,7 @@ var PlayerPage = React.createClass({
       component: MatchListingPage,
       passProps: {
         navigator: this.props.navigator,
-        matches: this.state.player.matches
+        matches: this.state.player.matches.reverse()
       }
     })
   },

@@ -23,6 +23,10 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		DA40D1001CD2BA2A00F9CE3C /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA40D0F41CD2B9E900F9CE3C /* libRNImagePicker.a */; };
+		DA6C39B21CD7DC57001AA522 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA6C39B11CD7DC57001AA522 /* Launch Screen.storyboard */; };
+		DA6C39C01CD7DCF6001AA522 /* loading_screen.png in Resources */ = {isa = PBXBuildFile; fileRef = DA6C39BE1CD7DCF6001AA522 /* loading_screen.png */; };
+		DA6C39C11CD7DCF6001AA522 /* provasport_app_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = DA6C39BF1CD7DCF6001AA522 /* provasport_app_logo.png */; };
+		DA6C39C31CD7DD5D001AA522 /* loading_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = DA6C39C21CD7DD5D001AA522 /* loading_logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +139,10 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		DA40D0E51CD2B9E900F9CE3C /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
+		DA6C39B11CD7DC57001AA522 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "ProvaSport/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		DA6C39BE1CD7DCF6001AA522 /* loading_screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = loading_screen.png; path = ProvaSport/assets/loading_screen.png; sourceTree = "<group>"; };
+		DA6C39BF1CD7DCF6001AA522 /* provasport_app_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = provasport_app_logo.png; path = ProvaSport/assets/provasport_app_logo.png; sourceTree = "<group>"; };
+		DA6C39C21CD7DD5D001AA522 /* loading_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = loading_logo.png; path = ProvaSport/assets/loading_logo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +250,7 @@
 		13B07FAE1A68108700A75B9A /* ProvaSport */ = {
 			isa = PBXGroup;
 			children = (
+				DA6C39C41CD7DD67001AA522 /* assets */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -297,6 +306,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				DA6C39B11CD7DC57001AA522 /* Launch Screen.storyboard */,
 				DA40D0E51CD2B9E900F9CE3C /* RNImagePicker.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* ProvaSport */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -322,6 +332,16 @@
 				DA40D0F41CD2B9E900F9CE3C /* libRNImagePicker.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DA6C39C41CD7DD67001AA522 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				DA6C39BE1CD7DCF6001AA522 /* loading_screen.png */,
+				DA6C39BF1CD7DCF6001AA522 /* provasport_app_logo.png */,
+				DA6C39C21CD7DD5D001AA522 /* loading_logo.png */,
+			);
+			name = assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -375,6 +395,9 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = J62ZDNNW8H;
 					};
 				};
 			};
@@ -535,8 +558,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA6C39B21CD7DC57001AA522 /* Launch Screen.storyboard in Resources */,
+				DA6C39C11CD7DCF6001AA522 /* provasport_app_logo.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				DA6C39C01CD7DCF6001AA522 /* loading_screen.png in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				DA6C39C31CD7DD5D001AA522 /* loading_logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,7 +667,10 @@
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -650,14 +680,19 @@
 				INFOPLIST_FILE = ProvaSport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = test.com.provasport.provasport;
 				PRODUCT_NAME = ProvaSport;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -666,7 +701,9 @@
 				INFOPLIST_FILE = ProvaSport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = test.com.provasport.provasport;
 				PRODUCT_NAME = ProvaSport;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

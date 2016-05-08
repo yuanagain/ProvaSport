@@ -1,6 +1,7 @@
 'use strict';
 
 var _const = require('./constants')
+import * as Team from '../modules/team'
 import * as Match from '../modules/match'
 import * as _ctools from './customtools'
 
@@ -111,6 +112,7 @@ var createRR = function(data) {
   var teams = data.teams
   // could do 2 forEach loops that are callback-safe
   var n = teams.length;
+  var index = 1;
   var numMatches = (n*n-n)/2.0;
   loop1:
     for (var i = 0; i < teams.length; i++) {
@@ -123,10 +125,12 @@ var createRR = function(data) {
           var matchi = JSON.parse(JSON.stringify(data.defaultM));
           //var matchi = data.matchinfo[j + teams.length*i] // get data match obj (just stock data but migh have a name and other attributes)
           //could possibly connect here too if connection not an issue
+          matchi.name = matchi.name +" "+ index;
           matchi.teams[0] = team1;
           matchi.teams[1] = team2;
           matchi.tournamentid = data.id;
           matches.push(matchi);
+          index++;
           //console.log(matchi) //correct object form testing
         }
       }
@@ -186,8 +190,12 @@ var createBracket = function(data) {
     for (var i = depth - 2; i >= 0; i--) {
       var cap = Math.pow(2, i);
       for (var j = 0; j < cap; j++){
-        //run 2^depth times
         var matchi = JSON.parse(JSON.stringify(Match.TBD));
+        matchi.teams[0] = "TBD";
+        matchi.teams[1] = "TBD";
+        matchi.datetime = Date.now();
+        matchi.sport = data.defaultM.sport;
+        matchi.tournamentid = data.id;
         matches.push(matchi)
       }
     }
@@ -244,7 +252,11 @@ var dictTest = {
 
 
 //
-var update_matches = function(matches, matchids, callback) {
+var update_matches = function(matches, tournament) {
+  var teams = {}
+  tournament.teams.forEach(function(team){
+    teams[team] = []
+  })
 
   // check through all the matches
   var depth = Math.log(matches.length + 1) / Math.log(2)
@@ -300,8 +312,13 @@ var update_matches = function(matches, matchids, callback) {
       // advance player
       target_match.teams[place] = winner_id
 
+      teams[target_match.teams[0]].push(target_match.matchid)
+      teams[target_match.teams[1]].push(target_match.matchid)
       // change status if necessary
-      target_match.status = 2
+      target_match.status = {
+        '0': 2,
+        '1': 2
+      };
     }
 
     if (changed == false) {
@@ -310,10 +327,11 @@ var update_matches = function(matches, matchids, callback) {
     two_sum += cap
   }
   //tie the new match with the team
-  //push then pull the matche object to the server
-  Match.setFromList(matchids, matches).then(resp=>callback(matches)).catch(function(err){
-    console.log("in customlogic.js 301: "+err)})
-  //return matches
+  //push then pull the match object to the server
+  return {
+    matches: matches,
+    teams: teams
+  };
 }
 //var matchlist = [Match.default_match, Match.default_match, Match.default_match, Match.default_match]
 //createFromList(matchlist, function(array){console.log(array)})

@@ -74,9 +74,8 @@ var SettingsPage = React.createClass({
 
     ImagePickerManager.showImagePicker(options, (response) => {
       //console.log(response);
-      if(!response.didCancel){
-
-      console.log('Response = ', response);
+      if(!response.didCancel) {
+        //console.log('Response = ', response);
         // You can display the image using either data:
         // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
         // uri (on iOS)
@@ -84,15 +83,13 @@ var SettingsPage = React.createClass({
         // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
         //upload image
-
         this.upload(source.uri, this.state.playerid);
         //Upload(source).then(resp=>)
         this.setState({
           profImage: source
         });
       }
-      }
-    );
+    });
   },
   render: function() {
     var {
@@ -185,53 +182,6 @@ var SettingsPage = React.createClass({
       var user = JSON.parse(response);
       this.setState({playerid: user.playerid})
     })
-
-    console.log(_clogic.createTrace(4))
-    var matches = [
-      {
-        status: 4,
-        teams: [0, 1],
-        scores: [[1, 2]],
-      },
-
-      {
-        status: 2,
-        teams: [2, 'BYE'],
-        scores: [[2, 1]],
-      },
-
-      {
-        status: 4,
-        teams: [4, 5],
-        scores: [[1, 2]],
-      },
-
-      {
-        status: 2,
-        teams: ['BYE', 7],
-        scores: [],
-      },
-
-      {
-        status: 0,
-        teams: ['TBD', 'TBD'],
-        scores: [],
-      },
-
-      {
-        status: 0,
-        teams: ['TBD', 'TBD'],
-        scores: [],
-      },
-
-      {
-        status: 0,
-        teams: ['TBD', 'TBD'],
-        scores: [],
-      },
-
-    ]
-    console.log(_clogic.update_matches(matches))
   },
 
   validEmail() {

@@ -13,8 +13,17 @@ var teamdb = require("firebase");
 teamdb = new Firebase("https://shining-torch-4767.firebaseio.com/team");
 /*possibly add stuff like isOnTeam etc.*/
 
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function _GetTeam(teamid, callback) {
   console.log("_GetTeam  "+teamid);
+  if(teamid === undefined){
+    callback(TBD)
+  }
+  else{
   /* var match = new Match(matchid); */
     var promise = new Promise(function(resolve, reject) {
         teamdb.child(teamid).on("value", function(snapshot) {
@@ -36,9 +45,16 @@ function _GetTeam(teamid, callback) {
     promise.then(function(value){
       callback(value);
     }).catch(function(err){
-      console.log("Failed to _GetTeam  "+ err);
+      console.log("Failed to _GetTeam  "+ err + "   "+teamid);
     });
+  }
 }
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 export function getTeam(teamid) {
   console.log("getTeam");
   /* var match = new Match(matchid); */
@@ -60,32 +76,45 @@ export function getTeam(teamid) {
         });
      });
 }
-//getTeam("BYE").then(resp=>{console.log(resp)})
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function updatePlayers(teamid, playerArray) {
   teamdb.child(teamid).update({
     "players": playerArray,
   })
 }
 
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function setProfPic(teamid, url) {
   teamdb.child(teamid).update({
     "thumbnail": url,
   })
 }
-//setProfPic("-KGnxwNWvzMWyXZD438Q","http://img02.deviantart.net/5e42/i/2007/011/7/1/kitten_stock___looking_scared_by_gracies_stock.jpg")
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function setName(teamid, name) {
   teamdb.child(teamid).update({
     "name": name,
   })
 }
-//setName("-KGnxwNWvzMWyXZD438Q", "Mr. Jenkins")
 
-function updateMatches(teamid, matchArray) {
-  teamdb.child(teamid).update({
-    "matches": matchArray,
-  })
-}
-
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 export function addPlayer(teamid, playerid) {
   console.log("addPlayer");
   var promise = new Promise(function(resolve, reject) {
@@ -107,13 +136,15 @@ export function addPlayer(teamid, playerid) {
   });
 }
 
-/*
 
+/* functionName
+ *  Description:
+ *  @returns:
   @params: teamid of Team object adding match
-  TODO ADD MATCHES TO PlAYERS TOO
+  make sure this and Player.addMatch run unique
   */
 export function addMatch(teamid, matchid) {
-  console.log("addMatch");
+  //console.log("addMatch");
   return new Promise(function(resolve, reject) {
       teamdb.child(teamid).on("value", function(snapshot) {
         var matches = []
@@ -133,7 +164,7 @@ export function addMatch(teamid, matchid) {
             Player.addMatch(playerid, matchid)
           });
           matches.push(matchid);
-          console.log("Added match: "+matches+" to team "+teamid+" with players "+team.players)
+          //console.log("Added match: "+matches+" to team "+teamid+" with players "+team.players)
           matches = unique(matches);
           resolve(matches);
         }
@@ -144,6 +175,12 @@ export function addMatch(teamid, matchid) {
     console.log("Failed to add match to team "+teamid+ "   "+matchid + "\n" + err);
   });
 }
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 export function addTournament(teamid, tournid) {
   //console.log("addTourn");
   return new Promise(function(resolve, reject) {
@@ -160,18 +197,34 @@ export function addTournament(teamid, tournid) {
     console.log("Failed to add tournament to team "+teamid+ "   "+tournid + "\n" + err);
   });
 }
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function unique(list) {
   return list.filter(function(elem, pos, arr) {
     return arr.indexOf(elem) == pos;
   });
 }
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 var findOne = function (haystack, arr) {
     return arr.some(function (v) {
         return haystack.indexOf(v) >= 0;
     });
 };
 
-
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function _AddPlayer(teamid, playerid, callback) {
 
   var promise = new Promise(function(resolve, reject) {
@@ -195,6 +248,11 @@ function _AddPlayer(teamid, playerid, callback) {
   });
 }
 
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function _AddMatch(teamid, matchid, callback) {
   console.log("_ADDMatch");
   var promise = new Promise(function(resolve, reject) {
@@ -225,7 +283,13 @@ function _AddMatch(teamid, matchid, callback) {
     console.log("Failed to add match to team\n" + err);
   });
 }
-//make sure updated with current data and not new object
+
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function _SetTeam(obj, teamid, callback) {
   console.log("_SetTeam");
   var promise = new Promise(function(resolve, reject) {
@@ -246,12 +310,16 @@ function _SetTeam(obj, teamid, callback) {
   });
 }
 
-/* needs and object for th full data of a team fields
-  */
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function createTeam(obj) {
-  console.log("create");
+  //console.log("create");
   return new Promise(function(resolve, reject) {
       var newRef = teamdb.push();
+      obj.teamid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -275,13 +343,16 @@ function createTeam(obj) {
     });
 }
 
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function _CreateTeam(obj, callback) {
-  console.log("_Create");
-  console.log("SETTING PROFPIC");
   //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic;})
   var promise = new Promise(function(resolve, reject) {
       var newRef = teamdb.push();
-
+      obj.teamid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -297,15 +368,6 @@ function _CreateTeam(obj, callback) {
           })
         }
       });
-
-    /*
-     * }).then(tid=>{
-     *   Player.GetPlayer(team.players[0]).then(resp=>{
-     *     Team.setProfPic(tid, resp.prof_pic);
-     *     Team.setName(tid, resp.name.full);
-     *   })
-     *   return Promise.resolve(tid);
-     */
     })
     promise.then(function (value) {
       //connect player to team
@@ -318,6 +380,12 @@ function _CreateTeam(obj, callback) {
       console.log("Something went wrong in _CreateTeam"+ error)
     });
 }
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function createFromList(teamobjlist, callback) {
   //console.log("cFromList");
   return new Promise(function (resolve) {
@@ -326,12 +394,6 @@ function createFromList(teamobjlist, callback) {
 
     teamobjlist.forEach(function(teamobj){
       createTeam(teamobj).then(resp=>{
-        /*
-         * Player.GetPlayer(teamobj.players[0]).then(response=>{
-         *   Team.setProfPic(tid, response.prof_pic);
-         *   Team.setName(tid, response.name.full);
-         * }).then(()=>{
-         */
           teamids.push(resp);
           i+=1;
           if(i == teamobjlist.length) resolve(teamids);
@@ -339,6 +401,12 @@ function createFromList(teamobjlist, callback) {
     })
   })
 }
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 export function addTeamPlayersToMatch(teamid, matchid) {
   //console.log("addTeamPlayersToMatch");
   return new Promise(function(resolve, reject) {
@@ -354,7 +422,12 @@ export function addTeamPlayersToMatch(teamid, matchid) {
       });
    });
 }
-/*returns which team the player is on*/
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 export function teamOneorTwo(team0id, playerid) {
   console.log("Team1or2");
   return new Promise(function(resolve){
@@ -366,7 +439,13 @@ export function teamOneorTwo(team0id, playerid) {
     });
   })
 }
-//returns true if on team and false if not on either team
+
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 export function onTeams(teamid1, teamid2, playerid) {
   console.log("onTeam");
   return new Promise(function(resolve){
@@ -382,17 +461,45 @@ export function onTeams(teamid1, teamid2, playerid) {
     })
   })
 }
-//posibly move to ctools
+
+/* functionName
+ *  Description:
+ *  @returns:
+ *  @parameters:
+ */
 function inArray(value, array) {
   return array.indexOf(value) > -1;
 }
+
+/* updateMatches()
+ * @params takes in a dictionary of teams indexed by team id with match arrays that need to be updated
+ * data : {
+ *  tid: [matches]
+ * }
+ */
+function updateMatches(data) {
+  console.log("DATA passed to updateMatches");
+  console.log(data);
+  for (var teamid in data){
+    console.log(teamid);
+    getTeam(teamid).then(teamobj=>{
+      var matches = data[teamid];
+      teamobj.matches.concat(matches);
+      unique(teamobj.matches);
+      console.log(teamobj.matches);
+      //update team's matches to incude new matches
+      teamdb.child(teamid).child('matches').set(teamobj.matches);
+    })
+  }
+}
+
 
 var TBD = {
     "name": "TBD",
     "players": [],
     "matches": [],
-    "teamid": 0,
-    "thumbnail": ""
+    "thumbnail": "../assets/logo_white_orange.png",
+    "teamid": 'TBD'
 };
 
 
@@ -400,7 +507,8 @@ var default_team = {
     "name": "Loading",
     "players": [],
     "matches": [],
-    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg"
+    "thumbnail": "http://cdn.xl.thumbs.canstockphoto.com/canstock16117908.jpg",
+    "teamid": -1
 };
 
 var bye = {
@@ -414,6 +522,7 @@ var bye = {
  * _SetTeam(bye, 'BYE', function(resp){console.log("SET BYE")})
  * _SetTeam(TBD, 'TBD', function(resp){console.log("SET TBD")})
  */
+
 module.exports = {_GetTeam, default_team, bye, _CreateTeam, createTeam, _SetTeam,
    getTeam, addMatch, _AddMatch, addPlayer, _AddPlayer, addTeamPlayersToMatch,
-   teamOneorTwo, onTeams, createFromList, findOne, addTournament, setProfPic};
+   teamOneorTwo, onTeams, createFromList, findOne, addTournament, setProfPic, updateMatches};

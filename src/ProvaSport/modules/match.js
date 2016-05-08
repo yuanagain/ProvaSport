@@ -40,6 +40,7 @@ function _GetMatch(matchid, callback) {
       console.log("Failed in _Getmatch "+err + " Matchid: "+matchid);
     });
 }
+//_GetMatch("-KH3StkanT49GsSpSIcY", function(resp){console.log(resp);})
 function getMatch(matchid) {
   /* var match = new Match(matchid); */
   return new Promise(function(resolve, reject) {
@@ -93,6 +94,7 @@ function createMatch(obj) {
   //console.log("CALLED MATCH.CREATEMATCH!!!")
   return new Promise(function(resolve, reject) {
       var newRef = matchdb.push();
+      obj.matchid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -132,6 +134,7 @@ function unique(list) {
 function _CreateMatch(obj, callback) {
   var promise = new Promise(function(resolve, reject) {
       var newRef = matchdb.push();
+      obj.matchid = newRef.key();
       newRef.set(obj, function(error) {
         if (error) {
           console.log("Data could not be saved." + error);
@@ -282,48 +285,6 @@ function setFromList(matchidlist, matchobjlist) {
       '1': 1
     },
 
-    BUT we will begin with integer codes  and work up*/
-//actual team id team id indexed status
-var default_match =
-  {
-        "datetime": 0,
-        "sport": ["LOADING"],
-        "scores": [["...","..."]],
-        "tournamentid": -1,
-        "winner": -1,
-        "data": {},
-        "teams": [],
-        "payoutdata": {
-          "xp": -1,
-          "cash": -1
-        },
-        "status": {
-          '0': 0,
-          '1': 0
-        },
-        "name": "Loading",
-        "location": "LOADING"
-  };
-  var TBD =
-    {
-          "datetime": 0,
-          "sport": ["LOADING"],
-          "scores": [],
-          "tournamentid": -1,
-          "winner": -1,
-          "data": {},
-          "teams": ["TBD","TBD"],
-          "payoutdata": {
-            "xp": -1,
-            "cash": -1
-          },
-          "status": {
-            '0': 0,
-            '1': 0
-          },
-          "name": "TBD",
-          "location": "TBD"
-    };
 
 /*Fetch a bunch of match objects and return the list of objects
   We need the list of objects to be in order of matchidArr
@@ -405,7 +366,7 @@ function myStatus(matchid, playerobj) {
   console.log("myStatus matchid:  "+matchid + "playerteams: "+ playerobj.teams);
   return new Promise(function (resolve) {
     getMatch(matchid).then(function(oMatch) {
-      if (playerobj.teams != undefined && playerobj.teams.constructor == Array){
+      if (playerobj.teams != undefined){
         console.log("Running TeamInMatch")
         teamInMatch(matchid, playerobj.teams, function(index){
           if(index != -1) {
@@ -415,32 +376,29 @@ function myStatus(matchid, playerobj) {
             resolve(1);
           }
         })
-    }
-    else {
-      resolve(1);
-    }
+      }
+      else {
+        resolve(1);
+      }
     })
   })
 }
 
-function getAllMatches(length) {
+function getAllMatches() {
   var matches = []
   return new Promise(function(resolve, reject) {
-      ref.child('match').on("value", function(snapshot) {
-        var val = snapshot.val();
+      matchdb.on("value", function(snapshot) {
         var len = 0;
-        if(length == -1){
-          len = Object.keys(val).length;
-        }
-        else{
-          len = length;
-        }
+        len = Object.keys(snapshot).length;
         var i = 0;
         console.log(len);
         snapshot.forEach(function(match){
           i++;
           if(!match.hasOwnProperty('teams')){
             match.teams = [];
+          }
+          if(!match.hasOwnProperty('scores')){
+            match.scores = [[" ", ' ']];
           }
           matches.push(match.val())
           if(i == len){
@@ -451,13 +409,33 @@ function getAllMatches(length) {
    });
 }
 
-function addTournament(matchid, tournid) {
-
+function deleteMatch(matchid) {
+  /*remove all players and then teardown
+  if in tournament then teardown (TODO FUTURE)*/
+  return new Promise(function(resolve, reject){
+    matchdb.child(matchid).once('value', function (snapshot){
+      var match = snapshot.val();
+      if (match != null){
+        match.players.forEach(function(playerid){
+          Player.removeMatch(playerid, matchid)
+        })
+        resolve();
+      }
+      else {
+        console.log('NO match Found');
+        reject();
+      }
+    })
+  }).then(()=>{
+    matchdb.child(matchid).remove()
+  }).catch(err=>{
+    console.log(err)
+  })
 }
 
-//getAllMatches(5).then(resp=>console.log(resp))
+
+//getAllMatches().then(resp=>console.log(resp))
 //tieMatchTo(35, 1, 1)
-/*CHANGED ***************HOW TO PARSE ARRAYS************** TODO*/
 /*
  * ref.child("match").child(35).child("teams").on("value", function(snapshot){
  *   var obj = snapshot.val()
@@ -502,10 +480,53 @@ function addTournament(matchid, tournid) {
  */
 //DB.player.find().then(resp=>console.log(resp))
  //DB.player.add(Player.default_player, 0)//.then(()=>DB.player.find().then(resp=>console.log(resp)))
+ //actual team id team id indexed status
+ var default_match =
+   {
+         "datetime": 0,
+         "sport": ["LOADING"],
+         "scores": [[" ", " "]],
+         "tournamentid": -1,
+         "winner": -1,
+         "data": {},
+         "teams": [],
+         "payoutdata": {
+           "xp": -1,
+           "cash": -1
+         },
+         "status": {
+           '0': 0,
+           '1': 0
+         },
+         "name": "Loading",
+         "location": "LOADING",
+         "matchid": 0,
+   };
+   var TBD =
+     {
+           "datetime": 0,
+           "sport": [],
+           "scores": [[" ", " "]],
+           "tournamentid": -1,
+           "winner": -1,
+           "data": {},
+           "teams": ["TBD","TBD"],
+           "payoutdata": {
+             "xp": 100,
+             "cash": 100
+           },
+           "status": {
+             '0': 0,
+             '1': 0
+           },
+           "name": "TBD",
+           "location": "TBD",
+           "matchid": "TBD"
+     };
 
 
 
 module.exports = {_GetMatch, default_match, TBD, setMatch, createMatch, _SetMatch,
                   _CreateMatch, updateScores, updateStatus, _CreateFromList,
                   createFromList, fetchList, _FetchList, setFromList, _SetFromList,
-                  isInMatch, myStatus, getAllMatches};
+                  isInMatch, myStatus, getAllMatches, deleteMatch};
