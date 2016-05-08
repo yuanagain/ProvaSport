@@ -207,9 +207,8 @@ var PlayersRow = React.createClass({
 
     var playerPics = this.state.players.map(function(player, i) {
       return (
-        <Link to="/profile" query={{ playerid: player.playerid }} key={i}>
-            <img style={pic} src={player.prof_pic} key={i + 1}/>
-        </Link>
+          <img style={pic} src={player.prof_pic} key={i + 1}/>
+
       );
     })
 

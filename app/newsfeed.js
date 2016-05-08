@@ -113,7 +113,7 @@ var NewsEntry = React.createClass({
   },
 
   componentWillMount: function() {
-    if (this.props.match.teams) {
+    if (this.props.match.teams != null && this.props.match.scores != null) {
       var winnerIndex = _ctools.getWinnerIndex(this.props.match)
       var loserIndex = (winnerIndex = 1) ? 0 : 1;
       Team._GetTeam(this.props.match.teams[winnerIndex], this.fetchWinner)
@@ -135,9 +135,9 @@ var NewsEntry = React.createClass({
     }
     var scores
     if (this.state.match.scores == null)
-        scores = ["", ""]
-    else
-        scores = _ctools.getScoreStrings(this.state.match.scores)
+        return (<div></div>)
+
+    scores = _ctools.getScoreStrings(this.state.match.scores)
     var winnerIndex = _ctools.getWinnerIndex(this.state.match)
     var loserIndex = (winnerIndex == 1) ? 0 : 1;
 

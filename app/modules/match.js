@@ -31,7 +31,7 @@ function _GetMatch(matchid, callback) {
             match.teams = []
           }
           if (!match.hasOwnProperty('scores')) {
-            match.teams = [['','']]
+            match.scores = [[' ',' ']]
           }
           resolve(match);
         });
@@ -54,7 +54,7 @@ function getMatch(matchid) {
           match.teams = []
         }
         if (!match.hasOwnProperty('scores')) {
-          match.teams = [['','']]
+          match.scores = [['','']]
         }
         resolve(match);
       });
@@ -429,12 +429,18 @@ function myStatus(matchid, playerobj) {
 function getAllMatches() {
   var matches = []
   return new Promise(function(resolve, reject) {
-      ref.child('match').on("value", function(snapshot) {
-        var val = snapshot.val();
-        var len = Object.keys(val).length;
+      matchdb.on("value", function(snapshot) {
+        var len = 0;
+        len = Object.keys(snapshot).length;
         var i = 0;
         snapshot.forEach(function(match){
           i++;
+          if(!match.hasOwnProperty('teams')){
+            match.teams = [];
+          }
+          if(!match.hasOwnProperty('scores')){
+            match.scores = [[' ', ' ']];
+          }
           matches.push(match.val())
           if(i == len){
             resolve(matches)
