@@ -129,7 +129,8 @@ render() {
       navigator,
       ...props
     } = this.props;
-
+console.log("Playerid:"+this.props.playerid);
+console.log("Player:"+this.state.player.playerid);
 return (
   <View style={styles.friendContainer}>
     <TouchableOpacity onPress = {()=>this.check()} style = {styles.container}>
@@ -152,6 +153,7 @@ return (
   },
 
   onPress: function(convoid) {
+    console.log(convoid);
     var Messenger = require('./Messenger');
     this.props.navigator.push({
       id: "Messenger",
@@ -173,11 +175,12 @@ return (
   },
   check: function() {
     //check if both players have existing conversation
+    console.log(this.state.player.playerid);
     AsyncStorage.getItem('player',(err, resp)=>{
       var player = JSON.parse(resp);
       var interlist = _ctools.intersection(player.convo, this.state.player.convo)
       console.log(interlist);
-      if(interlist.length == 1){
+      if(interlist.length !== 0){
         console.log("Existing CONVO");
         this.onPress(interlist[0])
       }
@@ -188,7 +191,7 @@ return (
           console.log(id);
           Player.addConvo(player.playerid, id)
           Player.addConvo(this.state.player.playerid, id)
-          this.onPress(convoid)
+          this.onPress(id)
         })
       }
       else {
@@ -203,7 +206,7 @@ return (
   },
 
   componentWillReceiveProps: function(nextProps) {
-    Player._GetPlayer(nextProps.playerid, this.fetchPlayer)
+    Player._GetPlayer(this.props.playerid, this.fetchPlayer)
   },
 });
 
