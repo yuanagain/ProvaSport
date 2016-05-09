@@ -350,35 +350,38 @@ function createTeam(obj) {
  */
 function _CreateTeam(obj, callback) {
   //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic;})
-  var promise = new Promise(function(resolve, reject) {
-      var newRef = teamdb.push();
-      obj.teamid = newRef.key();
-      newRef.set(obj, function(error) {
-        if (error) {
-          console.log("Data could not be saved." + error);
-          reject();
-        } else {
-          console.log("Data CREATED successfully _CreateT "+ newRef.key());
-          Player.GetPlayer(obj.players[0]).then(playerobj=>{
-              obj.thumbnail = playerobj.prof_pic;
-              obj.name = playerobj.name.full;
-              setProfPic(newRef.key(), playerobj.prof_pic);
-              setName(newRef.key(), playerobj.name.full);
-              resolve(newRef.key());
-          })
-        }
-      });
-    })
-    promise.then(function (value) {
-      //connect player to team
-      //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic})
-      obj.players.forEach(function(playerid){
-        Player.addTeam(playerid, value)
-      });
-      callback(value)
-    }).catch(function(error) {
-      console.log("Something went wrong in _CreateTeam"+ error)
-    });
+  /*
+   * var promise = new Promise(function(resolve, reject) {
+   *     var newRef = teamdb.push();
+   *     obj.teamid = newRef.key();
+   *     newRef.set(obj, function(error) {
+   *       if (error) {
+   *         console.log("Data could not be saved." + error);
+   *         reject();
+   *       } else {
+   *         console.log("Data CREATED successfully _CreateT "+ newRef.key());
+   *         Player.GetPlayer(obj.players[0]).then(playerobj=>{
+   *             obj.thumbnail = playerobj.prof_pic;
+   *             obj.name = playerobj.name.full;
+   *             setProfPic(newRef.key(), playerobj.prof_pic);
+   *             setName(newRef.key(), playerobj.name.full);
+   *             resolve(newRef.key());
+   *         })
+   *       }
+   *     });
+   *   })
+   *   promise.then(function (value) {
+   *     //connect player to team
+   *     //Player.GetPlayer(obj.players[0]).then(resp=>{obj.thumbnail=resp.prof_pic})
+   *     obj.players.forEach(function(playerid){
+   *       Player.addTeam(playerid, value)
+   *     });
+   *     callback(value)
+   *   }).catch(function(error) {
+   *     console.log("Something went wrong in _CreateTeam"+ error)
+   *   });
+   */
+   createTeam(obj).then(resp=>callback(resp)).catch(function(err){console.log(err);})
 }
 
 /* functionName

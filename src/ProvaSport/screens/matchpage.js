@@ -193,8 +193,8 @@ var MatchPage = React.createClass({
               var teams = data.teams;
               console.log(teams);
               Team.updateMatches(teams);
-              Match.setFromList(matchids, matches).then(resp=>callback(matches)).catch(function(err){
-                console.log("in customlogic.js 301: "+err)})
+              Match.setFromList(matchids, matches).then(resp=>console.log(matches)).catch(function(err){
+                console.log("in matchpage.js 301: "+err)})
             })
           }
         })
