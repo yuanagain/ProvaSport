@@ -487,7 +487,7 @@ var styles = StyleSheet.create({
     opacity: 1.00,
   },
   team_scroll: {
-    height: (Platform === 'ios') ? 200 * _cvals.dscale : windowSize.height / 4.4,
+    height: (Platform === 'ios') ? windowSize.height / 3.7 : windowSize.height / 3.7,
     width: windowSize.width,
   }
 })
