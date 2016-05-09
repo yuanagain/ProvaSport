@@ -346,8 +346,11 @@ var ContractsPage = React.createClass({
   },
 
   setNumTeams: function(num) {
+    if (num.length < 1) {
+      return
+    }
     // fill with empty teams
-    for (var i = this.state.num_teams; i < num; i++) {
+    for (var i = this.state.num_teams; i < num[0]; i++) {
       this.state.teams.push([])
     }
 
