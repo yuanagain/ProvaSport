@@ -24,7 +24,7 @@ const _cvals = {
   dscale: dscale,
   headerHeight: (Platform.OS === 'ios') ? 65 * dscale : 50 * dscale,
   slength: slength,
-  bricklength: (slength) * 2.5 - 2,
+  bricklength: (Platform.OS === 'ios') ? ((slength) * 2.5 - 2) : ((slength) * 4 - 2),
   brickheight: ((slength) * 3 / 5 - 4 * dscale),
   thumbslength: ((slength) * 3 / 5 - 12 * dscale),
   stdmargin: 8 * dscale,

@@ -299,16 +299,13 @@ var RecordPage = React.createClass({
   },
 
   setName: function(name) {
-    if (true) {
-      this.setState({name})
-    }
+    this.setState({name})
   },
 
   setLocation: function(location) {
-    if (true) {
-      this.setState({location})
-    }
+    this.setState({location})
   },
+
   validateTeams: function(){
     var team1 = this.state.teams[0];
     var team2 = this.state.teams[1];
@@ -455,9 +452,6 @@ var RecordPage = React.createClass({
     })
   },
 
-  setLocation: function(location) {
-    this.setState({name})
-  }
 });
 
 
