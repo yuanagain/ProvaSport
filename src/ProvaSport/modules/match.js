@@ -65,7 +65,7 @@ function _SetMatch(matchid, obj, callback) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data saved successfully.");
+          //console.log("Data saved successfully.");
           resolve(obj);
         }
       });
@@ -84,7 +84,7 @@ function setMatch(matchid, obj) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data saved successfully.");
+          //console.log("Data saved successfully.");
           resolve(obj);
         }
       });
@@ -100,7 +100,7 @@ function createMatch(obj) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data CREATED successfully "+ newRef.key());
+          //console.log("Data CREATED successfully "+ newRef.key());
           var key = newRef.key();
           //is this what we really need to call?
          if (obj.teams) {
@@ -140,7 +140,7 @@ function _CreateMatch(obj, callback) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data CREATED successfully "+ newRef.key());
+          //console.log("Data CREATED successfully "+ newRef.key());
           resolve(newRef.key());
         }
       });
@@ -215,7 +215,7 @@ function changeStatus(matchid, code) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data saved successfully.");
+          //console.log("Data saved successfully.");
           resolve(obj);
         }
       });
@@ -363,11 +363,11 @@ function teamInMatch(matchid, teams) {
 
 
 function myStatus(matchid, playerobj) {
-  console.log("myStatus matchid:  "+matchid + "playerteams: "+ playerobj.teams);
+  //console.log("myStatus matchid:  "+matchid + "playerteams: "+ playerobj.teams);
   return new Promise(function (resolve) {
     getMatch(matchid).then(function(oMatch) {
       if (playerobj.teams != undefined){
-        console.log("Running TeamInMatch")
+        //console.log("Running TeamInMatch")
         teamInMatch(matchid, playerobj.teams, function(index){
           if(index != -1) {
             resolve(oMatch.status[index])
@@ -391,7 +391,7 @@ function getAllMatches() {
         var len = 0;
         len = Object.keys(snapshot).length;
         var i = 0;
-        console.log(len);
+        //console.log(len);
         snapshot.forEach(function(match){
           i++;
           if(!match.hasOwnProperty('teams')){

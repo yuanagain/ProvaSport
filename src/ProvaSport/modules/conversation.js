@@ -86,6 +86,7 @@ function newConversation(){
 function getMessages(convoid, playerid) {
   return new Promise(function(resolve, reject) {
     var messagelist = [];
+    //child added
     messagedb.child(convoid).orderByChild('date').once("value", function(snapshot) {
 
      	snapshot.forEach(function(childSnapshot) {

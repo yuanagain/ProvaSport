@@ -18,7 +18,7 @@ tourndb = new Firebase("https://shining-torch-4767.firebaseio.com/tournament");
 /* needs and object for th full data of a team fields
   */
 function createTournament(obj) {
-  console.log("tournament");
+  //console.log("tournament");
   return new Promise(function(resolve, reject) {
       var newRef = tourndb.push();
       obj.tournamentid = newRef.key();
@@ -27,7 +27,7 @@ function createTournament(obj) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data CREATED successfully "+ newRef.key());
+          //console.log("Data CREATED successfully "+ newRef.key());
           //bind team players to tourn
           var i = 0;
           var len = obj.teams.length
@@ -46,7 +46,7 @@ function createTournament(obj) {
 }
 
 function _CreateTournament(obj, callback) {
-  console.log("TOURNAMENT");
+  //console.log("TOURNAMENT");
   var promise = new Promise(function(resolve, reject) {
       var newRef = tourndb.push();
       obj.tournamentid = newRef.key();
@@ -55,7 +55,7 @@ function _CreateTournament(obj, callback) {
           console.log("Data could not be saved." + error);
           reject();
         } else {
-          console.log("Data CREATED successfully "+ newRef.key());
+          //console.log("Data CREATED successfully "+ newRef.key());
           resolve(newRef.key());
         }
       });
@@ -126,7 +126,7 @@ function setTournament(tournamentid, obj) {
           console.log("Tourn could not be saved." + error);
           reject();
         } else {
-          console.log("Tourn saved successfully.");
+          //console.log("Tourn saved successfully.");
           resolve(obj);
         }
       });

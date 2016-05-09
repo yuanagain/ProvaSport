@@ -125,7 +125,7 @@ var Messenger = React.createClass({
  * dependent on Conversation.newMessage()
  */
   handleSend(message = {}, rowID = null) {
-    console.log("ADDING to "+this.props.convoid);
+    //console.log("ADDING to "+this.props.convoid);
     //push to Firebase
     //TODO: make the child be the player id
     if (message !== {}) {
@@ -136,10 +136,10 @@ var Messenger = React.createClass({
       };
       Conversation.newMessage(this.props.convoid, sendMessage).then(function(value) {
         if (value) {
-          this._MessagePage.setMessageStatus('Sent', rowID);
+          //this._MessagePage.setMessageStatus('Sent', rowID);
         }
         else {
-          this._MessagePage.setMessageStatus('ErrorButton', rowID);
+          //this._MessagePage.setMessageStatus('ErrorButton', rowID);
         }
       }).catch(function(error) {
           console.log(error);

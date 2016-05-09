@@ -64,7 +64,7 @@ _setInitialPlayer: function(obj) {
     AsyncStorage.setItem('player', JSON.stringify(obj), () => {
       AsyncStorage.getItem('player', (err, result)=>{
         //console.log("User");
-        console.log(JSON.parse(result));
+        //console.log(JSON.parse(result));
       });
     });
   } catch (error) {

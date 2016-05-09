@@ -65,8 +65,8 @@ function _GetPlayer(playerid, callback) {
 
 /*possilby add stuff like isOnTeam etc.*/
 export function GetPlayer(playerid) {
-  console.log("PLAYERID");
-  console.log(playerid);
+  //console.log("PLAYERID");
+  //console.log(playerid);
   /* var match = new Match(matchid); */
   if (playerid == -1)
   {
@@ -407,7 +407,7 @@ function _AddTournament(playerid, tournamentid, callback) {
   });
 }
 
-
+//used only for getFriendsMatches
 function getFriends(playerid){
   return new Promise(function(resolve){
     GetPlayer(playerid).then(resp=>{
@@ -419,6 +419,7 @@ function getFriends(playerid){
       var friendObjList = [];
       var friends = player.following;
       //console.log(player.friends)
+      friends.push(playerid);
       friends.forEach(function(friend){
         GetPlayer(friend).then(resp=>{
           friendObjList.push(resp);
@@ -518,4 +519,4 @@ export var default_player = {
 
 module.exports = {_GetPlayer, GetPlayer, createPlayer, default_player, addMatch,
                   addTeam, addFriend, addTournament, _AddTeam, _AddMatch, removeFriend, _AddTournament,
-                   searchPlayers, getFriends, getFriendsMatches, setPlayer, setProfPic, removeMatch, addConvo};
+                   searchPlayers, getFriendsMatches, setPlayer, setProfPic, removeMatch, addConvo};

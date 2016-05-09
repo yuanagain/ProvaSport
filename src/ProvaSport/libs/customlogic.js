@@ -257,7 +257,7 @@ var update_matches = function(matches, tournament) {
   tournament.teams.forEach(function(team){
     teams[team] = []
   })
-  console.log(teams);
+  //console.log(teams);
 
   // check through all the matches
   var depth = Math.log(matches.length + 1) / Math.log(2)
@@ -266,12 +266,12 @@ var update_matches = function(matches, tournament) {
 
 
   for (var i = 1; i < depth; i++) {
-    console.log("FOR1");
+    //console.log("FOR1");
     var cap = Math.pow(2, depth - i)
     var changed = false // track whether any changes have been made at this depth
 
     for (var j = 0; j < cap; j++) {
-      console.log("FOR2");
+      //console.log("FOR2");
       // check status of match
       var match = matches[two_sum + j]
       var status = _ctools.codeToString(match.status[0])
@@ -303,8 +303,8 @@ var update_matches = function(matches, tournament) {
 
       // compute next match in sequence
       var target_index = two_sum + cap + parseInt(j / 2)
-      console.log((two_sum + j) + ', ' + target_index + ', j = ' + j)
-      console.log("index:"+target_index+"  "+matches[target_index].teams);
+      //console.log((two_sum + j) + ', ' + target_index + ', j = ' + j)
+      //console.log("index:"+target_index+"  "+matches[target_index].teams);
       var target_match = matches[target_index]
       var place = j % 2
 
@@ -312,12 +312,14 @@ var update_matches = function(matches, tournament) {
       target_match.teams[place] = winner_id
 
       //undefined?
-      console.log("Winner: "+winner_id)
-      console.log("target_match:"+target_match.teams);
-      console.log(target_match.teams[0]);
-      console.log(target_match.teams[1]);
-      console.log(teams[target_match.teams[0]]);
-      console.log(teams[target_match.teams[1]] +"\n"+ target_match.matchid);
+      /*
+       * console.log("Winner: "+winner_id)
+       * console.log("target_match:"+target_match.teams);
+       * console.log(target_match.teams[0]);
+       * console.log(target_match.teams[1]);
+       * console.log(teams[target_match.teams[0]]);
+       * console.log(teams[target_match.teams[1]] +"\n"+ target_match.matchid);
+       */
 
       if(target_match.teams[0]!=='TBD')
         teams[target_match.teams[0]].push(target_match.matchid)
@@ -332,7 +334,7 @@ var update_matches = function(matches, tournament) {
       }
     }
     if(i + 1 == depth){
-      console.log("finished loop");
+      //console.log("finished loop");
       return {
         matches: matches,
         teams: teams
@@ -347,7 +349,7 @@ var update_matches = function(matches, tournament) {
   //tie the new match with the team
   //push then pull the match object to the server
   if(depth == 1){
-    console.log("depth == 1");
+    //console.log("depth == 1");
     return {
       matches: matches,
       teams: teams
