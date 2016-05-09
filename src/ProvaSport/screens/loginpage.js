@@ -54,7 +54,8 @@ var LoginPage = React.createClass({
     ];
 
     return (
-      <ScrollView ref='scrollView' style={styles.scroll}>
+      <ScrollView ref='scrollView' style={styles.scroll}
+                  contentContainerStyle={styles.scrollContent} >
         <View style={styles.container}>
 
           <View style={styles.logo_container}>
@@ -235,12 +236,14 @@ var LoginPage = React.createClass({
 
 var styles = StyleSheet.create({
   scroll: {
-
+  },
+  scrollContent: {
+    height: windowSize.height
   },
   logo: {
     marginTop: (Platform.OS === 'ios') ? 100 : 65,
-    width: 200 * _cvals.dscale,
-    height: 200 * _cvals.dscale
+    width: 200 * _cvals.vscale,
+    height: 200 * _cvals.vscale
   },
   logo_container: {
     width: windowSize.width,
@@ -251,9 +254,9 @@ var styles = StyleSheet.create({
   },
   title_text: {
     color: 'white',
-    fontSize: 50 * _cvals.dscale,
+    fontSize: 50 * _cvals.vscale,
     fontFamily: _cvals.mainfont,
-    padding: 10 * _cvals.dscale
+    padding: 10 * _cvals.vscale
   },
   login_button: {
     color: 'white',
@@ -261,10 +264,10 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     textAlign: 'center',
-    fontSize: 30 * _cvals.dscale,
+    fontSize: 30 * _cvals.vscale,
     backgroundColor: _cvals.skorange,
     width: windowSize.width,
-    paddingVertical: 12 * _cvals.dscale,
+    paddingVertical: 12 * _cvals.vscale,
     fontFamily: _cvals.mainfont,
     shadowRadius: 4,
     shadowColor: 'black',
@@ -273,17 +276,17 @@ var styles = StyleSheet.create({
   },
   signup_button: {
     opacity: 1,
-    padding: 5 * _cvals.dscale,
-    margin: 10 * _cvals.dscale,
+    padding: 5 * _cvals.vscale,
+    margin: 10 * _cvals.vscale,
   },
   login_input: {
-    height: 40 * _cvals.dscale,
+    height: 40 * _cvals.vscale,
     borderWidth: 0,
-    fontSize: 34 * _cvals.dscale,
+    fontSize: 34 * _cvals.vscale,
     textShadowColor: 'white',
     color: 'white',
-    margin: 10 * _cvals.dscale,
-    marginVertical: 18 * _cvals.dscale,
+    margin: 10 * _cvals.vscale,
+    marginVertical: 18 * _cvals.vscale,
     fontFamily: _cvals.mainfont,
     alignItems: 'center',
     justifyContent: 'center',
@@ -303,7 +306,7 @@ var styles = StyleSheet.create({
     width: windowSize.width,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 110,
+    height: 90 * _cvals.vscale,
   },
   inputs_container: {
     width: windowSize.width,
@@ -323,15 +326,15 @@ var styles = StyleSheet.create({
   },
   white_line: {
     backgroundColor: 'white',
-    height: 2 * _cvals.dscale,
+    height: 2 * _cvals.vscale,
     opacity: 0.3,
     width: windowSize.width
   },
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover', // or 'stretch'
-    width:320 * _cvals.dscale,
-    height:480 * _cvals.dscale,
+    // width: 320 * _cvals.dscale,
+    // height: 480 * _cvals.dscale,
   }
 })
 
