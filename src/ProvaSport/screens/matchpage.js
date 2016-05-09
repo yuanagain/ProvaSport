@@ -183,6 +183,7 @@ var MatchPage = React.createClass({
         Tournament.getTournament(this.state.match.tournamentid).then(tournament=>{
           //get a list of match objects
           if (tournament.type == "Elimination") {
+            var matchids = tournament.matches;
             Match.fetchList(tournament.matches).then(matchobjs=>{
               //update that list and the tournament
               var data = _clogic.update_matches(matchobjs, tournament);
