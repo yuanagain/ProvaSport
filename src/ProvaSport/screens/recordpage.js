@@ -455,12 +455,6 @@ var RecordPage = React.createClass({
     })
   },
 
-
-
-  setName: function(name) {
-    this.setState({name})
-  },
-
   setLocation: function(location) {
     this.setState({name})
   }

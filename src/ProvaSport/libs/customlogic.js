@@ -286,7 +286,7 @@ var update_matches = function(matches, tournament) {
       // entails that updates will continuet to be passed down
       changed = true
 
-      var winner_id = 'unassigned'
+      var winner_id = _ctools.getWinner(match);
 
       // automatically advance BYEs
       if (match.teams[0] == 'BYE') {
@@ -307,15 +307,22 @@ var update_matches = function(matches, tournament) {
       console.log("index:"+target_index+"  "+matches[target_index].teams);
       var target_match = matches[target_index]
       var place = j % 2
-      console.log("Winner: "+winner_id)
-      console.log("target_match:"+target_match.teams[place]);
-      console.log(teams[target_match.teams[0]]);
-      console.log(teams[target_match.teams[1]] +"\n"+ target_match.matchid);
+
       // advance player
       target_match.teams[place] = winner_id
+
       //undefined?
-      teams[target_match.teams[0]].push(target_match.matchid)
-      teams[target_match.teams[1]].push(target_match.matchid)
+      console.log("Winner: "+winner_id)
+      console.log("target_match:"+target_match.teams);
+      console.log(target_match.teams[0]);
+      console.log(target_match.teams[1]);
+      console.log(teams[target_match.teams[0]]);
+      console.log(teams[target_match.teams[1]] +"\n"+ target_match.matchid);
+
+      if(target_match.teams[0]!=='TBD')
+        teams[target_match.teams[0]].push(target_match.matchid)
+      if(target_match.teams[1]!=='TBD')
+        teams[target_match.teams[1]].push(target_match.matchid)
       // change status if necessary
       target_match.status = {
         '0': 2,
