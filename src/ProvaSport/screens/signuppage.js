@@ -75,9 +75,12 @@ var SignUpPage = React.createClass({
         // You can display the image using either data:
         // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
         // uri (on iOS)
-        const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+        const source = null
+        if (Platform.OS === 'ios')
+            source = {uri: response.uri.replace('file://', ''), isStatic: true};
         // uri (on android)
-        // const source = {uri: response.uri, isStatic: true};
+        else
+            source = {uri: response.uri, isStatic: true};
 
         //Upload(source).then(resp=>)
         this.setState({
