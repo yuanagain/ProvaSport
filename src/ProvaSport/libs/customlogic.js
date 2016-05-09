@@ -324,10 +324,12 @@ var update_matches = function(matches, tournament) {
       if(target_match.teams[1]!=='TBD')
         teams[target_match.teams[1]].push(target_match.matchid)
       // change status if necessary
-      target_match.status = {
-        '0': 2,
-        '1': 2
-      };
+      if (target_match.teams[1]==='TBD' || target_match.teams[0]==='TBD'){
+        target_match.status = {
+          '0': 2,
+          '1': 2
+        };
+      }
     }
     if(i + 1 == depth){
       console.log("finished loop");
