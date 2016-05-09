@@ -461,7 +461,7 @@ function getFriendsMatches(playerid) {
     })
   })
 }
-getFriendsMatches(0).then(resp=>console.log(resp))
+//getFriendsMatches(0).then(resp=>console.log(resp))
 
 
 
