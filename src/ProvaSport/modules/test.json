@@ -1,0 +1,149 @@
+{
+  "match" : [ {
+    "datetime" : 1460049311888,
+    "location" : "Dillon Gym",
+    "matchid" : 0,
+    "name" : "MATCH 1",
+    "payoutdata" : {
+      "cash" : 100,
+      "xp" : 100
+    },
+    "scores" : [ [ 89, 92 ], [ 4, 0 ], [ 0, 5 ] ],
+    "sport" : [ "Basketball" ],
+    "status" : [ 4, 4 ],
+    "teams" : [ 0, 1 ],
+    "tournamentid" : 99,
+    "winner" : 1
+  }, {
+    "datetime" : 1460057311888,
+    "location" : "Poe Field",
+    "matchid" : 1,
+    "name" : "a match for the ages",
+    "payoutdata" : {
+      "cash" : 500,
+      "xp" : 400
+    },
+    "scores" : [ [ 7, 5 ], [ 1, 0 ] ],
+    "sport" : [ "Badminton" ],
+    "status" : [ 2, 3 ],
+    "teams" : [ 1, 0 ],
+    "winner" : 1
+  } ],
+  "player" : [ {
+    "earnings" : {
+      "sportsball" : {
+        "cash" : 90,
+        "trophies" : [ 1, 0 ],
+        "xp" : 901
+      },
+      "tennis" : {
+        "cash" : 101,
+        "trophies" : [ 0, 1 ],
+        "xp" : 90
+      }
+    },
+    "elo" : 1,
+    "following" : [ ],
+    "home" : "COS 208",
+    "level" : 58,
+    "matches" : [ 1, 0 ],
+    "name" : {
+      "first" : "Chris",
+      "full" : "Dj Moretti",
+      "last" : "Moretti"
+    },
+    "nationality" : "USA",
+    "playerid" : 0,
+    "prof_pic" : "https://provasport.s3.amazonaws.com/provasport_profile_pics%2Fprof_pic0.jpg",
+    "sports" : "Basketball",
+    "teams" : [ 0 ],
+		"followedBy": [],
+    "userid" : 0
+  }, {
+    "earnings" : {
+      "basketball" : {
+        "cash" : 1101,
+        "trophies" : [ 0 ],
+        "xp" : 9001
+      }
+    },
+    "elo" : 0.5,
+    "following" : [ 0 ],
+    "home" : "COS basement",
+    "level" : 23,
+    "matches" : [ 0, 1 ],
+    "name" : {
+      "first" : "Hansen",
+      "full" : "Sir Hansen Zhang",
+      "last" : "Zhang"
+    },
+    "nationality" : "USA",
+    "playerid" : 1,
+    "prof_pic" : "http://www.cs.princeton.edu/~hansenz/figs/hansenz_cir.png",
+    "sports" : "sportsball",
+    "teams" : [ 0, 1 ],
+    "userid" : 1,
+		"followedBy": []
+  } ],
+  "team" : {
+    "0" : {
+      "location" : "Princeton",
+      "matches" : [0, 1],
+      "name" : "Da Bers",
+      "players" : [ 0 ],
+      "sport" : "Fishing",
+      "teamid" : 0,
+      "thumbnail" : "https://www.cs.princeton.edu/sites/all/modules/custom/cs_people/generate_thumbnail.php?id=1062&thumb="
+    },
+    "1" : {
+      "location" : "Yale",
+      "matches" : [0, 1],
+      "name" : "Fale Yales",
+      "players" : [ 1 ],
+      "sport" : "crying",
+      "teamid" : 1,
+      "thumbnail" : "http://www.cs.princeton.edu/~hansenz/figs/hansenz_cir.png"
+    },
+    "BYE" : {
+      "name" : "BYE",
+      "teamid" : "BYE",
+      "thumbnail" : ""
+    },
+    "TBD" : {
+      "matches" : [],
+      "name" : "TBD",
+      "teamid" : "TBD",
+      "thumbnail" : ""
+    }
+  },
+  "tournament" : [ {
+    "dates" : [ 1460049311888, 1460058911888 ],
+    "location" : "40.00897N, 70.89877W",
+    "matches" : [ 0, 1 ],
+    "sport" : "Basketball",
+    "teams" : [ 0, 1 ],
+    "tournamentid" : 0,
+    "type" : "bracket"
+  } ],
+  "trophy" : [ {
+    "description" : "Great Job.",
+    "name" : "THIS is a trophy",
+    "thumbnail" : "www.facebook.com/icon.png"
+  }, {
+    "description" : "GreatJob",
+    "name" : "Great JOb trophy",
+    "thumbnail" : "http://2.bp.blogspot.com/_10kDa8zs7zs/SwaugxzaHWI/AAAAAAAADvA/QEQGo1zwIw8/s1600/Great+Job+Trophy.gif"
+  } ],
+  "user" : {
+    "dd726cb4-cdd3-4d66-a06f-cb9e5a5a8794" : {
+      "birthday" : 1888889999,
+      "email" : "password@gmail.com",
+      "gender" : "M",
+      "name" : "Password",
+      "nationality" : "USA",
+      "playerid" : 0,
+      "prof_pic" : "https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwiuhcmO4a3MAhWJez4KHcT5DHMQjRwIBw&url=http%3A%2F%2Fwww.jennstrends.com%2Fthese-profile-photos-make-you-look-bad%2F&psig=AFQjCNHQM1sWI8pOR7pVQA1I9mlYjkBb5A&ust=1461810096997589",
+      "sports" : [ "Basketball" ]
+    }
+  }
+}

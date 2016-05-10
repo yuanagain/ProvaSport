@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="loading_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Kef-pk-hiY">
+                    <rect key="frame" x="120" y="120" width="240" height="240"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Kef-pk-hiY" secondAttribute="height" multiplier="1:1" id="hh1-3O-y5p"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Kef-pk-hiY" secondAttribute="trailing" constant="60" id="7uB-sS-4Om"/>
+                <constraint firstItem="Kef-pk-hiY" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="AGh-Jj-FAM"/>
+                <constraint firstItem="Kef-pk-hiY" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="C3M-QH-n86"/>
+                <constraint firstItem="Kef-pk-hiY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="yR4-EZ-XgX"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="548" y="455"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="loading_logo.png" width="789" height="774"/>
+    </resources>
+</document>
