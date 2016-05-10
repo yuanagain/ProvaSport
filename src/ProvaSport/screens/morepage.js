@@ -72,6 +72,12 @@ var MorePage = React.createClass({
         <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow
+          title={'Create Team'}
+          value={'New Team'}
+          onPress={this.toTeamCreation} />
+        <View style={_cstyles.section_divider_line}/>
+
+        <SimpleRow
           title={'Settings'}
           value={'Change'}
           onPress={this.toSettings} />
@@ -88,6 +94,17 @@ var MorePage = React.createClass({
       </View>
     </View>
     );
+  },
+
+  toTeamCreation: function() {
+    var TeamCreationPage = require('../screens/teamcreationpage')
+    this.props.navigator.push({
+      id: "TeamCrationPage",
+      component: TeamCreationPage,
+      passProps: {
+        navigator: this.props.navigator,
+      }
+    })
   },
 
   toSettings: function() {
