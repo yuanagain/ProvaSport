@@ -252,9 +252,52 @@ var intersection = function (a, b)
   }
   return result;
 }
+
+// SET ARITHMETIC: returns the set without the elements of diff
+var setDifference = function(set, diff) {
+  for (var i = 0; i < diff.length; i++) {
+    var item = diff[i]
+    var index = set.indexOf(item)
+    if (index == -1) {
+      continue
+    }
+
+    set.splice(index, 1)
+  }
+  return set
+}
+
+// SET ARITHMETIC: returns the set of players that are not in any
+// of the given teams
+var trimTeams = function(all_players, teams) {
+  var set = all_players.clone()
+  for (var i = 0; i < teams.length; i++) {
+    set = setDifference(set, teams[i])
+  }
+
+  return set
+}
+
+// SET ARITHMETIC: returns the set of players that team index can take
+var getMyTeams = function(all_players, teams, index) {
+  var set = all_players.slice(0)
+  for (var i = 0; i < teams.length; i++) {
+    if (i == index) {
+      continue
+    }
+    set = setDifference(set, teams[i])
+  }
+  console.log("SET: ")
+  console.log(set)
+  console.log("======")
+  return set
+}
+
+
 module.exports = {indexOf, supplementIndex, contains, inRange,
                   traceIndices, isValidScore, randomKey,
                   selectionNeedles, toDate, shortString,
                   cumulativeEarnings, getInitials, getWinner,
                   getTally, getScoreString, codeToString,
-                  findField, findId, unique, intersection};
+                  findField, findId, unique, intersection, 
+                  setDifference, getMyTeams};
