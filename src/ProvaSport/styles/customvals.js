@@ -24,7 +24,7 @@ const _cvals = {
   dscale: dscale,
   headerHeight: (Platform.OS === 'ios') ? 65 * dscale : 50 * dscale,
   wideButtonHeight: 50 * vscale,
-  tabBarHeight: 50 * dscale,
+  tabBarHeight: 50,
   slength: slength,
   bricklength: (Platform.OS === 'ios') ? ((slength) * 2.5 - 2) : ((slength) * 4 - 2),
   brickheight: ((slength) * 3 / 5 - 4 * dscale),
