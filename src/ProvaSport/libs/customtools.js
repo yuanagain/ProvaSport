@@ -279,7 +279,7 @@ var trimTeams = function(all_players, teams) {
 }
 
 // SET ARITHMETIC: returns the set of players that team index can take
-var getMyTeams = function(all_players, teams, index) {
+var getAvailable = function(all_players, teams, index) {
   var set = all_players.slice(0)
   for (var i = 0; i < teams.length; i++) {
     if (i == index) {
@@ -287,9 +287,7 @@ var getMyTeams = function(all_players, teams, index) {
     }
     set = setDifference(set, teams[i])
   }
-  console.log("SET: ")
-  console.log(set)
-  console.log("======")
+
   return set
 }
 
@@ -300,4 +298,4 @@ module.exports = {indexOf, supplementIndex, contains, inRange,
                   cumulativeEarnings, getInitials, getWinner,
                   getTally, getScoreString, codeToString,
                   findField, findId, unique, intersection, 
-                  setDifference, getMyTeams};
+                  setDifference, getAvailable};

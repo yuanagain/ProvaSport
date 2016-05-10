@@ -89,7 +89,7 @@ var ContractsPage = React.createClass({
         <PopoverSelector
           title={'Team ' + String(i + 1)}
           magic={'player'}
-          items={this.state.items}
+          items={_ctools.getAvailable(this.state.items, this.state.teams, i)}
           navigator={this.props.navigator}
           selection={this.state.teams[i]}
           harvest={this.setTeam}
