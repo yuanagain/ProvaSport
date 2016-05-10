@@ -200,7 +200,7 @@ var RecordPage = React.createClass({
 
     return (
     <View style={styles.container}>
-      <View style={(Platform.OS === 'ios') ? {height: 525 * _cvals.vscale} : {height: 520 * _cvals.vscale}}>
+      <View style={_cstyles.content}>
         <Header title={"RECORD"}
                   mode={this.props.mode}
                   navigator={this.props.navigator} />
@@ -212,20 +212,17 @@ var RecordPage = React.createClass({
 
             {sport}
 
-            <View style={_cstyles.section_divider_line}>
-            </View>
+            <View style={_cstyles.section_divider_line}/>
 
             {team1}
             {team_row_1}
 
-            <View style={_cstyles.section_divider_line}>
-            </View>
+            <View style={_cstyles.section_divider_line}/>
 
             {team2}
             {team_row_2}
 
-            <View style={_cstyles.section_divider_line}>
-            </View>
+            <View style={_cstyles.section_divider_line}/>
 
             <SimpleRow
               title={'Scores'}

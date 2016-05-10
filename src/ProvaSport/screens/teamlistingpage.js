@@ -71,7 +71,7 @@ var TeamListingPage = React.createClass({
            value={""}
            navigator={this.props.navigator}/>
 
-        <View style={_cstyles.section_divider_line} ></View>
+        <View style={_cstyles.section_divider_line} />
       </View>
     )
   },

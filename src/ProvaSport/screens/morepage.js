@@ -63,19 +63,19 @@ var MorePage = React.createClass({
           title={'Messages'}
           value={'View'}
           onPress={this.toMessenger} />
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow
           title={'Search Players'}
           value={'Search'}
           onPress={this.toPlayerSearch} />
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow
           title={'Settings'}
           value={'Change'}
           onPress={this.toSettings} />
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
       </View>
 

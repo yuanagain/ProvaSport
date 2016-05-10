@@ -16,7 +16,7 @@ var PopoverSelector = require('../bigparts/popoverselector')
 var RoundRobinPage = require('../screens/roundrobinpage')
 var BracketPage = require('../screens/bracketpage')
 var TeamPage = require('../screens/teampage')
-
+var PlayersRow = require('../parts/playersrow')
 var Header = require('../parts/header')
 
 var TeamListingPage = require('../screens/teamlistingpage')
@@ -86,29 +86,40 @@ var ContractsPage = React.createClass({
 
     for (var i = 0; i < this.state.teams.length; i++) {
       teamselectors.push(
-        <View key={i}>
-          <PopoverSelector
-            title={'Team ' + String(i + 1)}
-            magic={'player'}
-            items={this.state.items}
-            navigator={this.props.navigator}
-            selection={this.state.teams[i]}
-            harvest={this.setTeam}
-            harvestArgs={i}
-            key={i}
-          />
-          <View style={_cstyles.section_divider_line}></View>
-        </View>
+        <PopoverSelector
+          title={'Team ' + String(i + 1)}
+          magic={'player'}
+          items={this.state.items}
+          navigator={this.props.navigator}
+          selection={this.state.teams[i]}
+          harvest={this.setTeam}
+          harvestArgs={i}
+          key={i + 1}
+        />
+      )
+
+      if (this.state.teams[i].length > 0) {
+        teamselectors.push(
+          <PlayersRow   key={_ctools.randomKey()}
+                        players={this.state.teams[i]}
+                        navigator={this.props.navigator}
+                        disableTouch={true}/>
         )
+      }
+
+      teamselectors.push(
+        <View style={_cstyles.section_divider_line} 
+              key={(i + 1) * 100000000} />
+      )
     }
 
     return (
-    <View style={styles.container}>
-      <View>
+    <View style={styles.container} >
+      <View style={_cstyles.content}>
         <Header title={"CREATE"}
                 navigator={this.props.navigator} />
 
-        <View style={_cstyles.body_container}>
+        <ScrollView style={_cstyles.body_container}>
           <TextField
             label="Event Name"
             placeholder="Event Name"
@@ -131,8 +142,7 @@ var ContractsPage = React.createClass({
             harvest={this.setEventType}
             mode={'single'}
           />
-          <View style={_cstyles.section_divider_line}>
-          </View>
+          <View style={_cstyles.section_divider_line} />
 
           <PopoverSelector
             title={'Sport '}
@@ -143,8 +153,7 @@ var ContractsPage = React.createClass({
             maxSelect={1}
             mode={'single'}
           />
-          <View style={_cstyles.section_divider_line}>
-          </View>
+          <View style={_cstyles.section_divider_line}/>
 
           <PopoverSelector
             title={'Team Count'}
@@ -154,26 +163,21 @@ var ContractsPage = React.createClass({
             harvest={this.setNumTeams}
             mode={'single'}
           />
-          <View style={_cstyles.section_divider_line}>
-          </View>
+          <View style={_cstyles.section_divider_line}/>
           <View>
-            <ScrollView style={styles.team_scroll}>
-              {teamselectors}
-            </ScrollView>
+            {teamselectors}
           </View>
-        </View>
-      </View>
 
-      <View style={_cstyles.buttons_container}>
-
-        <WideButton
-          text="Create Tournament"
-          onPress={()=>this.start()}
-        />
+        </ScrollView>
       </View>
+      <WideButton
+        text={"Create Tournament"}
+        onPress={()=>this.start()}
+      />
     </View>
     );
   },
+
   validateName() {
     if(this.state.name.length < 2){
       console.log("ERROR need a name longer than 1 character");

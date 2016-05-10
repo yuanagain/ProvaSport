@@ -52,7 +52,7 @@ var PlayerSearchPage = React.createClass({
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var dataSource = ds.cloneWithRows(this.state.players)
 
-    var searching = <View></View>
+    var searching = <View/>
     if (this.state.searching) {
       searching = <View style={styles.searching}>
                     <Text style={_cstyles.standard_text}>
@@ -130,7 +130,7 @@ var PlayerSearchPage = React.createClass({
       <View>
         <PlayerRow playerid={playerid}
                  navigator={this.props.navigator} />
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
       </View>
     )
   },

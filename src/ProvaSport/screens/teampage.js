@@ -59,20 +59,20 @@ var TeamPage = React.createClass({
                   contentContainerStyle={styles.content}>
         <View style={_cstyles.body_container}>
           <SimpleRow title={"Team Name"} value={this.state.team.name} />
-          <View style={_cstyles.section_divider_line} ></View>
+          <View style={_cstyles.section_divider_line} />
 
           <SimpleRow title={"Sport"} value={this.state.team.sport} />
-          <View style={_cstyles.section_divider_line} ></View>
+          <View style={_cstyles.section_divider_line} />
 
           <SimpleRow title={"Location"} value={""} />
-          <View style={_cstyles.section_divider_line} ></View>
+          <View style={_cstyles.section_divider_line} />
 
           <SimpleRow title={"Members"} value={this.state.team.players.length} />
-          <View style={_cstyles.section_divider_line} ></View>
+          <View style={_cstyles.section_divider_line} />
 
           <SimpleRow title={"Matches Played"} value={""}
                      navigator={this.props.navigator} />
-          <View style={_cstyles.section_divider_line} ></View>
+          <View style={_cstyles.section_divider_line} />
 
           <SimpleRow title={"Recent Matches"} value={""} />
 

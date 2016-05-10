@@ -62,7 +62,7 @@ var PlayerPage = React.createClass({
 
 
     // add friend component
-    var add_friend = <View></View>
+    var add_friend = <View/>
 
     if (this.state.my_player) {
 
@@ -80,7 +80,7 @@ var PlayerPage = React.createClass({
                                     value={friend_status_text}
                                     key={1}/>,
                        <View style={_cstyles.section_divider_line}
-                             key={2}></View>]
+                             key={2}/>]
       }
     }
 
@@ -120,7 +120,7 @@ var PlayerPage = React.createClass({
             title={'Name'}
             value={this.state.player.name.full}/>
 
-          <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}/>
 
           {add_friend}
 
@@ -128,13 +128,13 @@ var PlayerPage = React.createClass({
             title={'Nationality'}
             value={this.state.player.nationality}/>
 
-          <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}/>
 
           <SimpleRow
             title={'Level'}
             value={this.state.player.level}/>
 
-          <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}/>
 
           <PayoutSection
             title={'Earnings'}
@@ -144,42 +144,42 @@ var PlayerPage = React.createClass({
           <PayoutListing
             earnings={this.state.player.earnings} />
 
-          <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}/>
 
           <SimpleRow
             title={'Sports'}
             value={this.state.player.sports}/>
 
-          <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}/>
 
           <SimpleRow
             title={'Location'}
             value={this.state.player.home}/>
 
-          <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow
           title={'Teams'}
           value={this.state.player.teams.length}
           onPress={this.toTeamListing} />
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow
           title={'Friends'}
           value={this.state.player.following.length}
           onPress={this.toFriendsListing} />
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow
           title={'Tournaments'}
           value={this.state.player.tournaments.length}
           onPress={this.toTournamentListing} />
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow title={"Career Matches"}
                    value={this.state.player.matches.length}
                    onPress={()=>this.toMatchListing()}/>
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow title={"Recent Matches"}
                    value={this.state.player.matches.length}

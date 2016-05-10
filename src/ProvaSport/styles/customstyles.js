@@ -150,6 +150,9 @@ var CustomStylesDefault = StyleSheet.create({
     width: 28 * _cvals.dscale,
     marginRight: 15 * _cvals.dscale,
   },
+  content: { 
+    height: windowSize.height - _cvals.wideButtonHeight - _cvals.tabBarHeight,
+  }
 })
 
 var chooseStyle = function() {

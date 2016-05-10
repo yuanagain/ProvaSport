@@ -122,7 +122,7 @@ var SettingsPage = React.createClass({
             harvest={(sports) => this.setState({sports})}
           />
 
-          <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}/>
 
           <PopoverSelector
             title={'Country'}
@@ -133,7 +133,7 @@ var SettingsPage = React.createClass({
             harvest={(country) => this.setState({country})}
           />
 
-          <View style={_cstyles.section_divider_line}></View>
+          <View style={_cstyles.section_divider_line}/>
 
           <SimpleRow
             title={'Password'}

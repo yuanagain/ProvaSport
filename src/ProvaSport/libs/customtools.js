@@ -75,7 +75,7 @@ var selectionNeedles = function(haystack, needles) {
 }
 
 var randomKey = function() {
-  return Math.random(1, _const.bignum)
+  return Math.random(2, _const.bignum)
 }
 
 var toDate = function(mydate){

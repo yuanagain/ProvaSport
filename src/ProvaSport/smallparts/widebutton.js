@@ -64,6 +64,7 @@ var styles = StyleSheet.create({
     shadowOffset: {width: 0, height: -1},
     padding: 5 * _cvals.dscale,
     alignItems: 'center',
+    height: _cvals.wideButtonHeight,
     justifyContent: 'center'
   },
 

@@ -68,7 +68,7 @@ var MatchPage = React.createClass({
       ...props
     } = this.props;
 
-    var buttons = <View></View>
+    var buttons = <View/>
     console.log("STATUS:  "+this.state.myStatus)
     if (this.state.myStatus == 3) {
       //console.log("MATCH  "+ this.state.match.status['0'])
@@ -112,16 +112,16 @@ var MatchPage = React.createClass({
             <View style={_cstyles.body_container}>
 
               <SimpleRow title={"Date "} value={_ctools.toDate(new Date(this.state.match.datetime))} />
-              <View style={_cstyles.section_divider_line} ></View>
+              <View style={_cstyles.section_divider_line} />
 
               <SimpleRow title={"Status "} value={_ctools.codeToString(this.state.match.status[this.state.myTeam])} />
-              <View style={_cstyles.section_divider_line} ></View>
+              <View style={_cstyles.section_divider_line} />
 
               <SimpleRow title={"Location "} value={this.state.match.location} />
-              <View style={_cstyles.section_divider_line} ></View>
+              <View style={_cstyles.section_divider_line} />
 
               <SimpleRow title={"Sport "} value={this.state.match.sport[0]} />
-              <View style={_cstyles.section_divider_line} ></View>
+              <View style={_cstyles.section_divider_line} />
 
 
               <TeamBlock teamid={this.state.match.teams[0]}
@@ -140,7 +140,7 @@ var MatchPage = React.createClass({
               <TeamRow  teamid={this.state.match.teams[1]}
                         navigator={this.props.navigator} />
 
-              <View style={_cstyles.section_divider_line} ></View>
+              <View style={_cstyles.section_divider_line} />
 
               <SimpleRow title={"Scores "} value={""} />
               <DynamicList
@@ -148,7 +148,7 @@ var MatchPage = React.createClass({
                 magic={'scores_fixed'}
               />
 
-              <View style={_cstyles.section_divider_line} ></View>
+              <View style={_cstyles.section_divider_line} />
             </View>
           </ScrollView>
         </View>
