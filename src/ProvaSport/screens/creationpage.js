@@ -178,7 +178,7 @@ var ContractsPage = React.createClass({
     );
   },
 
-  validateName() {
+  validateName: function() {
     if(this.state.name.length < 2){
       console.log("ERROR need a name longer than 1 character");
       return false;
@@ -187,7 +187,7 @@ var ContractsPage = React.createClass({
       return true;
     }
   },
-  validateTeams() {
+  validateTeams: function() {
     //much more complicated. make a list of players seen, no duplicate players,
     //rn just make sure each team has players and does not exceed max player
     var MAX_PLAYER_COUNT = _settings.config.maxPlayers;
@@ -202,6 +202,7 @@ var ContractsPage = React.createClass({
     })
   },
   start: function(){
+    console.log(this.state.teams)
     /*
      * if(!this.validateTeams() || !this.validateTeams()){
      *   console.log("ERROR");
@@ -291,7 +292,7 @@ var ContractsPage = React.createClass({
     }
     defaults.name = obj.name+" Match";
     defaults.sport = obj.sport;
-    defauts.payoutdata = {
+    defaults.payoutdata = {
       cash: 100,
       xp: 100
     };
@@ -450,7 +451,6 @@ var ContractsPage = React.createClass({
     this.reset();
   },
   toBracket(tid) {
-    console.log("TO BRACKET");
     this.props.navigator.push({
       id: "BracketPage3",
       component: BracketPage,
