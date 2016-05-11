@@ -280,9 +280,20 @@ var update_matches = function(matches, tournament) {
       if (match.teams[0] == 'TBD' || match.teams[1] == 'TBD') {
         continue
       }
-
-      if (status == "Unplayed" || (match.status[0] < 4 || match.status[1] < 4) || ((match.teams[0] =="BYE" && match.status[1] < 4) || (match.teams[1] =="BYE" && match.status[0] < 4))) {
-        continue
+      if (((match.teams[0] == "BYE")) {
+        if (status == "Unplayed" || (match.status[1] < 4)) {
+          continue
+        }
+      }
+      else if ((match.teams[1] == "BYE")) {
+        if (status == "Unplayed" || (match.status[0] < 4)) {
+          continue
+        }
+      }
+      else {
+        if (status == "Unplayed" || (match.status[0] < 4 || match.status[1] < 4)) {
+          continue
+        }
       }
       // entails that updates will continuet to be passed down
       changed = true
