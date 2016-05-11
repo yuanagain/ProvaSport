@@ -10,19 +10,6 @@
 var ref= require("firebase");
 ref = new Firebase("https://shining-torch-4767.firebaseio.com")
 /* register new user */
-function create(authData, object) {
-  /*Actual login*/
-  var isNewUser = true;
-  ref.onAuth(function(authData) {
-    if (authData && isNewUser) {
-      // save the user's profile into the database so we can list users,
-      // use them in Security and Firebase Rules, and show profiles
-      ref.child("user").child(authData.uid).set({
-        object
-      });
-    }
-  });
-}
 
 /*set everything in here*/
 function set(obj) {

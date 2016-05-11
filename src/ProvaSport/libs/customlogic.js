@@ -195,6 +195,7 @@ var createBracket = function(data) {
         matchi.teams[1] = "TBD";
         matchi.datetime = Date.now();
         matchi.sport = data.defaultM.sport;
+        matchi.name = data.defaultM.name;
         matchi.tournamentid = data.id;
         matches.push(matchi)
       }
@@ -280,7 +281,7 @@ var update_matches = function(matches, tournament) {
         continue
       }
 
-      if (status == "Unplayed" || match.status[0] < 4|| match.status[1] < 4) {
+      if (status == "Unplayed" || (match.status[0] < 4 && match.status[1] < 4)) {
         continue
       }
       // entails that updates will continuet to be passed down

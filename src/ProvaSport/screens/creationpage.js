@@ -270,7 +270,7 @@ var ContractsPage = React.createClass({
       obj.teams.forEach(function(teamid){
         Team.addTournament(teamid, id)
       })
-      console.log("BRACET2");
+      //console.log("BRACET2");
       _clogic.createBracket(data).then(reply=>{obj.matches=reply}).then(()=>{Tournament.setTournament(id, obj); return Promise.resolve()}).then(reps=>this.hardReset()).then(r=>this.toBracket(id)).catch(function(err){console.log(err)})
   },
   /*
