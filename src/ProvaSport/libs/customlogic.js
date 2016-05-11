@@ -281,7 +281,7 @@ var update_matches = function(matches, tournament) {
         continue
       }
 
-      if (status == "Unplayed" || (match.status[0] < 4 && match.status[1] < 4)) {
+      if (status == "Unplayed" || (match.status[0] < 4 || match.status[1] < 4) || ((match.teams[0] =="BYE" && match.status[1] < 4) || (match.teams[1] =="BYE" && match.status[0] < 4))) {
         continue
       }
       // entails that updates will continuet to be passed down
