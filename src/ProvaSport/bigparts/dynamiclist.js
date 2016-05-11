@@ -40,6 +40,10 @@ var DynamicList = React.createClass({
       rowRender = this.renderScore
     }
 
+    if (this.props.magic == 'players' ) {
+      rowRender = this.renderPlayer
+    }
+
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       items: this.props.items,
@@ -81,6 +85,10 @@ var DynamicList = React.createClass({
     if (this.props.magic == "scores_fixed") {
       AddRow = ( <View></View> )
     }
+
+    else if (this.props.magic == 'players' ) {
+      AddRow = <View></View>
+    }
     return (
     <View style={[styles.container, this.props.style]}>
 
@@ -100,6 +108,12 @@ var DynamicList = React.createClass({
         val1={score[0]}
         val2={score[1]}
       />
+    )
+  },
+
+  renderPlayer: function(playerid) {
+    return (
+      <Text>{"PLAYERID: " + playerid}</Text>
     )
   },
 

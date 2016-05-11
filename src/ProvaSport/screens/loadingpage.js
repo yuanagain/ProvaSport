@@ -30,7 +30,7 @@ var LoadingPage = React.createClass({
       <Header title={"Loading"}
               mode={'nav'}
               navigator={this.props.navigator} />
-      <View></View>
+      <View/>
     </View>
     );
   },

@@ -48,19 +48,19 @@ var MyPlayerPage = React.createClass({
          title={'Name'}
          value={'Player Name'}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+       <View style={_cstyles.section_divider_line}/>
 
        <SimpleRow
          title={'Nationality'}
          value={'USA'}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+       <View style={_cstyles.section_divider_line}/>
 
        <SimpleRow
          title={'Level'}
          value={'23'}/>
 
-       <View style={_cstyles.section_divider_line}></View>
+       <View style={_cstyles.section_divider_line}/>
 
         <PayoutSection
           title={'Earnings'}
@@ -79,25 +79,25 @@ var MyPlayerPage = React.createClass({
           earnings={{'cash': 12000, 'xp': 12000}}
         />
 
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow
           title={'Sports'}
           value={'Tennis, Soccer, Lacrosse'}/>
 
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow
           title={'Location'}
           value={'Princeton, NJ'}/>
 
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow
           title={'Teams'}
           value={'None'}/>
 
-        <View style={_cstyles.section_divider_line}></View>
+        <View style={_cstyles.section_divider_line}/>
 
         <SimpleRow title={"Recent Matches"} value={"4"} />
 
@@ -107,7 +107,7 @@ var MyPlayerPage = React.createClass({
           />
         </View>
 
-        <View style={_cstyles.section_divider_line} ></View>
+        <View style={_cstyles.section_divider_line} />
         <View style={{height: 50 * _cvals.dscale, width: windowSize.width}}>
         </View>
 

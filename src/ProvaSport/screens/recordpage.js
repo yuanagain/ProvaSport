@@ -54,12 +54,13 @@ var reset_form = {
         scores: [],
       }
 
-var items = ["Item 1", "Item 2"];
+var all_teams = ["Item 1", "Item 2"];
 
 var RecordPage = React.createClass({
 
   getInitialState: function() {
     return ( {
+      all_teams: [],
       name: "",
       location: "",
       sport: [],
@@ -74,7 +75,7 @@ var RecordPage = React.createClass({
   getDefaultProps: function() {
     return ({
       mode: '',
-      items: [0, 1],
+      all_teams: [0, 1],
       matchid: -1,
       // options; 'team1', 'team2, 'name', 'sport', 'location',
       fixed_fields: [],
@@ -149,7 +150,7 @@ var RecordPage = React.createClass({
       team1 = <PopoverSelector
                 title={'Team 1'}
                 magic={'player'}
-                items={this.state.items}
+                items={_ctools.getAvailable(this.state.all_teams, this.state.teams, 0)}
                 navigator={this.props.navigator}
                 selection={this.state.teams[0]}
                 harvest={this.setTeams}
@@ -168,7 +169,7 @@ var RecordPage = React.createClass({
       team2 = <PopoverSelector
                 title={'Team 2'}
                 magic={'player'}
-                items={this.state.items}
+                items={_ctools.getAvailable(this.state.all_teams, this.state.teams, 1)}
                 navigator={this.props.navigator}
                 selection={this.state.teams[1]}
                 harvest={this.setTeams}
@@ -200,7 +201,7 @@ var RecordPage = React.createClass({
 
     return (
     <View style={styles.container}>
-      <View style={(Platform.OS === 'ios') ? {height: 525 * _cvals.vscale} : {height: 520 * _cvals.vscale}}>
+      <View style={_cstyles.content}>
         <Header title={"RECORD"}
                   mode={this.props.mode}
                   navigator={this.props.navigator} />
@@ -212,20 +213,17 @@ var RecordPage = React.createClass({
 
             {sport}
 
-            <View style={_cstyles.section_divider_line}>
-            </View>
+            <View style={_cstyles.section_divider_line}/>
 
             {team1}
             {team_row_1}
 
-            <View style={_cstyles.section_divider_line}>
-            </View>
+            <View style={_cstyles.section_divider_line}/>
 
             {team2}
             {team_row_2}
 
-            <View style={_cstyles.section_divider_line}>
-            </View>
+            <View style={_cstyles.section_divider_line}/>
 
             <SimpleRow
               title={'Scores'}
@@ -259,8 +257,8 @@ var RecordPage = React.createClass({
     }
     AsyncStorage.getItem('player', (err, player)=>{
       player = JSON.parse(player);
-      var items = player.following.concat(player.playerid);
-      this.setState({items: items});
+      var all_teams = player.following.concat(player.playerid);
+      this.setState({all_teams: all_teams});
     })
   },
   //data MUST be populated
@@ -292,8 +290,8 @@ var RecordPage = React.createClass({
       user = JSON.parse(user);
       AsyncStorage.getItem('player', (err, player)=>{
         player = JSON.parse(player);
-        var items = player.following.concat(user.playerid);
-        this.setState({items: items});
+        var all_teams = player.following.concat(user.playerid);
+        this.setState({all_teams: all_teams});
       })
     })
   },
@@ -453,8 +451,6 @@ var RecordPage = React.createClass({
   },
 
 });
-
-
 
 var styles = StyleSheet.create({
   container: {
