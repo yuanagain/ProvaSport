@@ -91,6 +91,12 @@ function setMatch(matchid, obj) {
     });
 }
 function createMatch(obj) {
+  if (obj.teams[0] === 'BYE'){
+    obj.status[0] = 4;
+  }
+  else if (obj.teams[1]==="BYE") {
+     obj.status[1] = 4;
+  }
   //console.log("CALLED MATCH.CREATEMATCH!!!")
   return new Promise(function(resolve, reject) {
       var newRef = matchdb.push();
@@ -132,6 +138,13 @@ function unique(list) {
  * }
  */
 function _CreateMatch(obj, callback) {
+  if (obj.teams[0] === 'BYE'){
+    obj.status[0] = 4
+  }
+  else if (obj.teams[1]==="BYE") {
+     obj.status[1] = 4
+  }
+
   var promise = new Promise(function(resolve, reject) {
       var newRef = matchdb.push();
       obj.matchid = newRef.key();

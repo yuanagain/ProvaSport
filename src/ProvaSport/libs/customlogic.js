@@ -280,12 +280,12 @@ var update_matches = function(matches, tournament) {
       if (match.teams[0] == 'TBD' || match.teams[1] == 'TBD') {
         continue
       }
-      if ((match.teams[0] == "BYE")) {
+      if (match.teams[0] == "BYE") {
         if (status == "Unplayed" || (match.status[1] < 4)) {
           continue
         }
       }
-      else if ((match.teams[1] == "BYE")) {
+      else if (match.teams[1] == "BYE") {
         if (status == "Unplayed" || (match.status[0] < 4)) {
           continue
         }
