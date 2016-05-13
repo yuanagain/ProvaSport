@@ -295,7 +295,7 @@ var SignUpPage = React.createClass({
       )
     }
 
-    else if (this.state.country == null) {
+    else if (this.state.country == null || this.state.country.length == 0) {
       Alert.alert(
         'Invalid Country',
         'Please select a country',
@@ -304,7 +304,7 @@ var SignUpPage = React.createClass({
         ]
       )
     }
-    else if (this.state.sports == null) {
+    else if (this.state.sports == null || this.state.country.length == 0) {
       Alert.alert(
         'Invalid Sport Selection',
         'Please select at least 1 sport',
@@ -350,32 +350,41 @@ var SignUpPage = React.createClass({
       //create the user in Firebase
       //this should not result in a race condition but sometimes we get -1
       User.createUser(email, pass).then(uid=>{
-        callback(uid, setUser, player)
+        callback(uid, setUser, player, pass)
       }).catch(function(err){
         console.log("COULD NOT CREATE USER "+err)
-      })
+          Alert.alert(
+            'Invalid Login',
+            String(err),
+            [
+              {text: 'OK'},
+            ]
+          )
+      });
     }
   },
-  storeUser: function (uid, user, player) {
-    console.log("\n"+uid+"  "+user+"  "+player)
+  storeUser: function (uid, user, player, pass) {
+    //console.log("\n"+uid+"  "+user+"  "+player)
     player.userid = uid;
     var setImageFunc = this.upload;
     var callback = this.props.navToHomeFunc;
     var call1 = this._setInitialUser;
     var uri = this.state.profImage.uri
+    this._setInitialPlayer(player);
     Player.createPlayer(player).then(function(id){
       //given the id add to the user and create data in FB
-      console.log(player);
+      console.log("playerCreated");
       player.playerid = id;
-      setImageFunc(uri, id, player)
+      if(uri != "")
+        setImageFunc(uri, id, player)
       user.playerid = id;
-      console.log(user)
-      User.setUser(uid, user);
-      call1(user)
-    })
-    this._setInitialPlayer(player)
-    callback()
 
+      console.log("Setting User")
+      User.setUser(uid, user).then(resp=>call1(user)).then(() => callback()).catch(function(err){
+        console.log("setUser Failure REMOVING!: "+ err);
+        User.removeUser(setUser.email, pass)
+      });
+    }).catch(function(err){console.log(err);})
   },
   _setInitialUser: function(obj) {
     console.log("CACHE user")
@@ -426,7 +435,6 @@ var SignUpPage = React.createClass({
     })
   },
   _setInitialPlayer: function(obj) {
-
     try {
       //THIS WORKS!!!
       AsyncStorage.setItem('player', JSON.stringify(obj), () => {

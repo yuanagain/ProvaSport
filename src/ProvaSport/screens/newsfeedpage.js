@@ -60,73 +60,74 @@ var NewsFeedPage = React.createClass({
   },
 
   componentDidMount: function () {
+
+  },
+  componentWillReceiveProps: function (nextProps) {
     AsyncStorage.getItem('player', (err, player)=>{
+      console.log(player);
       player = JSON.parse(player);
       if (player.following.length == 0){
         this.setState({fmatches: player.matches})
       }
-      AsyncStorage.getItem('user', (err, result)=>{
-         //console.log("PLAYER");
-        //this is our matches
-        //console.log("USING ASYNC MATCHES")
-        result = JSON.parse(result);
-        Player.getFriendsMatches(result.playerid).then(resp=>{
-          var matches = [];
-          if(resp!=null || resp!= undefined) {
-            matches = resp;
-          }
-          else {
-            matches = [];
-          }
-          matches = this.unique(matches);
-          //matches = matches;
-          this.setState({fmatches: matches})
-        });
+      Player.getFriendsMatches(player.playerid).then(resp=>{
+        var matches = [];
+        if(resp!=null || resp!= undefined) {
+          matches = resp;
+        }
+        else {
+          matches = [];
+        }
+        matches = this.unique(matches);
+        //matches = matches;
+        this.setState({
+          player: player,
+          fmatches: matches
+        })
       });
     })
-  },
-  componentWillReceiveProps: function (nextProps) {
-    AsyncStorage.getItem('player', (err, player)=>{
-      player = JSON.parse(player);
-      AsyncStorage.getItem('user', (err, result)=>{
-         //console.log("PLAYER");
-        //this is our matches
-        //console.log("USING ASYNC MATCHES")
-        result = JSON.parse(result);
-        Player.getFriendsMatches(result.playerid).then(resp=>{
-          var matches = [];
-          /*
-           * console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
-           * console.log(this.unique(player.matches.concat(resp)));
-           */
-          if (resp!=null || resp!= undefined) {
-            matches = resp;
-          }
-          else {
-            //matches = player.matches;
-          }
-          //console.log(matches);
-          //matches = matches.reverse();
-          this.setState({fmatches: matches})
-        });
-      });
-      // this.state.match = this.props.match
-    })
-     this.onRefresh()
+    /*
+     * AsyncStorage.getItem('player', (err, player)=>{
+     *   player = JSON.parse(player);
+     *   AsyncStorage.getItem('user', (err, result)=>{
+     *      //console.log("PLAYER");
+     *     //this is our matches
+     *     //console.log("USING ASYNC MATCHES")
+     *     result = JSON.parse(result);
+     *     Player.getFriendsMatches(result.playerid).then(resp=>{
+     *       var matches = [];
+     *       /*
+     *        * console.log("RESPONSE FORM SDNJDKFJJNKDFJNKSD");
+     *        * console.log(this.unique(player.matches.concat(resp)));
+     *        *
+     *       if (resp!=null || resp!= undefined) {
+     *         matches = resp;
+     *       }
+     *       else {
+     *         //matches = player.matches;
+     *       }
+     *       //console.log(matches);
+     *       //matches = matches.reverse();
+     *       this.setState({fmatches: matches})
+     *     });
+     *   });
+     *   // this.state.match = this.props.match
+     * })
+     *  this.onRefresh()
+     */
   },
 
   onRefresh: function() {
 //hard re-fresh fetch from server
-    AsyncStorage.getItem('user', (err, result)=>{
-      result = JSON.parse(result);
-
-      Player.GetPlayer(result.playerid).then(player=>{
+  console.log(this.state.player);
+      Player.GetPlayer(this.state.player.playerid).then(player=>{
         AsyncStorage.setItem('player', JSON.stringify(player), (err, response)=>{
-          Player.getFriendsMatches(result.playerid).then(resp=>{
+          Player.getFriendsMatches(this.state.player.playerid).then(resp=>{
             var matches = [];
-            console.log("RESPONSE FROM");
-            console.log(resp);
-            console.log(player.matches);
+            /*
+             * console.log("RESPONSE FROM");
+             * console.log(resp);
+             * console.log(player.matches);
+             */
             if(resp!=null || resp!= undefined) {
               matches = resp;
             }
@@ -135,12 +136,12 @@ var NewsFeedPage = React.createClass({
             }
             //console.log(matches);
             //matches = matches.reverse();
-            this.setState({fmatches: matches})
+            this.setState({
+              player: player,
+              fmatches: matches})
           });
         });
       });
-      // this.state.match = this.props.match
-    })
   },
   unique: function(list) {
     return list.filter(function(elem, pos, arr) {

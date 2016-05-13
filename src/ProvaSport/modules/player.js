@@ -416,18 +416,20 @@ function getFriends(playerid){
         console.log("NO friends :(")
         resolve([])
       }
-      var friendObjList = [];
-      var friends = player.following;
-      //console.log(player.friends)
-      friends.push(playerid);
-      friends.forEach(function(friend){
-        GetPlayer(friend).then(resp=>{
-          friendObjList.push(resp);
-          if (friends.length == friendObjList.length){
-            resolve(friendObjList);
-          }
+      else {
+        var friendObjList = [];
+        var friends = player.following;
+        //console.log(player.friends)
+        friends.push(playerid);
+        friends.forEach(function(friend){
+          GetPlayer(friend).then(resp=>{
+            friendObjList.push(resp);
+            if (friends.length == friendObjList.length){
+              resolve(friendObjList);
+            }
+          })
         })
-      })
+      }
     })
   })
 }

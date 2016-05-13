@@ -41,27 +41,6 @@ function updateUser(uid, updateData) {
 }
 
 
-/*  CHANGED TO PLAYER MODULE
-HUGE API  how to request a friend? instead of force them to be together?
-function addFriend(friendid) {
-  var p = new Player(this.User.playerid);
-  p.addFriend(friendid);
-}
-*/
-
-/* CHANGED TO PLAYER
-Delete friend:
-function deleteFriend(friendid) {
-  if(err) { return null;}
-  var p = new Player(User.playerid);
-  var friends = p.getFriends;
-  friends.filter(friendid);
-  ref.child("player").child(this.User.playerid).update({"friends":friends});
-}
-*/
-/* set the users name
-
-  */
 function setName(uid, strName) {
   ref.child('user').child(uid).update({"name": strName});
 }
@@ -143,7 +122,7 @@ function createUser(email, password) {
       }, function(error, userData) {
         if (error) {
           console.log("Error creating user:", error);
-          reject("Error creating " + email);
+          reject(error);
         } else {
           console.log("Successfully created user account with uid:", userData.uid);
           resolve(userData.uid);
@@ -318,13 +297,15 @@ function _GetUser(uid, callback){
 function setUser(uid, obj) {
   return new Promise(function(resolve, reject){
     obj.userid = uid;
-    if (obj){
+    if (obj !== null){
       ref.child('user').child(uid).set(obj)
       console.log("created object USER")
+      resolve()
     }
     else {
       ref.child('user').child(uid).set(default_user)
-      consle.log("created Default User")
+      console.log("created Default User")
+      reject()
     }
   })
 }
@@ -346,7 +327,7 @@ function _SetUser(uid, obj) {
 var default_user = {
   "name": "Loading",
   "email": "Loading",
-  "playerid": 0,
+  "playerid": -1,
   "prof_pic": "loading",
   "nationality": "USA",
   "userid": 0,
@@ -379,4 +360,4 @@ var default_user = {
  */
 
 module.exports = {_GetUser, GetUser, default_user, createUser, login, _Login, logout, setUser,
-                  changePassword};
+                  changePassword, removeUser};
