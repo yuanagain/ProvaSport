@@ -32,6 +32,11 @@ var TeamBrick = React.createClass({
     if (this.props.disabled) {
       return
     }
+    // check if team or is BYE or TBD
+    if (this.props.teamid == 'BYE' || this.props.teamid == 'TBD') {
+      return
+    }
+
     var TeamPage = require('../screens/teampage')
     this.props.navigator.push({
       id: "TeamPage" + String(_ctools.randomKey()),
@@ -47,6 +52,7 @@ var TeamBrick = React.createClass({
     if (this.state.loaded == false) {
       return
     }
+
     var PlayerPage = require('../screens/playerpage')
     this.props.navigator.push({
       id: "PlayerPage" + String(_ctools.randomKey()),

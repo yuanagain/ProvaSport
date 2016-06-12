@@ -84,12 +84,18 @@ var TeamListingRow = React.createClass({
     if (this.state.loaded == false) {
       return
     }
+    // check if team or is BYE or TBD
+    if (this.props.teamid == 'BYE' || this.props.teamid == 'TBD') {
+      return
+    }
+
     var TeamPage = require('../screens/teampage')
     this.props.navigator.push({
       id: "TeamPage" + String(_ctools.randomKey()),
       component: TeamPage,
       passProps: {
         navigator: this.props.navigator,
+        teamid: this.props.teamid,
         tournamentid: this.props.tournamentid
       }
     })
