@@ -27,7 +27,7 @@ var NewsFeedPage = require('./screens/newsfeedpage')
 var CreationPage = require('./screens/creationpage')
 var MorePage = require('./screens/morepage')
 var SignUpPage = require('./screens/signuppage')
-
+// this is a new comment
 var _cvals = require('./styles/customvals.js')
 
 class ProvaSport extends Component {
