@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/api/comments', function(req, res) {
+/*app.get('/api/comments', function(req, res) {
   fs.readFile(COMMENTS_FILE, function(err, data) {
     if (err) {
       console.error(err);
@@ -69,9 +69,9 @@ app.post('/api/comments', function(req, res) {
       res.json(comments);
     });
   });
-});
+});*/
 
 
 app.listen(app.get('port'), function() {
   console.log('Server started: http://localhost:' + app.get('port') + '/');
-});
+}); 

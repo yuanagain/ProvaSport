@@ -23,6 +23,11 @@
 
 //var ProfilePage = require('./profile/profile.js')
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import LoginPage from './loginpage';
+
 var MainApp = React.createClass({
 
   getInitialState: function() {
@@ -37,7 +42,8 @@ var MainApp = React.createClass({
   render: function() {
     //<MuiThemeProvider></MuiThemeProvider>  
     return (
-      
+        
+        LoginPage.render();
         <div style = {style_2}>
           <h1>{"Yo"}</h1>
           <SideApp data={"yo1"} />
@@ -82,6 +88,6 @@ var style_2 = {
 };
 
 ReactDOM.render(
-  <MainApp />,
+  <LoginPage />,
   document.getElementById('content')
 );
