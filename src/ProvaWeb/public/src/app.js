@@ -23,6 +23,7 @@
 
 //var ProfilePage = require('./profile/profile.js')
 
+var SignUpPageUI = require('singuppage');
 var MainApp = React.createClass({
 
   getInitialState: function() {
@@ -37,9 +38,8 @@ var MainApp = React.createClass({
   render: function() {
     //<MuiThemeProvider></MuiThemeProvider>  
     return (
-      
         <div style = {style_2}>
-          <h1>{"Yo"}</h1>
+          <h1>Yo</h1>
           <SideApp data={"yo1"} />
           <SideApp data={"hello"} />
           <SideApp data={"yo mama2"} />
