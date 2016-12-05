@@ -43,12 +43,9 @@ var MainApp = React.createClass({
     //<MuiThemeProvider></MuiThemeProvider>  
     return (
         
-        LoginPage.render();
+        
         <div style = {style_2}>
-          <h1>{"Yo"}</h1>
-          <SideApp data={"yo1"} />
-          <SideApp data={"hello"} />
-          <SideApp data={"yo mama2"} />
+          <LoginPage />
         </div>
 
     );

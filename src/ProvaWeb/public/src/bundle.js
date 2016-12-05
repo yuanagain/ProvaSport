@@ -81,14 +81,7 @@
 	    return _react2.default.createElement(
 	      'div',
 	      { style: style_2 },
-	      _react2.default.createElement(
-	        'h1',
-	        null,
-	        "Yo"
-	      ),
-	      _react2.default.createElement(SideApp, { data: "yo1" }),
-	      _react2.default.createElement(SideApp, { data: "hello" }),
-	      _react2.default.createElement(SideApp, { data: "yo mama2" })
+	      _react2.default.createElement(_loginpage2.default, null)
 	    );
 	  }
 	}); // Yuan Wang
@@ -149,7 +142,7 @@
 	  color: 'blue'
 	};
 	
-	_reactDom2.default.render(_react2.default.createElement(MainApp, null), document.getElementById('content'));
+	_reactDom2.default.render(_react2.default.createElement(_loginpage2.default, null), document.getElementById('content'));
 
 /***/ },
 /* 1 */
@@ -22427,17 +22420,25 @@
 	          "form",
 	          null,
 	          React.createElement("input", { type: "emai", name: "email" }),
-	          React.createElement("input", { type: "password", name: "password" })
+	          React.createElement("br", null),
+	          React.createElement("input", { type: "password", name: "password" }),
+	          React.createElement("br", null)
 	        ),
 	        React.createElement(
 	          "a",
 	          { href: "#" },
 	          "Forgot your password?"
 	        ),
-	        React.createElement("button", { type: "submit" }),
+	        React.createElement("br", null),
 	        React.createElement(
-	          "h1",
+	          "button",
 	          null,
+	          "Submit"
+	        ),
+	        React.createElement("br", null),
+	        React.createElement(
+	          "a",
+	          { href: "#" },
 	          "New to ProvaSport? Sign up here!"
 	        )
 	      );

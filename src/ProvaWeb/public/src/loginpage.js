@@ -10,12 +10,12 @@ class LoginPage extends React.Component {
           <h1>ProvaSport</h1>
           <h3>Visionary Statement</h3>
           <form>
-            <input type="emai" name="email"/>
-            <input type="password" name="password"/>
+            <input type="emai" name="email"/><br/>
+            <input type="password" name="password"/><br/>
           </form>
-          <a href="#">Forgot your password?</a>
-          <button type="submit"/>
-          <h1>New to ProvaSport? Sign up here!</h1>
+          <a href="#">Forgot your password?</a><br/>
+          <button>Submit</button><br/>
+          <a href="#">New to ProvaSport? Sign up here!</a>
         </div>
       );
     }
