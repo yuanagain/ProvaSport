@@ -7,24 +7,21 @@ class LoginPage extends React.Component {
     render() {
       return (
         <div className="container-fluid">
-          <div className='col-sm-12'>
-            <img src = "../assets/Logo.png"/>
+          <div className='col-xs-12'>
+            <img className='img-fluid' src = "../assets/Logo.png"/>
             <h1 className='ProvaSport'>ProvaSport</h1>
             <h3>Visionary Statement</h3>
             <form>
-              <input type="emai" name="email"/><br/>
-              <input type="password" name="password"/><br/>
+              <input type="emai" className="form-control" placeholder="Email" name="email"/><br/>
+              <input type="password" className="form-control"placeholder="Password" name="password"/>
             </form>
-
-          </div>
-          <div className="col-sm-4 col-offset-8">
-              <a href="#">Forgot your password?</a><br/>
-          </div>
-          <div className='col-sm-12'>
-            <button className="btn btn-default">Submit</button><br/> 
-          </div>
-          <div className="col-sm-4 col-offset-8">
-            <a href="#">New to ProvaSport? Sign up here!</a>
+            <div className="link">
+              <a href="#">Forgot your password?</a><br/><br/>
+            </div>
+            <button className="btn btn-default" type="submit">Sign In</button><br/><br/>
+            <div className="centerLink">
+              <a href="#">New to ProvaSport? Sign up here!</a>
+            </div>
           </div>
         </div>
       );

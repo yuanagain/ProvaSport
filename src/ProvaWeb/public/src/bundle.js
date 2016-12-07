@@ -22380,7 +22380,7 @@
   \*********************************/
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -22401,61 +22401,58 @@
 	  }
 	
 	  _createClass(LoginPage, [{
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
 	      return React.createElement(
-	        "div",
-	        { className: "container-fluid" },
+	        'div',
+	        { className: 'container-fluid' },
 	        React.createElement(
-	          "div",
-	          { className: "col-sm-12" },
-	          React.createElement("img", { src: "../assets/Logo.png" }),
+	          'div',
+	          { className: 'col-xs-12' },
+	          React.createElement('img', { className: 'img-fluid', src: '../assets/Logo.png' }),
 	          React.createElement(
-	            "h1",
-	            { className: "ProvaSport" },
-	            "ProvaSport"
+	            'h1',
+	            { className: 'ProvaSport' },
+	            'ProvaSport'
 	          ),
 	          React.createElement(
-	            "h3",
+	            'h3',
 	            null,
-	            "Visionary Statement"
+	            'Visionary Statement'
 	          ),
 	          React.createElement(
-	            "form",
+	            'form',
 	            null,
-	            React.createElement("input", { type: "emai", name: "email" }),
-	            React.createElement("br", null),
-	            React.createElement("input", { type: "password", name: "password" }),
-	            React.createElement("br", null)
-	          )
-	        ),
-	        React.createElement(
-	          "div",
-	          { className: "col-sm-4 col-offset-8" },
-	          React.createElement(
-	            "a",
-	            { href: "#" },
-	            "Forgot your password?"
+	            React.createElement('input', { type: 'emai', className: 'form-control', placeholder: 'Email', name: 'email' }),
+	            React.createElement('br', null),
+	            React.createElement('input', { type: 'password', className: 'form-control', placeholder: 'Password', name: 'password' })
 	          ),
-	          React.createElement("br", null)
-	        ),
-	        React.createElement(
-	          "div",
-	          { className: "col-sm-12" },
 	          React.createElement(
-	            "button",
-	            { className: "btn btn-default" },
-	            "Submit"
+	            'div',
+	            { className: 'link' },
+	            React.createElement(
+	              'a',
+	              { href: '#' },
+	              'Forgot your password?'
+	            ),
+	            React.createElement('br', null),
+	            React.createElement('br', null)
 	          ),
-	          React.createElement("br", null)
-	        ),
-	        React.createElement(
-	          "div",
-	          { className: "col-sm-4 col-offset-8" },
 	          React.createElement(
-	            "a",
-	            { href: "#" },
-	            "New to ProvaSport? Sign up here!"
+	            'button',
+	            { className: 'btn btn-default', type: 'submit' },
+	            'Sign In'
+	          ),
+	          React.createElement('br', null),
+	          React.createElement('br', null),
+	          React.createElement(
+	            'div',
+	            { className: 'centerLink' },
+	            React.createElement(
+	              'a',
+	              { href: '#' },
+	              'New to ProvaSport? Sign up here!'
+	            )
 	          )
 	        )
 	      );

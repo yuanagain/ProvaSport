@@ -12,8 +12,8 @@ body {
 }
 
 a {
-  color: #5C5C5C;
-  text-align: center;
+  color: #5C5C5C !important;
+  text-align: right !important;
   text-decoration: none;
 }
 
@@ -80,6 +80,20 @@ form {
   color: white;
 }
 
-h1, h3, a, input {
+.btn-default {
+  color:#fff !important;
+  background-color: #333 !important;
+  border-color: #333 !important; 
+}
+
+.centerLink {
+  text-align: center !important;
+}
+
+.link {
+  text-align: right !important;
+}
+
+h1, h3, input {
   text-align: center;
 }
