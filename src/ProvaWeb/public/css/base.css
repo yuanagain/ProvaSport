@@ -1,14 +1,19 @@
 body {
-  background: #fff;
+  background: #48B1E2 !important;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.7;
-  margin: 0;
+  margin: auto;
   padding: 30px;
 }
 
+.container {
+  background-color: #48B1E2;
+}
+
 a {
-  color: #4183c4;
+  color: #5C5C5C;
+  text-align: center;
   text-decoration: none;
 }
 
@@ -28,12 +33,11 @@ code {
 
 h1, h2, h3, h4 {
   font-weight: bold;
-  margin: 0 0 15px;
+  margin: 0 0;
   padding: 0;
 }
 
 h1 {
-  border-bottom: 1px solid #ddd;
   font-size: 2.5em;
 }
 
@@ -43,7 +47,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1.5em;
+  font-size: 1.1em;
 }
 
 h4 {
@@ -56,4 +60,26 @@ p, ul {
 
 ul {
   padding-left: 30px;
+}
+
+img, input, form, button {
+  width: 100%
+}
+
+button {
+  background-color: black;
+  color: white;
+  outline: none;
+}
+
+form {
+  margin: auto;
+}
+
+.ProvaSport {
+  color: white;
+}
+
+h1, h3, a, input {
+  text-align: center;
 }

@@ -22390,6 +22390,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	// TODO: Add onclick action to submit button, hook to back end
 	var LoginPage = function (_React$Component) {
 	  _inherits(LoginPage, _React$Component);
 	
@@ -22404,42 +22405,58 @@
 	    value: function render() {
 	      return React.createElement(
 	        "div",
-	        null,
-	        React.createElement("img", { src: "../assets/Logo.png" }),
+	        { className: "container-fluid" },
 	        React.createElement(
-	          "h1",
-	          null,
-	          "ProvaSport"
+	          "div",
+	          { className: "col-sm-12" },
+	          React.createElement("img", { src: "../assets/Logo.png" }),
+	          React.createElement(
+	            "h1",
+	            { className: "ProvaSport" },
+	            "ProvaSport"
+	          ),
+	          React.createElement(
+	            "h3",
+	            null,
+	            "Visionary Statement"
+	          ),
+	          React.createElement(
+	            "form",
+	            null,
+	            React.createElement("input", { type: "emai", name: "email" }),
+	            React.createElement("br", null),
+	            React.createElement("input", { type: "password", name: "password" }),
+	            React.createElement("br", null)
+	          )
 	        ),
 	        React.createElement(
-	          "h3",
-	          null,
-	          "Visionary Statement"
-	        ),
-	        React.createElement(
-	          "form",
-	          null,
-	          React.createElement("input", { type: "emai", name: "email" }),
-	          React.createElement("br", null),
-	          React.createElement("input", { type: "password", name: "password" }),
+	          "div",
+	          { className: "col-sm-4 col-offset-8" },
+	          React.createElement(
+	            "a",
+	            { href: "#" },
+	            "Forgot your password?"
+	          ),
 	          React.createElement("br", null)
 	        ),
 	        React.createElement(
-	          "a",
-	          { href: "#" },
-	          "Forgot your password?"
+	          "div",
+	          { className: "col-sm-12" },
+	          React.createElement(
+	            "button",
+	            { className: "btn btn-default" },
+	            "Submit"
+	          ),
+	          React.createElement("br", null)
 	        ),
-	        React.createElement("br", null),
 	        React.createElement(
-	          "button",
-	          null,
-	          "Submit"
-	        ),
-	        React.createElement("br", null),
-	        React.createElement(
-	          "a",
-	          { href: "#" },
-	          "New to ProvaSport? Sign up here!"
+	          "div",
+	          { className: "col-sm-4 col-offset-8" },
+	          React.createElement(
+	            "a",
+	            { href: "#" },
+	            "New to ProvaSport? Sign up here!"
+	          )
 	        )
 	      );
 	    }
@@ -22447,8 +22464,6 @@
 	
 	  return LoginPage;
 	}(React.Component);
-	
-	ReactDOM.render(React.createElement(LoginPage, null), document.getElementById('content'));
 	
 	module.exports = LoginPage;
 
