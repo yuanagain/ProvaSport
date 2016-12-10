@@ -57,9 +57,9 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _loginpage = __webpack_require__(/*! ./loginpage */ 183);
+	var _profilepage = __webpack_require__(/*! ./profile/profilepage */ 183);
 	
-	var _loginpage2 = _interopRequireDefault(_loginpage);
+	var _profilepage2 = _interopRequireDefault(_profilepage);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -81,7 +81,7 @@
 	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2.default.createElement(_loginpage2.default, null)
+	      _react2.default.createElement(_profilepage2.default, null)
 	    );
 	  }
 	}); // Yuan Wang
@@ -134,7 +134,7 @@
 	  }
 	});
 	
-	_reactDom2.default.render(_react2.default.createElement(_loginpage2.default, null), document.getElementById('content'));
+	_reactDom2.default.render(_react2.default.createElement(MainApp, null), document.getElementById('content'));
 
 /***/ },
 /* 1 */
@@ -22367,94 +22367,54 @@
 
 /***/ },
 /* 183 */
-/*!*********************************!*\
-  !*** ./public/src/loginpage.js ***!
-  \*********************************/
-/***/ function(module, exports) {
+/*!*******************************************!*\
+  !*** ./public/src/profile/profilepage.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	// Yuan Wang
+	// profilepage.js
+	// Copyright ProvaSport 2016
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var React = __webpack_require__(/*! react */ 1);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 32);
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	var ProfilePage = React.createClass({
+	  displayName: 'ProfilePage',
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	// TODO: Add onclick action to submit button, hook to back end
-	var LoginPage = function (_React$Component) {
-	  _inherits(LoginPage, _React$Component);
+	  getInitialState: function getInitialState() {
+	    return { data: [] };
+	  },
 	
-	  function LoginPage() {
-	    _classCallCheck(this, LoginPage);
+	  componentDidMount: function componentDidMount() {
+	    //this.loadCommentsFromServer();
+	    //setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+	  },
 	
-	    return _possibleConstructorReturn(this, (LoginPage.__proto__ || Object.getPrototypeOf(LoginPage)).call(this));
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { style: style_3 },
+	      React.createElement(
+	        'h1',
+	        null,
+	        "HELLO"
+	      )
+	    );
 	  }
+	});
 	
-	  _createClass(LoginPage, [{
-	    key: "render",
-	    value: function render() {
-	      return React.createElement(
-	        "div",
-	        { className: "container-fluid vertical-center" },
-	        React.createElement(
-	          "div",
-	          { className: "col-xs-12" },
-	          React.createElement("img", { className: "img-fluid center-block", alt: "Responsive image", src: "../assets/Logo.png" }),
-	          React.createElement(
-	            "h1",
-	            { className: "ProvaSport" },
-	            "ProvaSport"
-	          ),
-	          React.createElement(
-	            "h3",
-	            null,
-	            "Visionary Statement"
-	          ),
-	          React.createElement(
-	            "form",
-	            null,
-	            React.createElement("input", { type: "emai", className: "form-control", placeholder: "Email", name: "email" }),
-	            React.createElement("br", null),
-	            React.createElement("input", { type: "password", className: "form-control", placeholder: "Password", name: "password" })
-	          ),
-	          React.createElement(
-	            "div",
-	            { className: "link" },
-	            React.createElement(
-	              "a",
-	              { href: "#" },
-	              "Forget your password?"
-	            ),
-	            React.createElement("br", null),
-	            React.createElement("br", null)
-	          ),
-	          React.createElement(
-	            "button",
-	            { className: "btn btn-default", type: "submit" },
-	            "Sign In"
-	          ),
-	          React.createElement("br", null),
-	          React.createElement("br", null),
-	          React.createElement(
-	            "div",
-	            { className: "centerLink" },
-	            React.createElement(
-	              "a",
-	              { href: "#" },
-	              "New to ProvaSport? Sign up here!"
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
+	var style_3 = {
+	  color: 'orange'
+	};
 	
-	  return LoginPage;
-	}(React.Component);
-	
-	module.exports = LoginPage;
+	exports.default = ProfilePage;
 
 /***/ }
 /******/ ]);

@@ -26,7 +26,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import LoginPage from './loginpage';
+import Profile from './profile/profilepage'
 
 var MainApp = React.createClass({
 
@@ -43,7 +43,7 @@ var MainApp = React.createClass({
     //<MuiThemeProvider></MuiThemeProvider>  
     return (
         <div>
-          <LoginPage />
+          <Profile />
         </div>
 
     );
@@ -71,6 +71,6 @@ var SideApp = React.createClass({
 });
 
 ReactDOM.render(
-  <LoginPage />,
+  <MainApp />,
   document.getElementById('content')
 );
