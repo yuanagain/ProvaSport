@@ -42,9 +42,7 @@ var MainApp = React.createClass({
   render: function() {
     //<MuiThemeProvider></MuiThemeProvider>  
     return (
-        
-        
-        <div style = {style_2}>
+        <div>
           <LoginPage />
         </div>
 
@@ -65,24 +63,12 @@ var SideApp = React.createClass({
 
     
     return (
-      
         <div style = {style_3}>
           <h2>{this.props.data}</h2>
-
         </div>
-
     );
   }
 });
-
-
-var style_3 = {
-  color: 'orange',
-};
-
-var style_2 = {
-  color: 'blue',
-};
 
 ReactDOM.render(
   <LoginPage />,

@@ -6,9 +6,9 @@ class LoginPage extends React.Component {
 
     render() {
       return (
-        <div className="container-fluid">
+        <div className="container-fluid vertical-center">
           <div className='col-xs-12'>
-            <img className='img-fluid' src = "../assets/Logo.png"/>
+            <img className="img-fluid center-block" alt="Responsive image" src = "../assets/Logo.png"/>
             <h1 className='ProvaSport'>ProvaSport</h1>
             <h3>Visionary Statement</h3>
             <form>
@@ -16,7 +16,7 @@ class LoginPage extends React.Component {
               <input type="password" className="form-control"placeholder="Password" name="password"/>
             </form>
             <div className="link">
-              <a href="#">Forgot your password?</a><br/><br/>
+              <a href="#">Forget your password?</a><br/><br/>
             </div>
             <button className="btn btn-default" type="submit">Sign In</button><br/><br/>
             <div className="centerLink">

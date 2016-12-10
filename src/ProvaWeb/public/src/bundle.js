@@ -80,7 +80,7 @@
 	    //<MuiThemeProvider></MuiThemeProvider>  
 	    return _react2.default.createElement(
 	      'div',
-	      { style: style_2 },
+	      null,
 	      _react2.default.createElement(_loginpage2.default, null)
 	    );
 	  }
@@ -133,14 +133,6 @@
 	    );
 	  }
 	});
-	
-	var style_3 = {
-	  color: 'orange'
-	};
-	
-	var style_2 = {
-	  color: 'blue'
-	};
 	
 	_reactDom2.default.render(_react2.default.createElement(_loginpage2.default, null), document.getElementById('content'));
 
@@ -22380,7 +22372,7 @@
   \*********************************/
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -22401,57 +22393,57 @@
 	  }
 	
 	  _createClass(LoginPage, [{
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      return React.createElement(
-	        'div',
-	        { className: 'container-fluid' },
+	        "div",
+	        { className: "container-fluid vertical-center" },
 	        React.createElement(
-	          'div',
-	          { className: 'col-xs-12' },
-	          React.createElement('img', { className: 'img-fluid', src: '../assets/Logo.png' }),
+	          "div",
+	          { className: "col-xs-12" },
+	          React.createElement("img", { className: "img-fluid center-block", alt: "Responsive image", src: "../assets/Logo.png" }),
 	          React.createElement(
-	            'h1',
-	            { className: 'ProvaSport' },
-	            'ProvaSport'
+	            "h1",
+	            { className: "ProvaSport" },
+	            "ProvaSport"
 	          ),
 	          React.createElement(
-	            'h3',
+	            "h3",
 	            null,
-	            'Visionary Statement'
+	            "Visionary Statement"
 	          ),
 	          React.createElement(
-	            'form',
+	            "form",
 	            null,
-	            React.createElement('input', { type: 'emai', className: 'form-control', placeholder: 'Email', name: 'email' }),
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'password', className: 'form-control', placeholder: 'Password', name: 'password' })
+	            React.createElement("input", { type: "emai", className: "form-control", placeholder: "Email", name: "email" }),
+	            React.createElement("br", null),
+	            React.createElement("input", { type: "password", className: "form-control", placeholder: "Password", name: "password" })
 	          ),
 	          React.createElement(
-	            'div',
-	            { className: 'link' },
+	            "div",
+	            { className: "link" },
 	            React.createElement(
-	              'a',
-	              { href: '#' },
-	              'Forgot your password?'
+	              "a",
+	              { href: "#" },
+	              "Forget your password?"
 	            ),
-	            React.createElement('br', null),
-	            React.createElement('br', null)
+	            React.createElement("br", null),
+	            React.createElement("br", null)
 	          ),
 	          React.createElement(
-	            'button',
-	            { className: 'btn btn-default', type: 'submit' },
-	            'Sign In'
+	            "button",
+	            { className: "btn btn-default", type: "submit" },
+	            "Sign In"
 	          ),
-	          React.createElement('br', null),
-	          React.createElement('br', null),
+	          React.createElement("br", null),
+	          React.createElement("br", null),
 	          React.createElement(
-	            'div',
-	            { className: 'centerLink' },
+	            "div",
+	            { className: "centerLink" },
 	            React.createElement(
-	              'a',
-	              { href: '#' },
-	              'New to ProvaSport? Sign up here!'
+	              "a",
+	              { href: "#" },
+	              "New to ProvaSport? Sign up here!"
 	            )
 	          )
 	        )

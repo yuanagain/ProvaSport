@@ -2,9 +2,8 @@ body {
   background: #48B1E2 !important;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
-  line-height: 1.7;
   margin: auto;
-  padding: 30px;
+  max-height: 100% !important;
 }
 
 .container {
@@ -41,28 +40,21 @@ h1 {
   font-size: 2.5em;
 }
 
-h2 {
-  border-bottom: 1px solid #eee;
-  font-size: 2em;
-}
-
 h3 {
-  font-size: 1.1em;
-}
-
-h4 {
-  font-size: 1.2em;
+  margin-bottom: 15% !important;
+  margin-top: 0px !important;
+  font-size: 1.1em !important;
 }
 
 p, ul {
   margin: 15px 0;
 }
 
-ul {
-  padding-left: 30px;
+img {
+  height:100% !important;
 }
 
-img, input, form, button {
+form, button {
   width: 100%
 }
 
@@ -76,6 +68,10 @@ form {
   margin: auto;
 }
 
+.container-fluid { 
+  height: 100% !important;
+}
+
 .ProvaSport {
   color: white;
 }
@@ -84,6 +80,14 @@ form {
   color:#fff !important;
   background-color: #333 !important;
   border-color: #333 !important; 
+}
+
+.vertical-center {
+  min-height: 100% !important;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh !important; /* These two lines are counted as one :-)       */
+
+  display: flex !important;
+  align-items: center !important;
 }
 
 .centerLink {
