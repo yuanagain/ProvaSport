@@ -50,10 +50,6 @@ p, ul {
   margin: 15px 0;
 }
 
-img {
-  height:100% !important;
-}
-
 form, button {
   width: 100%
 }
@@ -66,6 +62,10 @@ button {
 
 form {
   margin: auto;
+}
+
+img {
+  width: 50% !important;
 }
 
 .container-fluid { 
