@@ -1,0 +1,16 @@
+.vertical-center {
+  min-height: 100% !important;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh !important; /* These two lines are counted as one :-)       */
+
+  display: flex !important;
+  align-items: center !important;
+}
+
+.container-fluid { 
+  height: 100% !important;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}

@@ -19,9 +19,22 @@ var ProfilePage = React.createClass({
   render: function() {
     return (
       
-        <div style = {style_3}>
-          <h1>{"HELLO"}</h1>
-
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-4"> {/* Picture and name*/}
+              <img src="../../assets/ProfilePic.jpg" className="img-fluid img-circle"/>
+            </div>
+            <div className="col-sm-8"> {/*The stats and shit, quick game button*/}
+              <div className="row"> {/*Stats and titles*/}
+                text
+              }
+              </div>
+              <div className="row"> {/*This row is for the quick game button according to mockup*/}
+                text2
+              }
+              </div>
+            </div>
+          </div>
         </div>
 
     );

@@ -22400,11 +22400,33 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { style: style_3 },
+	      { className: 'container-fluid' },
 	      React.createElement(
-	        'h1',
-	        null,
-	        "HELLO"
+	        'div',
+	        { className: 'row' },
+	        React.createElement(
+	          'div',
+	          { className: 'col-sm-4' },
+	          ' ',
+	          React.createElement('img', { src: '../../assets/ProfilePic.jpg', className: 'img-fluid img-circle' })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'col-sm-8' },
+	          ' ',
+	          React.createElement(
+	            'div',
+	            { className: 'row' },
+	            ' ',
+	            'text }'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'row' },
+	            ' ',
+	            'text2 }'
+	          )
+	        )
 	      )
 	    );
 	  }
