@@ -1,4 +1,6 @@
 // TODO: Add onclick action to submit button, hook to back end
+import React from 'react';
+
 class LoginPage extends React.Component {
     constructor() {
       super();
@@ -8,7 +10,7 @@ class LoginPage extends React.Component {
       return (
         <div className="container-fluid vertical-center">
           <div className='col-xs-12'>
-            <img className="img-fluid center-block" alt="Responsive image" src = "../assets/Logo.png"/>
+            <img className="img-fluid center-block" alt="Responsive image" src = "/images/Logo.png"/>
             <h1 className='ProvaSport'>ProvaSport</h1>
             <h3>Visionary Statement</h3>
             <form>
