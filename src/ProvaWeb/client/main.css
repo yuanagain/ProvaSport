@@ -1,15 +1,5 @@
 /* CSS declarations go here */
-body {
-  background: #48B1E2 !important;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  margin: auto;
-  max-height: 100% !important;
-}
 
-.container {
-  background-color: #48B1E2;
-}
 
 a {
   color: #5C5C5C !important;
@@ -29,6 +19,11 @@ code {
   font-size: 12px;
   margin: 0 2px;
   padding: 0 5px;
+}
+
+p { 
+  font-size: 1.5em !important;
+  vertical-align: center;
 }
 
 h1, h2, h3, h4 {
@@ -61,12 +56,28 @@ button {
   outline: none;
 }
 
+
+
 form {
   margin: auto;
 }
 
 img {
   width: 50% !important;
+}
+
+.profilePic {
+  width: 100% !important;
+}
+
+.actionsGrid {
+  margin-right: -15px !important;
+  margin-left: -15px !important;
+}
+
+.gridBlock {
+  background-color: #fff; 
+  min-height: 95% !important;
 }
 
 .container-fluid { 
@@ -86,6 +97,8 @@ img {
 .vertical-center {
   min-height: 100% !important;  /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh !important; /* These two lines are counted as one :-)       */
+  padding-right: 0 !important;
+  padding-left: 0 !important;
 
   display: flex !important;
   align-items: center !important;
