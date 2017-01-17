@@ -7,3 +7,4 @@ import RecordPage from '../imports/ui/RecordPage.jsx';
 
 Meteor.startup(() => {
   render(<RecordPage />, document.getElementById('render-target'));
+})

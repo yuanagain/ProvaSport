@@ -29,7 +29,7 @@ const RecordPage = React.createClass({
     },
 
     close() {
-    this.setState({ showModal: false });
+      this.setState({ showModal: false });
     },
 
     open() {
@@ -140,7 +140,7 @@ const RecordPage = React.createClass({
               <Button
                 style={{width: '50%'}}
                 bsStyle="primary"
-                bsSize="large"
+                bsSize="small"
                 onClick={this.open}
               >
                 Select Team 1
@@ -149,7 +149,7 @@ const RecordPage = React.createClass({
               <Button
                 style={{width: '50%'}}
                 bsStyle="primary"
-                bsSize="large"
+                bsSize="small"
                 onClick={this.open}
               >
                 Select Team 2
