@@ -5,7 +5,10 @@ import {Popover,
         Modal, 
         Image,
         Button, 
-        OverlayTrigger} 
+        OverlayTrigger,
+        Grid, 
+        Row,
+        Col} 
         from 'react-bootstrap';
 
 class PlayerRow extends React.Component {
@@ -16,32 +19,23 @@ class PlayerRow extends React.Component {
     render() {
       return (
         <div style={styles.playerbrick}>
-          <div style={styles.im_container}>
-            <Image  circle
-                    style={styles.im}
-                    src={"http://www.proprofs.com/quiz-school/topic_images/p18lq7ediepl816p6s04171vo23.jpg"} />          
-          </div>
-
-          <div style={styles.text_container}>
-            <text style={styles.name}>Player Name</text>
-            <br></br>
-            <text style={styles.detail_text}>Details about Player</text>
-          </div>
-
-
-          <div style={styles.im_container}>
-            <img  style={styles.im}
-                  src={"http://www.proprofs.com/quiz-school/topic_images/p18lq7ediepl816p6s04171vo23.jpg"} />
-          </div>
-
-          <div style={styles.text_container}>
-            <text style={styles.name}>Player Name</text>
-            <br></br>
-            <text style={styles.detail_text}>Details about Player</text>
-          </div>
+          <Grid>
+            <Row>
+              <Col xs={2}>
+                <Image src="/images/ProfilePic.jpg" circle className="profilePic"/>
+              </Col>
+              <Col xs={10}>
+                <Row>
+                  <text>Player Name</text>
+                </Row>
+                <Row>
+                  <text> Details about player</text>
+                </Row>
+              </Col> 
+            </Row>
+          </Grid>
         </div>
-      );
-    }
+      )}
 }
 
 var styles = {
@@ -65,9 +59,8 @@ var styles = {
     justifyContent: 'flex-start'
   },
   im: {
-    height: 46,
-    width: 46,
-    borderRadius: 1,
+    height: '100%',
+    width: '100%',
   },
 
   im_container: {
