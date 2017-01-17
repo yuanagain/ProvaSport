@@ -8,7 +8,7 @@ class LoginPage extends React.Component {
 
     render() {
       return (
-        <div className="container-fluid vertical-center">
+        <div className="container-fluid vertical-center" style={containerStyles} style={bodyStyles}>
           <div className='col-xs-12'>
             <img className="img-fluid center-block" alt="Responsive image" src = "/images/Logo.png"/>
             <h1 className='ProvaSport'>ProvaSport</h1>
@@ -29,5 +29,20 @@ class LoginPage extends React.Component {
       );
     }
 }
+
+const bodyStyles = {  
+  backgroundColor: '#48B1E2',
+  fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
+  fontSize: '15px',
+  margin: 'auto',
+  maxHeight: '100% !important',
+};
+
+const containerStyles = {
+  backgroundColor: '#48B1E2',
+}
+
+
+
 
 module.exports = LoginPage;

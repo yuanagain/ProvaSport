@@ -1,6 +1,6 @@
 // TODO: Add onclick action to submit button, hook to back end
 import React from 'react';
-import DropdownButton from 'react-bootstrap';
+import {DropdownButton, MenuItem} from 'react-bootstrap';
 
 class RecordPage extends React.Component {
     constructor() {
