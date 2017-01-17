@@ -15,6 +15,8 @@ import {Jumbotron,
         OverlayTrigger} 
         from 'react-bootstrap';
 
+import PlayerRow from '../ui/PlayerRow.jsx'
+
 const RecordPage = React.createClass({
     getInitialState() {
       return ({
@@ -62,18 +64,51 @@ const RecordPage = React.createClass({
       return (
         
         <div className="container-fluid">
-          <Jumbotron>
-            <h1>Hello, world!</h1>
-            <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-            <p><Button bsStyle="primary">Learn more</Button></p>
-          </Jumbotron>
+          <PlayerRow />
+          
           <div className='col-xs-12'>
 
-            <h1 className='ProvaSport'>ProvaSport</h1>
-            <h3>Visionary Statement</h3>
+            <h1 className='ProvaSport'>ProvaSport</h1>        
+
+            <Modal show={this.state.showModal} onHide={this.close}>
+              <Modal.Header closeButton>
+                <Modal.Title>Team Selection</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <h4>Team 1</h4>
+
+                <form>
+                  <FormGroup
+                    controlId="formBasicText"
+                    validationState={this.getValidationState()}
+                  >
+                    <ControlLabel>Working example with validation</ControlLabel>
+                    <FormControl
+                      type="text"
+                      value={this.state.teamsearch}
+                      placeholder="Enter text"
+                      onChange={this.handleChange}
+                    />
+                    <FormControl.Feedback />
+                    <HelpBlock>Validation is based on string length.</HelpBlock>
+                  </FormGroup>
+                </form>
+
+
+                <p>there is a <OverlayTrigger overlay={popover}><a href="#">popover</a></OverlayTrigger> here</p>
+
+                <h4>Tooltips in a modal</h4>
+                <p>there is a <OverlayTrigger overlay={tooltip}><a href="#">tooltip</a></OverlayTrigger> here</p>
+
+                <hr />
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={this.close}>Close</Button>
+              </Modal.Footer>
+            </Modal>
 
             <DropdownButton title={this.state.sport} pullRight={true} id="bg-justified-dropdown"
-                            onSelect={(eventKey) => this.setState({sport: eventKey})}>
+                              onSelect={(eventKey) => this.setState({sport: eventKey})}>
               <MenuItem eventKey="Soccer">Soccer</MenuItem>
               <MenuItem divider />
               <MenuItem eventKey="Baseball">Baseball</MenuItem>
@@ -100,52 +135,34 @@ const RecordPage = React.createClass({
               <MenuItem eventKey="Stanford">Stanford</MenuItem>
             </DropdownButton>
 
-            <button className="btn btn-default" type="submit">Sign In</button><br/><br/>
+            <Jumbotron>
+              <PlayerRow /> 
+              <Button
+                style={{width: '50%'}}
+                bsStyle="primary"
+                bsSize="large"
+                onClick={this.open}
+              >
+                Select Team 1
+              </Button>
+
+              <Button
+                style={{width: '50%'}}
+                bsStyle="primary"
+                bsSize="large"
+                onClick={this.open}
+              >
+                Select Team 2
+              </Button>
+            </Jumbotron>
+
+            <Jumbotron>
+              <h1>Scores</h1>
+            </Jumbotron>
+            
+
+            <button className="btn btn-default" type="submit">Submit</button><br/><br/>
           </div>
-          <Button
-            bsStyle="primary"
-            bsSize="large"
-            onClick={this.open}
-          >
-            Launch demo modal
-          </Button>
-
-          <Modal show={this.state.showModal} onHide={this.close}>
-            <Modal.Header closeButton>
-              <Modal.Title>Team Selection</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <h4>Team 1</h4>
-
-              <form>
-                <FormGroup
-                  controlId="formBasicText"
-                  validationState={this.getValidationState()}
-                >
-                  <ControlLabel>Working example with validation</ControlLabel>
-                  <FormControl
-                    type="text"
-                    value={this.state.teamsearch}
-                    placeholder="Enter text"
-                    onChange={this.handleChange}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>Validation is based on string length.</HelpBlock>
-                </FormGroup>
-              </form>
-
-
-              <p>there is a <OverlayTrigger overlay={popover}><a href="#">popover</a></OverlayTrigger> here</p>
-
-              <h4>Tooltips in a modal</h4>
-              <p>there is a <OverlayTrigger overlay={tooltip}><a href="#">tooltip</a></OverlayTrigger> here</p>
-
-              <hr />
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={this.close}>Close</Button>
-            </Modal.Footer>
-          </Modal>
         </div>
       );
     }
