@@ -14,7 +14,7 @@ class LoginPage extends React.Component {
             <h1 className='ProvaSport'>ProvaSport</h1>
             <h3>Visionary Statement</h3>
             <form>
-              <input type="emai" className="form-control" placeholder="Email" name="email"/><br/>
+              <input type="email" className="form-control" placeholder="Email" name="email"/><br/>
               <input type="password" className="form-control"placeholder="Password" name="password"/>
             </form>
             <div className="link">
