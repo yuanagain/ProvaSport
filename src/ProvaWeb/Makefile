@@ -1,5 +1,5 @@
 gitadd:
-	git add ./imports/*.js ./server/*.js ./client/*.js
+	git add ./imports/*.jsx ./server/*.js ./client/*.js
 	git add package.json
 	git add Makefile
 	git status
