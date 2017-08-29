@@ -2,16 +2,15 @@ import React, { Component } from 'react'
 import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom'
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group'
 import CreateMatch from './createMatch'
-//import ChatRoom from './ChatRoom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import { ref, firebaseAuth } from 'C:/Users/Duwan_000/Documents/GitHub/react-router-firebase-auth/src/config/constants'
+import { firebaseAuth } from 'C:/Users/Duwan_000/Documents/GitHub/react-router-firebase-auth/src/config/constants'
 import matchFeed from './matchFeed'
 import 'react-datepicker/dist/react-datepicker.css';
-import * as firebase from "firebase"
 import TimePicker from 'react-bootstrap-time-picker';
 import Maps from './Maps'
 import ImageUpload from './ImageUpload'
+import { saveMatch } from 'C:/Users/Duwan_000/Documents/GitHub/react-router-firebase-auth/src/helpers/auth.js'
 
 export default class Dashboard extends Component {
 
@@ -32,7 +31,7 @@ export default class Dashboard extends Component {
         User: null
       }
     }
-    this.handleChange = this.handleChange.bind(this);
+     this.handleChange = this.handleChange.bind(this);
      this.handleTimeChange = this.handleTimeChange.bind(this);
   }
 
@@ -57,13 +56,13 @@ export default class Dashboard extends Component {
   }
 
   handleTimeChange(time) {
-    console.log(time);     // <- prints "3600" if "01:00" is picked
+  //  console.log(time);     // <- prints "3600" if "01:00" is picked
     this.setState({ time });
   }
 
   myCallback = (dataFromMaps) => {
       //  [...we will use the dataFromChild here...]
-      console.log(dataFromMaps.address)
+    //  console.log(dataFromMaps.address)
       this.setState({mapDataAddress: dataFromMaps.address,
                      mapDataLat: dataFromMaps.lat,
                      mapDataLng: dataFromMaps.lng
@@ -73,75 +72,25 @@ export default class Dashboard extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    var sport = this.sport.value;
-  //  console.log(sport)
-    //var matchDay = this.formatDate.value;
-    var formatDate = this.state.formatDate
-  //  console.log(formatDate)
-    var skill = this.skill.value
-    const time = this.state.time
-    const mapDataAddress = this.state.mapDataAddress
-    const mapDataLat = this.state.mapDataLat
-    const mapDataLng = this.state.mapDataLng
-
-    console.log('entered')
-    console.log('this.state.time')
-    console.log(this.state.time)
-    console.log('this.state.mapDataAddress')
-    console.log(this.state.mapDataAddress)
-    console.log('this.state.mapDataLat')
-    console.log(this.state.mapDataLat)
-    console.log('this.state.mapDataLng')
-    console.log(this.state.mapDataLng)
+    const matchData =  {
+    sport: this.sport.value,
+    gameDate: this.state.formatDate,
+    skill: this.skill.value,
+    matchTime: this.state.time,
+    mapDataAddress: this.state.mapDataAddress,
+    mapDataLat: this.state.mapDataLat,
+    mapDataLng: this.state.mapDataLng
+}
 
   firebaseAuth().onAuthStateChanged(function(user) {
 if (user) {
 
-
-firebase.database().ref(`users/${user.uid}/personal-info`).on('value', (snapshot)=> {
-
-  var profile = snapshot.val()
-  console.log(profile)
-  //var childKey = snapshot.key
-
-  const f_name = profile.FirstName
-  const l_name = profile.LastName
-
-  var newMatchKey = firebase.database().ref('matches').push().key
-  console.log('newMatchKey')
-  console.log(newMatchKey)
-
-  //console.log(this.state.matchKey)
-  //this.setState({matchKey: newMatchKey})
-  //this.setState({first_name: f_name})
-  //this.setState({last_name: l_name})
-  //console.log(this.state.matchKey)
-
-  ref.child(`/matches/` + newMatchKey)
-  .update({
-    creator_first_name: f_name,
-    creator_last_name: l_name,
-    sport: sport,
-    gameDate: formatDate,
-    skill: skill,
-    matchTime: time,
-    mapDataAddress: mapDataAddress,
-    mapDataLat: mapDataLat,
-    mapDataLng: mapDataLng,
-    players: [user.uid],
-    creator: user.uid
-  })
-
-      ref.child(`users/${user.uid}/account-info`)
-      .set({
-      joinedGames: newMatchKey
-      })
-
-  })
+// External function, handles upload to firebase
+saveMatch(matchData, user)
 
 
 } else {
-// No user is signed in.
+// No user is signed in. Cannot perform upload.
 }
 });
 }
@@ -175,19 +124,15 @@ firebase.database().ref(`users/${user.uid}/personal-info`).on('value', (snapshot
       <matchFeed  />
       <li><NavLink to="/protected/matchFeed">Match Feed</NavLink></li>
             <Route path="/protected/matchFeed" component={matchFeed}/>
-      
+
       <div>
-      <CreateMatch />
+
       </div>
 
 
       <Router>
       <div>
-     <li><NavLink to="/protected/createMatch">Create Match</NavLink></li>
-           <Route path="/protected/createMatch" component={CreateMatch}/>
-           <ol id='matchlist'>
-
-           </ol>
+  
            </div>
            </Router>
 

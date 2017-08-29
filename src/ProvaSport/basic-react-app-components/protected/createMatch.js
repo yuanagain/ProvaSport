@@ -58,13 +58,6 @@ export default class CreateMatch extends Component {
   })
 }
 
-// changeList(event){
-//   //console.log(event)
-//   this.setState({
-//     newMatch: event.target.value
-//   });
-// }
-
   render () {
 
   const currentMatches = this.state.matchList.map((match, i) => {

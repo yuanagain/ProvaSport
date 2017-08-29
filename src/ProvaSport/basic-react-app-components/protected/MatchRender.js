@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import * as firebase from "firebase"
-import { ref, firebaseAuth } from 'C:/Users/Duwan_000/Documents/GitHub/react-router-firebase-auth/src/config/constants'
+import { firebaseAuth } from 'C:/Users/Duwan_000/Documents/GitHub/react-router-firebase-auth/src/config/constants'
 import ChatRoom from './ChatRoom'
+import { removeMatchBackend, joinMatch } from 'C:/Users/Duwan_000/Documents/GitHub/react-router-firebase-auth/src/helpers/auth.js'
 
 export default class MatchRender extends Component {
 
@@ -18,23 +18,10 @@ export default class MatchRender extends Component {
 
 handleJoin(){
 const user = firebaseAuth().currentUser
-//console.log("this.props.match.players")
-//var players = this.props.match.players.map(function(value, i){
-  //  return (
-//console.log(this.props.match.players)
 const players = this.props.match.players
-//this.console.log(players)
 const matchID = this.props.match.id
-players.push(user.uid)
-//console.log(players)
-
-firebase.database().ref(`matches/${this.props.match.id}/`).update({ players: players })
-
-//May need this for other info
-ref.child(`users/${user.uid}/account-info/joinedGames/${this.props.match.id}`)
-.set({ id: 0
-})
-//firebase.database().ref(`matches/${this.props.match.id}/players`).push(user.uid)
+// Writes data to backend
+joinMatch(user, players, matchID)
 this.setState({joined: true})
 }
 
@@ -42,33 +29,18 @@ handleMessage(){}
 
 removeMatch(e){
        e.preventDefault();
-       console.log("Remove Match")
-
+       console.log("Removing Match")
     const players = this.props.match.players
-
-
-    //can use address for advantage..
-    //  make query for all children joined games with people joined,
-    // run loop to delete the joined game
-
-    for (var i =0; i < players.length; i++){
-      console.log(players[i])
-    ref.child(`users/${players[i]}/account-info/joinedGames/${this.props.match.id}`).remove()
-}
-  // delete the match from firebase
-   ref.child(`matches/${this.props.match.id}/`).remove()
-
+    // Call to firebase
+    removeMatchBackend(players)
    }
 
 renderjoin(e){
   e.preventDefault()
-
-  return <div>  </div>
+  return <div> No function yet </div>
 }
 
   render(){
-  //  console.log("props test")
-  //  console.log(this.props.match.id)
     const user = firebaseAuth().currentUser.uid
     let button = null
 
@@ -124,7 +96,6 @@ renderjoin(e){
             </div>
             {button}
             <div className="actions">
-
               <a href="#" className="btn btn-default stat-item"></a>
 
               <a onClick={this.renderjoin}  href="#" className="btn btn-default stat-item">
@@ -133,10 +104,6 @@ renderjoin(e){
         </div>
         <ChatRoom matchkey={this.props.match.id}/>
       </div>
-
-
-
     )
-
   }
 }

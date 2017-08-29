@@ -1,0 +1,462 @@
+.then(() => user)
+
+//firebase.database().ref(`matches/${this.props.match.id}/players`).push(user.uid)
+
+//  <div className="col-sm-9">
+//
+// <div className="col-sm-12">
+//   <div className="panel panel-white post panel-shadow">
+//     <div className="post-heading">
+//       <div className="pull-left image">
+//         <img className="img-circle avatar" src="http://placehold.it/48x48" alt=""/>
+//         Avatar
+//       </div>
+//       <div className="pull-left meta">
+//         <div className="title h5">
+//         <b> {user.FirstName} {user.LastName} </b>
+//         made a match
+//         </div>
+//         <h6 className="text-muted time">An hour ago</h6>
+//         </div>
+//       </div>
+//     </div>
+//     <div className="col-md-12 post-description">
+//       <h3> {this.props.sport} !</h3>
+//       <br/>
+//       <h3> {this.props.skill} !</h3>
+//       <br/>
+//       <h3> {this.props.date} !</h3>
+//       <br/>
+//       <h3> {this.props.JoinedGames.length} !</h3>
+//       <br/>
+//       </div>
+//       <div className="actions">
+//         <a href="#" className="btn btn-default stat-item"></a>
+//
+//         <a onClick={this.handleChange}  href="#" className="btn btn-default stat-item">
+//                          <i className="fa fa-thumbs-up icon"></i>
+//                      </a>
+//                      &nbsp;{this.joinRender(       )}
+//   </div>
+// </div>
+
+
+
+
+//                          <Statusform/>
+//                          {posts}
+//                          <button onClick={this.addMore}
+//                                  className="btn btn-lg">More</button>13
+//                      </div>
+//
+
+
+// {posts}
+
+
+
+user={this.state.User}
+
+//  <b> {this.props.User.FirstName} {this.props.User.LastName} </b>
+
+
+
+  <CreateMatch />
+
+  <li><NavLink to="/protected/createMatch">Create Match</NavLink></li>
+        <Route path="/protected/createMatch" component={CreateMatch}/>
+        <ol id='matchlist'>
+
+        </ol>
+
+
+
+
+<div className='container'>
+  <h1 className='display-3'>react-places-autocomplete <i className='fa fa-map-marker header'/></h1>
+  <p className='lead'>A React component to build a customized UI for Google Maps Places Autocomplete</p>
+  <hr />
+  <a href='https://github.com/kenny-hibino/react-places-autocomplete' className='Demo__github-link' target="_blank" >
+    <span className='fa fa-github Demo__github-icon'></span>
+    &nbsp;View on GitHub
+  </a>
+</div>
+
+
+
+
+//   render() {
+//   return (
+//     <Script
+//       url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdF3b7VI0t-l2u9FJTy5v5OxQpgjBBAYc&callback=initMap"
+//       onCreate={this.handleScriptCreate.bind(this)}
+//       onError={this.handleScriptError.bind(this)}
+//       onLoad={this.handleScriptLoad.bind(this)}
+//     />
+//   )
+// }
+//
+// handleScriptCreate() {
+//   this.setState({ scriptLoaded: false })
+// }
+//
+// handleScriptError() {
+//   this.setState({ scriptError: true })
+// }
+//
+// handleScriptLoad() {
+//   this.setState({ scriptLoaded: true })
+// }
+
+
+
+
+// push user id to player field if match not made by user
+// remove button if made by user
+// make some 'joined' button if joined another users game
+
+//switch(){
+
+// if match.creator === user.uid
+//     render "your match"
+// defult null
+
+// if match.players.exists???(user.uid)
+    //  render button that says " Joined! "
+//
+//   if not in joined players and players.length < max length for sport:
+//   render "Join match" button
+//      players.
+// if reached max player capacity:
+// Render "Match Full" or remove from list.
+
+//}
+
+
+//
+// ref.child(`/matches/` + this.state.matchKey)
+// .update({
+//
+// })
+//
+// firebase.database().ref(`users/${user.uid}/personal-info`).once('value', function(snapshot) {
+// snapshot.forEach(function(childSnapshot) {
+// var childKey = childSnapshot.key;
+// var childData = childSnapshot.val();
+// console.log(childKey)
+// console.log(childData)
+// if (childKey === 'FirstName'){
+//   console.log(childData)
+//   console.log(this.state.first_name)
+//   const f_name = childData
+//   this.setState({first_name: f_name})
+// }
+// if (childKey === 'LastName'){
+//   this.setState({last_name: childData})
+// }
+// // ...
+// });
+// //var first_name = childData.FirstName
+// //console.log(first_name)
+// //var last_name = childData.LastName
+// ///this.setState({first_name: first_name})
+// //this.setState({last_name: last_name})
+//
+// });
+
+//console.log('First Name')
+//console.log(this.state.first_name)
+
+
+//console.log('First Name')
+//console.log(this.state.first_name)
+
+//console.log(sport)
+//console.log(formatDate)
+//  console.log(skill)
+
+
+// User is signed in.
+//   var user_pers_info = firebase.database().ref(`users/${user.uid}/personal-info`)
+// console.log('user_pers_info')
+// console.log(user_pers_info)
+// .push({
+//   creator: user.uid,
+//   players: user.uid,
+//   sport: sport,
+//   gameDate: formatDate,
+//   skill: skill
+// })
+//
+// ref.child(`users/${user.uid}/personal-info`).once('value', function(snapshot) {
+//   snapshot.forEach(function(childSnapshot) {
+//     var childKey = childSnapshot.key;
+//     var childData = childSnapshot.val();
+//     var first_name = childData.FirstName
+//     var last_name = childData.LastName
+//     this.setState({first_name: first_name})
+//     this.setState({last_name: last_name})
+//
+//     // ...
+//   });
+// });
+
+
+//  creator_first_name: f_name,
+//  creator_last_name: l_name,
+//players: [user.uid],
+//creator: user.uid
+
+//  console.log(testObject)
+
+  //   var sport = this.sport.value;
+  // //  console.log(sport)
+  //   //var matchDay = this.formatDate.value;
+  //   var formatDate = this.state.formatDate
+  // //  console.log(formatDate)
+  //   var skill = this.skill.value
+  //   const time = this.state.time
+  //   const mapDataAddress = this.state.mapDataAddress
+  //   const mapDataLat = this.state.mapDataLat
+  //   const mapDataLng = this.state.mapDataLng
+  //
+  //   console.log('entered')
+  //   console.log('this.state.time')
+  //   console.log(this.state.time)
+  //   console.log('this.state.mapDataAddress')
+  //   console.log(this.state.mapDataAddress)
+  //   console.log('this.state.mapDataLat')
+  //   console.log(this.state.mapDataLat)
+  //   console.log('this.state.mapDataLng')
+  //   console.log(this.state.mapDataLng)
+//var that = this
+
+
+<h3> Basic Messenger </h3>
+
+// const user = firebaseAuth().currentUser
+// console.log(user.uid)
+//  console.log(user.FirstName)
+//  var user_pers_info = firebase.database().ref(`users/${user.uid}/personal-info`)
+
+//console.log(that.state.time)
+// firebase.database().ref(`users/${user.uid}/personal-info`).on('value', (snapshot)=> {
+//
+//   var profile = snapshot.val()
+//   console.log(profile)
+//   //var childKey = snapshot.key
+//
+//   const f_name = profile.FirstName
+//   const l_name = profile.LastName
+//
+//   var newMatchKey = firebase.database().ref('matches').push().key
+//   console.log('newMatchKey')
+//   console.log(newMatchKey)
+
+  //console.log(this.state.matchKey)
+  //this.setState({matchKey: newMatchKey})
+  //this.setState({first_name: f_name})
+  //this.setState({last_name: l_name})
+  //console.log(this.state.matchKey)
+  //
+  // ref.child(`/matches/` + newMatchKey)
+  // .update({
+  //   creator_first_name: f_name,
+  //   creator_last_name: l_name,
+  //   sport: sport,
+  //   gameDate: formatDate,
+  //   skill: skill,
+  //   matchTime: time,
+  //   mapDataAddress: mapDataAddress,
+  //   mapDataLat: mapDataLat,
+  //   mapDataLng: mapDataLng,
+  //   players: [user.uid],
+  //   creator: user.uid
+  // })
+  //
+  //     ref.child(`users/${user.uid}/account-info`)
+  //     .set({
+  //     joinedGames: newMatchKey
+  //     })
+  //
+  // })
+  //
+
+  // changeList(event){
+  //   //console.log(event)
+  //   this.setState({
+  //     newMatch: event.target.value
+  //   });
+  // }
+
+  //console.log('nextMatch')
+  //console.log(nextMatch)
+
+  //var allMatches = this.state.allMatches.slice()
+  //console.log('allMathces')
+  //console.log(this.state.allMatches)
+  //console.log('runMathces')
+  //console.log(allMatches)
+
+  //console.log(skill)
+  //console.log(sport)
+//  console.log(date)
+
+//  this.setState({User: user})
+
+  // //console.log(this.state.User.uid)
+  // firebase.database().ref(`matches/`).on('value', (snapshot)=> {
+  //
+  // //  var matchesInfo = []
+  //   var matches = snapshot.val()
+  //   //console.log('allmatches')
+  //   //console.log(matches)
+  //
+  //   var keys = []
+  //   var keys = Object.keys(matches)
+  //       console.log(keys)
+  //
+  //       for (var i =0; i < keys.length; i++) {
+  //         //var id = matches[k].key
+  //         //console.log(id)
+  //         var k = keys[i];
+  //       //  var match = matches[k];
+  //         var skill = matches[k].skill;
+  //         var sport = matches[k].sport;
+  //         var date = matches[k].gameDate;
+  //         var creator_query = matches[k].creator;
+  //         var players = matches[k].players;
+  //         var creator_first_name = matches[k].creator_first_name;
+  //         var creator_last_name = matches[k].creator_last_name;
+  //
+  //   //console.log(skill)
+  //   //console.log(sport)
+  // //  console.log(date)
+  // console.log('players')
+  //   console.log(players)
+  //
+  //   var nextMatch = {
+  //     id: k,
+  //     skill: skill,
+  //     sport: sport,
+  //     date:  date,
+  //     players: players,
+  //     creator: creator_query,
+  //     creatorName: creator_first_name + " " + creator_last_name
+  //   }
+  //   //console.log('nextMatch')
+  //   //console.log(nextMatch)
+  //
+  //   var allMatches = this.state.allMatches.slice()
+  //   //console.log('allMathces')
+  //   //console.log(this.state.allMatches)
+  //   //console.log('runMathces')
+  //   //console.log(allMatches)
+  //
+  //   allMatches.push(nextMatch)
+  //   //console.log(allMatches)
+
+  //  console.log('testpost')
+  //  var testpost = this.state.allMatches
+    //console.log('testpost')
+  //  console.log(testpost)
+    //  console.log(posts)
+
+    // return (
+    //   <li key={match.id}>{match.skill}
+    //   {match.sport}
+    //   {match.date}
+    //   </li>
+    // )
+
+
+  //  var messages = this.
+
+
+  //  console.log('This.state.User')
+  //  console.log(this.state.User)
+  //  console.log('this.state.allMatches')
+  //  console.log(this.state.allMatches)
+
+    // const posts = this.state.allMatches.map(function(record){
+    //   return <MatchRender key={record.id} match={record} />
+
+
+        //uploadImage(file)
+    //
+    //     // Create a root reference
+    //     var storageRef = firebase.storage().ref();
+    //
+    //     // Create the file metadata
+    // var metadata = {
+    //   contentType: 'image/jpeg'
+    // };
+    //
+    // // Upload file and metadata to the object 'images/mountains.jpg'
+    // var uploadTask = storageRef.child('profilePics/' + file.name).put(file, metadata);
+    //
+    // // Listen for state changes, errors, and completion of the upload.
+    // uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+    //   function(snapshot) {
+    //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    //     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //         //uploader.value = percentage;
+    //     console.log('Upload is ' + progress + '% done');
+    //     switch (snapshot.state) {
+    //       case firebase.storage.TaskState.PAUSED: // or 'paused'
+    //         console.log('Upload is paused');
+    //         break;
+    //       case firebase.storage.TaskState.RUNNING: // or 'running'
+    //         console.log('Upload is running');
+    //         break;
+    //     }
+    //   }, function(error) {
+    //
+    //   // A full list of error codes is available at
+    //   // https://firebase.google.com/docs/storage/web/handle-errors
+    //   switch (error.code) {
+    //     case 'storage/unauthorized':
+    //       // User doesn't have permission to access the object
+    //       break;
+    //
+    //     case 'storage/canceled':
+    //       // User canceled the upload
+    //       break;
+    //
+    //     case 'storage/unknown':
+    //       // Unknown error occurred, inspect error.serverResponse
+    //       break;
+    //   }
+    // }, function() {
+    //   // Upload completed successfully, now we can get the download URL
+    //   var downloadURL = uploadTask.snapshot.downloadURL;
+    // });
+
+
+        //
+        //
+
+        // console.log( this.state.file.name)
+        // //console.log(this.state.file)
+        // var storageRef = firebase.storage().ref('prof_pics/'+ this.state.file.name)
+        //
+        // //Upload
+        // var task = storageRef.put(this.state.file)
+
+      //   //Update progress bar
+      //   task.on('state_changed',
+      //
+      //     function progress(snapshot) {
+      //       var percentage = (snapshot.bytesTransferred /
+      //       snapshot.totalBytes) * 100;
+      //       uploader.value = percentage;
+      //       console.log(percentage)
+      //     }
+      //
+      //   //  error(err){}
+      //
+      // //    complete(){}
+      //
+      // )
+
+        //ref.child(`users/${user.uid}/personal-info`).update({profPic: this.state.file})

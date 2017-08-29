@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import * as firebase from "firebase"
+import { displayMessages, submitMessagesBackend } from 'C:/Users/Duwan_000/Documents/GitHub/react-router-firebase-auth/src/helpers/auth.js'
 
 export default class ChatRoom extends Component {
 
@@ -14,19 +15,24 @@ export default class ChatRoom extends Component {
   }
 
   componentDidMount(){
-  //  console.log('ComponentDidMount')
-  //  console.log("Chat Room props test")
-  //  console.log(this.props.matchkey)
-    firebase.database().ref(`messages/${this.props.matchkey}/`).on('value', (snapshot)=> {
+    const matchKey = this.props.matchkey
+  //  const blank = []
+     firebase.database().ref(`messages/${this.props.matchkey}/`).on('value', (snapshot)=> {
+    //
+    // //const currentMessages = snapshot.val()
+    const currentMessages = snapshot.val()
+  //  blank.push(currentMessages)
 
-      const currentMessages = snapshot.val()
+  // need to put finishing touches on this
+  //  const currentMessages = displayMessages(matchKey)
+  //  console.log(currentMessages)
 
       if (currentMessages != null){
         this.setState({
           messages: currentMessages
         })
       }
-    })
+   })
   }
 
   updateMessage(event){
@@ -37,19 +43,11 @@ export default class ChatRoom extends Component {
   }
 
   submitMessage(event){
-  //  console.log('submit')
     const nextMessage = {
       id: this.state.messages.length,
       text: this.state.message
     }
-
-    firebase.database().ref(`messages/${this.props.matchkey}/` + nextMessage.id).set(nextMessage)
-
-    // var list = Object.assign([], this.state.messages)
-    // list.push(nextMessage)
-    // this.setState({
-    //   messages: list
-    // })
+    submitMessagesBackend(nextMessage, this.props.matchkey)
   }
 
   render(){
@@ -62,13 +60,10 @@ export default class ChatRoom extends Component {
     })
 
     return(
-
       <div>
-
         <ol>
         {currentMessage}
         </ol>
-
       <label>Message</label>
       <br />
       <input onChange={this.updateMessage} type="text" placeholder="Message" />

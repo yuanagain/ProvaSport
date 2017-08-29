@@ -10,6 +10,7 @@ function setErrorMsg(error) {
 
 export default class Register extends Component {
   state = { registerError: null }
+
   handleSubmit = (e) => {
     e.preventDefault()
 
@@ -37,11 +38,6 @@ export default class Register extends Component {
       BirthYear: year,
       Gender: gender
     })
-
-    // ref.child(`users/${user.uid}/account-info`)
-    // .set({
-    //   JoinedGames: null
-    // })
 
   } else {
     // No user is signed in.
