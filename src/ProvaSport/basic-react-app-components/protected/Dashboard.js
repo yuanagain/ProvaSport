@@ -11,6 +11,7 @@ import TimePicker from 'react-bootstrap-time-picker';
 import Maps from './Maps'
 import ImageUpload from './ImageUpload'
 import { saveMatch } from 'C:/Users/Duwan_000/Documents/GitHub/react-router-firebase-auth/src/helpers/auth.js'
+import Tournament from './Tournament'
 
 export default class Dashboard extends Component {
 
@@ -97,6 +98,75 @@ saveMatch(matchData, user)
 
   render () {
 
+    const divStyle = {
+      display: 'block',
+      textAlign: 'center',
+      background: "#eee",
+      padding: "5px",
+      margin: "5px",
+      //width: "550px",
+      //justifyContent: 'center'
+      //alignItems: 'flex',
+      //justifyContent: 'flex',
+      //alignSelf: 'flex',
+    //  color: 'blue',
+    //  backgroundImage: 'url(' + imgUrl + ')',
+    };
+
+    const divCheckbox = {
+      textAlign: 'center',
+      display: 'table',
+      //justifyContent: 'center',
+    //  float: 'left',
+      display: 'inlineBlock',
+    //  marginRight: '155px'
+      //margin: '0 auto'
+    }
+
+    const checkboxLabel =  {
+      //display: 'table-row'
+      display: 'inlineBlock'
+  }
+
+  //  const inputLen = {
+  //     display: 'table-row',
+  //     width: '100%',
+  // }
+
+    const matchLabel = {
+    //  marginRight: "40px"
+    //  color: 'blue',
+    //  backgroundImage: 'url(' + imgUrl + ')',
+    };
+
+    const stdInput = {
+    width: '200px',
+  //  display: 'inlineBlock',
+    //textAlign: 'center',
+    //border: '1px'
+    //solid #000
+    padding: '5px'
+  }
+
+    const headerStyle2 = {
+      color: 'white',
+      background: "SteelBlue",
+      textAlign: 'center',
+      padding: "13px",
+      margin: "5px",
+      width: "5256x"
+    };
+
+    const checkbox = {
+  //    padding: "100px",
+      margin: "5px",
+  //  display: 'table-row',
+  display: 'inlineBlock',
+    width: '100%',
+//    width: '200px'
+    };
+
+
     return (
       <div>
       <div>
@@ -132,15 +202,19 @@ saveMatch(matchData, user)
 
       <Router>
       <div>
-  
+
            </div>
            </Router>
 
-                <h2> Create a Match: </h2>
+
+           <div style={divStyle}>
+
+           <h2 style={headerStyle2}> Create a Match! </h2>
+
            <form onSubmit={this.handleSubmit}>
-           <label>Sport</label>
+           <label style={matchLabel}>1. Sport</label>
            <div className="form-group">
-           <select id="sport" ref={(sport) => this.sport = sport}>
+           <select style={stdInput} id="sport" ref={(sport) => this.sport = sport}>
            <option disabled value>Sport</option>
            <option value="Tennis">Tennis</option>
            <option value="Badminton">Badminton</option>
@@ -150,40 +224,49 @@ saveMatch(matchData, user)
            </select>
 
            </div>
-           <label>Date</label>
-           <div className="date">
+
+           <div style={divCheckbox} >
+           <label style={checkboxLabel}>2. Date</label>
            <DatePicker
+           style={stdInput}
            selected={this.state.startDate}
            onChange={this.handleChange}
            minDate={moment()}
            maxDate={moment().add(65, "days")}
-           placeholderText="Choose a Day" />
+           placeholderText="  Choose a Day..." />
+<br/>
+           <label style={checkboxLabel}>3. Match Start Time </label>
+           <TimePicker  onChange={this.handleTimeChange}
+           value={this.state.time}
+           start="6:00" end="23:30"/>
            </div>
-
-           <br/>
-           <label> Match Start Time </label>
-           <TimePicker onChange={this.handleTimeChange} value={this.state.time}
-                                                    start="6:00" end="23:30"/>
 
            <br/>
            <Maps callbackFromParent={this.myCallback}/>
+           <br/>
 
-           <label>Skill Level</label>
-           <div className="form-group">
-           <select id="skill" ref={(skill) => this.skill = skill}>
-           <option disabled value>Skill</option>
-           <option value="Beginner">Beginner</option>
-           <option value="Intermediate">Intermediate</option>
-           <option value="Advanced">Advanced</option>
-           </select>
-           <br />
-           <br />
-           <button type="submit" className="btn btn-primary">Create</button>
-           <br />
-           </div>
+           <label style={matchLabel}> 4. Preferred Opponent Skill Level</label>
+
+           <CheckboxGroup
+              name="preferred opponent skill level"
+              value={this.state.sports}
+              onChange={this.sportsChanged.bind(this)}>
+                 <div style={divCheckbox}>
+                  <label style={checkboxLabel}><Checkbox style={checkbox} value="Beginner"/> Beginner</label>
+                  <label style={checkboxLabel}><Checkbox style={checkbox} value="Intermediate"/> Intermediate</label>
+                  <label style={checkboxLabel}><Checkbox style={checkbox} value="Advanced"/> Advanced</label>
+                     </div>
+                </CheckboxGroup>
+                <br/>
+           <button type="submit" className="btn btn-primary">Create Match</button>
+
+
          </form>
+</div>
+         <Tournament />
+</div>
 
-      </div>
+
     )
   }
 }

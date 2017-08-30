@@ -60,11 +60,6 @@ class Maps extends React.Component {
   }
 
   renderGeocodeSuccess(lat, lng) {
-    //console.log("this.state.address 2")
-    //console.log(this.state.address)
-    //console.log("geocodeResults")
-    //console.log(lat)
-    //console.log(lng)
 
     const mapInfo = {
       address: this.state.address,
@@ -83,10 +78,47 @@ class Maps extends React.Component {
 
   render() {
     const cssClasses = {
-      root: 'form-group',
-      input: 'Demo__search-input',
-      autocompleteContainer: 'Demo__autocomplete-container',
+      // root: 'form-group',
+      // input: 'Demo__search-input',
+      // autocompleteContainer: 'Demo__autocomplete-container',
     }
+
+    const defaultStyles = {
+    root: {
+      position: 'relative',
+      paddingBottom: '0px',
+    },
+    input: {
+      display: 'inline-block',
+      width: '100%',
+      padding: '10px',
+    },
+    autocompleteContainer: {
+      position: 'absolute',
+      top: '100%',
+      backgroundColor: 'white',
+      border: '1px solid #555555',
+      width: '100%',
+    },
+    autocompleteItem: {
+      backgroundColor: '#ffffff',
+      padding: '10px',
+      color: '#555555',
+      cursor: 'pointer',
+    },
+    autocompleteItemActive: {
+      backgroundColor: '#fafafa'
+    },
+    googleLogoContainer: {
+      textAlign: 'right',
+      padding: '1px',
+      backgroundColor: '#fafafa'
+    },
+    googleLogoImage: {
+      width: 50
+    }
+  }
+
 
     const AutocompleteItem = ({ formattedSuggestion }) => (
       <div className="Demo__suggestion-item">
@@ -102,20 +134,20 @@ class Maps extends React.Component {
       onBlur: () => { console.log('Blur event!'); },
       onFocus: () => { console.log('Focused!'); },
       autoFocus: true,
-      placeholder: "Search Places",
+      placeholder: "Search for places...",
       name: 'Demo__input',
       id: "my-input-id",
     }
 
     return (
       <div className='page-wrapper'>
-      <label> Enter Address </label>
+            <label>3. Enter Address </label>
         <div className='container'>
           <PlacesAutocomplete
             onSelect={this.handleSelect}
             autocompleteItem={AutocompleteItem}
             onEnterKeyDown={this.handleSelect}
-            classNames={cssClasses}
+            classNames={defaultStyles}
             inputProps={inputProps}
           />
           {this.state.loading ? <div><i className="fa fa-spinner fa-pulse fa-3x fa-fw Demo__spinner" /></div> : null}
